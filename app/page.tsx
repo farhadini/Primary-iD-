@@ -6,6 +6,8 @@ import MeetYourPrimaryID from "@/components/meet-your-primary-id";
 import CarePathways from "@/components/care-pathways";
 import NewPatientVisit from "@/components/new-patient-visit";
 import OurApproach from "@/components/our-approach";
+import Testimonials from "@/components/testimonials";
+import MobileStickyCTA from "@/components/mobile-sticky-cta";
 import FinancialMembership from "@/components/financial-membership";
 
 // ============================================================
@@ -63,6 +65,12 @@ function Reveal({ children, delay = 0, y = 18, className = "" }) {
 // ── Nav ───────────────────────────────────────────────────────
 function Nav({ scrolled }) {
   return (
+    <>
+    <style>{`
+      @media (min-width: 760px) {
+        .nav-phone { display: inline-flex !important; }
+      }
+    `}</style>
     <nav style={{
       position: "fixed", top: 0, left: 0, right: 0, zIndex: 200,
       background: scrolled ? "rgba(250,248,245,0.96)" : "transparent",
@@ -97,6 +105,24 @@ function Nav({ scrolled }) {
         </div>
 
         {/* Primary CTA */}
+        <a
+          href="tel:+13105648990"
+          style={{
+            display: "none",
+            color: B.navy, textDecoration: "none",
+            fontFamily: "Georgia,serif", fontSize: 13, fontWeight: 500,
+            marginRight: 18, alignItems: "center", gap: 6,
+            opacity: 0.85,
+          }}
+          className="nav-phone"
+          onMouseOver={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; }}
+          onMouseOut={e => { (e.currentTarget as HTMLElement).style.opacity = "0.85"; }}
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          (310) 564-8990
+        </a>
         <a href="#book" style={{
           background: B.navy, color: B.white, textDecoration: "none",
           borderRadius: 8, padding: "9px 20px",
@@ -113,6 +139,7 @@ function Nav({ scrolled }) {
         </a>
       </div>
     </nav>
+    </>
   );
 }
 
@@ -123,7 +150,7 @@ function Hero() {
   useEffect(() => { setTimeout(() => setLoaded(true), 80); }, []);
 
   const trustItems = [
-    { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3z"/><polyline points="9 12 11 14 15 10"/></svg>, text: "Trusted by 500+ 5-star patients on Google" },
+    { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3z"/><polyline points="9 12 11 14 15 10"/></svg>, text: "Rated 4.9 by 373+ patients on Google" },
     { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}><path d="M4 4h10l6 6v10H4z"/><path d="M8 9h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>, text: "Functional prosthodontist + integrative team" },
     { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}><path d="M11 20A7 7 0 0 1 4 13c0-4 3-8 8-11 5 3 8 7 8 11a7 7 0 0 1-7 7z"/><path d="M12 4v16"/></svg>, text: "Whole-body dentistry, not just teeth" },
     { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>, text: "Start with a free 6-minute online assessment" },
@@ -199,6 +226,16 @@ function Hero() {
               Take the health assessment
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </a>
+            <div style={{
+              fontFamily: "Georgia,serif",
+              fontSize: 12.5,
+              color: B.muted,
+              marginTop: -4,
+              letterSpacing: "0.01em",
+              opacity: 0.85,
+            }}>
+              Free · Private · Results sent to your inbox.
+            </div>
           </div>
 
           {/* Trust Strip */}
@@ -228,7 +265,7 @@ function Hero() {
             opacity: loaded ? 1 : 0,
             transition: "opacity 0.8s ease 0.8s",
           }}>
-            Founded by <a href="#" style={{ color: B.muted, textDecoration: "none" }} onMouseOver={e => e.currentTarget.style.color = B.navy} onMouseOut={e => e.currentTarget.style.color = B.muted}>Dr. Tzur Gabi, Functional Prosthodontist &amp; Oral Physician</a>
+            Founded by <a href="/about/" style={{ color: B.muted, textDecoration: "none" }} onMouseOver={e => e.currentTarget.style.color = B.navy} onMouseOut={e => e.currentTarget.style.color = B.muted}>Dr. Tzur Gabi, Functional Prosthodontist &amp; Oral Physician</a>
           </div>
         </div>
 
@@ -1437,7 +1474,7 @@ function BookingCTA() {
           <div style={{ marginTop: 40, display: "flex", justifyContent: "center", gap: 32, flexWrap: "wrap" }}>
             {[
               { n: "25+", label: "Years experience" },
-              { n: "5★", label: "Patient reviews" },
+              { n: "373+", label: "5★ Google reviews" },
               { n: "360°", label: "Health evaluation" },
             ].map(stat => (
               <div key={stat.n} style={{ textAlign: "center" }}>
@@ -1537,7 +1574,7 @@ function Footer() {
             <p style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "rgba(255,255,255,0.5)", marginTop: 16 }}>
               11980 San Vicente Blvd, Suite 902<br />
               Los Angeles, CA 90049<br />
-              <span style={{ color: B.blue }}>(310) 826-8260</span>
+              <span style={{ color: B.blue }}>(310) 564-8990</span>
             </p>
           </div>
 
@@ -1786,9 +1823,11 @@ export default function PrimaryHomepage() {
 
       {/* Section 6: Our Approach - Outcomes-first grid */}
       <OurApproach />
+      <Testimonials />
 
       {/* Section 7: Financial / Membership */}
       <FinancialMembership />
+      <MobileStickyCTA />
 
       {/* Booking CTA */}
       <BookingCTA />

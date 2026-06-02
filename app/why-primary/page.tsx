@@ -1815,7 +1815,7 @@ function Footer() {
             <p style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "rgba(255,255,255,0.5)", marginTop: 16 }}>
               11980 San Vicente Blvd, Suite 902<br />
               Los Angeles, CA 90049<br />
-              <span style={{ color: B.blue }}>(310) 826-8260</span>
+              <span style={{ color: B.blue }}>(310) 564-8990</span>
             </p>
           </div>
 

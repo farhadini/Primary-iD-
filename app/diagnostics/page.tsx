@@ -941,7 +941,7 @@ function FullResults({ answers, user, completedDims, onRetake, onStart }) {
             <RotateCcw size={13} strokeWidth={1.8} /> Start over
           </button>
           <div style={{ marginTop: 16, fontFamily: "Georgia,serif", fontSize: 11, color: "rgba(255,255,255,0.2)", fontStyle: "italic" }}>
-            11980 San Vicente Blvd, Suite 902 · Brentwood, Los Angeles · (310) 826-8260
+            11980 San Vicente Blvd, Suite 902 · Brentwood, Los Angeles · (310) 564-8990
           </div>
         </div>
       </div>

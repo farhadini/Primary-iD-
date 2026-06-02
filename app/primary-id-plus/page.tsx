@@ -814,7 +814,7 @@ function Footer() {
               />
             </div>
             <p style={{ fontFamily: "Georgia,serif", fontSize: 13, color: "rgba(255,255,255,0.65)", lineHeight: 1.65, maxWidth: 260 }}>Integrative dentistry that looks at your whole health picture, not just your teeth.</p>
-            <p style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "rgba(255,255,255,0.5)", marginTop: 16 }}>11980 San Vicente Blvd, Suite 902<br />Los Angeles, CA 90049<br /><span style={{ color: B.blue }}>(310) 826-8260</span></p>
+            <p style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "rgba(255,255,255,0.5)", marginTop: 16 }}>11980 San Vicente Blvd, Suite 902<br />Los Angeles, CA 90049<br /><span style={{ color: B.blue }}>(310) 564-8990</span></p>
           </div>
           {[
             { heading: "Visit", links: ["Book appointment", "New patient special", "Our location", "Hours"] },

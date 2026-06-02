@@ -721,7 +721,7 @@ function BookCTA() {
           </div>
 
           <div style={{ marginTop: 36, fontFamily: "Georgia,serif", fontSize: 12, color: "rgba(255,255,255,0.2)", fontStyle: "italic" }}>
-            11980 San Vicente Blvd, Suite 902 · Brentwood, LA · (310) 826-8260
+            11980 San Vicente Blvd, Suite 902 · Brentwood, LA · (310) 564-8990
           </div>
         </div>
       </div>

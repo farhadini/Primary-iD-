@@ -1,896 +1,298 @@
-"use client";
+import Link from "next/link"
+import { SiteHeader, SiteFooter, PALETTE } from "@/components/site-shell"
+import { PhysicianSchema, BreadcrumbSchema } from "@/components/schema"
 
-import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
+const SERIF = "Georgia, 'Times New Roman', serif"
+const SANS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
 
-// ── Brand tokens ─────────────────────────────────────────────
-const B = {
-  navy: "#0E2240",
-  cream: "#FAF8F5",
-  warm: "#FEFCF9",
-  ink: "#1A1A2E",
-  inkSoft: "#4A4A5A",
-  muted: "#8A8A9A",
-  line: "rgba(14, 34, 64, 0.08)",
-  blue: "#24A7E0",
-  gold: "#D4B584",
-  green: "#48C28C",
-  purple: "#7B68EE",
-  orange: "#E8985E",
-  pink: "#E05BBF",
-  white: "#FFFFFF",
-};
-
-const SERIF = '"Fraunces", Georgia, serif';
-const SANS = '"Inter", system-ui, sans-serif';
-
-// ── Nav ───────────────────────────────────────────────────────
-function Nav({ scrolled }: { scrolled: boolean }) {
+function PortraitFrame() {
+  // Abstract portrait stand-in — a circular gradient with subtle geometry
+  // that reads as "person" without requiring an actual photograph.
   return (
-    <nav style={{
-      position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
-      background: scrolled ? "rgba(254, 252, 249, 0.92)" : "transparent",
-      backdropFilter: scrolled ? "blur(12px)" : "none",
-      WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
-      borderBottom: scrolled ? `1px solid ${B.line}` : "1px solid transparent",
-      transition: "all 0.3s ease",
-    }}>
-      <div style={{
-        maxWidth: 1280, margin: "0 auto",
-        padding: "18px 40px",
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-      }}>
-        <Link href="/" style={{ textDecoration: "none" }}>
-          <img src="/images/primary-brand-logo.png" alt="Primary" style={{ height: 36, width: "auto" }} />
-        </Link>
-        <div style={{ display: "flex", alignItems: "center", gap: 36 }}>
-          {[
-            { label: "Why Primary", href: "/why-primary" },
-            { label: "The Science", href: "/oral-systemic" },
-            { label: "About", href: "/about" },
-          ].map(link => (
-            <Link key={link.href} href={link.href} style={{
-              fontFamily: SANS, fontSize: 13, fontWeight: 500, letterSpacing: "0.01em",
-              color: B.navy, textDecoration: "none",
-              transition: "color 0.2s ease",
-            }}>
-              {link.label}
-            </Link>
-          ))}
-          <Link href="/get-started" style={{
-            fontFamily: SANS, fontSize: 13, fontWeight: 600,
-            color: B.warm, background: B.navy,
-            padding: "10px 20px", borderRadius: 999,
-            textDecoration: "none",
-            transition: "transform 0.2s ease, opacity 0.2s ease",
-          }}>
-            Get your Primary iD
-          </Link>
-        </div>
-      </div>
-    </nav>
-  );
+    <svg viewBox="0 0 240 240" style={{ width: "100%", maxWidth: 320 }}>
+      <defs>
+        <radialGradient id="pf-bg" cx="50%" cy="50%" r="55%">
+          <stop offset="0%" stopColor="#FEFCF9" />
+          <stop offset="100%" stopColor="#EFE8DD" />
+        </radialGradient>
+        <linearGradient id="pf-shadow" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="rgba(14,34,64,0.0)" />
+          <stop offset="100%" stopColor="rgba(14,34,64,0.18)" />
+        </linearGradient>
+      </defs>
+      <circle cx="120" cy="120" r="118" fill="url(#pf-bg)" stroke="#0E2240" strokeOpacity="0.08" strokeWidth="1" />
+      {/* Suggestion of shoulders/figure */}
+      <path d="M40 240 Q40 180 120 180 Q200 180 200 240 Z" fill="#0E2240" opacity="0.06" />
+      {/* Head/face */}
+      <circle cx="120" cy="110" r="46" fill="#FEFCF9" stroke="#0E2240" strokeOpacity="0.2" strokeWidth="1" />
+      {/* Soft hair gesture */}
+      <path d="M76 96 Q88 60 120 60 Q152 60 164 96" fill="#0E2240" opacity="0.7" />
+      {/* Soft shadow under chin */}
+      <ellipse cx="120" cy="158" rx="32" ry="8" fill="url(#pf-shadow)" />
+      {/* Caption label */}
+      <text x="120" y="222" textAnchor="middle" fontFamily="Georgia, serif" fontSize="11" fontStyle="italic" fill="#0E2240" opacity="0.6">
+        Dr. Tzur Gabi
+      </text>
+    </svg>
+  )
 }
 
-// ── Hero ───────────────────────────────────────────────────────
-function Hero() {
-  const [loaded, setLoaded] = useState(false);
-  useEffect(() => { setLoaded(true); }, []);
-
-  return (
-    <section style={{
-      padding: "180px 40px 120px",
-      maxWidth: 1100, margin: "0 auto",
-      borderBottom: `1px solid ${B.line}`,
-    }}>
-      <div style={{
-        fontFamily: SANS, fontSize: 11, fontWeight: 500,
-        letterSpacing: "0.32em", textTransform: "uppercase",
-        color: B.muted, marginBottom: 40,
-        opacity: loaded ? 1 : 0,
-        transform: loaded ? "translateY(0)" : "translateY(12px)",
-        transition: "all 0.7s ease-out 0.1s",
-      }}>
-        About · Our Why
-      </div>
-      <h1 style={{
-        fontFamily: SERIF, fontSize: "clamp(48px, 7vw, 104px)",
-        fontWeight: 300, lineHeight: 0.98, letterSpacing: "-0.03em",
-        color: B.navy, maxWidth: 980,
-        opacity: loaded ? 1 : 0,
-        transform: loaded ? "translateY(0)" : "translateY(16px)",
-        transition: "all 0.8s ease-out 0.22s",
-      }}>
-        We started Primary because<br />
-        <em style={{ fontStyle: "italic", color: B.inkSoft, fontWeight: 300 }}>
-          nobody was building the care we wanted.
-        </em>
-      </h1>
-      <p style={{
-        fontFamily: SANS, fontSize: 17, lineHeight: 1.55,
-        color: B.inkSoft, maxWidth: 560, marginTop: 48,
-        opacity: loaded ? 1 : 0,
-        transform: loaded ? "translateY(0)" : "translateY(12px)",
-        transition: "all 0.8s ease-out 0.4s",
-      }}>
-        This isn&apos;t a business plan. It&apos;s what happened when a dentist and a systems architect got tired of waiting for healthcare to integrate itself.
-      </p>
-    </section>
-  );
-}
-
-// ── Manifesto ───────────────────────────────────────────────────
-const TENETS = [
-  { num: "01", text: <>Every patient deserves to understand their own health before anyone sells them a treatment. Your <em>Primary iD</em> — five dimensions, one score — comes <strong>before</strong> the first visit, not after the first bill.</> },
-  { num: "02", text: <>Crooked teeth are an airway story. Bleeding gums are an inflammation story. Chronic bad breath is a microbiome story. We refuse to treat smoke without finding the fire.</> },
-  { num: "03", text: <>Technology should make care <em>more</em> human, not less. Every tool in our practice — AI diagnostics, genomic testing, computer vision radiology — exists to give the doctor and the patient more time to actually look at each other.</> },
-  { num: "04", text: <>Prevention is a better business than intervention — for the patient, for the clinician, and for the economy. We built a membership, not an insurance product, because the math of wellness doesn&apos;t fit inside a claim form.</> },
-  { num: "05", text: <>The future of primary care looks a lot like a dental chair. <strong>Not because dentists replace doctors</strong> — because the most-used appointment in your life should connect to the rest of your health instead of existing in a silo.</> },
-];
-
-function Manifesto() {
-  const [loaded, setLoaded] = useState(false);
-  useEffect(() => { setLoaded(true); }, []);
-
-  return (
-    <section style={{ padding: "140px 40px 120px", maxWidth: 1100, margin: "0 auto" }}>
-      <div style={{ maxWidth: 760 }}>
-        <div style={{
-          fontFamily: SANS, fontSize: 11, fontWeight: 500,
-          letterSpacing: "0.32em", textTransform: "uppercase",
-          color: B.muted, marginBottom: 32,
-          opacity: loaded ? 1 : 0,
-          transform: loaded ? "translateY(0)" : "translateY(12px)",
-          transition: "all 0.7s ease-out 0.1s",
-        }}>
-          The Manifesto
-        </div>
-
-        <p style={{
-          fontFamily: SERIF, fontSize: "clamp(28px, 3vw, 40px)",
-          fontWeight: 400, lineHeight: 1.22, letterSpacing: "-0.02em",
-          color: B.navy, marginBottom: 48,
-          opacity: loaded ? 1 : 0,
-          transform: loaded ? "translateY(0)" : "translateY(12px)",
-          transition: "all 0.8s ease-out 0.2s",
-        }}>
-          We believe your mouth is the most-visited, least-integrated part of your healthcare. And we think that&apos;s the largest quiet opportunity in medicine today.
-        </p>
-
-        <p style={{
-          fontFamily: SERIF, fontSize: "clamp(22px, 2.4vw, 30px)",
-          lineHeight: 1.35, fontWeight: 300, letterSpacing: "-0.01em",
-          color: B.navy, marginBottom: 36,
-          opacity: loaded ? 1 : 0,
-          transform: loaded ? "translateY(0)" : "translateY(12px)",
-          transition: "all 0.8s ease-out 0.3s",
-        }}>
-          Most Americans see a dentist three to four times a year. They see a primary care doctor, on average, less than once. That means the dental chair is already the most frequent touchpoint in the adult healthcare system — <em style={{ fontStyle: "italic", color: B.inkSoft }}>and almost no one is using it that way.</em>
-        </p>
-
-        <p style={{
-          fontFamily: SERIF, fontSize: "clamp(22px, 2.4vw, 30px)",
-          lineHeight: 1.35, fontWeight: 300, letterSpacing: "-0.01em",
-          color: B.navy, marginBottom: 36,
-          opacity: loaded ? 1 : 0,
-          transform: loaded ? "translateY(0)" : "translateY(12px)",
-          transition: "all 0.8s ease-out 0.35s",
-        }}>
-          Your dentist sees inflammation before your cardiologist does. Your dentist sees the earliest signs of sleep apnea before your pulmonologist does. Your dentist watches nutrition, stress, immunity, and aging write themselves onto your teeth and gums, visit after visit. And then says nothing, because the system pays them to fix one tooth at a time.
-        </p>
-
-        <div style={{ width: 60, height: 1, background: B.navy, margin: "60px 0", opacity: 0.4 }} />
-
-        <p style={{
-          fontFamily: SERIF, fontSize: "clamp(22px, 2.4vw, 30px)",
-          lineHeight: 1.35, fontWeight: 500, letterSpacing: "-0.01em",
-          color: B.navy, marginBottom: 36,
-        }}>
-          We think the mouth is a diagnostic instrument the healthcare system has been ignoring for a hundred years.
-        </p>
-
-        <p style={{
-          fontFamily: SERIF, fontSize: "clamp(22px, 2.4vw, 30px)",
-          lineHeight: 1.35, fontWeight: 300, letterSpacing: "-0.01em",
-          color: B.navy, marginBottom: 36,
-        }}>
-          Not because dentists are careless. Because the model they were trained into was built in 1900, when dentistry was literally extracted from medicine and turned into a separate trade. Everything downstream of that — the insurance split, the training split, the records split — has made it structurally impossible for the person who sees you most often to talk to the person who treats you when you&apos;re sick.
-        </p>
-
-        <p style={{
-          fontFamily: SERIF, fontSize: "clamp(22px, 2.4vw, 30px)",
-          lineHeight: 1.35, fontWeight: 300, letterSpacing: "-0.01em",
-          color: B.navy, marginBottom: 36,
-        }}>
-          Primary is built to close that gap.
-        </p>
-
-        <div style={{ width: 60, height: 1, background: B.navy, margin: "60px 0", opacity: 0.4 }} />
-
-        <p style={{
-          fontFamily: SERIF, fontSize: "clamp(28px, 3vw, 40px)",
-          fontWeight: 400, lineHeight: 1.22, letterSpacing: "-0.02em",
-          color: B.navy, marginBottom: 48,
-        }}>
-          We don&apos;t want to fix the existing maze. We want to build a new front door.
-        </p>
-
-        {TENETS.map((tenet, i) => (
-          <div key={tenet.num} style={{
-            display: "grid", gridTemplateColumns: "32px 1fr",
-            gap: 28, alignItems: "start", marginBottom: 36,
-          }}>
-            <div style={{
-              fontFamily: SANS, fontSize: 11, fontWeight: 500,
-              letterSpacing: "0.24em", color: B.muted, paddingTop: 10,
-            }}>
-              {tenet.num}
-            </div>
-            <p style={{
-              fontFamily: SERIF, fontSize: "clamp(20px, 2vw, 24px)",
-              lineHeight: 1.35, fontWeight: 300, color: B.navy, margin: 0,
-            }}>
-              {tenet.text}
-            </p>
-          </div>
-        ))}
-
-        <div style={{ width: 60, height: 1, background: B.navy, margin: "60px 0", opacity: 0.4 }} />
-
-        <p style={{
-          fontFamily: SERIF, fontSize: "clamp(22px, 2.4vw, 30px)",
-          lineHeight: 1.35, fontWeight: 300, letterSpacing: "-0.01em",
-          color: B.navy, marginBottom: 36,
-        }}>
-          Primary is a clinic, a platform, and a thesis. The clinic is where we prove it works on one patient at a time. The platform — Primary iD — is how we give that clarity to anyone, anywhere, before they walk in. The thesis is that dentistry, properly integrated, is the fastest path to the kind of healthcare we wish existed for ourselves.
-        </p>
-
-        <p style={{
-          fontFamily: SERIF, fontSize: "clamp(22px, 2.4vw, 30px)",
-          lineHeight: 1.35, fontWeight: 300, fontStyle: "italic",
-          color: B.navy,
-        }}>
-          So we&apos;re building it.
-        </p>
-      </div>
-    </section>
-  );
-}
-
-// ── Origin Story ───────────────────────────────────────────────
-function Origin() {
-  return (
-    <section style={{
-      padding: "120px 40px",
-      maxWidth: 1100, margin: "0 auto",
-      borderTop: `1px solid ${B.line}`,
-    }}>
-      <div style={{
-        display: "grid", gridTemplateColumns: "1fr 1.4fr", gap: 80, alignItems: "start",
-      }} className="origin-grid-responsive">
-        <div style={{ position: "sticky", top: 60 }} className="origin-label">
-          <div style={{
-            fontFamily: SANS, fontSize: 11, fontWeight: 500,
-            letterSpacing: "0.32em", textTransform: "uppercase",
-            color: B.muted, marginBottom: 16,
-          }}>
-            How it started
-          </div>
-          <h2 style={{
-            fontFamily: SERIF, fontWeight: 300,
-            fontSize: "clamp(32px, 3.2vw, 48px)",
-            lineHeight: 1.05, letterSpacing: "-0.02em", color: B.navy,
-          }}>
-            Two people,<br /><em style={{ fontStyle: "italic", color: B.inkSoft }}>one conviction.</em>
-          </h2>
-        </div>
-
-        <div style={{ fontFamily: SANS, fontSize: 17, lineHeight: 1.68, color: B.inkSoft }}>
-          <p style={{ marginBottom: 24 }}>
-            Primary began as a conversation between <strong style={{ color: B.navy, fontWeight: 500 }}>Dr. Tzur Gabi</strong>, a Brentwood-based integrative prosthodontist who had spent two decades watching patients fall through the cracks between specialties, and <strong style={{ color: B.navy, fontWeight: 500 }}>Farhad Attaie</strong>, a systems architect and serial entrepreneur who had been building inside the dental industry since 2007 — trying, again and again, to make it live up to its potential as the front door to whole-body health.
-          </p>
-          <p style={{ marginBottom: 24 }}>
-            Tzur had the chair, the patients, the clinical authority — and a growing frustration that the system he was trained in was making it illegal to practice the care he knew was possible. Farhad had already co-founded HelloSmile in NYC&apos;s underserved communities, built an innovation lab (Factory) serving Nike and Cisco, earned a TED Residency, and incubated half a dozen dental ventures at Nacci. Each attempt had taught him the same thing from a different angle: <em style={{ fontStyle: "italic" }}>the industry doesn&apos;t need one more tool bolted onto the old model — it needs a new model.</em>
-          </p>
-          <blockquote style={{
-            fontFamily: SERIF, fontSize: "clamp(22px, 2.2vw, 28px)",
-            fontWeight: 300, fontStyle: "italic", lineHeight: 1.3,
-            color: B.navy, margin: "40px 0", paddingLeft: 24,
-            borderLeft: `2px solid ${B.navy}`, letterSpacing: "-0.01em",
-          }}>
-            &ldquo;We realized nobody was going to build the practice we wanted to walk into as patients. So we stopped waiting.&rdquo;
-          </blockquote>
-          <p style={{ marginBottom: 24 }}>
-            The idea for Primary is simple and the execution is not. <strong style={{ color: B.navy, fontWeight: 500 }}>Use dentistry as the front door to integrated healthcare.</strong> Score the whole patient across oral health, sleep, nutrition, genetics, and longevity before they sit in the chair. Build the operating system — the <em style={{ fontStyle: "italic" }}>Primary iD</em> — that translates five dimensions of data into one number the patient can act on. Prove it in one LA clinic. Scale it through a network of practices that share the same thesis.
-          </p>
-          <p>
-            That&apos;s what we&apos;re doing now.
-          </p>
-        </div>
-      </div>
-
-      <style>{`
-        @media (max-width: 820px) {
-          .origin-grid-responsive { grid-template-columns: 1fr !important; gap: 40px !important; }
-          .origin-label { position: static !important; }
-        }
-      `}</style>
-    </section>
-  );
-}
-
-// ── Bios ───────────────────────────────────────────────────────
-const TZUR_CREDITS = [
-  { label: "Specialty", value: "Prosthodontics · Implants · Full-Arch Reconstruction" },
-  { label: "Also Founder Of", value: "Caligenix · Primary iD" },
-  { label: "Forthcoming Book", value: "Your Mouth Keeps the Score", italic: true },
-  { label: "Advisory", value: "Viome · Arini AI · OrthoFX · Show and Tell" },
-];
-
-const FARHAD_CREDITS = [
-  { label: "Role at Primary", value: "Chief Ecosystem Architect" },
-  { label: "Also Building", value: "Primary iD · FODO" },
-  { label: "Previously", value: "HelloSmile · Factory · Nacci · FlossBar" },
-  { label: "Recognition", value: "TED Resident · 20+ companies launched · $50M+ raised" },
-];
-
-function Bios() {
-  return (
-    <section style={{
-      padding: "120px 40px 40px",
-      maxWidth: 1100, margin: "0 auto",
-      borderTop: `1px solid ${B.line}`,
-    }}>
-      <div style={{
-        fontFamily: SANS, fontSize: 11, fontWeight: 500,
-        letterSpacing: "0.32em", textTransform: "uppercase",
-        color: B.muted, marginBottom: 16,
-      }}>
-        The Founders
-      </div>
-      <h2 style={{
-        fontFamily: SERIF, fontWeight: 300,
-        fontSize: "clamp(36px, 4vw, 56px)",
-        lineHeight: 1.05, letterSpacing: "-0.02em",
-        color: B.navy, marginBottom: 80, maxWidth: 780,
-      }}>
-        A clinician and a systems architect,<br />
-        <em style={{ fontStyle: "italic", color: B.inkSoft }}>both patients first.</em>
-      </h2>
-
-      {/* Dr. Tzur Gabi */}
-      <article style={{
-        display: "grid", gridTemplateColumns: "340px 1fr",
-        gap: 64, padding: "56px 0", borderTop: `1px solid ${B.line}`, alignItems: "start",
-      }} className="bio-card-responsive">
-        <div style={{
-          position: "relative", aspectRatio: "3 / 4", borderRadius: 16, overflow: "hidden",
-          background: `radial-gradient(ellipse 80% 60% at 50% 40%, rgba(72, 194, 140, 0.22) 0%, transparent 60%),
-            radial-gradient(ellipse 60% 70% at 70% 80%, rgba(36, 167, 224, 0.15) 0%, transparent 50%),
-            ${B.cream}`,
-          boxShadow: `0 20px 60px -30px rgba(14,34,64,0.2), 0 0 0 1px ${B.line}`,
-        }}>
-          <img
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-04-21%20at%208.13.05%E2%80%AFPM-rC1cjGW8lnbB7k20ooPCQ8l9uhKzjS.png"
-            alt="Dr. Tzur Gabi"
-            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
-          />
-        </div>
-        <div>
-          <div style={{
-            fontFamily: SANS, fontSize: 11, fontWeight: 500,
-            letterSpacing: "0.28em", textTransform: "uppercase",
-            color: B.muted, marginBottom: 12,
-          }}>
-            Founder · Prosthodontist · Oral Physician
-          </div>
-          <h3 style={{
-            fontFamily: SERIF, fontWeight: 400,
-            fontSize: "clamp(32px, 3.2vw, 44px)",
-            lineHeight: 1.05, letterSpacing: "-0.02em",
-            color: B.navy, marginBottom: 24,
-          }}>
-            Dr. Tzur Gabi<br />
-            <em style={{ fontStyle: "italic", fontWeight: 300, color: B.inkSoft }}>The Dental Architect</em>
-          </h3>
-          <div style={{ fontFamily: SANS, fontSize: 16, lineHeight: 1.7, color: B.inkSoft }}>
-            <p style={{ marginBottom: 20 }}>
-              Tzur immigrated to the United States from Israel when he was ten. He was accepted to dental school early and deferred it to spend a year backpacking across South America — an experience he still credits with teaching him that the best healthcare is both deeply personal and unafraid of what&apos;s coming next.
-            </p>
-            <p style={{ marginBottom: 20 }}>
-              He came back, finished his specialty in prosthodontics, and spent the next two decades building one of Los Angeles&apos; most trusted integrative practices in Brentwood — while also mentoring thousands of dentists worldwide on major reconstructive, implant, and full-arch dentistry. His clinical approach earned him the nickname <em>&ldquo;The Dental Architect&rdquo;</em> from his patients.
-            </p>
-            <p style={{ marginBottom: 20 }}>
-              He is the <strong style={{ color: B.navy, fontWeight: 500 }}>co-founder of Caligenix</strong>, a genomics company pioneering DNA-and-RNA-based personalization of dental and wellness care. He holds strategic advisory roles with Viome, Arini AI, OrthoFX, and Show and Tell — companies he partners with because they share the conviction that the mouth is an under-read diagnostic instrument.
-            </p>
-            <p style={{ marginBottom: 20 }}>
-              He is currently writing <em>Your Mouth Keeps the Score</em>, a book that argues — in the tradition of Bessel van der Kolk&apos;s work on trauma — that the body stores what the mind cannot, and that the mouth is where that record becomes visible first. It&apos;s the clearest articulation to date of the clinical thesis that Primary is built on.
-            </p>
-            <p>
-              Tzur started Primary for the reason most clinicians start something: he kept meeting patients he couldn&apos;t fully help inside the system he was trained in. So he decided to build a different system.
-            </p>
-          </div>
-          <div style={{
-            marginTop: 28, paddingTop: 28, borderTop: `1px solid ${B.line}`,
-            display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px 32px",
-          }} className="credit-grid-responsive">
-            {TZUR_CREDITS.map(c => (
-              <div key={c.label} style={{ fontFamily: SANS, fontSize: 13, lineHeight: 1.5, color: B.inkSoft }}>
-                <span style={{
-                  display: "block", fontSize: 10, fontWeight: 500,
-                  letterSpacing: "0.22em", textTransform: "uppercase",
-                  color: B.muted, marginBottom: 4,
-                }}>
-                  {c.label}
-                </span>
-                {c.italic ? <em>{c.value}</em> : c.value}
-              </div>
-            ))}
-          </div>
-          <div style={{ marginTop: 28, display: "flex", gap: 20, fontFamily: SANS, fontSize: 13 }}>
-            <a href="https://www.linkedin.com/in/drgabi" target="_blank" rel="noopener noreferrer" style={{
-              color: B.navy, textDecoration: "none", borderBottom: `1px solid ${B.navy}`, paddingBottom: 2,
-            }}>LinkedIn →</a>
-            <a href="#" style={{
-              color: B.navy, textDecoration: "none", borderBottom: `1px solid ${B.navy}`, paddingBottom: 2,
-            }}>Thought leadership →</a>
-          </div>
-        </div>
-      </article>
-
-      {/* Farhad Attaie */}
-      <article style={{
-        display: "grid", gridTemplateColumns: "340px 1fr",
-        gap: 64, padding: "56px 0", borderTop: `1px solid ${B.line}`, borderBottom: `1px solid ${B.line}`, alignItems: "start",
-      }} className="bio-card-responsive">
-        <div style={{
-          position: "relative", aspectRatio: "3 / 4", borderRadius: 16, overflow: "hidden",
-          background: `radial-gradient(ellipse 80% 60% at 50% 40%, rgba(123, 104, 238, 0.22) 0%, transparent 60%),
-            radial-gradient(ellipse 60% 70% at 30% 80%, rgba(232, 152, 94, 0.15) 0%, transparent 50%),
-            ${B.cream}`,
-          boxShadow: `0 20px 60px -30px rgba(14,34,64,0.2), 0 0 0 1px ${B.line}`,
-        }}>
-          <img
-            src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-04-21%20at%208.12.28%E2%80%AFPM-vlZXPruEtrNDPcwc3EH18Iw07rOcA2.png"
-            alt="Farhad Attaie"
-            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
-          />
-        </div>
-        <div>
-          <div style={{
-            fontFamily: SANS, fontSize: 11, fontWeight: 500,
-            letterSpacing: "0.28em", textTransform: "uppercase",
-            color: B.muted, marginBottom: 12,
-          }}>
-            Co-Founder · Chief Ecosystem Architect
-          </div>
-          <h3 style={{
-            fontFamily: SERIF, fontWeight: 400,
-            fontSize: "clamp(32px, 3.2vw, 44px)",
-            lineHeight: 1.05, letterSpacing: "-0.02em",
-            color: B.navy, marginBottom: 24,
-          }}>
-            Farhad Attaie<br />
-            <em style={{ fontStyle: "italic", fontWeight: 300, color: B.inkSoft }}>The Systems Architect</em>
-          </h3>
-          <div style={{ fontFamily: SANS, fontSize: 16, lineHeight: 1.7, color: B.inkSoft }}>
-            <p style={{ marginBottom: 20 }}>
-              Farhad has been working on the same problem for almost two decades: <strong style={{ color: B.navy, fontWeight: 500 }}>what would American healthcare look like if dentistry were the front door instead of the forgotten side street?</strong> Primary is the answer he&apos;s been building toward since 2007.
-            </p>
-            <p style={{ marginBottom: 20 }}>
-              He started his career at Merrill Lynch in Palo Alto during the 2004 boom, watching the financial system up close — and then watching it collapse in 2008. A conversation with Ben Cohen of Ben &amp; Jerry&apos;s in the aftermath rewired him permanently: profit was a tool, purpose was the product. He left finance, launched his first social enterprise at Stanford, and followed a family connection into pediatric dentistry in NYC&apos;s underserved communities — where he saw the technology gap that would define the next seventeen years of his work.
-            </p>
-            <p style={{ marginBottom: 20 }}>
-              In 2009 he co-founded <strong style={{ color: B.navy, fontWeight: 500 }}>HelloSmile</strong>, one of the earliest integrated dental-and-medical care models in New York. He built <strong style={{ color: B.navy, fontWeight: 500 }}>HelloLAB</strong> in partnership with RISD, NYU, Columbia, and Parsons, bringing human-centered design to oral health. He scaled a second iteration of HelloSmile that earned him a place in the <strong style={{ color: B.navy, fontWeight: 500 }}>TED Residency</strong>. He founded <strong style={{ color: B.navy, fontWeight: 500 }}>Factory</strong> in San Francisco, an innovation lab serving Nike, Cisco, and Levi&apos;s from a 10,000-square-foot mansion on Alamo Square. And he launched <strong style={{ color: B.navy, fontWeight: 500 }}>Nacci</strong> with Dionna McPhatter, where he led the &ldquo;Future of Dental&rdquo; division and incubated FlossBar with investment from Colgate and Heartland.
-            </p>
-            <p style={{ marginBottom: 20 }}>
-              Each of those chapters taught him a different piece of the same lesson: <em style={{ fontStyle: "italic" }}>you cannot transform healthcare by bolting better software onto a broken operating model.</em> The industry needed a new delivery layer — one integrated platform that brought clinical, genomic, behavioral, and operational data together under one roof. That conviction is what Primary is built on.
-            </p>
-            <p style={{ marginBottom: 20 }}>
-              When he met Dr. Tzur Gabi, he finally met the clinical partner who had been trying to solve the same problem from the inside of the chair. They started Primary together.
-            </p>
-            <p>
-              At Primary, Farhad leads the architecture across three connected layers: <strong style={{ color: B.navy, fontWeight: 500 }}>the clinic</strong> in Brentwood, where the model is proven one patient at a time; <strong style={{ color: B.navy, fontWeight: 500 }}>Primary iD</strong>, the platform that turns fragmented dental, genomic, and lifestyle data into a single patient-facing health score; and <strong style={{ color: B.navy, fontWeight: 500 }}>FODO</strong>, the AI-native scaling vehicle that extends the thesis to a national network of practices.
-            </p>
-          </div>
-          <div style={{
-            marginTop: 28, paddingTop: 28, borderTop: `1px solid ${B.line}`,
-            display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px 32px",
-          }} className="credit-grid-responsive">
-            {FARHAD_CREDITS.map(c => (
-              <div key={c.label} style={{ fontFamily: SANS, fontSize: 13, lineHeight: 1.5, color: B.inkSoft }}>
-                <span style={{
-                  display: "block", fontSize: 10, fontWeight: 500,
-                  letterSpacing: "0.22em", textTransform: "uppercase",
-                  color: B.muted, marginBottom: 4,
-                }}>
-                  {c.label}
-                </span>
-                {c.value}
-              </div>
-            ))}
-          </div>
-          <div style={{ marginTop: 28, display: "flex", gap: 20, fontFamily: SANS, fontSize: 13 }}>
-            <a href="#" style={{
-              color: B.navy, textDecoration: "none", borderBottom: `1px solid ${B.navy}`, paddingBottom: 2,
-            }}>LinkedIn →</a>
-            <a href="#" style={{
-              color: B.navy, textDecoration: "none", borderBottom: `1px solid ${B.navy}`, paddingBottom: 2,
-            }}>Personal site →</a>
-          </div>
-        </div>
-      </article>
-
-      <style>{`
-        @media (max-width: 820px) {
-          .bio-card-responsive { grid-template-columns: 1fr !important; gap: 32px !important; }
-          .bio-card-responsive > div:first-child { max-width: 320px; }
-          .credit-grid-responsive { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
-    </section>
-  );
-}
-
-// ── Golden Ratio Section ───────────────────────────────────────
-function GoldenRatio() {
-  const [inView, setInView] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    if (!sectionRef.current) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setInView(true); },
-      { threshold: 0.25 }
-    );
-    observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <section
-      ref={sectionRef}
-      style={{
-        padding: "160px 40px 140px",
-        maxWidth: 1100, margin: "0 auto",
-        borderTop: `1px solid ${B.line}`,
-        textAlign: "center",
-      }}
-    >
-      <div style={{
-        fontFamily: SANS, fontSize: 11, fontWeight: 500,
-        letterSpacing: "0.32em", textTransform: "uppercase",
-        color: B.muted, marginBottom: 32,
-      }}>
-        The Golden Ratio of Care
-      </div>
-      <h2 style={{
-        fontFamily: SERIF, fontWeight: 300,
-        fontSize: "clamp(40px, 5vw, 72px)",
-        lineHeight: 1.02, letterSpacing: "-0.025em",
-        color: B.navy, maxWidth: 880, margin: "0 auto",
-      }}>
-        Higher quality. More access. <em style={{ fontStyle: "italic", color: B.inkSoft }}>Lower cost.</em>
-      </h2>
-      <p style={{
-        fontFamily: SANS, fontSize: 17, lineHeight: 1.62, color: B.inkSoft,
-        maxWidth: 620, margin: "32px auto 0",
-      }}>
-        For fifty years, American healthcare has accepted a trade-off: you can raise quality, expand access, or lower cost — but never all three at once. Primary is built on the belief that this trade-off is a feature of the old operating model, not a law of nature.
-      </p>
-
-      {/* Triangle SVG Animation */}
-      <div style={{
-        position: "relative", margin: "96px auto 0",
-        width: "100%", maxWidth: 720, aspectRatio: "1 / 1",
-      }}>
-        <svg viewBox="0 0 720 720" style={{ width: "100%", height: "100%", overflow: "visible" }}>
-          {/* Triangle */}
-          <polygon
-            points="140,90 80,600 600,340"
-            fill="rgba(14,34,64,0.025)"
-            stroke={B.navy}
-            strokeWidth="1.5"
-            style={{
-              strokeDasharray: 1600,
-              strokeDashoffset: inView ? 0 : 1600,
-              transition: "stroke-dashoffset 2.2s cubic-bezier(.55,.1,.25,1) 0.3s",
-            }}
-          />
-
-          {/* Fibonacci squares */}
-          {[
-            { x: 80, y: 340, w: 260, h: 260 },
-            { x: 340, y: 340, w: 160, h: 160 },
-            { x: 340, y: 500, w: 100, h: 100 },
-            { x: 440, y: 500, w: 62, h: 62 },
-          ].map((sq, i) => (
-            <rect
-              key={i}
-              x={sq.x} y={sq.y} width={sq.w} height={sq.h}
-              fill="none" stroke={B.navy} strokeWidth="0.5"
-              style={{
-                opacity: inView ? 0.14 : 0,
-                transition: "opacity 0.8s ease 2.4s",
-              }}
-            />
-          ))}
-
-          {/* Golden spiral */}
-          <path
-            d="M 80 600 A 260 260 0 0 1 340 340 A 160 160 0 0 1 500 500 A 100 100 0 0 1 400 600 A 62 62 0 0 1 338 538 A 38 38 0 0 1 376 500"
-            fill="none" stroke={B.green} strokeWidth="2"
-            style={{
-              opacity: 0.7,
-              strokeDasharray: 800,
-              strokeDashoffset: inView ? 0 : 800,
-              transition: "stroke-dashoffset 3s cubic-bezier(.55,.1,.25,1) 1.8s",
-            }}
-          />
-
-          {/* Quality label */}
-          <g style={{
-            opacity: inView ? 1 : 0,
-            transform: inView ? "translateY(0)" : "translateY(8px)",
-            transition: "all 0.9s cubic-bezier(.2,.8,.2,1) 2.8s",
-          }}>
-            <text x="140" y="58" textAnchor="middle" style={{
-              fontFamily: SANS, fontSize: 12, fontWeight: 500,
-              letterSpacing: "0.22em", textTransform: "uppercase", fill: B.navy,
-            }}>QUALITY</text>
-            <text x="215" y="55" textAnchor="start" style={{
-              fontFamily: SANS, fontSize: 20, fontWeight: 400, fill: B.green,
-            }}>↑</text>
-            <text x="140" y="80" textAnchor="middle" style={{
-              fontFamily: SERIF, fontSize: 15, fontStyle: "italic", fill: B.inkSoft,
-            }}>more time, deeper care</text>
-          </g>
-
-          {/* Access label */}
-          <g style={{
-            opacity: inView ? 1 : 0,
-            transform: inView ? "translateY(0)" : "translateY(8px)",
-            transition: "all 0.9s cubic-bezier(.2,.8,.2,1) 3.2s",
-          }}>
-            <text x="80" y="635" textAnchor="middle" style={{
-              fontFamily: SANS, fontSize: 12, fontWeight: 500,
-              letterSpacing: "0.22em", textTransform: "uppercase", fill: B.navy,
-            }}>ACCESS</text>
-            <text x="146" y="632" textAnchor="start" style={{
-              fontFamily: SANS, fontSize: 20, fontWeight: 400, fill: B.blue,
-            }}>↑</text>
-            <text x="80" y="657" textAnchor="middle" style={{
-              fontFamily: SERIF, fontSize: 15, fontStyle: "italic", fill: B.inkSoft,
-            }}>six minutes, from anywhere</text>
-          </g>
-
-          {/* Cost label */}
-          <g style={{
-            opacity: inView ? 1 : 0,
-            transform: inView ? "translateY(0)" : "translateY(8px)",
-            transition: "all 0.9s cubic-bezier(.2,.8,.2,1) 3.6s",
-          }}>
-            <text x="615" y="330" textAnchor="start" style={{
-              fontFamily: SANS, fontSize: 12, fontWeight: 500,
-              letterSpacing: "0.22em", textTransform: "uppercase", fill: B.navy,
-            }}>COST</text>
-            <text x="668" y="333" textAnchor="start" style={{
-              fontFamily: SANS, fontSize: 20, fontWeight: 400, fill: B.orange,
-            }}>↓</text>
-            <text x="615" y="354" textAnchor="start" style={{
-              fontFamily: SERIF, fontSize: 15, fontStyle: "italic", fill: B.inkSoft,
-            }}>prevention, not maze</text>
-          </g>
-        </svg>
-
-        {/* Phi reveal */}
-        <div style={{
-          position: "absolute", bottom: -56, left: "50%", transform: "translateX(-50%)",
-          fontFamily: SERIF, fontSize: 13, color: B.muted,
-          letterSpacing: "0.12em", textAlign: "center", whiteSpace: "nowrap",
-          opacity: inView ? 1 : 0,
-          transition: "opacity 1s ease 4.4s",
-        }}>
-          φ · <span style={{ fontStyle: "italic", color: B.navy, fontSize: 16 }}>1.618</span> · the ratio nature uses to grow without waste
-        </div>
-      </div>
-
-      {/* Three lever cards */}
-      <div style={{
-        marginTop: 120,
-        display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 24,
-        textAlign: "left",
-      }} className="lever-grid-responsive">
-        {[
-          { num: "01 / QUALITY", title: "Goes up", arrow: "↑", color: B.green, text: <>By scoring the whole patient <strong style={{ color: B.navy, fontWeight: 500 }}>before</strong> the first visit, our clinicians spend their chair time treating the person in front of them — not entering data, not selling procedures, not chasing reimbursement codes. The first ninety minutes are yours.</> },
-          { num: "02 / ACCESS", title: "Goes up", arrow: "↑", color: B.blue, text: <>The Primary iD is a <strong style={{ color: B.navy, fontWeight: 500 }}>six-minute online assessment</strong> anyone, anywhere can take before they ever step into a clinic. Your health picture arrives before your chair time, and virtual second opinions let people start without leaving their couch.</> },
-          { num: "03 / COST", title: "Goes down", arrow: "↓", color: B.orange, text: <>Prevention is an order of magnitude cheaper than intervention. Our membership model removes the insurance maze, aligns incentives with your long-term health, and lets us catch problems <strong style={{ color: B.navy, fontWeight: 500 }}>years before they become procedures</strong>.</> },
-        ].map(lever => (
-          <div key={lever.num} style={{
-            padding: "36px 28px", borderRadius: 16,
-            background: B.cream, border: `1px solid ${B.line}`,
-            position: "relative", overflow: "hidden",
-          }}>
-            <div style={{
-              position: "absolute", top: 0, left: 0, width: 48, height: 2, background: lever.color,
-            }} />
-            <div style={{
-              fontFamily: SANS, fontSize: 10, fontWeight: 500,
-              color: B.muted, letterSpacing: "0.28em", marginBottom: 12,
-            }}>
-              {lever.num}
-            </div>
-            <h3 style={{
-              fontFamily: SERIF, fontWeight: 400, fontSize: 26,
-              color: B.navy, letterSpacing: "-0.01em", lineHeight: 1.1, marginBottom: 0,
-            }}>
-              {lever.title} <span style={{ fontSize: 20, color: lever.color, marginLeft: 4 }}>{lever.arrow}</span>
-            </h3>
-            <p style={{
-              fontFamily: SANS, fontSize: 14, lineHeight: 1.62, color: B.inkSoft, marginTop: 14,
-            }}>
-              {lever.text}
-            </p>
-          </div>
-        ))}
-      </div>
-
-      <div style={{ marginTop: 96, padding: "0 20px" }}>
-        <p style={{
-          fontFamily: SERIF, fontSize: "clamp(22px, 2.6vw, 32px)",
-          lineHeight: 1.28, fontWeight: 300, color: B.navy,
-          maxWidth: 780, margin: "0 auto", letterSpacing: "-0.01em",
-        }}>
-          The old model assumed the three had to fight. <em style={{ fontStyle: "italic", color: B.inkSoft }}>We built one where they compound.</em>
-        </p>
-      </div>
-
-      <style>{`
-        @media (max-width: 820px) {
-          .lever-grid-responsive { grid-template-columns: 1fr !important; gap: 16px !important; margin-top: 80px !important; }
-        }
-      `}</style>
-    </section>
-  );
-}
-
-// ── CTA ───────────────────────────────────────────────────────
-function CTA() {
-  return (
-    <section style={{
-      padding: "140px 40px 40px",
-      maxWidth: 1100, margin: "0 auto",
-      borderTop: `1px solid ${B.line}`,
-      textAlign: "center",
-    }}>
-      <h2 style={{
-        fontFamily: SERIF, fontWeight: 300,
-        fontSize: "clamp(40px, 5vw, 72px)",
-        lineHeight: 1, letterSpacing: "-0.03em",
-        color: B.navy, marginBottom: 16,
-      }}>
-        Ready to see what your<br />
-        <em style={{ fontStyle: "italic", color: B.inkSoft }}>mouth has been saying?</em>
-      </h2>
-      <p style={{
-        fontFamily: SANS, fontSize: 16, color: B.inkSoft,
-        maxWidth: 460, margin: "0 auto 40px", lineHeight: 1.6,
-      }}>
-        Five dimensions. One score. Six minutes. Before the chair, before the bill, before anything else.
-      </p>
-      <Link href="/get-started" style={{
-        display: "inline-flex", alignItems: "center", gap: 10,
-        background: B.navy, color: B.warm,
-        padding: "16px 32px", borderRadius: 100,
-        textDecoration: "none",
-        fontFamily: SANS, fontSize: 13, fontWeight: 500, letterSpacing: "0.06em",
-        transition: "transform 200ms ease",
-      }}>
-        Get your Primary iD →
-      </Link>
-    </section>
-  );
-}
-
-// ── Footer ───────────────────────────────────────────────────
-const FOOTER_COLS = [
-  { heading: "Primary", links: [
-    { label: "Why Primary", href: "/why-primary" },
-    { label: "Membership", href: "/membership" },
-    { label: "Locations", href: "/locations" },
-    { label: "Book a visit", href: "/book" },
-  ]},
-  { heading: "Learn", links: [
-    { label: "Our approach", href: "/oral-systemic" },
-    { label: "Research library", href: "/research" },
-    { label: "About us", href: "/about" },
-    { label: "Health assessment", href: "/diagnostics" },
-  ]},
-  { heading: "Connect", links: [
-    { label: "Contact", href: "/contact" },
-    { label: "Careers", href: "/careers" },
-    { label: "Press", href: "/press" },
-    { label: "For practitioners", href: "/practitioners" },
-  ]},
-];
-
-function Footer() {
-  return (
-    <footer style={{ background: B.navy, color: B.warm, padding: "80px 40px 48px" }}>
-      <div style={{
-        maxWidth: 1280, margin: "0 auto",
-        display: "grid", gridTemplateColumns: "1.5fr repeat(3, 1fr)", gap: 64,
-      }}>
-        <div>
-          <img src="/images/primary-brand-logo-light.png" alt="Primary" style={{ height: 32, marginBottom: 20 }} />
-          <p style={{
-            fontFamily: SERIF, fontSize: 15, lineHeight: 1.55,
-            color: "rgba(254, 252, 249, 0.7)", maxWidth: 260,
-          }}>
-            Whole-body dentistry. One score. A new front door to healthcare.
-          </p>
-        </div>
-        {FOOTER_COLS.map(col => (
-          <div key={col.heading}>
-            <h4 style={{
-              fontFamily: SANS, fontSize: 11, fontWeight: 600,
-              letterSpacing: "0.14em", textTransform: "uppercase",
-              color: "rgba(254, 252, 249, 0.5)", marginBottom: 20,
-            }}>
-              {col.heading}
-            </h4>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-              {col.links.map(link => (
-                <li key={link.href} style={{ marginBottom: 14 }}>
-                  <Link href={link.href} style={{
-                    fontFamily: SANS, fontSize: 14, color: B.warm,
-                    textDecoration: "none", transition: "color 0.2s ease",
-                  }}>
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-      <div style={{
-        maxWidth: 1280, margin: "64px auto 0",
-        paddingTop: 32, borderTop: "1px solid rgba(254, 252, 249, 0.1)",
-        display: "flex", justifyContent: "space-between", alignItems: "center",
-        fontFamily: SANS, fontSize: 12, color: "rgba(254, 252, 249, 0.4)",
-      }}>
-        <span>© 2025 Primary Health Inc. All rights reserved.</span>
-        <div style={{ display: "flex", gap: 24 }}>
-          <Link href="/privacy" style={{ color: "inherit", textDecoration: "none" }}>Privacy</Link>
-          <Link href="/terms" style={{ color: "inherit", textDecoration: "none" }}>Terms</Link>
-          <Link href="/hipaa" style={{ color: "inherit", textDecoration: "none" }}>HIPAA</Link>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
-// ── Page ───────────────────────────────────────────────────────
 export default function AboutPage() {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
-    <main style={{ background: B.warm, minHeight: "100vh" }}>
-      <Nav scrolled={scrolled} />
-      <Hero />
-      <Manifesto />
-      <Origin />
-      <Bios />
-      <GoldenRatio />
-      <CTA />
-      <Footer />
-    </main>
-  );
+    <>
+      <SiteHeader />
+      <PhysicianSchema />
+      <BreadcrumbSchema items={[
+        { name: "Home", url: "https://myprimaryid.com/" },
+        { name: "About Dr. Tzur Gabi", url: "https://myprimaryid.com/about/" },
+      ]} />
+
+      {/* HERO */}
+      <section style={{ background: PALETTE.cream, padding: "120px 28px 96px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div className="about-hero" style={{ display: "grid", gridTemplateColumns: "1fr 360px", gap: 64, alignItems: "center" }}>
+            <div>
+              <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.18em", textTransform: "uppercase", fontWeight: 700, marginBottom: 28 }}>
+                Founder · Primary Integrative Dentistry
+              </div>
+              <h1 style={{ fontFamily: SERIF, fontSize: "clamp(46px, 7vw, 76px)", fontWeight: 400, lineHeight: 1.03, letterSpacing: "-0.015em", margin: "0 0 22px" }}>
+                Dr. Tzur Gabi.
+              </h1>
+              <p style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 24, color: PALETTE.body, margin: "0 0 28px", lineHeight: 1.45, maxWidth: 580 }}>
+                Functional prosthodontist. Twenty-five years of putting the mouth back in the body.
+              </p>
+              <p style={{ fontSize: 17, lineHeight: 1.65, color: PALETTE.body, margin: "0 0 28px", maxWidth: 600, fontFamily: SANS }}>
+                Trained as a prosthodontist — the dental specialty for reconstructive, restorative, cosmetic, and implant work. Background in genetics and artificial intelligence. Mentor to thousands of dentists worldwide on how to handle the cases other practices refer away. Known in the field as <em>The Dental Architect</em>.
+              </p>
+              <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+                <Link href="/book/preventive/" style={{ background: PALETTE.navy, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15 }}>
+                  Book a visit with Dr. Gabi →
+                </Link>
+                <Link href="/diagnostics/" style={{ background: "transparent", color: PALETTE.navy, padding: "13px 26px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15, border: `1.5px solid ${PALETTE.navy}` }}>
+                  Start with the assessment
+                </Link>
+              </div>
+            </div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <PortraitFrame />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CREDENTIAL STRIP */}
+      <section style={{ background: PALETTE.navy, color: "#FEFCF9", padding: "44px 28px" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div className="cred-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 32, alignItems: "center" }}>
+            {[
+              { num: "25+", label: "Years of practice" },
+              { num: "4.9", label: "Average rating across 373+ reviews" },
+              { num: "1,000s", label: "Dentists mentored worldwide" },
+              { num: "First", label: "DNA dentist in the US" },
+            ].map((c, i) => (
+              <div key={i} style={{ borderLeft: i > 0 ? "1px solid rgba(254,252,249,0.18)" : "none", paddingLeft: i > 0 ? 24 : 0 }}>
+                <div style={{ fontFamily: SERIF, fontSize: 36, fontWeight: 400, color: PALETTE.blue, marginBottom: 4 }}>
+                  {c.num}
+                </div>
+                <div style={{ fontFamily: SANS, fontSize: 12, color: "rgba(254,252,249,0.75)", lineHeight: 1.4 }}>
+                  {c.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* THE STORY */}
+      <section style={{ background: PALETTE.warmWhite, padding: "96px 28px" }}>
+        <div style={{ maxWidth: 760, margin: "0 auto" }}>
+          <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>
+            The story
+          </div>
+          <h2 style={{ fontFamily: SERIF, fontSize: "clamp(32px, 4.5vw, 46px)", fontWeight: 400, color: PALETTE.navy, lineHeight: 1.12, letterSpacing: "-0.02em", margin: "0 0 32px" }}>
+            Why we don&apos;t treat <em style={{ color: PALETTE.blue }}>mouths in isolation</em>.
+          </h2>
+
+          <div style={{ fontSize: 17, lineHeight: 1.75, color: PALETTE.body, fontFamily: SANS }}>
+            <p style={{ margin: "0 0 22px" }}>
+              For most of dental history, the field has been organized around the tooth. One tooth at a time. One filling at a time. One crown at a time. The assumption was that the mouth was a closed system — sealed off from sleep, from heart, from gut, from the rest of you.
+            </p>
+            <p style={{ margin: "0 0 22px" }}>
+              That assumption is wrong. The mouth turns out to be one of the most diagnostically rich places in the entire body. Sleep-disordered breathing announces itself in your jaw posture before any sleep study catches it. Cardiovascular inflammation shows up in your gums before it shows up in your bloodwork. Family periodontal history predicts heart-attack risk almost as well as it predicts tooth loss. The mouth is the front door to systemic health.
+            </p>
+            <p style={{ margin: "0 0 22px" }}>
+              The field, slowly, has come to know this. My practice was built on getting there a little earlier than most.
+            </p>
+
+            <h3 style={{ fontFamily: SERIF, fontSize: 26, fontWeight: 500, color: PALETTE.navy, margin: "48px 0 16px", lineHeight: 1.25 }}>
+              The training
+            </h3>
+            <p style={{ margin: "0 0 22px" }}>
+              I trained as a prosthodontist — the dental specialty that exists for the hardest restorative work. Full-arch reconstructions. Complex implant cases. Cosmetic transformations that have to last decades. The cases that other practices refer out, prosthodontists are trained to handle.
+            </p>
+            <p style={{ margin: "0 0 22px" }}>
+              My background before dentistry was in genetics and artificial intelligence. I spent years thinking about how biology encodes outcomes — and how technology can read that encoding faster than a human clinician can. When I came to dentistry, I didn&apos;t leave that framework behind. It became the lens.
+            </p>
+
+            <h3 style={{ fontFamily: SERIF, fontSize: 26, fontWeight: 500, color: PALETTE.navy, margin: "48px 0 16px", lineHeight: 1.25 }}>
+              The Dental Architect
+            </h3>
+            <p style={{ margin: "0 0 22px" }}>
+              Patients gave me the nickname. The idea is that you don&apos;t restore a mouth the way you fix a car part — you design it the way you&apos;d design a structure: thinking about load distribution, material biology, how the airway interacts with the bite, how the bite interacts with sleep, how sleep interacts with the inflammation that eventually kills the implant if you ignore it. Each tooth is a load-bearing member of a system that has to last.
+            </p>
+            <p style={{ margin: "0 0 22px" }}>
+              That&apos;s the approach behind everything we do at Primary. It&apos;s why our first visits are 90 minutes instead of 20. It&apos;s why we image in 3D instead of 2D. It&apos;s why we ask about your sleep and your nutrition and your family medical history before we even pick up an instrument.
+            </p>
+
+            <h3 style={{ fontFamily: SERIF, fontSize: 26, fontWeight: 500, color: PALETTE.navy, margin: "48px 0 16px", lineHeight: 1.25 }}>
+              The teaching
+            </h3>
+            <p style={{ margin: "0 0 22px" }}>
+              In parallel with the practice, I&apos;ve spent the last fifteen-plus years teaching this approach to other dentists — thousands of them, across the U.S. and internationally. The lectures, the mentorship, the case reviews — they exist because the gap between what dentistry has historically been and what it could be is wide enough to spend a career closing.
+            </p>
+            <p style={{ margin: "0 0 22px" }}>
+              I co-founded Caligenix to extend the work past dentistry — into the broader space where genetics, microbiome, and clinical wellness intersect. The thesis is the same as Primary&apos;s: the body has been over-divided into specialties, and the highest-leverage work happens where those specialties meet.
+            </p>
+
+            <h3 style={{ fontFamily: SERIF, fontSize: 26, fontWeight: 500, color: PALETTE.navy, margin: "48px 0 16px", lineHeight: 1.25 }}>
+              The practice
+            </h3>
+            <p style={{ margin: "0 0 22px" }}>
+              Primary Integrative Dentistry is what I&apos;ve been building toward. Brentwood, Los Angeles. The whole-body framework in one practice. A first-visit experience that treats you like a person who lives in a body, not a mouth that needs servicing. The Primary iD — a structured way to see your five interconnected health dimensions on one page — so we can plan the work around the picture instead of around the procedure.
+            </p>
+            <p style={{ margin: "0 0 22px" }}>
+              If you&apos;ve been managing something for a while — a tooth you&apos;ve been eating around, a smile you&apos;ve been hiding, a quote that didn&apos;t sit right — come in. Most of what people are afraid of about dentistry is gone before the second visit.
+            </p>
+
+            <p style={{ margin: "32px 0 0", fontFamily: SERIF, fontStyle: "italic", fontSize: 19, color: PALETTE.navy }}>
+              — Dr. Tzur Gabi
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* CREDENTIALS / SPECIALTIES */}
+      <section style={{ background: PALETTE.cream, padding: "96px 28px", borderTop: `1px solid ${PALETTE.border}` }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ maxWidth: 720, marginBottom: 56 }}>
+            <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>
+              Areas of focus
+            </div>
+            <h2 style={{ fontFamily: SERIF, fontSize: "clamp(32px, 4.5vw, 46px)", fontWeight: 400, color: PALETTE.navy, lineHeight: 1.12, letterSpacing: "-0.02em", margin: "0 0 18px" }}>
+              What I do <em style={{ color: PALETTE.blue }}>most</em>.
+            </h2>
+          </div>
+          <div className="focus-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 24 }}>
+            {[
+              { title: "Full-arch reconstruction", body: "All-on-4, All-on-6, zygomatic implants. Twenty-five years of cases other practices refer out." },
+              { title: "Complex implant cases", body: "Patients with diabetes, bisphosphonate history, autoimmune conditions, prior failed implants. The cases that need a prosthodontist." },
+              { title: "Second opinions", body: "Honest review of treatment plans from other practices. Sometimes the answer is &apos;they got it right.&apos;" },
+              { title: "Integrative diagnostics", body: "3D CBCT, salivary microbiome, airway analysis, sleep screening. The picture other practices don&apos;t see." },
+              { title: "Aesthetic & cosmetic", body: "Veneers, smile design, biocompatible materials. Aesthetics built on bite mechanics and biology." },
+              { title: "Functional prosthodontics", body: "Reconstructive work, full-mouth rehabilitation, bite reconstruction. Where the doctorate-level specialty pays off." },
+            ].map((f, i) => (
+              <div key={i} style={{ background: PALETTE.warmWhite, border: `1px solid ${PALETTE.border}`, borderRadius: 14, padding: "24px 26px" }}>
+                <h3 style={{ fontFamily: SERIF, fontSize: 18, fontWeight: 500, color: PALETTE.navy, margin: "0 0 10px", lineHeight: 1.25 }}>
+                  {f.title}
+                </h3>
+                <p style={{ fontFamily: SANS, fontSize: 14, color: PALETTE.body, lineHeight: 1.6, margin: 0 }} dangerouslySetInnerHTML={{ __html: f.body }} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* RECOGNITION & TEACHING */}
+      <section style={{ background: PALETTE.warmWhite, padding: "96px 28px", borderTop: `1px solid ${PALETTE.border}` }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div className="recog-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "start" }}>
+            <div>
+              <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>
+                Recognition
+              </div>
+              <h2 style={{ fontFamily: SERIF, fontSize: "clamp(28px, 4vw, 38px)", fontWeight: 400, color: PALETTE.navy, lineHeight: 1.15, letterSpacing: "-0.02em", margin: "0 0 22px" }}>
+                In the field.
+              </h2>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 12 }}>
+                {[
+                  "First DNA dentist in the United States — pioneering genetic-informed dental care",
+                  "Mentor to thousands of dentists worldwide on advanced restorative and reconstructive work",
+                  "Co-founder, Caligenix — genetics-informed wellness platform",
+                  "Active speaker on integrative dentistry and the oral-systemic connection",
+                ].map((r, i) => (
+                  <li key={i} style={{
+                    fontSize: 15.5, lineHeight: 1.6, color: PALETTE.body, fontFamily: SANS,
+                    display: "grid", gridTemplateColumns: "16px 1fr", gap: 12, alignItems: "start",
+                  }}>
+                    <span style={{ width: 6, height: 6, borderRadius: 999, background: PALETTE.blue, display: "inline-block", marginTop: 9 }} />
+                    {r}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>
+                Where to read more
+              </div>
+              <h2 style={{ fontFamily: SERIF, fontSize: "clamp(28px, 4vw, 38px)", fontWeight: 400, color: PALETTE.navy, lineHeight: 1.15, letterSpacing: "-0.02em", margin: "0 0 22px" }}>
+                The writing.
+              </h2>
+              <p style={{ fontSize: 15.5, color: PALETTE.body, lineHeight: 1.65, margin: "0 0 18px", fontFamily: SANS }}>
+                Dr. Gabi&apos;s perspective on the oral-systemic connection, integrative dentistry frameworks, and patient-centered care lives in the Primary Journal — accessible directly from this site.
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                <Link href="/blogs/" style={{ fontFamily: SANS, fontSize: 14, color: PALETTE.navy, textDecoration: "underline", textDecorationColor: "rgba(14,34,64,0.3)", textUnderlineOffset: 4, fontWeight: 500 }}>
+                  Primary Journal — articles and essays →
+                </Link>
+                <a href="https://www.linkedin.com/in/drgabi" target="_blank" rel="noopener" style={{ fontFamily: SANS, fontSize: 14, color: PALETTE.navy, textDecoration: "underline", textDecorationColor: "rgba(14,34,64,0.3)", textUnderlineOffset: 4, fontWeight: 500 }}>
+                  LinkedIn — @drgabi →
+                </a>
+                <Link href="/five-dimensions/" style={{ fontFamily: SANS, fontSize: 14, color: PALETTE.navy, textDecoration: "underline", textDecorationColor: "rgba(14,34,64,0.3)", textUnderlineOffset: 4, fontWeight: 500 }}>
+                  The Five Dimensions framework →
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* BOOKEND */}
+      <section style={{ background: PALETTE.cream, padding: "120px 28px", borderTop: `1px solid ${PALETTE.border}` }}>
+        <div style={{ maxWidth: 760, margin: "0 auto", textAlign: "center" }}>
+          <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>
+            Two ways to start
+          </div>
+          <h2 style={{ fontFamily: SERIF, fontSize: "clamp(34px, 5vw, 52px)", fontWeight: 400, color: PALETTE.navy, lineHeight: 1.1, letterSpacing: "-0.02em", margin: "0 0 28px" }}>
+            See if Primary is <em style={{ color: PALETTE.blue }}>right for you</em>.
+          </h2>
+          <p style={{ fontSize: 17, lineHeight: 1.6, color: PALETTE.body, margin: "0 0 36px" }}>
+            Take the 6-minute online assessment for a directional read on your situation. Or schedule a 90-minute first visit and have a treatment roadmap the same day. Both are how patients usually start with me.
+          </p>
+          <div style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "center", marginBottom: 28 }}>
+            <Link href="/diagnostics/" style={{ background: PALETTE.navy, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15 }}>
+              Take the assessment
+            </Link>
+            <Link href="/book/preventive/" style={{ background: "transparent", color: PALETTE.navy, padding: "13px 26px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15, border: `1.5px solid ${PALETTE.navy}` }}>
+              Schedule a first visit
+            </Link>
+          </div>
+          <p style={{ fontFamily: SANS, fontSize: 13.5, color: PALETTE.muted, margin: 0 }}>
+            Or call (310) 564-8990 — we&apos;re here Mon–Thu 8a–6p, Fri 8a–5p.
+          </p>
+        </div>
+      </section>
+
+      <style>{`
+        @media (max-width: 880px) {
+          .about-hero { grid-template-columns: 1fr !important; gap: 36px !important; }
+          .cred-grid { grid-template-columns: 1fr 1fr !important; gap: 24px !important; }
+          .cred-grid > div:nth-child(3) { border-left: none !important; padding-left: 0 !important; }
+          .focus-grid { grid-template-columns: 1fr !important; }
+          .recog-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+        }
+      `}</style>
+
+      <SiteFooter />
+    </>
+  )
 }

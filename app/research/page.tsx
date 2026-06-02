@@ -539,7 +539,7 @@ function Footer() {
               <br />
               Los Angeles, CA 90049
               <br />
-              <span style={{ color: B.blue }}>(310) 826-8260</span>
+              <span style={{ color: B.blue }}>(310) 564-8990</span>
             </p>
           </div>
 

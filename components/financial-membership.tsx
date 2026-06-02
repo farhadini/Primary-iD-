@@ -464,6 +464,159 @@ export default function FinancialMembership() {
           </article>
         </div>
 
+        {/* Pricing tiers — added per audit Fix #18: visible price anchor */}
+        <div
+          className="fin-pricing"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: 18,
+            marginBottom: 28,
+          }}
+        >
+          {[
+            {
+              tier: "Primary iD Core",
+              price: "$49",
+              cadence: "/ month",
+              annual: "or $499 / year",
+              tagline: "Comprehensive preventive + your full Primary iD score updated every visit.",
+              includes: [
+                "2 cleanings & exams a year",
+                "Annual 3D CBCT + salivary diagnostics",
+                "STOP-BANG airway screening",
+                "Member pricing on restorative & cosmetic work (20% off)",
+              ],
+            },
+            {
+              tier: "Primary iD Plus",
+              price: "$129",
+              cadence: "/ month",
+              annual: "or $1,290 / year",
+              tagline: "Core, plus longevity coaching, biomarker labs, and priority scheduling.",
+              includes: [
+                "Everything in Core",
+                "Quarterly MEDAS nutrition + LE8 coaching",
+                "Biomarker lab panel (hormone, metabolic, inflammatory)",
+                "Member pricing on full-arch cases (25% off)",
+              ],
+              highlight: true,
+            },
+          ].map((plan, i) => (
+            <div
+              key={i}
+              style={{
+                background: plan.highlight ? B.navy : B.warm,
+                color: plan.highlight ? B.warm : B.navy,
+                border: `1px solid ${plan.highlight ? B.navy : B.line}`,
+                borderRadius: 16,
+                padding: "28px 24px",
+                display: "flex",
+                flexDirection: "column",
+                gap: 14,
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: SANS,
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: plan.highlight ? B.blue : B.muted,
+                }}
+              >
+                {plan.tier}
+              </div>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+                <span
+                  style={{
+                    fontFamily: "Georgia, serif",
+                    fontSize: 38,
+                    fontWeight: 500,
+                    color: plan.highlight ? "#FEFCF9" : B.navy,
+                  }}
+                >
+                  {plan.price}
+                </span>
+                <span
+                  style={{
+                    fontFamily: SANS,
+                    fontSize: 14,
+                    color: plan.highlight ? "rgba(254,252,249,0.7)" : B.muted,
+                  }}
+                >
+                  {plan.cadence}
+                </span>
+              </div>
+              <div
+                style={{
+                  fontFamily: SANS,
+                  fontSize: 13,
+                  color: plan.highlight ? "rgba(254,252,249,0.65)" : B.muted,
+                  marginTop: -8,
+                }}
+              >
+                {plan.annual}
+              </div>
+              <p
+                style={{
+                  fontFamily: SANS,
+                  fontSize: 14.5,
+                  lineHeight: 1.55,
+                  margin: 0,
+                  color: plan.highlight ? "rgba(254,252,249,0.85)" : B.body,
+                }}
+              >
+                {plan.tagline}
+              </p>
+              <ul style={{ listStyle: "none", padding: 0, margin: "4px 0 0", display: "flex", flexDirection: "column", gap: 8 }}>
+                {plan.includes.map((item, j) => (
+                  <li
+                    key={j}
+                    style={{
+                      fontFamily: SANS,
+                      fontSize: 13.5,
+                      lineHeight: 1.5,
+                      color: plan.highlight ? "rgba(254,252,249,0.8)" : B.body,
+                      display: "grid",
+                      gridTemplateColumns: "16px 1fr",
+                      gap: 10,
+                      alignItems: "start",
+                    }}
+                  >
+                    <span style={{ color: plan.highlight ? B.blue : "#2d8a5f", marginTop: 4 }}>✓</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <a
+                href="https://primaryid.subscribili.com"
+                target="_blank"
+                rel="noopener"
+                style={{
+                  marginTop: 12,
+                  background: plan.highlight ? "#FEFCF9" : B.navy,
+                  color: plan.highlight ? B.navy : "#FEFCF9",
+                  padding: "12px 20px",
+                  borderRadius: 999,
+                  textDecoration: "none",
+                  textAlign: "center",
+                  fontFamily: SANS,
+                  fontSize: 14,
+                  fontWeight: 600,
+                }}
+              >
+                Join {plan.tier.split(" ").pop()}
+              </a>
+            </div>
+          ))}
+        </div>
+
+        <p style={{ fontFamily: SANS, fontSize: 12.5, color: B.muted, marginBottom: 28, textAlign: "center" }}>
+          PPO-friendly · Works alongside your insurance · No claim forms · Cancel any time
+        </p>
+
         {/* Insurance strip */}
         <div
           style={{
@@ -687,6 +840,37 @@ export default function FinancialMembership() {
                 <polyline points="12 5 19 12 12 19" />
               </svg>
             </a>
+            {/* Join Primary iD Membership — external Subscribili funnel. TODO(farhad): confirm subdomain with Subscribili rep */}
+            <a
+              href="https://primaryid.subscribili.com"
+              target="_blank"
+              rel="noopener"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 10,
+                background: "transparent",
+                color: "#FEFCF9",
+                padding: "14px 26px",
+                borderRadius: 999,
+                fontFamily: SANS,
+                fontSize: 14,
+                fontWeight: 600,
+                textDecoration: "none",
+                border: "1px solid rgba(254,252,249,0.4)",
+                marginLeft: 12,
+                transition: "background 0.2s ease",
+              }}
+              onMouseOver={(e) => { e.currentTarget.style.background = "rgba(254,252,249,0.08)"; }}
+              onMouseOut={(e) => { e.currentTarget.style.background = "transparent"; }}
+            >
+              Join the membership
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="10" y1="14" x2="21" y2="3"/>
+                <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/>
+              </svg>
+            </a>
           </div>
         </div>
 
@@ -717,6 +901,7 @@ export default function FinancialMembership() {
         @media (max-width: 980px) {
           .fin-contrast { grid-template-columns: 1fr !important; }
           .fin-pathway { grid-template-columns: 1fr !important; padding: 36px 32px !important; }
+          .fin-pricing { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 620px) {
           .fin-pathway { padding: 28px 24px !important; }
