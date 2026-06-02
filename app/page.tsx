@@ -1539,23 +1539,28 @@ function MembershipStrip() {
 function Footer() {
   const footerLinks = [
     { heading: "Visit", links: [
-      { label: "Book appointment", href: "#book" },
-      { label: "New patients", href: "/new-patient" },
-      { label: "Our location", href: "#" },
+      { label: "Book appointment", href: "/book/" },
+      { label: "New patients", href: "/new-patient/" },
+      { label: "Our location", href: "https://maps.app.goo.gl/oQoaV1MrCoMEQ1CS8" },
+      { label: "FAQ", href: "/faq/" },
     ]},
     { heading: "Care", links: [
-      { label: "Preventive care", href: "#" },
-      { label: "Aligners & airway", href: "#" },
-      { label: "Cosmetic dentistry", href: "#" },
-      { label: "Implants", href: "#" },
+      { label: "Preventive care", href: "/book/preventive/" },
+      { label: "Airway & sleep", href: "/book/airway/" },
+      { label: "Cosmetic dentistry", href: "/cosmetic-dentistry/" },
+      { label: "Dental implants", href: "/dental-implant/" },
+      { label: "Safe mercury removal", href: "/safe-mercury-removal/" },
+      { label: "Wholistic dentistry", href: "/wholistic-dentistry/" },
     ]},
-{ heading: "Learn", links: [
-  { label: "Our approach", href: "/oral-systemic" },
-  { label: "Research library", href: "/research" },
-  { label: "About us", href: "/about" },
-  { label: "Health assessment", href: "/diagnostics" },
-  ]},
-  ];
+    { heading: "Learn", links: [
+      { label: "Why Primary", href: "/why-primary/" },
+      { label: "Five Dimensions", href: "/five-dimensions/" },
+      { label: "Dr. Gabi", href: "/about/" },
+      { label: "Second opinions", href: "/second-opinion/" },
+      { label: "Primary Journal", href: "/blogs/" },
+      { label: "Health assessment", href: "/diagnostics/" },
+    ]},
+  ]
 
   return (
     <footer style={{ background: B.navy, padding: "56px 32px 36px" }}>

@@ -228,7 +228,7 @@ function Card({ dim }: { dim: typeof DIMENSIONS[0] }) {
           </svg>
         </a>
         <a
-          href="#"
+          href="/five-dimensions/"
           style={{
             color: B.navy, textDecoration: "none",
             fontWeight: 500, fontSize: 13,
