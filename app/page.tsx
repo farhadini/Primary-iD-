@@ -90,12 +90,14 @@ function Nav({ scrolled }) {
         </div>
 
         {/* Nav links */}
-        <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 22 }}>
           {[
-            { label: "Why Primary", href: "/why-primary" },
-            { label: "The Science", href: "/oral-systemic" },
+            { label: "Why Primary", href: "/why-primary/" },
+            { label: "Five Dimensions", href: "/five-dimensions/" },
             { label: "Services", href: "#services" },
+            { label: "Dr. Gabi", href: "/about/" },
             { label: "Membership", href: "#membership" },
+            { label: "Journal", href: "/blogs/" },
           ].map(item => (
             <a key={item.label} href={item.href} style={{ fontFamily: "Georgia,serif", fontSize: 13, color: B.body, textDecoration: "none", opacity: 0.7, transition: "opacity 0.2s" }}
               onMouseOver={e => (e.target as HTMLElement).style.opacity = "1"}
@@ -213,7 +215,7 @@ function Hero() {
               Book a visit
             </a>
 
-            <a href="/diagnostics" style={{
+            <a href="/diagnostics/" style={{
               color: B.navy, textDecoration: "none", fontWeight: 500, fontSize: 15,
               display: "inline-flex", alignItems: "center", gap: 8,
               borderBottom: "1px solid rgba(14,34,64,0.2)",
@@ -799,7 +801,7 @@ function Editorial({ label, headline, subheadline, body, image, reverse = false,
               }}>{headline}</h2>
               {subheadline && <p style={{ fontFamily: "Georgia,serif", fontSize: 17, color: B.navy, fontStyle: "italic", opacity: 0.55, margin: "0 0 20px" }}>{subheadline}</p>}
               <p style={{ fontFamily: "Georgia,serif", fontSize: 15, color: B.body, lineHeight: 1.75, margin: "0 0 32px" }}>{body}</p>
-              <a href="/oral-systemic" style={{
+              <a href="/oral-systemic/" style={{
                 display: "inline-flex", alignItems: "center", gap: 8,
                 fontFamily: "Georgia,serif", fontSize: 14, color: B.navy,
                 textDecoration: "none",
@@ -1456,7 +1458,7 @@ function BookingCTA() {
             Schedule a visit and experience what it feels like when dental care looks at the whole you — not just the problem in front of us.
           </p>
 
-          <a href="#" style={{
+          <a href="/new-patient/" style={{
             background: B.navy, color: B.white, textDecoration: "none",
             borderRadius: 9, padding: "16px 40px",
             fontFamily: "Georgia,serif", fontSize: 16,
@@ -1513,7 +1515,7 @@ function MembershipStrip() {
               Our membership plans replace traditional insurance with a model built around your ongoing wellness — not your episodic problems.
             </p>
           </div>
-          <a href="#" style={{
+          <a href="https://primaryid.subscribili.com" target="_blank" rel="noopener" style={{
             background: B.green, color: B.white, textDecoration: "none",
             borderRadius: 9, padding: "14px 28px",
             fontFamily: "Georgia,serif", fontSize: 14,
@@ -1673,7 +1675,7 @@ function NewPatientSection() {
             </h2>
           </div>
 
-          <a href="/new-patient" style={{
+          <a href="/new-patient/" style={{
             display: "inline-flex", alignItems: "center", gap: 9,
             fontFamily: "Georgia,serif", fontSize: 13,
             color: "rgba(255,255,255,0.5)", textDecoration: "none",
@@ -1764,7 +1766,7 @@ function NewPatientSection() {
             <span style={{ display: "block", fontSize: 11, marginTop: 5, color: "rgba(255,255,255,0.2)", fontStyle: "normal" }}>— Dr. Tzur Gabi, Founder</span>
           </p>
           <div style={{ display: "flex", gap: 12 }}>
-            <a href="/new-patient" style={{
+            <a href="/new-patient/" style={{
               fontFamily: "Georgia,serif", fontSize: 13,
               color: "rgba(255,255,255,0.6)", textDecoration: "none",
               padding: "11px 22px", borderRadius: 8,
@@ -1816,7 +1818,7 @@ export default function PrimaryHomepage() {
       <MeetYourPrimaryID />
 
       {/* Section 4: Care Pathways - Horizontal Scroll Carousel */}
-      <CarePathways />
+      <div id="services"><CarePathways /></div>
 
       {/* Section 5: The New Patient Visit, Reimagined */}
       <NewPatientVisit />
@@ -1826,7 +1828,9 @@ export default function PrimaryHomepage() {
       <Testimonials />
 
       {/* Section 7: Financial / Membership */}
-      <FinancialMembership />
+      <div id="membership">
+        <FinancialMembership />
+      </div>
       <MobileStickyCTA />
 
       {/* Booking CTA */}
