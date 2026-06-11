@@ -9,5 +9,10 @@ export const metadata: Metadata = {
     description: "Cosmetic dentistry built on biocompatible materials and biological function.",
     url: "https://myprimaryid.com/cosmetic-dentistry/",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cosmetic Dentistry in Brentwood | Primary iD",
+    description: "Cosmetic dentistry built on biocompatible materials and biological function.",
+  },
 }
 export default function Layout({ children }: { children: React.ReactNode }) { return children }

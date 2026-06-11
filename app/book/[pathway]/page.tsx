@@ -132,6 +132,7 @@ export async function generateMetadata({
     title: p.title,
     description: p.description,
     alternates: { canonical: `https://myprimaryid.com/book/${pathway}/` },
+    robots: { index: false, follow: true },
     openGraph: {
       title: p.title,
       description: p.description,

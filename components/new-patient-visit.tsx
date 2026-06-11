@@ -571,7 +571,7 @@ export default function NewPatientVisit() {
             <strong style={{ fontStyle: "normal", fontWeight: 400 }}>You get value before you sit in the chair.</strong>{" "}
             <em style={{ color: B.blue, fontWeight: 500 }}>Your score, your Oral → Systemic playbook, and a virtual second opinion — all free, all yours, before any commitment.</em>
           </div>
-          <a href="/about" style={{
+          <a href="/about/" style={{
             background: "transparent", color: B.navy,
             border: `1px solid rgba(14,34,64,0.18)`,
             padding: "12px 20px", borderRadius: 9,
@@ -593,7 +593,7 @@ export default function NewPatientVisit() {
             display: "inline-flex", gap: 20, alignItems: "center",
             flexWrap: "wrap", justifyContent: "center",
           }}>
-            <a href="/diagnostics" style={{
+            <a href="/diagnostics/" style={{
               background: B.navy, color: B.warm,
               padding: "18px 32px", borderRadius: 9,
               textDecoration: "none", fontWeight: 600, fontSize: 15,

@@ -44,10 +44,12 @@ function Nav({ scrolled }: { scrolled: boolean }) {
 
         <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
           {[
-            { label: "Why Primary", href: "/why-primary", active: true },
-            { label: "The Science", href: "/oral-systemic", active: false },
-            { label: "Services", href: "/#services", active: false },
-            { label: "Membership", href: "/#membership", active: false },
+            { label: "Why Primary", href: "/why-primary/", active: true },
+            { label: "Five Dimensions", href: "/five-dimensions/", active: false },
+            { label: "The Science", href: "/oral-systemic/", active: false },
+            { label: "Dr. Gabi", href: "/about/", active: false },
+            { label: "New Patients", href: "/new-patient/", active: false },
+            { label: "Journal", href: "/blogs/", active: false },
           ].map(item => (
             <Link key={item.label} href={item.href} style={{
               fontFamily: "Georgia,serif", fontSize: 13,
@@ -59,7 +61,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
           ))}
         </div>
 
-        <Link href="/diagnostics" style={{
+        <Link href="/diagnostics/" style={{
           background: B.navy, color: B.white, textDecoration: "none",
           borderRadius: 8, padding: "9px 20px",
           fontFamily: "Georgia,serif", fontSize: 13, fontWeight: 400,
@@ -334,7 +336,7 @@ function Hero() {
             <span style={{ color: B.navy, fontWeight: 500 }}>cognitive decline</span>,{" "}
             <span style={{ color: B.navy, fontWeight: 500 }}>metabolic health</span>, and{" "}
             <span style={{ color: B.navy, fontWeight: 500 }}>longevity</span>.{" "}
-            <Link href="/oral-systemic" style={{ color: B.blue, textDecoration: "none", fontWeight: 500 }}>
+            <Link href="/oral-systemic/" style={{ color: B.blue, textDecoration: "none", fontWeight: 500 }}>
               See the research →
             </Link>
           </p>
@@ -345,7 +347,7 @@ function Hero() {
             transform: loaded ? "translateY(0)" : "translateY(12px)",
             transition: "all 0.8s ease-out 0.55s",
           }}>
-            <Link href="/diagnostics" style={{
+            <Link href="/diagnostics/" style={{
               fontFamily: SANS,
               display: "inline-flex", alignItems: "center", gap: 10,
               padding: "16px 30px", background: B.navy, color: B.warm,
@@ -980,7 +982,7 @@ function HowWeSeeYou() {
           transform: loaded ? "translateY(0)" : "translateY(12px)",
           transition: "all 0.8s ease-out 0.75s",
         }}>
-          <Link href="/oral-systemic" style={{
+          <Link href="/oral-systemic/" style={{
             display: "inline-flex", alignItems: "center", gap: 10,
             padding: "14px 26px", borderRadius: 999,
             fontFamily: SANS, fontSize: 13, fontWeight: 600, letterSpacing: "0.02em",
@@ -1778,21 +1780,21 @@ function TheOutcome() {
 function Footer() {
   const footerLinks = [
     { heading: "Visit", links: [
-      { label: "Book appointment", href: "/#book" },
-      { label: "New patients", href: "/new-patient" },
-      { label: "Our location", href: "#" },
+      { label: "Book appointment", href: "/book/" },
+      { label: "New patients", href: "/new-patient/" },
+      { label: "Our location", href: "https://maps.app.goo.gl/oQoaV1MrCoMEQ1CS8", external: true },
     ]},
     { heading: "Care", links: [
-      { label: "Preventive care", href: "#" },
-      { label: "Aligners & airway", href: "#" },
-      { label: "Cosmetic dentistry", href: "#" },
-      { label: "Implants", href: "#" },
+      { label: "Preventive care", href: "/book/preventive/" },
+      { label: "Aligners & airway", href: "/book/airway/" },
+      { label: "Cosmetic dentistry", href: "/cosmetic-dentistry/" },
+      { label: "Implants", href: "/dental-implant/" },
     ]},
 { heading: "Learn", links: [
-  { label: "Our approach", href: "/oral-systemic" },
-  { label: "Research library", href: "/research" },
-  { label: "About us", href: "/about" },
-  { label: "Health assessment", href: "/diagnostics" },
+  { label: "Our approach", href: "/oral-systemic/" },
+  { label: "Research library", href: "/research/" },
+  { label: "About us", href: "/about/" },
+  { label: "Health assessment", href: "/diagnostics/" },
   ]},
   ];
 
@@ -1823,7 +1825,11 @@ function Footer() {
             <div key={col.heading}>
               <div style={{ fontFamily: "Georgia,serif", fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.5)", letterSpacing: "0.08em", marginBottom: 16 }}>{col.heading.toUpperCase()}</div>
               {col.links.map(link => (
-                <Link key={link.label} href={link.href} style={{ display: "block", fontFamily: "Georgia,serif", fontSize: 14, color: "rgba(255,255,255,0.75)", textDecoration: "none", marginBottom: 10, transition: "color 0.2s" }}>{link.label}</Link>
+                link.external ? (
+                  <a key={link.label} href={link.href} target="_blank" rel="noopener" style={{ display: "block", fontFamily: "Georgia,serif", fontSize: 14, color: "rgba(255,255,255,0.75)", textDecoration: "none", marginBottom: 10, transition: "color 0.2s" }}>{link.label}</a>
+                ) : (
+                  <Link key={link.label} href={link.href} style={{ display: "block", fontFamily: "Georgia,serif", fontSize: 14, color: "rgba(255,255,255,0.75)", textDecoration: "none", marginBottom: 10, transition: "color 0.2s" }}>{link.label}</Link>
+                )
               ))}
             </div>
           ))}

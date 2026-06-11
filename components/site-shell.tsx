@@ -71,7 +71,9 @@ export function SiteHeader() {
             { label: "Why Primary", href: "/why-primary/" },
             { label: "Five Dimensions", href: "/five-dimensions/" },
             { label: "The Science", href: "/oral-systemic/" },
+            { label: "Dr. Gabi", href: "/about/" },
             { label: "New Patients", href: "/new-patient/" },
+            { label: "Journal", href: "/blogs/" },
           ].map((item) => (
             <Link
               key={item.label}
@@ -100,7 +102,7 @@ export function SiteHeader() {
             (310) 564-8990
           </a>
           <Link
-            href="/new-patient/"
+            href="/book/"
             style={{
               background: PALETTE.navy,
               color: PALETTE.white,

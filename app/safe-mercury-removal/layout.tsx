@@ -9,5 +9,10 @@ export const metadata: Metadata = {
     description: "IAOMT-trained safe amalgam removal in Brentwood, Los Angeles.",
     url: "https://myprimaryid.com/safe-mercury-removal/",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Safe Mercury Removal | SMART Protocol | Primary iD",
+    description: "IAOMT-trained safe amalgam removal in Brentwood, Los Angeles.",
+  },
 }
 export default function Layout({ children }: { children: React.ReactNode }) { return children }

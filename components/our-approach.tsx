@@ -627,7 +627,7 @@ export default function OurApproach() {
                 CAMBRA + AAP/EFP
               </span>
               <a
-                href="/diagnostics"
+                href="/diagnostics/"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -688,7 +688,7 @@ export default function OurApproach() {
             You&apos;ll leave with a <em style={{ color: B.blue, fontStyle: "italic" }}>whole-body plan</em> that happens to start there.
           </h4>
           <a
-            href="/diagnostics"
+            href="/diagnostics/"
             style={{
               display: "inline-flex",
               alignItems: "center",

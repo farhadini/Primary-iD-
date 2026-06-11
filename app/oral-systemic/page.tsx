@@ -79,11 +79,13 @@ function Nav() {
           Primary <em style={{ color: B.blue, fontStyle: "italic", fontWeight: 400 }}>iD</em>
         </Link>
         <div style={{ display: "flex", gap: 28, alignItems: "center" }}>
-          <Link href="/#approach" style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 500, color: "rgba(254,252,249,0.82)", textDecoration: "none" }}>Our Approach</Link>
-          <Link href="/oral-systemic" style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 500, color: B.blue, textDecoration: "none" }}>The Science</Link>
-          <Link href="/new-patient" style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 500, color: "rgba(254,252,249,0.82)", textDecoration: "none" }}>New Patients</Link>
-          <Link href="/membership" style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 500, color: "rgba(254,252,249,0.82)", textDecoration: "none" }}>Membership</Link>
-          <Link href="/diagnostics" style={{
+          <Link href="/why-primary/" style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 500, color: "rgba(254,252,249,0.82)", textDecoration: "none" }}>Why Primary</Link>
+          <Link href="/five-dimensions/" style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 500, color: "rgba(254,252,249,0.82)", textDecoration: "none" }}>Five Dimensions</Link>
+          <Link href="/oral-systemic/" style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 500, color: B.blue, textDecoration: "none" }}>The Science</Link>
+          <Link href="/about/" style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 500, color: "rgba(254,252,249,0.82)", textDecoration: "none" }}>Dr. Gabi</Link>
+          <Link href="/new-patient/" style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 500, color: "rgba(254,252,249,0.82)", textDecoration: "none" }}>New Patients</Link>
+          <Link href="/blogs/" style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 500, color: "rgba(254,252,249,0.82)", textDecoration: "none" }}>Journal</Link>
+          <Link href="/diagnostics/" style={{
             fontFamily: SANS, fontSize: 13, fontWeight: 600,
             background: B.blue, color: B.warm,
             padding: "10px 18px", borderRadius: 999, textDecoration: "none",
@@ -663,7 +665,7 @@ function DimensionsSection() {
             </div>
           </Reveal>
           <Reveal delay={0.4}>
-            <Link href="/diagnostics" style={{
+            <Link href="/diagnostics/" style={{
               display: "inline-flex", alignItems: "center", gap: 8,
               padding: "13px 22px", borderRadius: 999,
               background: B.navy, color: B.warm,
@@ -687,7 +689,7 @@ function DimensionsSection() {
                   <div style={{ fontFamily: SERIF, fontSize: 18, color: B.navy, fontWeight: 400, letterSpacing: "-0.005em" }}>{dim.name}</div>
                   <div style={{ fontFamily: SANS, fontSize: 11.5, color: B.muted, letterSpacing: "0.06em", textTransform: "uppercase", marginTop: 4 }}>{dim.inst}</div>
                 </div>
-                <Link href="/diagnostics" style={{ fontFamily: SANS, fontSize: 12.5, fontWeight: 600, color: B.navy, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>
+                <Link href="/diagnostics/" style={{ fontFamily: SANS, fontSize: 12.5, fontWeight: 600, color: B.navy, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>
                   Start <span>→</span>
                 </Link>
               </li>
@@ -734,7 +736,7 @@ function FinalCTA() {
         </Reveal>
         <Reveal delay={0.3}>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/diagnostics" style={{
+            <Link href="/diagnostics/" style={{
               display: "inline-flex", alignItems: "center", gap: 10,
               background: B.warm, color: B.navy,
               padding: "16px 28px", borderRadius: 999,
@@ -770,11 +772,11 @@ function Footer() {
           Primary <em style={{ color: B.blue, fontStyle: "italic" }}>iD</em>
         </Link>
         <nav style={{ display: "flex", gap: 22, flexWrap: "wrap" }}>
-          <Link href="/#approach" style={{ color: "rgba(254,252,249,0.7)", textDecoration: "none" }}>Our Approach</Link>
-          <Link href="/oral-systemic" style={{ color: "rgba(254,252,249,0.7)", textDecoration: "none" }}>The Science</Link>
-          <Link href="/membership" style={{ color: "rgba(254,252,249,0.7)", textDecoration: "none" }}>Membership</Link>
-          <Link href="/new-patient" style={{ color: "rgba(254,252,249,0.7)", textDecoration: "none" }}>New Patients</Link>
-          <Link href="/#book" style={{ color: "rgba(254,252,249,0.7)", textDecoration: "none" }}>Book a visit</Link>
+          <Link href="/why-primary/" style={{ color: "rgba(254,252,249,0.7)", textDecoration: "none" }}>Why Primary</Link>
+          <Link href="/oral-systemic/" style={{ color: "rgba(254,252,249,0.7)", textDecoration: "none" }}>The Science</Link>
+          <Link href="/primary-id-plus/" style={{ color: "rgba(254,252,249,0.7)", textDecoration: "none" }}>Membership</Link>
+          <Link href="/new-patient/" style={{ color: "rgba(254,252,249,0.7)", textDecoration: "none" }}>New Patients</Link>
+          <Link href="/book/" style={{ color: "rgba(254,252,249,0.7)", textDecoration: "none" }}>Book a visit</Link>
         </nav>
       </div>
     </footer>

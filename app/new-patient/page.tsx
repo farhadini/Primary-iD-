@@ -63,8 +63,17 @@ function Nav() {
           />
         </a>
         <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-          <a href="/" style={{ fontFamily: "Georgia,serif", fontSize: 13, color: B.body, textDecoration: "none", opacity: 0.6 }}>← Back to home</a>
-          <a href="#book" style={{
+          {[
+            { label: "Why Primary", href: "/why-primary/" },
+            { label: "Five Dimensions", href: "/five-dimensions/" },
+            { label: "The Science", href: "/oral-systemic/" },
+            { label: "Dr. Gabi", href: "/about/" },
+            { label: "New Patients", href: "/new-patient/", active: true },
+            { label: "Journal", href: "/blogs/" },
+          ].map(item => (
+            <a key={item.label} href={item.href} style={{ fontFamily: "Georgia,serif", fontSize: 13, color: item.active ? B.blue : B.body, textDecoration: "none", opacity: item.active ? 1 : 0.7 }}>{item.label}</a>
+          ))}
+          <a href="/book/" style={{
             background: B.navy, color: B.white, textDecoration: "none",
             borderRadius: 8, padding: "9px 20px",
             fontFamily: "Georgia,serif", fontSize: 13,
@@ -270,7 +279,7 @@ function PreVisit() {
               marginTop: 24,
               opacity: visible ? 1 : 0, transition: "opacity 0.7s ease 0.7s",
             }}>
-              <a href="#" style={{
+              <a href="/diagnostics/" style={{
                 background: B.navy, color: B.white, textDecoration: "none",
                 borderRadius: 9, padding: "14px 28px",
                 fontFamily: "Georgia,serif", fontSize: 14,
@@ -692,7 +701,7 @@ function BookCTA() {
           </p>
 
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-            <a href="#" style={{
+            <a href="/book/" style={{
               background: B.white, color: B.navy, textDecoration: "none",
               borderRadius: 9, padding: "16px 36px",
               fontFamily: "Georgia,serif", fontSize: 15,
@@ -705,7 +714,7 @@ function BookCTA() {
             >
               Book a visit
             </a>
-            <a href="#" style={{
+            <a href="/diagnostics/" style={{
               background: "transparent", color: "rgba(255,255,255,0.7)", textDecoration: "none",
               borderRadius: 9, padding: "16px 28px",
               fontFamily: "Georgia,serif", fontSize: 15,
@@ -797,7 +806,7 @@ export function NewPatientSection({ onNavigate }) {
             </p>
 
             <a
-              href="/new-patient"
+              href="/new-patient/"
               onClick={onNavigate}
               style={{
                 display: "inline-flex", alignItems: "center", gap: 10,

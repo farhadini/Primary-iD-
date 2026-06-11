@@ -438,7 +438,7 @@ export default function OralSystemicSection() {
             }}
           >
             <a
-              href="/diagnostics"
+              href="/diagnostics/"
               data-analytics="oral_systemic_cta"
               style={{
                 background: C.blue,
@@ -472,7 +472,7 @@ export default function OralSystemicSection() {
               5 dimensions · 50 questions · personalized results
             </p>
             <a
-              href="/oral-systemic"
+              href="/oral-systemic/"
               style={{
                 marginTop: 8,
                 fontSize: 14,

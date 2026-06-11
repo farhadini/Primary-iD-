@@ -9,5 +9,10 @@ export const metadata: Metadata = {
     description: "Five interconnected health dimensions, anchored to validated clinical instruments.",
     url: "https://myprimaryid.com/five-dimensions/",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Five Dimensions | Primary iD",
+    description: "Five interconnected health dimensions, anchored to validated clinical instruments.",
+  },
 }
 export default function Layout({ children }: { children: React.ReactNode }) { return children }

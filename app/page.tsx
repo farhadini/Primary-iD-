@@ -94,9 +94,9 @@ function Nav({ scrolled }) {
           {[
             { label: "Why Primary", href: "/why-primary/" },
             { label: "Five Dimensions", href: "/five-dimensions/" },
-            { label: "Services", href: "#services" },
+            { label: "The Science", href: "/oral-systemic/" },
             { label: "Dr. Gabi", href: "/about/" },
-            { label: "Membership", href: "#membership" },
+            { label: "New Patients", href: "/new-patient/" },
             { label: "Journal", href: "/blogs/" },
           ].map(item => (
             <a key={item.label} href={item.href} style={{ fontFamily: "Georgia,serif", fontSize: 13, color: B.body, textDecoration: "none", opacity: 0.7, transition: "opacity 0.2s" }}
@@ -125,7 +125,7 @@ function Nav({ scrolled }) {
           </svg>
           (310) 564-8990
         </a>
-        <a href="#book" style={{
+        <a href="/book/" style={{
           background: B.navy, color: B.white, textDecoration: "none",
           borderRadius: 8, padding: "9px 20px",
           fontFamily: "Georgia,serif", fontSize: 13, fontWeight: 400,
@@ -1600,7 +1600,7 @@ function Footer() {
 
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <span style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
-            © 2025 Primary Integrative Dentistry
+            © {new Date().getFullYear()} Primary Integrative Dentistry
           </span>
           <span style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "rgba(255,255,255,0.35)", fontStyle: "italic" }}>
             Dr. Tzur Gabi, Founder

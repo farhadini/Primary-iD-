@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   creator: "Primary Integrative Dentistry",
   publisher: "Primary Integrative Dentistry",
   alternates: {
-    canonical: SITE_URL,
+    canonical: "https://myprimaryid.com/",
   },
   openGraph: {
     type: "website",

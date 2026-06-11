@@ -9,5 +9,10 @@ export const metadata: Metadata = {
     description: "Zirconia and titanium implants. 3D-guided. Biocompatible. Brentwood, LA.",
     url: "https://myprimaryid.com/dental-implant/",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dental Implants in Brentwood | Primary iD",
+    description: "Zirconia and titanium implants. 3D-guided. Biocompatible. Brentwood, LA.",
+  },
 }
 export default function Layout({ children }: { children: React.ReactNode }) { return children }

@@ -211,7 +211,7 @@ function Card({ dim }: { dim: typeof DIMENSIONS[0] }) {
         flexWrap: "wrap",
       }}>
         <a
-          href="/diagnostics"
+          href="/diagnostics/"
           style={{
             background: B.navy, color: B.warm,
             padding: "11px 18px", borderRadius: 9,

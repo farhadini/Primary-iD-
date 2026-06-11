@@ -428,10 +428,12 @@ function Nav({ scrolled }: { scrolled: boolean }) {
 
       <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
         {[
-          { label: "Why Primary", href: "/why-primary" },
-          { label: "The Science", href: "/oral-systemic" },
-          { label: "Research", href: "/research", active: true },
-          { label: "Membership", href: "#membership" },
+          { label: "Why Primary", href: "/why-primary/" },
+          { label: "Five Dimensions", href: "/five-dimensions/" },
+          { label: "The Science", href: "/oral-systemic/" },
+          { label: "Dr. Gabi", href: "/about/" },
+          { label: "New Patients", href: "/new-patient/" },
+          { label: "Journal", href: "/blogs/" },
         ].map((item) => (
           <Link
             key={item.label}
@@ -451,7 +453,7 @@ function Nav({ scrolled }: { scrolled: boolean }) {
       </div>
 
       <Link
-        href="/#book"
+        href="/book/"
         style={{
           fontFamily: SANS,
           fontSize: 12,
@@ -477,27 +479,27 @@ function Footer() {
     {
       heading: "Visit",
       links: [
-        { label: "Book appointment", href: "/#book" },
-        { label: "New patients", href: "/new-patient" },
-        { label: "Our location", href: "#" },
+        { label: "Book appointment", href: "/book/" },
+        { label: "New patients", href: "/new-patient/" },
+        { label: "Our location", href: "https://maps.app.goo.gl/oQoaV1MrCoMEQ1CS8", external: true },
       ],
     },
     {
       heading: "Care",
       links: [
-        { label: "Preventive care", href: "#" },
-        { label: "Aligners & airway", href: "#" },
-        { label: "Cosmetic dentistry", href: "#" },
-        { label: "Implants", href: "#" },
+        { label: "Preventive care", href: "/book/preventive/" },
+        { label: "Aligners & airway", href: "/book/airway/" },
+        { label: "Cosmetic dentistry", href: "/cosmetic-dentistry/" },
+        { label: "Implants", href: "/dental-implant/" },
       ],
     },
     {
       heading: "Learn",
       links: [
-        { label: "Our approach", href: "/oral-systemic" },
-        { label: "Research library", href: "/research" },
-        { label: "Why Primary", href: "/why-primary" },
-        { label: "Primary ID+", href: "/primary-id-plus" },
+        { label: "Our approach", href: "/oral-systemic/" },
+        { label: "Research library", href: "/research/" },
+        { label: "Why Primary", href: "/why-primary/" },
+        { label: "Primary ID+", href: "/primary-id-plus/" },
       ],
     },
   ];
@@ -558,21 +560,41 @@ function Footer() {
                 {col.heading.toUpperCase()}
               </div>
               {col.links.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  style={{
-                    display: "block",
-                    fontFamily: SERIF,
-                    fontSize: 14,
-                    color: "rgba(255,255,255,0.75)",
-                    textDecoration: "none",
-                    marginBottom: 10,
-                    transition: "color 0.2s",
-                  }}
-                >
-                  {link.label}
-                </Link>
+                link.external ? (
+                  <a
+                    key={link.label}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener"
+                    style={{
+                      display: "block",
+                      fontFamily: SERIF,
+                      fontSize: 14,
+                      color: "rgba(255,255,255,0.75)",
+                      textDecoration: "none",
+                      marginBottom: 10,
+                      transition: "color 0.2s",
+                    }}
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    style={{
+                      display: "block",
+                      fontFamily: SERIF,
+                      fontSize: 14,
+                      color: "rgba(255,255,255,0.75)",
+                      textDecoration: "none",
+                      marginBottom: 10,
+                      transition: "color 0.2s",
+                    }}
+                  >
+                    {link.label}
+                  </Link>
+                )
               ))}
             </div>
           ))}

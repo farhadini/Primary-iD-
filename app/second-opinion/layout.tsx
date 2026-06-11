@@ -9,5 +9,10 @@ export const metadata: Metadata = {
     description: "Honest review of your dental treatment plan by Dr. Tzur Gabi.",
     url: "https://myprimaryid.com/second-opinion/",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Second Opinion · Primary Integrative Dentistry",
+    description: "Honest review of your dental treatment plan by Dr. Tzur Gabi.",
+  },
 }
 export default function Layout({ children }: { children: React.ReactNode }) { return children }

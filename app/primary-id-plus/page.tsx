@@ -151,14 +151,21 @@ function Nav() {
           }}>ID+</span>
         </a>
         <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
-          {["Our Approach", "Services", "Membership", "About"].map(item => (
-            <a key={item} href="#" style={{ fontFamily: "Georgia,serif", fontSize: 13, color: B.body, textDecoration: "none", opacity: 0.7, transition: "opacity 0.2s" }}
+          {[
+            { label: "Why Primary", href: "/why-primary/" },
+            { label: "Five Dimensions", href: "/five-dimensions/" },
+            { label: "The Science", href: "/oral-systemic/" },
+            { label: "Dr. Gabi", href: "/about/" },
+            { label: "New Patients", href: "/new-patient/" },
+            { label: "Journal", href: "/blogs/" },
+          ].map(item => (
+            <a key={item.label} href={item.href} style={{ fontFamily: "Georgia,serif", fontSize: 13, color: B.body, textDecoration: "none", opacity: 0.7, transition: "opacity 0.2s" }}
               onMouseOver={e => e.target.style.opacity = 1}
               onMouseOut={e => e.target.style.opacity = 0.7}
-            >{item}</a>
+            >{item.label}</a>
           ))}
         </div>
-        <a href="#consultation" style={{
+        <a href="/book/" style={{
           background: B.navy, color: B.white, textDecoration: "none",
           borderRadius: 8, padding: "9px 20px", fontFamily: "Georgia,serif", fontSize: 13,
           boxShadow: "0 2px 12px rgba(14,34,64,0.18)", transition: "background 0.2s ease", display: "inline-block",
@@ -721,7 +728,7 @@ function Consultation() {
                 ))}
               </div>
             </div>
-            <BlueBtn href="#">Download Sample Protocol</BlueBtn>
+            <BlueBtn href="/book/">Download Sample Protocol</BlueBtn>
           </div>
         </Reveal>
       </div>
@@ -785,8 +792,8 @@ function ClosingCTA() {
             No commitment. No pressure. Just a conversation about whether this is right for you.
           </p>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-            <BlueBtn href="#book">Book a longevity consultation</BlueBtn>
-            <GhostLink href="#book" light>Or mention it at your next visit</GhostLink>
+            <BlueBtn href="/book/">Book a longevity consultation</BlueBtn>
+            <GhostLink href="/book/" light>Or mention it at your next visit</GhostLink>
           </div>
           <div style={{ marginTop: 52, paddingTop: 36, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
             <p style={{ fontFamily: "Georgia,serif", fontSize: 11, color: "rgba(255,255,255,0.18)", lineHeight: 1.7, maxWidth: 480, margin: "0 auto", fontStyle: "italic" }}>
@@ -817,17 +824,39 @@ function Footer() {
             <p style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "rgba(255,255,255,0.5)", marginTop: 16 }}>11980 San Vicente Blvd, Suite 902<br />Los Angeles, CA 90049<br /><span style={{ color: B.blue }}>(310) 564-8990</span></p>
           </div>
           {[
-            { heading: "Visit", links: ["Book appointment", "New patient special", "Our location", "Hours"] },
-            { heading: "Care", links: ["Preventive care", "Aligners and airway", "Cosmetic dentistry", "Implants"] },
-            { heading: "Learn", links: ["The Primary Journal", "Oral-body connection", "Primary iD", "Primary ID+"] },
+            { heading: "Visit", links: [
+              { label: "Book appointment", href: "/book/" },
+              { label: "New patient special", href: "/new-patient/" },
+              { label: "Our location", href: "https://maps.app.goo.gl/oQoaV1MrCoMEQ1CS8", external: true },
+              { label: "FAQ", href: "/faq/" },
+            ] },
+            { heading: "Care", links: [
+              { label: "Preventive care", href: "/book/preventive/" },
+              { label: "Aligners and airway", href: "/book/airway/" },
+              { label: "Cosmetic dentistry", href: "/cosmetic-dentistry/" },
+              { label: "Implants", href: "/dental-implant/" },
+            ] },
+            { heading: "Learn", links: [
+              { label: "The Primary Journal", href: "/blogs/" },
+              { label: "Oral-body connection", href: "/oral-systemic/" },
+              { label: "Why Primary", href: "/why-primary/" },
+              { label: "Primary ID+", href: "/primary-id-plus/" },
+            ] },
           ].map(col => (
             <div key={col.heading}>
               <div style={{ fontFamily: "Georgia,serif", fontSize: 11, color: "rgba(255,255,255,0.3)", letterSpacing: "0.06em", marginBottom: 14 }}>{col.heading.toUpperCase()}</div>
               {col.links.map(link => (
-                <a key={link} href="#" style={{ display: "block", fontFamily: "Georgia,serif", fontSize: 13, color: "rgba(255,255,255,0.5)", textDecoration: "none", marginBottom: 8, transition: "color 0.2s" }}
-                  onMouseOver={e => e.target.style.color = "rgba(255,255,255,0.8)"}
-                  onMouseOut={e => e.target.style.color = "rgba(255,255,255,0.5)"}
-                >{link}</a>
+                link.external ? (
+                  <a key={link.label} href={link.href} target="_blank" rel="noopener" style={{ display: "block", fontFamily: "Georgia,serif", fontSize: 13, color: "rgba(255,255,255,0.5)", textDecoration: "none", marginBottom: 8, transition: "color 0.2s" }}
+                    onMouseOver={e => e.target.style.color = "rgba(255,255,255,0.8)"}
+                    onMouseOut={e => e.target.style.color = "rgba(255,255,255,0.5)"}
+                  >{link.label}</a>
+                ) : (
+                  <a key={link.label} href={link.href} style={{ display: "block", fontFamily: "Georgia,serif", fontSize: 13, color: "rgba(255,255,255,0.5)", textDecoration: "none", marginBottom: 8, transition: "color 0.2s" }}
+                    onMouseOver={e => e.target.style.color = "rgba(255,255,255,0.8)"}
+                    onMouseOut={e => e.target.style.color = "rgba(255,255,255,0.5)"}
+                  >{link.label}</a>
+                )
               ))}
             </div>
           ))}

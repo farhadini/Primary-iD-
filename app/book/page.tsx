@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   description:
     "Five pathways into Primary Integrative Dentistry — preventive, airway, cosmetic, implants, and longevity. Start with the assessment or call (310) 564-8990.",
   alternates: { canonical: "https://myprimaryid.com/book/" },
+  robots: { index: false, follow: true },
 }
 
 const PATHWAYS = [
