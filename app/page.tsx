@@ -1817,30 +1817,34 @@ export default function PrimaryHomepage() {
     <div style={{ fontFamily: "Georgia,serif", background: B.cream, minHeight: "100vh" }}>
       <Nav scrolled={scrolled} />
       <Hero />
-      <PrimaryiDExperience />
 
-      {/* Section 3: Meet Your Primary iD - Dimension Cards Carousel */}
+      {/* Why Primary - the differentiated approach (build conviction first) */}
+      <OurApproach />
+
+      {/* The proprietary Primary iD score */}
       <MeetYourPrimaryID />
 
-      {/* Section 4: Care Pathways - Horizontal Scroll Carousel */}
+      {/* What we treat - care pathways */}
       <div id="services"><CarePathways /></div>
 
-      {/* Section 5: The New Patient Visit, Reimagined */}
-      <NewPatientVisit />
-
-      {/* Section 6: Our Approach - Outcomes-first grid */}
-      <OurApproach />
+      {/* Social proof - trust before the ask */}
       <Testimonials />
 
-      {/* Section 7: Financial / Membership */}
+      {/* The interactive Primary iD assessment - invite engagement once convinced */}
+      <PrimaryiDExperience />
+
+      {/* What to expect at your first visit */}
+      <NewPatientVisit />
+
+      {/* Financial / Membership */}
       <div id="membership">
         <FinancialMembership />
       </div>
-      <MobileStickyCTA />
 
-      {/* Booking CTA */}
+      {/* Final booking CTA */}
       <BookingCTA />
 
+      <MobileStickyCTA />
       <Footer />
     </div>
   );

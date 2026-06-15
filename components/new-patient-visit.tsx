@@ -126,7 +126,7 @@ function MockAppointment() {
       iconColor: B.blue,
       title: "Virtual second opinion",
       badge: "Free",
-      sub: "From anywhere · 30 min",
+      sub: "From anywhere",
       selected: true,
     },
   ];
@@ -528,9 +528,9 @@ export default function NewPatientVisit() {
 
             <StepCard
               num="03"
-              tag="Oral → Systemic Playbook"
+              tag="After your first visit"
               title={<>Unlock your<br/>Oral → Systemic Playbook.</>}
-              line="One unified, doctor-built playbook — your personalized path to optimal wellbeing, delivered before your first visit."
+              line="One unified, doctor-built playbook, your personalized path to optimal wellbeing, built from your visit and delivered after you come in."
             >
               <MockPlaybook />
             </StepCard>
@@ -569,7 +569,7 @@ export default function NewPatientVisit() {
             fontStyle: "italic",
           }}>
             <strong style={{ fontStyle: "normal", fontWeight: 400 }}>You get value before you sit in the chair.</strong>{" "}
-            <em style={{ color: B.blue, fontWeight: 500 }}>Your score, your Oral → Systemic playbook, and a virtual second opinion — all free, all yours, before any commitment.</em>
+            <em style={{ color: B.blue, fontWeight: 500 }}>Your Primary Health Score and a virtual second opinion, free and yours before any commitment. Your full Oral → Systemic Playbook follows after your first visit.</em>
           </div>
           <a href="/about/" style={{
             background: "transparent", color: B.navy,
