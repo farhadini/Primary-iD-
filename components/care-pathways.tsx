@@ -41,7 +41,7 @@ const PATHWAYS = [
       "Airway & sleep screening",
       "Functional orthodontics",
       "Myofunctional therapy",
-      "Snoring & bruxism support",
+      "Snoring & bruxism (teeth grinding) support",
     ],
     color: B.blue,
     video: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/airway%20animation%20primary%20website%20-9l4BM1zmKujete7CL9KKlxEPCIBU7m.mp4",

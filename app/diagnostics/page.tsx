@@ -111,7 +111,7 @@ const B = {
   pink: "#E05BBF",
 };
 
-// ── DIMENSION DATA — 10 Yes/No questions each ─────────────────
+// ── DIMENSION DATA : 10 Yes/No questions each ─────────────────
 const DIMS = [
   {
     id: "oral",
@@ -122,16 +122,16 @@ const DIMS = [
     intro: "Your mouth is the starting point for whole-body health. 10 quick questions reveal your oral foundation.",
     fact: "Gum disease doubles your risk of heart disease. Most people have no idea.",
     questions: [
-      { q: "Do your gums bleed when you brush or floss?",                  yScore: 0,  nScore: 10, insight: "Bleeding gums signal active inflammation — a direct pathway to systemic health issues including heart disease." },
+      { q: "Do your gums bleed when you brush or floss?",                  yScore: 0,  nScore: 10, insight: "Bleeding gums signal active inflammation, a direct pathway to systemic health issues including heart disease." },
       { q: "Have you had a dental exam in the last 6 months?",             yScore: 10, nScore: 0,  insight: "Regular exams catch problems before they become expensive or dangerous. Most systemic signals appear here first." },
-      { q: "Do you have tooth sensitivity to hot, cold, or sweet?",        yScore: 2,  nScore: 10, insight: "Sensitivity often signals enamel erosion or early decay — both highly preventable with the right care." },
+      { q: "Do you have tooth sensitivity to hot, cold, or sweet?",        yScore: 2,  nScore: 10, insight: "Sensitivity often signals enamel erosion or early decay, both highly preventable with the right care." },
       { q: "Do you brush twice a day and floss daily?",                    yScore: 10, nScore: 2,  insight: "This simple habit reduces your risk of gum disease by over 60%. It also changes your systemic inflammation profile." },
-      { q: "Have you noticed any loose teeth or changes in your bite?",    yScore: 1,  nScore: 10, insight: "These are early signs of bone loss — one of the most underdiagnosed oral-systemic risks in adults." },
+      { q: "Have you noticed any loose teeth or changes in your bite?",    yScore: 1,  nScore: 10, insight: "These are early signs of bone loss, one of the most underdiagnosed oral-systemic risks in adults." },
       { q: "Do you have any dental work older than 10 years?",             yScore: 4,  nScore: 10, insight: "Older materials can degrade and release substances that affect systemic health. Worth a comprehensive review." },
-      { q: "Do you experience jaw pain, clicking, or tension?",            yScore: 2,  nScore: 10, insight: "TMJ dysfunction is often connected to sleep, airway, and nervous system issues — not just a jaw problem." },
-      { q: "Would you describe your breath as consistently fresh?",        yScore: 10, nScore: 2,  insight: "Persistent bad breath often signals an imbalanced oral microbiome — the first ecosystem in your body." },
+      { q: "Do you experience jaw pain, clicking, or tension?",            yScore: 2,  nScore: 10, insight: "TMJ dysfunction is often connected to sleep, airway, and nervous system issues, not just a jaw problem." },
+      { q: "Would you describe your breath as consistently fresh?",        yScore: 10, nScore: 2,  insight: "Persistent bad breath often signals an imbalanced oral microbiome, the first ecosystem in your body." },
       { q: "Have you ever been told you have gum disease or gingivitis?",  yScore: 2,  nScore: 10, insight: "Periodontal bacteria enter the bloodstream and trigger inflammatory responses throughout the body." },
-      { q: "Do you feel confident in how your smile looks and functions?", yScore: 10, nScore: 4,  insight: "Oral confidence affects mental health, social behavior, and willingness to seek care — all measurable health factors." },
+      { q: "Do you feel confident in how your smile looks and functions?", yScore: 10, nScore: 4,  insight: "Oral confidence affects mental health, social behavior, and willingness to seek care, all measurable health factors." },
     ],
   },
   {
@@ -144,14 +144,14 @@ const DIMS = [
     fact: "80% of people with sleep apnea are undiagnosed. Their dentist is often first to spot it.",
     questions: [
       { q: "Do you wake up feeling genuinely rested most mornings?",               yScore: 10, nScore: 0,  insight: "Unrefreshing sleep is the hallmark of sleep-disordered breathing, even without snoring or gasping." },
-      { q: "Has anyone told you that you snore or stop breathing at night?",       yScore: 0,  nScore: 10, insight: "Witnessed apneas are among the strongest predictors of obstructive sleep apnea — a serious cardiovascular risk." },
-      { q: "Do you grind or clench your teeth?",                                   yScore: 1,  nScore: 10, insight: "Bruxism is often the body's response to airway obstruction during sleep — a signal most practitioners miss." },
-      { q: "Do you breathe primarily through your nose?",                          yScore: 10, nScore: 2,  insight: "Nasal breathing produces nitric oxide — critical for oxygen absorption, immunity, and cardiovascular health." },
+      { q: "Has anyone told you that you snore or stop breathing at night?",       yScore: 0,  nScore: 10, insight: "Witnessed apneas are among the strongest predictors of obstructive sleep apnea, a serious cardiovascular risk." },
+      { q: "Do you grind or clench your teeth?",                                   yScore: 1,  nScore: 10, insight: "Bruxism (teeth grinding) is often the body's response to airway obstruction during sleep, a signal most practitioners miss." },
+      { q: "Do you breathe primarily through your nose?",                          yScore: 10, nScore: 2,  insight: "Nasal breathing produces nitric oxide, critical for oxygen absorption, immunity, and cardiovascular health." },
       { q: "Do you feel alert throughout the day without relying on caffeine?",    yScore: 10, nScore: 2,  insight: "Daytime fatigue is the most common unrecognized symptom of sleep-disordered breathing." },
-      { q: "Do you wake up with a dry mouth or sore throat?",                      yScore: 2,  nScore: 10, insight: "Morning dry mouth is a strong indicator of mouth breathing during sleep — directly tied to airway health." },
-      { q: "Do you fall asleep easily and stay asleep through the night?",         yScore: 10, nScore: 2,  insight: "Fragmented sleep architecture is often caused by micro-arousals from airway restriction — invisible to the sleeper." },
+      { q: "Do you wake up with a dry mouth or sore throat?",                      yScore: 2,  nScore: 10, insight: "Morning dry mouth is a strong indicator of mouth breathing during sleep, directly tied to airway health." },
+      { q: "Do you fall asleep easily and stay asleep through the night?",         yScore: 10, nScore: 2,  insight: "Fragmented sleep architecture is often caused by micro-arousals from airway restriction, invisible to the sleeper." },
       { q: "Have you ever been evaluated for sleep apnea?",                        yScore: 8,  nScore: 4,  insight: "Most adults have never been screened. A dentist is uniquely positioned to assess airway risk at every visit." },
-      { q: "Do you wake up with headaches or jaw tension?",                        yScore: 2,  nScore: 10, insight: "Morning headaches and jaw tension are a classic triad with airway compromise — often dismissed as stress." },
+      { q: "Do you wake up with headaches or jaw tension?",                        yScore: 2,  nScore: 10, insight: "Morning headaches and jaw tension are a classic triad with airway compromise, often dismissed as stress." },
       { q: "Is your sleep generally 7 to 9 hours per night?",                     yScore: 10, nScore: 2,  insight: "Chronic short sleep is linked to accelerated biological aging, metabolic dysfunction, and oral inflammation." },
     ],
   },
@@ -161,18 +161,18 @@ const DIMS = [
     color: B.green,
     lightBg: "#E8F8F0",
     tagline: "You feed your mouth first.",
-    intro: "What you eat shapes your oral microbiome — and everything downstream from it. These 10 questions reveal your nutrition picture.",
+    intro: "What you eat shapes your oral microbiome, and everything downstream from it. These 10 questions reveal your nutrition picture.",
     fact: "Every time you swallow, billions of oral bacteria travel to your gut. Your diet determines which ones.",
     questions: [
       { q: "Do you eat mostly whole, unprocessed foods?",                          yScore: 10, nScore: 2,  insight: "Whole foods feed beneficial oral bacteria and reduce the acidic environment that drives decay and inflammation." },
       { q: "Do you consume sugary drinks or snacks daily?",                        yScore: 0,  nScore: 10, insight: "Sugar is the primary fuel for harmful oral bacteria. Even 'healthy' sugar sources count." },
-      { q: "Do you eat fermented foods like yogurt, kefir, or sauerkraut?",       yScore: 10, nScore: 4,  insight: "Fermented foods seed your oral and gut microbiome with beneficial bacteria — a direct health investment." },
+      { q: "Do you eat fermented foods like yogurt, kefir, or sauerkraut?",       yScore: 10, nScore: 4,  insight: "Fermented foods seed your oral and gut microbiome with beneficial bacteria, a direct health investment." },
       { q: "Do you drink at least 8 glasses of water daily?",                     yScore: 10, nScore: 2,  insight: "Saliva is your mouth's built-in defense system. Dehydration suppresses it and invites bacterial overgrowth." },
       { q: "Do you chew your food slowly and thoroughly?",                        yScore: 10, nScore: 4,  insight: "Digestion begins in the mouth. Thorough chewing activates salivary enzymes and reduces digestive stress downstream." },
       { q: "Do you limit alcohol to fewer than 7 drinks per week?",              yScore: 10, nScore: 2,  insight: "Alcohol disrupts the oral microbiome, dries the mouth, and increases oral cancer risk significantly." },
-      { q: "Do you eat leafy greens or cruciferous vegetables most days?",        yScore: 10, nScore: 4,  insight: "These vegetables feed nitrate-reducing oral bacteria that produce nitric oxide — essential for cardiovascular health." },
+      { q: "Do you eat leafy greens or cruciferous vegetables most days?",        yScore: 10, nScore: 4,  insight: "These vegetables feed nitrate-reducing oral bacteria that produce nitric oxide, essential for cardiovascular health." },
       { q: "Do you avoid grazing or snacking between meals?",                     yScore: 10, nScore: 4,  insight: "Constant snacking keeps oral pH acidic and prevents the remineralization cycle your teeth depend on." },
-      { q: "Do you take a probiotic or eat prebiotics regularly?",                yScore: 10, nScore: 5,  insight: "Oral probiotics are one of the most underused tools for microbiome health — and one of the most impactful." },
+      { q: "Do you take a probiotic or eat prebiotics regularly?",                yScore: 10, nScore: 5,  insight: "Oral probiotics are one of the most underused tools for microbiome health, and one of the most impactful." },
       { q: "Is your diet mostly anti-inflammatory in nature?",                    yScore: 10, nScore: 2,  insight: "Systemic inflammation starts with what you eat. The oral microbiome is the first place that change is measurable." },
     ],
   },
@@ -183,16 +183,16 @@ const DIMS = [
     lightBg: "#FCE8F6",
     tagline: "Your biology is unique. Your care should be too.",
     intro: "Your genetics and oral microbiome shape your susceptibility to everything from gum disease to Alzheimer's.",
-    fact: "A specific oral bacterium — P. gingivalis — has been found in the brains of Alzheimer's patients.",
+    fact: "A specific oral bacterium, P. gingivalis, has been found in the brains of Alzheimer's patients.",
     questions: [
-      { q: "Do you have a family history of gum disease?",                         yScore: 2,  nScore: 10, insight: "Periodontal susceptibility has a strong genetic component — knowing it early changes your prevention strategy." },
+      { q: "Do you have a family history of gum disease?",                         yScore: 2,  nScore: 10, insight: "Periodontal susceptibility has a strong genetic component, and knowing it early changes your prevention strategy." },
       { q: "Do you have a family history of heart disease or diabetes?",           yScore: 3,  nScore: 10, insight: "These conditions share inflammatory pathways with oral disease. Your risk profile needs to be understood together." },
       { q: "Have you ever had genetic testing like 23andMe or similar?",           yScore: 8,  nScore: 5,  insight: "Genetic insights let us personalize your care from day one. Some people are genetically wired for higher inflammation." },
       { q: "Do you experience chronic inflammation symptoms like joint pain or fatigue?", yScore: 2, nScore: 10, insight: "Chronic systemic inflammation is the common thread between gum disease and most major chronic diseases." },
       { q: "Do you have known sensitivities to metals or dental materials?",       yScore: 3,  nScore: 10, insight: "Metal sensitivities can cause systemic reactions from dental work that go undiagnosed for years." },
       { q: "Have you ever had a comprehensive microbiome test?",                   yScore: 9,  nScore: 5,  insight: "Most people have never looked at their oral microbiome. It's the most upstream intervention available." },
-      { q: "Do you have autoimmune conditions in your family history?",            yScore: 3,  nScore: 10, insight: "Oral inflammation activates the same immune pathways that drive autoimmune conditions — often the first trigger." },
-      { q: "Do you have a history of frequent cavities despite good hygiene?",     yScore: 2,  nScore: 10, insight: "Cavity-prone patients often have a specific genetic variant affecting enamel — and a treatable microbiome profile." },
+      { q: "Do you have autoimmune conditions in your family history?",            yScore: 3,  nScore: 10, insight: "Oral inflammation activates the same immune pathways that drive autoimmune conditions, often the first trigger." },
+      { q: "Do you have a history of frequent cavities despite good hygiene?",     yScore: 2,  nScore: 10, insight: "Cavity-prone patients often have a specific genetic variant affecting enamel, and a treatable microbiome profile." },
       { q: "Do you feel your current dental care is personalized to your biology?", yScore: 8, nScore: 4,  insight: "Personalized care based on your genetic and microbiome profile is the future of dentistry. Very few practices offer it." },
       { q: "Are you curious about what your oral microbiome looks like right now?", yScore: 10, nScore: 5, insight: "Curiosity is the first step. We can test your oral microbiome at your next visit and show you exactly what's there." },
     ],
@@ -204,17 +204,17 @@ const DIMS = [
     lightBg: "#FFF0E8",
     tagline: "The dimension most dentists never look at.",
     intro: "Airway health is the hidden dimension. It affects sleep, energy, focus, and how your face develops over time.",
-    fact: "Tongue posture affects your airway every moment you're alive — yet almost no one has ever been evaluated for it.",
+    fact: "Tongue posture affects your airway every moment you're alive, yet almost no one has ever been evaluated for it.",
     questions: [
-      { q: "Do you breathe through your nose more than your mouth?",               yScore: 10, nScore: 2,  insight: "Nasal breathing filters, humidifies, and oxygenates air — mouth breathing bypasses all of it and dries oral tissue." },
+      { q: "Do you breathe through your nose more than your mouth?",               yScore: 10, nScore: 2,  insight: "Nasal breathing filters, humidifies, and oxygenates air. Mouth breathing bypasses all of it and dries oral tissue." },
       { q: "Does your tongue rest against the roof of your mouth when closed?",    yScore: 10, nScore: 2,  insight: "Correct tongue posture is critical for airway patency. Incorrect posture contributes to airway collapse during sleep." },
       { q: "Can you breathe comfortably through your nose during exercise?",       yScore: 10, nScore: 3,  insight: "Nasal breathing capacity during exertion is one of the best indicators of functional airway health." },
       { q: "Do you feel congested or blocked in your nose frequently?",            yScore: 2,  nScore: 10, insight: "Chronic nasal congestion forces mouth breathing, disrupts sleep, and dries out the oral environment." },
-      { q: "Have you ever been evaluated for a deviated septum or narrow palate?", yScore: 7,  nScore: 5,  insight: "Structural airway issues are common, underdiagnosed, and often correctable — especially in younger patients." },
-      { q: "Do you experience jaw tension, clicking, or limited opening?",         yScore: 2,  nScore: 10, insight: "TMJ issues and airway problems are closely linked — the jaw position affects airway space directly." },
+      { q: "Have you ever been evaluated for a deviated septum or narrow palate?", yScore: 7,  nScore: 5,  insight: "Structural airway issues are common, underdiagnosed, and often correctable, especially in younger patients." },
+      { q: "Do you experience jaw tension, clicking, or limited opening?",         yScore: 2,  nScore: 10, insight: "TMJ issues and airway problems are closely linked. The jaw position affects airway space directly." },
       { q: "Have you ever been told your tonsils are enlarged?",                   yScore: 3,  nScore: 10, insight: "Enlarged tonsils reduce airway space and are a primary cause of pediatric sleep apnea and poor development." },
-      { q: "Do you have good posture — head balanced above your shoulders?",       yScore: 10, nScore: 3,  insight: "Forward head posture reduces airway diameter by up to 30% — directly connected to chronic airway compression." },
-      { q: "Do you feel like you can take a full, deep breath easily?",            yScore: 10, nScore: 2,  insight: "Restricted breathing often originates in the airway anatomy — something a trained dentist can assess visually." },
+      { q: "Do you have good posture, head balanced above your shoulders?",       yScore: 10, nScore: 3,  insight: "Forward head posture reduces airway diameter by up to 30%, directly connected to chronic airway compression." },
+      { q: "Do you feel like you can take a full, deep breath easily?",            yScore: 10, nScore: 2,  insight: "Restricted breathing often originates in the airway anatomy, something a trained dentist can assess visually." },
       { q: "Are you free of chronic sinus infections or nasal issues?",            yScore: 10, nScore: 3,  insight: "Chronic sinusitis and oral health are bidirectionally linked through the same mucosal immune pathways." },
     ],
   },
@@ -368,7 +368,7 @@ function Pentagon({ scores }) {
 
 // ── SCREENS ───────────────────────────────────────────────────
 
-// 0. LANDING — choose your path
+// 0. LANDING : choose your path
 function Landing({ onStart, onStartAll }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -440,7 +440,7 @@ function Landing({ onStart, onStartAll }) {
             <span style={{ fontStyle: "italic", color: B.blue }}>Primary Health Score.</span>
           </h1>
           <p style={{ fontFamily: "Georgia,serif", fontSize: 16, color: "rgba(255,255,255,0.45)", lineHeight: 1.75, margin: 0, maxWidth: 420 }}>
-            5 dimensions. 50 questions. A complete picture of your oral-systemic health — in under 10 minutes.
+            5 dimensions. 50 questions. A complete picture of your oral-systemic health, in under 10 minutes.
           </p>
         </div>
 
@@ -537,7 +537,7 @@ function Landing({ onStart, onStartAll }) {
   );
 }
 
-// 1. DIM INTRO — animated entry to a dimension
+// 1. DIM INTRO : animated entry to a dimension
 function DimIntro({ dim, user, qsDone, totalDims, onBegin }) {
   const [ready, setReady] = useState(false);
   useEffect(() => { const t = setTimeout(() => setReady(true), 60); return () => clearTimeout(t); }, []);
@@ -583,7 +583,7 @@ function DimIntro({ dim, user, qsDone, totalDims, onBegin }) {
   );
 }
 
-// 2. QUESTION — single yes/no question
+// 2. QUESTION : single yes/no question
 function Question({ dim, question, questionIndex, totalQuestions, onAnswer, answered }) {
   const [selected, setSelected] = useState(null);
   const [animOut, setAnimOut] = useState(false);
@@ -677,7 +677,7 @@ function Question({ dim, question, questionIndex, totalQuestions, onAnswer, answ
             })}
           </div>
 
-          {/* Insight card — slides in after answer, stays until Continue */}
+          {/* Insight card : slides in after answer, stays until Continue */}
           {selected !== null && (
             <div style={{ animation: "insightIn 0.4s cubic-bezier(0.23,1,0.32,1) forwards", marginBottom: 14 }}>
               <div style={{
@@ -729,7 +729,7 @@ function Question({ dim, question, questionIndex, totalQuestions, onAnswer, answ
   );
 }
 
-// 3. DIM RESULT — score reveal + invitation to next
+// 3. DIM RESULT : score reveal + invitation to next
 function DimResult({ dim, score, user, nextDim, completedDims, answers, onNext, onNextDim, onViewAll }) {
   const [shown, setShown] = useState(false);
   useEffect(() => { const t = setTimeout(() => setShown(true), 100); return () => clearTimeout(t); }, []);
@@ -822,7 +822,7 @@ function DimResult({ dim, score, user, nextDim, completedDims, answers, onNext, 
   );
 }
 
-// 4. FULL RESULTS — pentagon + all 5 scores + CTA
+// 4. FULL RESULTS : pentagon + all 5 scores + CTA
 function FullResults({ answers, user, completedDims, onRetake, onStart }) {
   const [shown, setShown] = useState(false);
   useEffect(() => { const t = setTimeout(() => setShown(true), 100); return () => clearTimeout(t); }, []);
@@ -944,7 +944,7 @@ function FullResults({ answers, user, completedDims, onRetake, onStart }) {
             <span style={{ fontStyle: "italic", color: B.blue }}>A clinical visit goes much deeper.</span>
           </h3>
           <p style={{ fontFamily: "Georgia,serif", fontSize: 13.5, color: "rgba(255,255,255,0.4)", lineHeight: 1.7, margin: "0 0 20px" }}>
-            Primary uses advanced diagnostics — 3D imaging, salivary testing, and airway assessment — to see what questionnaires can only hint at.
+            Primary uses advanced diagnostics, 3D imaging, salivary testing, and airway assessment, to see what questionnaires can only hint at.
           </p>
           <a href="/book/" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, padding: "15px", background: B.blue, color: B.white, borderRadius: 12, fontFamily: "Georgia,serif", fontSize: 15, textDecoration: "none", marginBottom: 10, boxShadow: `0 4px 20px ${B.blue}40`, transition: "all 0.25s ease" }}
             onMouseOver={e => { e.currentTarget.style.transform = "translateY(-2px)"; }}

@@ -6,7 +6,7 @@ import { BreadcrumbSchema } from "@/components/schema"
 export const metadata: Metadata = {
   title: "Book a visit",
   description:
-    "Five pathways into Primary Integrative Dentistry — preventive, airway, cosmetic, implants, and longevity. Start with the assessment or call (310) 564-8990.",
+    "Five pathways into Primary Integrative Dentistry: preventive, airway, cosmetic, implants, and longevity. Start with the assessment or call (310) 564-8990.",
   alternates: { canonical: "https://myprimaryid.com/book/" },
   robots: { index: false, follow: true },
 }
@@ -14,9 +14,9 @@ export const metadata: Metadata = {
 const PATHWAYS = [
   { slug: "preventive", title: "Preventive", desc: "Comprehensive 90-minute intake with the full Primary iD score." },
   { slug: "airway", title: "Airway & sleep", desc: "Sleep-disordered breathing screening, STOP-BANG, CBCT airway analysis." },
-  { slug: "cosmetic", title: "Cosmetic", desc: "Veneers, whitening, bonding, full smile design — biocompatible by default." },
+  { slug: "cosmetic", title: "Cosmetic", desc: "Veneers, whitening, bonding, full smile design, biocompatible by default." },
   { slug: "implants", title: "Implants", desc: "Zirconia and titanium implants planned with 3D imaging. Full-arch capable." },
-  { slug: "longevity", title: "Longevity", desc: "Primary iD Plus — biomarker labs, nutrition, sleep, and oral microbiome integrated." },
+  { slug: "longevity", title: "Longevity", desc: "Primary iD Plus: biomarker labs, nutrition, sleep, and oral microbiome integrated." },
 ]
 
 export default function BookIndexPage() {
@@ -31,7 +31,7 @@ export default function BookIndexPage() {
         <Hero
           eyebrow="Book"
           title="Choose your pathway."
-          subtitle="We meet you where your priority is — and broaden out from there. Every pathway includes a full Primary iD scoring across five dimensions."
+          subtitle="We meet you where your priority is, and broaden out from there. Every pathway includes a full Primary iD scoring across five dimensions."
         />
         <div style={{ marginTop: 16 }}>
           {PATHWAYS.map((p) => (

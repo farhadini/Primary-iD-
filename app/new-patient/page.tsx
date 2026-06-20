@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 
 // ============================================================
-// PRIMARY — New Patient Experience Page
+// PRIMARY : New Patient Experience Page
 // + Homepage section component (export separately)
 // Design: quiet luxury · editorial · anxiety-reducing · warm
 // ============================================================
@@ -199,7 +199,7 @@ function PreVisit() {
   ];
 
   const faqs = [
-    { q: "How long does the assessment take?", a: "About 10 minutes total — 2 minutes per dimension. You can save and return if needed." },
+    { q: "How long does the assessment take?", a: "About 10 minutes total, 2 minutes per dimension. You can save and return if needed." },
     { q: "Do I need to complete it before my visit?", a: "We strongly recommend it. It lets Dr. Gabi review your health picture before you even sit in the chair, so your time together is deeper and more personal." },
     { q: "Is my information private?", a: "Completely. Your responses are used only to personalize your care. We never share or sell patient data." },
     { q: "What if I don't know the answers to some questions?", a: "Your best estimate is fine. The assessment is a starting point, not a diagnostic test. We'll refine the picture together during your visit." },
@@ -370,9 +370,9 @@ function DayOf() {
       time: "0–15 min",
       color: B.blue,
       room: null,
-      description: "You'll be greeted by name and taken on a brief orientation of the space. The Brentwood skyline views were intentional — this is not your typical dental waiting room.",
+      description: "You'll be greeted by name and taken on a brief orientation of the space. The skyline views were intentional. This is not your typical dental waiting room.",
       details: [
-        "No clipboards, no waiting room forms — your intake is already complete",
+        "No clipboards, no waiting room forms. Your intake is already complete",
         "Your care team has reviewed your health assessment",
         "You'll be offered water, tea, or a quiet moment to settle in",
         "Meet the person who will guide you through your visit",
@@ -385,13 +385,13 @@ function DayOf() {
       time: "15–50 min",
       color: B.green,
       room: "RENEWAL or RESTORE",
-      description: "This is where Primary is different. We use technology that most practices don't have — and we explain every step so you understand what we're looking for and why.",
+      description: "This is where Primary is different. We use technology that most practices don't have, and we explain every step so you understand what we're looking for and why.",
       details: [
-        "3D CBCT imaging — sees bone density, airways, hidden infections",
-        "Intraoral scanning — digital impressions, no trays",
-        "Salivary diagnostics — identifies bacterial risk and microbiome imbalance",
-        "Airway analysis — measures your actual breathing capacity",
-        "Full periodontal assessment — gum health and inflammation markers",
+        "3D CBCT imaging: sees bone density, airways, hidden infections",
+        "Intraoral scanning: digital impressions, no trays",
+        "Salivary diagnostics: identifies bacterial risk and microbiome imbalance",
+        "Airway analysis: measures your actual breathing capacity",
+        "Full periodontal assessment: gum health and inflammation markers",
       ],
       note: "Each test takes 5–10 minutes. We narrate as we go, connecting findings to your health picture.",
     },
@@ -417,7 +417,7 @@ function DayOf() {
       time: "75–85 min",
       color: B.purple,
       room: null,
-      description: "By the end of your visit, you receive your personalized Primary iD — a scored health roadmap across all five dimensions that you can take with you and build on over time.",
+      description: "By the end of your visit, you receive your personalized Primary iD, a scored health roadmap across all five dimensions that you can take with you and build on over time.",
       details: [
         "Scores across oral health, sleep, nutrition, genetics, and airway",
         "Priority areas identified based on your specific profile",
@@ -433,7 +433,7 @@ function DayOf() {
       time: "85–90 min",
       color: B.green,
       room: "REIMAGINE",
-      description: "Your treatment coordinator walks you through a care plan that makes sense — no pressure, no confusion. Every option is explained with context and you leave with clarity, not anxiety.",
+      description: "Your treatment coordinator walks you through a care plan that makes sense, with no pressure and no confusion. Every option is explained with context and you leave with clarity, not anxiety.",
       details: [
         "Treatment options presented with clear priorities",
         "Transparent pricing with no hidden costs",
@@ -441,7 +441,7 @@ function DayOf() {
         "Insurance review and financing options if applicable",
         "Your next appointment scheduled before you leave",
       ],
-      note: "The goal is that you leave knowing exactly what to do next — and genuinely excited about your health journey.",
+      note: "The goal is that you leave knowing exactly what to do next, and genuinely excited about your health journey.",
     },
   ];
 
@@ -622,7 +622,7 @@ function TheSpace() {
           </div>
           <div style={{ opacity: visible ? 1 : 0, transition: "opacity 0.7s ease 0.2s" }}>
             <p style={{ fontFamily: "Georgia,serif", fontSize: 15, color: B.body, lineHeight: 1.75, margin: 0 }}>
-              We named each room with intention. The "Re-" prefix isn't decorative — it's a philosophy. Every treatment, every visit, every conversation here is about returning you to something. Balance. Health. Clarity. Confidence.
+              We named each room with intention. The "Re-" prefix isn't decorative. It's a philosophy. Every treatment, every visit, every conversation here is about returning you to something. Balance. Health. Clarity. Confidence.
             </p>
           </div>
         </div>
@@ -802,7 +802,7 @@ export function NewPatientSection({ onNavigate }) {
               margin: "0 0 36px", maxWidth: 420,
               opacity: visible ? 1 : 0, transition: "opacity 0.7s ease 0.2s",
             }}>
-              Ninety minutes. No surprises. A health picture you've never had before — and a clear path forward.
+              Ninety minutes. No surprises. A health picture you've never had before, and a clear path forward.
             </p>
 
             <a
@@ -861,7 +861,7 @@ export function NewPatientSection({ onNavigate }) {
             <div style={{ marginTop: 16, padding: "14px 20px", background: `${B.accent}08`, borderRadius: 10, border: `1px solid ${B.accent}15` }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <div style={{ width: 5, height: 5, borderRadius: "50%", background: B.accent }} />
-                <span style={{ fontFamily: "Georgia,serif", fontSize: 12, color: B.accent }}>~90 minutes · Brentwood, Los Angeles</span>
+                <span style={{ fontFamily: "Georgia,serif", fontSize: 12, color: B.accent }}>~90 minutes · Los Angeles</span>
               </div>
             </div>
           </div>

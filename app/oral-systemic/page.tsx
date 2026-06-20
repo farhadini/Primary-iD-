@@ -231,12 +231,12 @@ function Editorial() {
           </Reveal>
           <Reveal delay={0.2}>
             <p style={{ fontFamily: SERIF, fontWeight: 300, fontSize: 17, lineHeight: 1.85, color: B.body, margin: "0 0 22px" }}>
-              Inflammation, bacteria, airway restriction, microbiome imbalance — these do not respect the line between a dental chair and an exam table. They travel. They accumulate. And by the time they show up elsewhere in your body, the signal started here.
+              Inflammation, bacteria, airway restriction, microbiome imbalance: these do not respect the line between a dental chair and an exam table. They travel. They accumulate. And by the time they show up elsewhere in your body, the signal started here.
             </p>
           </Reveal>
           <Reveal delay={0.3}>
             <p style={{ fontFamily: SERIF, fontWeight: 300, fontSize: 17, lineHeight: 1.85, color: B.body, margin: 0 }}>
-              Dentists see patients three to four times more often than primary care physicians. That frequency is not a scheduling quirk. It is an unmatched window to catch what others will miss — if the dentist is looking for it.
+              Dentists see patients three to four times more often than primary care physicians. That frequency is not a scheduling quirk. It is an unmatched window to catch what others will miss, if the dentist is looking for it.
             </p>
           </Reveal>
         </div>
@@ -290,7 +290,7 @@ function SystemsGrid() {
     {
       num: "02", title: "Sleep &", titleEm: "airway",
       icon: <svg viewBox="0 0 40 40" fill="none" style={{ width: 36, height: 36 }}><path d="M26 8 C18 10 12 16 12 24 C12 30 16 34 22 34 C28 34 32 30 33 25 C29 27 24 26 21 22 C18 18 19 12 26 8 Z" fill={B.purple}/><circle cx="30" cy="14" r="1.2" fill="#fff" opacity="0.8"/><circle cx="34" cy="20" r="0.8" fill="#fff" opacity="0.8"/></svg>,
-      body: <>Your jaw shape determines how you breathe at night. A narrow arch, a tongue-tie, or a high palate can close the airway during sleep — setting off snoring, grinding, and <strong>the cardiovascular toll of untreated apnea.</strong></>,
+      body: <>Your jaw shape determines how you breathe at night. A narrow arch, a tongue-tie, or a high palate can close the airway during sleep, setting off snoring, grinding, and <strong>the cardiovascular toll of untreated apnea.</strong></>,
       stat: "80% undiagnosed · STOP-BANG",
       color: B.purple, bg: "linear-gradient(135deg, #F6F5FE 0%, #DDD6F7 100%)", statBg: B.purple50, statColor: "#4f3fb0",
       link: "/diagnostics",
@@ -306,7 +306,7 @@ function SystemsGrid() {
     {
       num: "04", title: "", titleEm: "Longevity",
       icon: <svg viewBox="0 0 40 40" fill="none" style={{ width: 36, height: 36 }}><path d="M8 26 L14 20 L19 25 L26 12 L32 18" stroke={B.green} strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round"/><circle cx="32" cy="18" r="3" fill={B.green}/><circle cx="32" cy="18" r="1.5" fill="#fff"/></svg>,
-      body: <>Oral health is one of the most predictive markers of lifespan. <strong>P. gingivalis — a periodontal pathogen — has been found in the brains of Alzheimer's patients.</strong> The mouth is on the front line of how long, and how well, you live.</>,
+      body: <>Oral health is one of the most predictive markers of lifespan. <strong>P. gingivalis, a periodontal pathogen, has been found in the brains of Alzheimer's patients.</strong> The mouth is on the front line of how long, and how well, you live.</>,
       stat: "+5–7 years · Life's Essential 8",
       color: B.green, bg: "linear-gradient(135deg, #F2FAF5 0%, #D4EEDE 100%)", statBg: B.green50, statColor: "#2d8a5f",
       link: "/diagnostics",
@@ -421,7 +421,7 @@ function AccessAdvantage() {
           </Reveal>
           <Reveal delay={0.3}>
             <p style={{ fontFamily: SERIF, fontWeight: 300, fontSize: 17, lineHeight: 1.75, color: B.body, margin: 0, maxWidth: 460 }}>
-              The dentist, statistically, is the doctor you visit most. That frequency is the single biggest untapped opportunity in preventive medicine — if the dentist is trained to see beyond the teeth.
+              The dentist, statistically, is the doctor you visit most. That frequency is the single biggest untapped opportunity in preventive medicine, if the dentist is trained to see beyond the teeth.
             </p>
           </Reveal>
         </div>
@@ -488,7 +488,7 @@ function AutoimmuneSection() {
           </Reveal>
           <Reveal delay={0.2}>
             <p style={{ fontFamily: SERIF, fontWeight: 300, fontSize: 16.5, lineHeight: 1.75, color: "rgba(254,252,249,0.82)", margin: "0 0 18px" }}>
-              One in ten people now lives with an autoimmune condition. These diseases don't start in the organ they attack — they start in the gut, the airway, and the mouth.
+              One in ten people now lives with an autoimmune condition. These diseases don't start in the organ they attack. They start in the gut, the airway, and the mouth.
             </p>
           </Reveal>
           <Reveal delay={0.3}>
@@ -498,7 +498,7 @@ function AutoimmuneSection() {
           </Reveal>
           <Reveal delay={0.4}>
             <div style={{ marginTop: 24, padding: "20px 22px", background: "rgba(232,152,94,0.1)", borderLeft: `3px solid ${B.accent}`, borderRadius: 10, fontFamily: SERIF, fontStyle: "italic", fontSize: 15.5, lineHeight: 1.6, color: B.warm }}>
-              If we catch inflammation where it starts — in the oral microbiome — we can intercept the cascade before it becomes a diagnosis.
+              If we catch inflammation where it starts, in the oral microbiome, we can intercept the cascade before it becomes a diagnosis.
             </div>
           </Reveal>
         </div>
@@ -550,12 +550,12 @@ function CancerSection() {
           </Reveal>
           <Reveal delay={0.1}>
             <h2 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(32px, 3.8vw, 46px)", lineHeight: 1.12, letterSpacing: "-0.015em", color: B.navy, margin: "16px 0 14px" }}>
-              One in three cancer deaths trace back to <em style={{ fontStyle: "italic", color: B.blue, fontWeight: 400 }}>lifestyle, not luck.</em>
+              The earliest signs of oral and throat cancer often show up <em style={{ fontStyle: "italic", color: B.blue, fontWeight: 400 }}>in the mouth first.</em>
             </h2>
           </Reveal>
           <Reveal delay={0.2}>
             <p style={{ fontFamily: SERIF, fontWeight: 300, fontSize: 17, lineHeight: 1.7, color: B.body, margin: 0 }}>
-              And your dentist is the doctor most likely to spot the earliest signals — in the mouth, in the throat, in the breath, in the tissue.
+              And your dentist is the doctor most likely to spot the earliest signals, in the mouth, in the throat, in the breath, in the tissue.
             </p>
           </Reveal>
         </div>
@@ -632,10 +632,10 @@ function CancerSection() {
 // ── DIMENSIONS SECTION ─────────────────────────────────────────
 function DimensionsSection() {
   const dimensions = [
-    { num: "01", name: "Oral Health", inst: "CAMBRA · caries & periodontal risk" },
-    { num: "02", name: "Sleep & Airway", inst: "STOP-BANG · breathing & apnea risk" },
+    { num: "01", name: "Oral Health", inst: "Caries-risk assessment · cavities & gum-disease risk" },
+    { num: "02", name: "Sleep & Airway", inst: "Sleep-apnea screening · breathing & apnea risk" },
     { num: "03", name: "Nutrition", inst: "MEDAS · Mediterranean adherence" },
-    { num: "04", name: "Family History", inst: "AAP / EFP · inherited disease risk" },
+    { num: "04", name: "Family History", inst: "Family-history review · inherited disease risk" },
     { num: "05", name: "Longevity", inst: "Life's Essential 8 · cardiovascular & metabolic" },
   ];
 
@@ -656,12 +656,12 @@ function DimensionsSection() {
           </Reveal>
           <Reveal delay={0.2}>
             <p style={{ fontFamily: SERIF, fontWeight: 300, fontSize: 16.5, lineHeight: 1.75, color: B.body, margin: "0 0 20px", maxWidth: 440 }}>
-              We don't guess where to intervene. We measure it — across five dimensions backed by validated clinical instruments.
+              We don't guess where to intervene. We measure it, across five dimensions backed by validated clinical instruments.
             </p>
           </Reveal>
           <Reveal delay={0.3}>
             <div style={{ marginTop: 10, marginBottom: 28, padding: "18px 22px", background: B.accent50, borderLeft: `3px solid ${B.accent}`, borderRadius: 10, fontFamily: SERIF, fontStyle: "italic", fontSize: 15.5, lineHeight: 1.6, color: B.body }}>
-              <strong style={{ color: "#9e4628", fontStyle: "normal", fontWeight: 600 }}>And your scores become your plan.</strong> Your Primary iD membership is built around these five dimensions — only what your scores say you need, nothing you don't.
+              <strong style={{ color: "#9e4628", fontStyle: "normal", fontWeight: 600 }}>Your scores guide the conversation, they don't write the plan.</strong> They tell us where to look. Dr. Gabi then confirms what the exam and imaging actually show before anything is recommended, so your care follows the real findings, not a script. Your Primary iD membership is built around these same five dimensions.
             </div>
           </Reveal>
           <Reveal delay={0.4}>
@@ -731,7 +731,7 @@ function FinalCTA() {
         </Reveal>
         <Reveal delay={0.2}>
           <p style={{ fontFamily: SERIF, fontWeight: 300, fontSize: 17, lineHeight: 1.6, color: "rgba(254,252,249,0.9)", margin: "0 auto 32px", maxWidth: 620 }}>
-            About ten minutes. Five validated chapters. One Primary iD score that shapes your care — and your plan.
+            About ten minutes. Five validated chapters. One Primary iD score that shapes your care, and your plan.
           </p>
         </Reveal>
         <Reveal delay={0.3}>
@@ -802,7 +802,7 @@ export default function OralSystemicPage() {
       <CancerSection />
       <DimensionsSection />
       <Pullquote 
-        quote="If you care about your heart, your sleep, your skin, and how long you live — then you care about your oral health. These are not separate conversations. They are the same conversation."
+        quote="If you care about your heart, your sleep, your skin, and how long you live, then you care about your oral health. These are not separate conversations. They are the same conversation."
         cite="Dr. Tzur Gabi"
       />
       <FinalCTA />

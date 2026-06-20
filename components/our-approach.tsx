@@ -1,7 +1,7 @@
 "use client";
 
 // ---------------------------------------------------------------------------
-// Section 6: Our Approach — outcomes-first grid
+// Section 6: Our Approach, outcomes-first grid
 // ---------------------------------------------------------------------------
 
 const B = {
@@ -65,7 +65,7 @@ const OUTCOMES = [
     kickerColor: "#1a6f9c",
     rootCopy: (
       <>
-        Crooked teeth usually trace back to <strong>airway and tongue posture</strong> in childhood. Aligning the arch without addressing the airway sets you up to relapse — or to snore harder.
+        Crooked teeth usually trace back to <strong>airway and tongue posture</strong> in childhood. Aligning the arch without addressing the airway sets you up to relapse, or to snore harder.
       </>
     ),
     chip: "STOP-BANG · Sleep",
@@ -131,7 +131,7 @@ const OUTCOMES = [
     kickerColor: "#9e4628",
     rootCopy: (
       <>
-        Bleeding gums are a <strong>systemic inflammation</strong> signal — the same inflammation that drives heart disease and diabetes. Treating gums without treating that signal is treating smoke, not fire.
+        Bleeding gums are a <strong>systemic inflammation</strong> signal: the same inflammation that drives heart disease and diabetes. Treating gums without treating that signal is treating smoke, not fire.
       </>
     ),
     chip: "AAP/EFP · Family",
@@ -161,7 +161,7 @@ const OUTCOMES = [
     kickerColor: "#4f3fb0",
     rootCopy: (
       <>
-        Snoring and grinding aren&apos;t sleep habits — they&apos;re <strong>airway compensation</strong>. Your mouth is doing at night what it has to do to breathe. We measure the airway first.
+        Snoring and grinding aren&apos;t sleep habits. They&apos;re <strong>airway compensation</strong>. Your mouth is doing at night what it has to do to breathe. We measure the airway first.
       </>
     ),
     chip: "STOP-BANG · Sleep",
@@ -464,7 +464,7 @@ export default function OurApproach() {
             margin: "0 0 56px",
           }}
         >
-          Every patient walks in with a goal — whiter, straighter, pain-free, a better night&apos;s sleep, a longer life. Every goal has a root cause most dentists never check. Here&apos;s how we think about it, one outcome at a time.
+          Every patient walks in with a goal: whiter, straighter, pain-free, a better night&apos;s sleep, a longer life. Every goal has a root cause most dentists never check. Here&apos;s how we think about it, one outcome at a time.
         </p>
 
         {/* Outcome grid */}
@@ -601,7 +601,7 @@ export default function OurApproach() {
                 maxWidth: 560,
               }}
             >
-              Tooth loss isn&apos;t a cosmetic problem — it&apos;s the downstream result of <strong style={{ color: B.navy, fontWeight: 600 }}>caries, periodontal disease, or airway damage</strong> that went unaddressed. Before we rebuild — implants, full-arch, dentures — we find what caused the loss, so the replacement lasts the rest of your life, not just the warranty.
+              Tooth loss isn&apos;t a cosmetic problem. It&apos;s the downstream result of <strong style={{ color: B.navy, fontWeight: 600 }}>caries, periodontal (gum) disease, or airway damage</strong> that went unaddressed. Before we rebuild, whether implants, full-arch, or dentures, we find what caused the loss, so the replacement lasts the rest of your life, not just the warranty.
             </p>
             <div
               style={{

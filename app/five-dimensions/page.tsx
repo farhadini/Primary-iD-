@@ -4,11 +4,11 @@ import Link from "next/link"
 import type React from "react"
 
 // ─────────────────────────────────────────────────────────────────────────
-// /five-dimensions/ — The Primary iD framework page.
+// /five-dimensions/ : The Primary iD framework page.
 //
 // Migrated from the design HTML (five-dimensions-page.html). Each of the
 // five dimensions is anchored to a validated clinical instrument that's
-// recognized in academic medicine — that's the whole credibility argument
+// recognized in academic medicine, which is the whole credibility argument
 // of the page and we lead with it.
 // ─────────────────────────────────────────────────────────────────────────
 
@@ -21,14 +21,14 @@ const DIMENSIONS = [
     headline: "Where everything starts.",
     subhead: "The only place we can see bone, nerves, and soft tissue meet directly.",
     body:
-      "The mouth is the diagnostic frontier most healthcare ignores. Caries risk, periodontal status, saliva environment, and smile-related quality of life — each one tells us something about a system the rest of medicine usually misses. We score you against CAMBRA (the caries risk framework taught in dental schools), the CDC/AAP perio surveillance markers (bleeding-on-probing as the inflammation signal), and OHIP-14 (the oral-health-related quality of life instrument). Eight questions, about two minutes, a directional read on the foundation of everything else.",
+      "The mouth is the diagnostic frontier most healthcare ignores. Caries risk, periodontal status, saliva environment, and smile-related quality of life: each one tells us something about a system the rest of medicine usually misses. We score you against CAMBRA (the caries risk framework taught in dental schools), the CDC/AAP perio surveillance markers (bleeding-on-probing as the inflammation signal), and OHIP-14 (the oral-health-related quality of life instrument). Eight questions, about two minutes, a directional read on the foundation of everything else.",
     instrument: "CAMBRA + CDC/AAP perio screen + OHIP-14",
     sample: 72,
     tier: "Strong",
     stat: { num: "2×", desc: "heart disease risk with untreated periodontitis" },
     citations:
       "Featherstone JDB. CAMBRA. J Calif Dent Assoc 2007 · Eke PI et al. CDC Periodontal Surveillance. J Periodontol 2013 · Cochrane Oral Health Group. Fluoride toothpaste review, 2019 · Slade GD. OHIP-14. Community Dent Oral Epidemiol 1997.",
-    bridge: "Bruxism — grinding and clenching — links the mouth directly to how you breathe at night.",
+    bridge: "Bruxism (teeth grinding) links the mouth directly to how you breathe at night.",
   },
   {
     n: "02",
@@ -38,7 +38,7 @@ const DIMENSIONS = [
     headline: "What your mouth knows about your nights.",
     subhead: "Eighty percent of sleep apnea is undiagnosed. We see the airway before anyone else does.",
     body:
-      "The jaw, tongue, soft palate, and airway anatomy are visible from a dental chair in ways they're not from most physician offices. STOP-BANG — the validated screening tool used by anesthesiologists before any surgery — gives us a structured read on your sleep-disordered-breathing risk in 8 questions. We pair it with the Epworth Sleepiness Scale to capture the subjective daytime function side. Together they don't diagnose apnea (that requires a home sleep test) — but they tell us whether one is warranted.",
+      "The jaw, tongue, soft palate, and airway anatomy are visible from a dental chair in ways they're not from most physician offices. STOP-BANG, the validated screening tool used by anesthesiologists before any surgery, gives us a structured read on your sleep-disordered-breathing risk in 8 questions. We pair it with the Epworth Sleepiness Scale to capture the subjective daytime function side. Together they don't diagnose apnea (that requires a home sleep test), but they tell us whether one is warranted.",
     instrument: "STOP-BANG + Epworth Sleepiness Scale",
     sample: 68,
     tier: "Foundational",
@@ -46,7 +46,7 @@ const DIMENSIONS = [
     citations:
       "Chung F et al. STOP-BANG questionnaire. Anesthesiology 2008 · Johns MW. Epworth Sleepiness Scale. Sleep 1991.",
     bridge:
-      "Chronic airway inflammation correlates tightly with dietary pattern — what you eat reaches your gums and your sleep.",
+      "Chronic airway inflammation correlates tightly with dietary pattern: what you eat reaches your gums and your sleep.",
   },
   {
     n: "03",
@@ -56,7 +56,7 @@ const DIMENSIONS = [
     headline: "What you drink reaches your gums before your gut.",
     subhead: "We don't prescribe diets. We map your pattern against two validated frequency tools.",
     body:
-      "The Mediterranean Diet Adherence Screener (MEDAS) is the food-pattern instrument validated by the PREDIMED trial — one of the strongest dietary-intervention studies in cardiovascular research. BEVQ-15 specifically captures beverage intake, because sugary drinks are the single strongest dietary signal for both caries risk and metabolic health. We don't ask what you ate yesterday — we ask about your pattern. Eight questions tell us where the one or two highest-leverage swaps would be.",
+      "The Mediterranean Diet Adherence Screener (MEDAS) is the food-pattern instrument validated by the PREDIMED trial, one of the strongest dietary-intervention studies in cardiovascular research. BEVQ-15 specifically captures beverage intake, because sugary drinks are the single strongest dietary signal for both caries risk and metabolic health. We don't ask what you ate yesterday. We ask about your pattern. Eight questions tell us where the one or two highest-leverage swaps would be.",
     instrument: "MEDAS (PREDIMED) + BEVQ-15",
     sample: 81,
     tier: "Strong",
@@ -64,7 +64,7 @@ const DIMENSIONS = [
     citations:
       "Martínez-González MA et al. MEDAS. PLoS One 2012 · Hedrick VE. BEVQ-15. JADA 2012.",
     bridge:
-      "Your dietary patterns intersect with what runs in your family — diabetes, cardiovascular risk, autoimmune disease all show up here.",
+      "Your dietary patterns intersect with what runs in your family: diabetes, cardiovascular risk, autoimmune disease all show up here.",
   },
   {
     n: "04",
@@ -75,7 +75,7 @@ const DIMENSIONS = [
     subhead:
       "First-degree family history predicts your disease grade more reliably than any consumer gene panel.",
     body:
-      "The IL-1 genetic test that dentistry briefly embraced was refuted by the 2017 AAP/EFP World Workshop on Periodontitis Classification. The validated framework that replaced it is family history — specifically: did first-degree relatives lose teeth from periodontal disease, do they have early-onset cardiovascular events, does diabetes run in the family. Those three signals, combined with your smoking history and a few other modifiers, give us a structured grade on heritable risk. We use the same framework periodontists at academic medical centers use.",
+      "The IL-1 genetic test that dentistry briefly embraced was refuted by the 2017 AAP/EFP World Workshop on Periodontitis Classification. The validated framework that replaced it is family history. Specifically: did first-degree relatives lose teeth from periodontal (gum) disease, do they have early-onset cardiovascular events, does diabetes run in the family. Those three signals, combined with your smoking history and a few other modifiers, give us a structured grade on heritable risk. We use the same framework periodontists at academic medical centers use.",
     instrument: "AAP/EFP 2017 Periodontitis Classification (Grading framework)",
     sample: 75,
     tier: "Strong",
@@ -93,7 +93,7 @@ const DIMENSIONS = [
     headline: "The dental chair sees your long game.",
     subhead: "Periodontal disease is one of the most predictive markers of lifespan we have.",
     body:
-      "The American Heart Association's Life's Essential 8 framework — published in Circulation 2022 — is the clearest cardiovascular-health trajectory map currently available. Tobacco, exercise, sleep, weight, lipids, glucose, blood pressure, diet. Eight components, scored as one composite. The mouth sits upstream of most of them — chronic oral inflammation shows up in C-reactive protein, P. gingivalis (a periodontal pathogen) has been found in the brains of Alzheimer's patients, and the bidirectional link between perio and diabetes is well-established. Your Longevity chapter pulls your mouth into the cardiovascular picture.",
+      "The American Heart Association's Life's Essential 8 framework, published in Circulation 2022, is the clearest cardiovascular-health trajectory map currently available. Tobacco, exercise, sleep, weight, lipids, glucose, blood pressure, diet. Eight components, scored as one composite. The mouth sits upstream of most of them. Chronic oral inflammation shows up in C-reactive protein, P. gingivalis (a periodontal pathogen) has been found in the brains of Alzheimer's patients, and the bidirectional link between perio and diabetes is well-established. Your Longevity chapter pulls your mouth into the cardiovascular picture.",
     instrument: "AHA Life's Essential 8 (2022)",
     sample: 73,
     tier: "Strong",
@@ -107,8 +107,8 @@ const DIMENSIONS = [
 const TIERS = [
   { range: "85–100", name: "Thriving", desc: "Your dimensions are doing the quiet work. Our job is protection, not correction." },
   { range: "70–84", name: "Strong", desc: "Solid foundation, a couple of clear levers. Small shifts here meaningfully change your 10-year trajectory." },
-  { range: "50–69", name: "Foundational", desc: "Real signal worth acting on. None of it catastrophic — all of it addressable with focused work." },
-  { range: "<50", name: "Needs focus", desc: "Meaningful signal we want to address carefully. No judgment — a clear plan we build together." },
+  { range: "50–69", name: "Foundational", desc: "Real signal worth acting on. None of it catastrophic, all of it addressable with focused work." },
+  { range: "<50", name: "Needs focus", desc: "Meaningful signal we want to address carefully. No judgment, just a clear plan we build together." },
 ]
 
 const SERIF = "Georgia, 'Times New Roman', serif"
@@ -307,7 +307,7 @@ export default function FiveDimensionsPage() {
             lineHeight: 1.5, maxWidth: 720, marginLeft: "auto", marginRight: "auto",
           }}>
             Your Primary iD is the score of five interconnected health dimensions. Each one is
-            anchored to a validated clinical instrument. Together they tell us — and you — what
+            anchored to a validated clinical instrument. Together they tell us, and you, what
             your mouth is saying about the rest of your body.
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "center" }}>
@@ -398,7 +398,7 @@ export default function FiveDimensionsPage() {
             Why these <em style={{ color: PALETTE.blue }}>five</em>.
           </h2>
           <p style={{ fontSize: 18, lineHeight: 1.7, color: PALETTE.body, margin: 0 }}>
-            The five dimensions of a Primary iD aren&apos;t arbitrary categories — they&apos;re the five places where your mouth tells the rest of your body&apos;s story most clearly. <strong style={{ color: PALETTE.navy }}>Each one is anchored to a validated clinical instrument used in academic medicine.</strong> Each one is scored on the same 0–100 scale. Each one connects to the others — your sleep affects your nutrition affects your family-history risk affects your longevity. The Primary iD is the score of those connections, made visible.
+            The five dimensions of a Primary iD aren&apos;t arbitrary categories. They&apos;re the five places where your mouth tells the rest of your body&apos;s story most clearly. <strong style={{ color: PALETTE.navy }}>Each one is anchored to a validated clinical instrument used in academic medicine.</strong> Each one is scored on the same 0–100 scale. Each one connects to the others: your sleep affects your nutrition affects your family-history risk affects your longevity. The Primary iD is the score of those connections, made visible.
           </p>
         </div>
       </section>
@@ -429,7 +429,7 @@ export default function FiveDimensionsPage() {
             fontSize: 18, lineHeight: 1.65, color: "rgba(254,252,249,0.8)",
             margin: "0 auto 56px", maxWidth: 760, textAlign: "center",
           }}>
-            Each dimension scores 0–100 on its own. Your composite Primary iD is the average — a single number that summarizes the whole picture. The number isn&apos;t the point. The point is what it surfaces: which dimensions are pulling their weight, which one or two are dragging the others down, where the highest-leverage interventions live.
+            Each dimension scores 0–100 on its own. Your composite Primary iD is the average, a single number that summarizes the whole picture. The number isn&apos;t the point. The point is what it surfaces: which dimensions are pulling their weight, which one or two are dragging the others down, where the highest-leverage interventions live.
           </p>
           <div
             className="tier-grid"

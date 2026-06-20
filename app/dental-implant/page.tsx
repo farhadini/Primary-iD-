@@ -4,7 +4,7 @@ import { ServiceSchema, FAQPageSchema, BreadcrumbSchema } from "@/components/sch
 import ImplantPathFinder from "@/components/implant-path-finder"
 
 // ─────────────────────────────────────────────────────────────────────────
-// /dental-implant/ — Full Arch & Implants pathway page.
+// /dental-implant/ : Full Arch & Implants pathway page.
 //
 // v1 spec: brand-system SVG visuals (no photography placeholders),
 // full-arch animation video in the hero, custom Implant Path Finder
@@ -17,15 +17,15 @@ const SERIF = "Georgia, 'Times New Roman', serif"
 const SANS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
 
 const FAQ_ITEMS = [
-  { q: "Will it hurt?", a: "During surgery: no — IV sedation handles that. After surgery: yes, for a few days, in a manageable way. Most patients describe it as 'uncomfortable' rather than 'painful.' We use a structured pain protocol (not just opioids) and most patients are off pain meds within five days. The first 48 hours are the most intense — we check in with you daily during that window." },
-  { q: "How long is recovery, really?", a: "Functional recovery (back to work, normal life) is usually under a week. Soft-food phase varies by case. Full healing and osseointegration takes months — but you have temporary teeth throughout, so you're never without a smile. Most patients underestimate how quickly they return to normal life — and overestimate how long they have to eat soft foods." },
-  { q: "What if an implant fails?", a: "Implant survival in non-smokers with healthy biology runs ~95% at 10 years and ~90% at 25 years in the published literature. If one fails (rare), we replace it under our warranty at no cost to you. We screen aggressively up front specifically to minimize this — which is the whole point of mapping your situation before we plan the work." },
-  { q: "Can I eat normally again? Like, actually normally?", a: "Yes. Fixed full-arch on implants restores ~90% of natural chewing force. You'll eat apples, steak, corn on the cob — whatever you've been avoiding. The few exceptions: ice (don't chew it), and very hard nuts in shells. Most patients describe the food experience as the single biggest quality-of-life gain." },
-  { q: "What's the warranty?", a: "25-year warranty on the implants themselves, manufacturer-backed. 5-year warranty on the prosthesis (the visible teeth part), covering normal wear and any defect. We explain warranty terms in writing at treatment plan presentation — no fine print surprises." },
-  { q: "How long do implants last?", a: "Properly placed, properly maintained implants typically last 25+ years — many last a lifetime. The prosthetic teeth on top may need replacement at the 15–20 year mark depending on wear. Maintenance matters: patients on a twice-yearly hygiene protocol with good home care see implant survival rates above 95% at 25 years." },
-  { q: "Will insurance cover any of it?", a: "Usually a small portion. Most dental insurance plans cap at $1,500–$3,000 per year, which doesn't go far on a $35K case. We file what's coverable (extractions, bone grafts sometimes count) every time. Medical insurance occasionally covers implant work when tooth loss connects to a documented medical condition — rare, but we'll check." },
-  { q: "What about anesthesia?", a: "IV sedation for all surgical visits, administered by a board-certified anesthesia provider. You can pick the depth — light (you remember nothing, breathe on your own) or deeper (closer to general). Most patients choose light. Either way, no awareness, no panic, no pain." },
-  { q: "What if I'm scared of dentists?", a: "Most full-arch patients have been managing this longer than they wanted to because of fear. You're not unusual. We schedule first visits as conversations — no instruments, no surprises, no sales pressure. If you want to bring someone with you, do. Many patients do." },
+  { q: "Will it hurt?", a: "During surgery: no, IV sedation handles that. After surgery: yes, for a few days, in a manageable way. Most patients describe it as 'uncomfortable' rather than 'painful.' We use a structured pain protocol (not just opioids) and most patients are off pain meds within five days. The first 48 hours are the most intense, and we check in with you daily during that window." },
+  { q: "How long is recovery, really?", a: "Functional recovery (back to work, normal life) is usually under a week. Soft-food phase varies by case. Full healing and osseointegration takes months, but you have temporary teeth throughout, so you're never without a smile. Most patients underestimate how quickly they return to normal life, and overestimate how long they have to eat soft foods." },
+  { q: "What if an implant fails?", a: "Implant survival in non-smokers with healthy biology runs ~95% at 10 years and ~90% at 25 years in the published literature. If one fails (rare), we replace it under our warranty at no cost to you. We screen aggressively up front specifically to minimize this, which is the whole point of mapping your situation before we plan the work." },
+  { q: "Can I eat normally again? Like, actually normally?", a: "Yes. Fixed full-arch on implants restores ~90% of natural chewing force. You'll eat apples, steak, corn on the cob, whatever you've been avoiding. The few exceptions: ice (don't chew it), and very hard nuts in shells. Most patients describe the food experience as the single biggest quality-of-life gain." },
+  { q: "What's the warranty?", a: "25-year warranty on the implants themselves, manufacturer-backed. 5-year warranty on the prosthesis (the visible teeth part), covering normal wear and any defect. We explain warranty terms in writing at treatment plan presentation, with no fine print surprises." },
+  { q: "How long do implants last?", a: "Properly placed, properly maintained implants typically last 25+ years, and many last a lifetime. The prosthetic teeth on top may need replacement at the 15–20 year mark depending on wear. Maintenance matters: patients on a twice-yearly hygiene protocol with good home care see implant survival rates above 95% at 25 years." },
+  { q: "Will insurance cover any of it?", a: "Usually a small portion. Most dental insurance plans cap at $1,500–$3,000 per year, which doesn't go far on a $35K case. We file what's coverable (extractions, bone grafts sometimes count) every time. Medical insurance occasionally covers implant work when tooth loss connects to a documented medical condition. Rare, but we'll check." },
+  { q: "What about anesthesia?", a: "IV sedation for all surgical visits, administered by a board-certified anesthesia provider. You can pick the depth: light (you remember nothing, breathe on your own) or deeper (closer to general). Most patients choose light. Either way, no awareness, no panic, no pain." },
+  { q: "What if I'm scared of dentists?", a: "Most full-arch patients have been managing this longer than they wanted to because of fear. You're not unusual. We schedule first visits as conversations, with no instruments, no surprises, no sales pressure. If you want to bring someone with you, do. Many patients do." },
 ]
 
 // ─── Brand SVG illustrations ──────────────────────────────────────────────
@@ -152,20 +152,20 @@ const OPTIONS = [
 ]
 
 const JOURNEY = [
-  { n: "01", name: "Consultation", headline: "The first visit looks nothing like the last one.", body: "3D imaging (CBCT). Airway screening. Biomarker review if you've brought labs. A real conversation about your situation, your medical history, what you want, what you're afraid of. Treatment plan presented the same day, in plain English. No commitment expected — most patients leave to think.", feel: "heard. Informed. Not rushed." },
+  { n: "01", name: "Consultation", headline: "The first visit looks nothing like the last one.", body: "3D imaging (CBCT). Airway screening. Biomarker review if you've brought labs. A real conversation about your situation, your medical history, what you want, what you're afraid of. Treatment plan presented the same day, in plain English. No commitment expected, and most patients leave to think.", feel: "heard. Informed. Not rushed." },
   { n: "02", name: "Digital planning", headline: "Your new teeth, designed before they're made.", body: "CAD design of your prosthetic. Material decision (zirconia vs. acrylic vs. hybrid). Implant placement modeled in software to a fraction of a millimeter. Financing decided. Surgical date scheduled. You'll see the design before we order anything.", feel: "ready. The unknowns are gone by the end of this phase." },
-  { n: "03", name: "Surgery day", headline: "You go home with teeth.", body: "IV sedation (light or full — your call). Failing teeth removed if needed. Implants placed using a digital surgical guide. Temporary teeth attached the same day. You walk out with a smile. Recovery starts immediately and is more comfortable than most patients expect — managed with a structured pain protocol, not 'tough it out.'", feel: "surprisingly okay. Sore, yes. Suffering, no." },
-  { n: "04", name: "Healing & osseointegration", headline: "The implants become part of you.", body: "Soft-food phase. Regular check-ins. Your bone fuses to the implants — biology doing the slow, steady work. The temporary teeth stay in throughout. Life mostly normal within a month.", feel: "patient, but not stuck." },
-  { n: "05", name: "Final restoration", headline: "The real teeth go in.", body: "Final prosthetic — fitted, calibrated for bite, color-matched. The temporary comes off, the permanent goes on. We take photos. Most patients cry a little. Then we send you home with care instructions and a smile that should outlast you.", feel: "transformed. Lighter. Often, finally yourself." },
-  { n: "06", name: "Lifetime maintenance", headline: "The relationship doesn't end — it deepens.", body: "Twice-yearly maintenance protocol. Member pricing on hygiene and any restorative work the prosthesis eventually needs. We're your dental practice for the rest of your life. That's the model.", feel: "settled. Looked after." },
+  { n: "03", name: "Surgery day", headline: "You go home with teeth.", body: "IV sedation (light or full, your call). Failing teeth removed if needed. Implants placed using a digital surgical guide. Temporary teeth attached the same day. You walk out with a smile. Recovery starts immediately and is more comfortable than most patients expect, managed with a structured pain protocol, not 'tough it out.'", feel: "surprisingly okay. Sore, yes. Suffering, no." },
+  { n: "04", name: "Healing & osseointegration", headline: "The implants become part of you.", body: "Soft-food phase. Regular check-ins. Your bone fuses to the implants, biology doing the slow, steady work. The temporary teeth stay in throughout. Life mostly normal within a month.", feel: "patient, but not stuck." },
+  { n: "05", name: "Final restoration", headline: "The real teeth go in.", body: "Final prosthetic, fitted, calibrated for bite, color-matched. The temporary comes off, the permanent goes on. We take photos. Most patients cry a little. Then we send you home with care instructions and a smile that should outlast you.", feel: "transformed. Lighter. Often, finally yourself." },
+  { n: "06", name: "Lifetime maintenance", headline: "The relationship doesn't end. It deepens.", body: "Twice-yearly maintenance protocol. Member pricing on hygiene and any restorative work the prosthesis eventually needs. We're your dental practice for the rest of your life. That's the model.", feel: "settled. Looked after." },
 ]
 
 const COMPARISON = [
-  ["First visit length", "15–30 min with the doctor", "90 minutes with Dr. Gabi — diagnostics, conversation, treatment plan same day"],
-  ["Diagnostic imaging", "2D X-ray, occasional panoramic", "3D CBCT + intra-oral scan — every patient, every plan"],
-  ["Pre-surgical risk read", "Brief health-history form", "Primary iD — five dimensions of biology mapped before any surgical plan is built"],
+  ["Time with the doctor", "5–10 min with a general dentist", "30+ minutes with Dr. Gabi, a prosthodontist, inside a 90-minute visit with diagnostics and a same-day plan"],
+  ["Diagnostic imaging", "2D X-ray, occasional panoramic", "3D CBCT + intra-oral scan, every patient, every plan"],
+  ["Pre-surgical risk read", "Brief health-history form", "Primary iD, five dimensions of biology mapped before any surgical plan is built"],
   ["Treatment plan", "One option presented", "Plain-English, multiple options, with rationale for why we'd recommend one over another"],
-  ["Surgical experience", "High-volume clinic, multiple surgeons", "Dr. Gabi performs every surgery — same hands, every visit"],
+  ["Surgical experience", "High-volume clinic, multiple surgeons", "Dr. Gabi performs every surgery, same hands, every visit"],
   ["Materials", "Standard set, often not discussed", "Biocompatible options, with sensitivity testing when indicated. Zirconia available."],
   ["Follow-up & maintenance", "Hand-off to a generalist", "Lifetime relationship, twice-yearly maintenance, membership-supported"],
 ]
@@ -203,7 +203,7 @@ export default function DentalImplantPage() {
             A second chance to chew. Speak. Smile.
           </p>
           <p style={{ fontSize: 17, lineHeight: 1.65, color: "rgba(254,252,249,0.85)", margin: "0 0 40px", maxWidth: 620, fontFamily: SANS }}>
-            If you&apos;re here, you&apos;ve probably been managing this for a while. Eating around it. Smiling carefully. We start where the last office didn&apos;t — with understanding <em>you</em>, then planning the work.
+            If you&apos;re here, you&apos;ve probably been managing this for a while. Eating around it. Smiling carefully. We start where the last office didn&apos;t, with understanding <em>you</em>, then planning the work.
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
             <a href="#path-finder" style={{ background: PALETTE.blue, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15 }}>
@@ -226,10 +226,10 @@ export default function DentalImplantPage() {
             You&apos;ve probably been managing this longer than you wanted to. Eating around it. Smiling carefully. Maybe you&apos;ve already gotten a quote that felt impossible to even hold in your head.
           </p>
           <p style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 22, lineHeight: 1.55, color: PALETTE.navy, margin: "0 0 28px" }}>
-            The path forward is more straightforward than you think — and you&apos;re more in control of it than the last office made you feel.
+            The path forward is more straightforward than you think, and you&apos;re more in control of it than the last office made you feel.
           </p>
           <div style={{ fontFamily: SANS, fontSize: 13, color: PALETTE.muted, letterSpacing: "0.04em" }}>
-            — Dr. Tzur Gabi, Founder
+            Dr. Tzur Gabi, Founder
           </div>
         </div>
       </section>
@@ -246,14 +246,14 @@ export default function DentalImplantPage() {
                 Before we plan a procedure, we <em style={{ color: PALETTE.blue }}>map your situation</em>.
               </h2>
               <p style={{ fontSize: 18, lineHeight: 1.7, color: PALETTE.body, margin: "0 0 28px" }}>
-                Implant outcomes depend on biology — yours, specifically. Diabetes affects bone integration. Smoking affects implant survival. Sleep affects bruxism affects implant loading. Family periodontal history affects long-term prognosis. A 90-minute consultation that ignores these isn&apos;t a consultation — it&apos;s a sales pitch with a 3D scanner.
+                Implant outcomes depend on biology, yours, specifically. Diabetes affects bone integration. Smoking affects implant survival. Sleep affects bruxism (teeth grinding) affects implant loading. Family periodontal history affects long-term prognosis. A 90-minute consultation that ignores these isn&apos;t a consultation. It&apos;s a sales pitch with a 3D scanner.
               </p>
               <div className="factor-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18, marginBottom: 28 }}>
                 {[
                   { title: "Family History", instrument: "AAP/EFP framework", body: "First-degree perio history predicts implant prognosis better than any consumer gene panel. We use the validated grading." },
-                  { title: "Medical & medication", instrument: "Pre-surgical review", body: "Bisphosphonates, immunosuppressants, recent radiation, anticoagulants — each changes the surgical plan, not the surgical pitch." },
+                  { title: "Medical & medication", instrument: "Pre-surgical review", body: "Bisphosphonates, immunosuppressants, recent radiation, anticoagulants: each changes the surgical plan, not the surgical pitch." },
                   { title: "Sleep & airway", instrument: "STOP-BANG", body: "Bruxism from sleep-disordered breathing is the most under-screened cause of prosthetic failure. We catch it before we restore." },
-                  { title: "Longevity", instrument: "AHA Life's Essential 8", body: "Blood pressure, A1c, smoking, exercise — the whole-body context the dental chair usually never sees." },
+                  { title: "Longevity", instrument: "AHA Life's Essential 8", body: "Blood pressure, A1c, smoking, exercise: the whole-body context the dental chair usually never sees." },
                 ].map((f, i) => (
                   <div key={i} style={{ background: PALETTE.warmWhite, border: `1px solid ${PALETTE.border}`, borderRadius: 12, padding: "16px 18px" }}>
                     <div style={{ fontFamily: SERIF, fontSize: 16, color: PALETTE.navy, fontWeight: 500 }}>{f.title}</div>
@@ -281,7 +281,7 @@ export default function DentalImplantPage() {
               Your options
             </div>
             <h2 style={{ fontFamily: SERIF, fontSize: "clamp(34px, 5vw, 50px)", fontWeight: 400, color: PALETTE.navy, lineHeight: 1.1, letterSpacing: "-0.02em", margin: "0 0 20px" }}>
-              Four ways forward — <em style={{ color: PALETTE.blue }}>honestly</em> framed.
+              Four ways forward, <em style={{ color: PALETTE.blue }}>honestly</em> framed.
             </h2>
             <p style={{ fontSize: 17, lineHeight: 1.65, color: PALETTE.body, margin: 0 }}>
               Not every implant is right for every patient. Here&apos;s each option with what it does, when it&apos;s the right tool, and a real cost range. We never push a path that doesn&apos;t fit your situation.
@@ -349,7 +349,7 @@ export default function DentalImplantPage() {
               Six steps, end to end. <em style={{ color: PALETTE.blue }}>No surprises.</em>
             </h2>
             <p style={{ fontSize: 17, lineHeight: 1.65, color: PALETTE.body, margin: 0 }}>
-              From the first consultation to the moment you walk out with your final teeth — every step mapped, every sensation named in advance. Some cases collapse multiple steps into a single visit (same-day full arch). Others stage over months. We&apos;ll know which after the consultation.
+              From the first consultation to the moment you walk out with your final teeth, every step mapped, every sensation named in advance. Some cases collapse multiple steps into a single visit (same-day full arch). Others stage over months. We&apos;ll know which after the consultation.
             </p>
           </div>
 
@@ -390,7 +390,7 @@ export default function DentalImplantPage() {
               What you&apos;re <em style={{ color: PALETTE.blue }}>actually</em> comparing.
             </h2>
             <p style={{ fontSize: 17, lineHeight: 1.65, color: PALETTE.body, margin: 0 }}>
-              If you&apos;ve gotten a quote elsewhere, use this to compare what you&apos;re really getting. Not every difference matters — but some are the difference between an implant that lasts 5 years and one that lasts 25.
+              If you&apos;ve gotten a quote elsewhere, use this to compare what you&apos;re really getting. Not every difference matters, but some are the difference between an implant that lasts 5 years and one that lasts 25.
             </p>
           </div>
 
@@ -421,7 +421,7 @@ export default function DentalImplantPage() {
             Bring us your <em style={{ color: PALETTE.blue }}>treatment plan</em>.
           </h2>
           <p style={{ fontSize: 17, lineHeight: 1.65, color: "rgba(254,252,249,0.85)", margin: "0 0 32px" }}>
-            Most of the people who come to us for full arch already have a quote from somewhere else. We&apos;ll review what was proposed against your Primary iD risk picture — and tell you what we&apos;d verify, what we&apos;d do differently, and why. Sometimes we&apos;ll tell you they got it right. The opinion is honest, regardless of where it lands.
+            Most of the people who come to us for full arch already have a quote from somewhere else. We&apos;ll review what was proposed against your Primary iD risk picture, and tell you what we&apos;d verify, what we&apos;d do differently, and why. Sometimes we&apos;ll tell you they got it right. The opinion is honest, regardless of where it lands.
           </p>
           <a href="mailto:hello@myprimaryid.com?subject=Second opinion request" style={{ background: PALETTE.blue, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15, display: "inline-block" }}>
             Send us your treatment plan →
@@ -440,7 +440,7 @@ export default function DentalImplantPage() {
               A real range. <em style={{ color: PALETTE.blue }}>No sales math.</em>
             </h2>
             <p style={{ fontSize: 17, lineHeight: 1.65, color: PALETTE.body, margin: 0 }}>
-              We will never quote you a number that depends on a sales tactic. Here&apos;s how full-arch pricing actually works — the range, the factors that move you along it, the financing options we work with.
+              We will never quote you a number that depends on a sales tactic. Here&apos;s how full-arch pricing actually works: the range, the factors that move you along it, the financing options we work with.
             </p>
           </div>
 
@@ -491,7 +491,7 @@ export default function DentalImplantPage() {
             <div style={{ padding: "20px 22px", background: PALETTE.warmWhite, border: `1px solid ${PALETTE.border}`, borderRadius: 12 }}>
               <div style={{ fontFamily: SERIF, fontSize: 16, color: PALETTE.navy, marginBottom: 6, fontWeight: 500 }}>Insurance</div>
               <div style={{ fontFamily: SANS, fontSize: 13.5, color: PALETTE.body, lineHeight: 1.55 }}>
-                Most dental insurance covers little to nothing on implants — but we file what&apos;s coverable, every time. Medical insurance occasionally applies.
+                Most dental insurance covers little to nothing on implants, but we file what&apos;s coverable, every time. Medical insurance occasionally applies.
               </div>
             </div>
             <div style={{ padding: "20px 22px", background: PALETTE.warmWhite, border: `1px solid ${PALETTE.border}`, borderRadius: 12 }}>
@@ -555,7 +555,7 @@ export default function DentalImplantPage() {
             </Link>
           </div>
           <p style={{ fontFamily: SANS, fontSize: 13.5, color: PALETTE.muted, margin: 0 }}>
-            Or send us a treatment plan you&apos;ve gotten elsewhere — we&apos;ll review it honestly.
+            Or send us a treatment plan you&apos;ve gotten elsewhere, and we&apos;ll review it honestly.
           </p>
         </div>
       </section>

@@ -18,8 +18,8 @@ export default function CosmeticDentistryPage() {
       <ArticleContainer>
         <Hero
           eyebrow="Aesthetic Dentistry"
-          title="Cosmetic & Aesthetic Dentistry, Brentwood."
-          subtitle="Veneers, whitening, and full smile design — built on biocompatible materials and biological function, not just appearance."
+          title="Cosmetic & Aesthetic Dentistry, Los Angeles."
+          subtitle="Veneers, whitening, and full smile design, built on biocompatible materials and biological function, not just appearance."
         />
 
         <p>
@@ -41,7 +41,7 @@ export default function CosmeticDentistryPage() {
 
         <H3>Porcelain veneers</H3>
         <p>
-          Minimally-prepared porcelain veneers — preserving as much of your natural enamel as the case allows.
+          Minimally-prepared porcelain veneers, preserving as much of your natural enamel as the case allows.
           We use lithium disilicate (e.max) and zirconia for strength and translucency, both fully biocompatible.
           Designed using digital smile design (DSD) so you preview the final result before any tooth structure
           is altered.
@@ -50,13 +50,13 @@ export default function CosmeticDentistryPage() {
         <H3>Professional whitening</H3>
         <p>
           In-office whitening with desensitization protocol, or take-home custom trays with KöR or Opalescence
-          gels. We screen for sensitivity, enamel demineralization, and any underlying decay before whitening —
-          whitening a tooth with active demineralization makes the problem dramatically worse.
+          gels. We screen for sensitivity, enamel demineralization, and any underlying decay before whitening.
+          Whitening a tooth with active demineralization makes the problem dramatically worse.
         </p>
 
         <H3>Composite bonding</H3>
         <p>
-          For smaller corrections — chipped edges, gaps, minor reshaping — composite bonding offers a
+          For smaller corrections, like chipped edges, gaps, or minor reshaping, composite bonding offers a
           conservative, reversible option that preserves the natural tooth.
         </p>
 
@@ -70,13 +70,13 @@ export default function CosmeticDentistryPage() {
         <H3>Full smile makeover</H3>
         <p>
           For comprehensive cases combining veneers, alignment, gum reshaping, and sometimes implants, we
-          plan and sequence the work to produce a single coherent outcome — not a series of disconnected
+          plan and sequence the work to produce a single coherent outcome, not a series of disconnected
           procedures.
         </p>
 
         <H2>Biocompatible by default</H2>
         <p>
-          Every restorative material we place is chosen for its biological compatibility — not just its
+          Every restorative material we place is chosen for its biological compatibility, not just its
           appearance. We avoid amalgam, mercury, and unnecessary metal alloys. For patients with documented
           sensitivities, we do material-sensitivity testing (MELISA) before placing permanent restorations.
           The principle: nothing goes into your mouth that hasn't been chosen for both its aesthetic and its
@@ -86,7 +86,7 @@ export default function CosmeticDentistryPage() {
         <H2>Before & after</H2>
         <p style={{ color: PALETTE.muted, fontStyle: "italic" }}>
           A curated gallery of patient cases is coming. Ask Dr. Gabi to walk you through case studies during
-          your consultation — we'll show you outcomes from patients with similar starting points.
+          your consultation, and we'll show you outcomes from patients with similar starting points.
         </p>
 
         <H2>Bite and airway come first</H2>

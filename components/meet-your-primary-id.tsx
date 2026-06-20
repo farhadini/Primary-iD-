@@ -23,7 +23,7 @@ const DIMENSIONS = [
     color: B.green,
     score: 72,
     headline: "What your mouth reveals about your whole body.",
-    stat: "Gum disease triples your risk of a second heart attack — most dental visits never check.",
+    stat: "Gum disease triples your risk of a second heart attack. Most dental visits never check.",
   },
   {
     id: "sleep",
@@ -306,7 +306,7 @@ export default function MeetYourPrimaryID() {
             fontSize: 18, lineHeight: 1.6,
             color: B.body, maxWidth: 540, margin: "24px 0 0",
           }}>
-            Each dimension reveals a different layer of how your mouth shapes your whole-body health. Start with one — or get all five.
+            Each dimension reveals a different layer of how your mouth shapes your whole-body health. Start with one, or get all five.
           </p>
         </div>
 

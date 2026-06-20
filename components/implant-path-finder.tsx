@@ -6,7 +6,7 @@
  * Output is a narrative read of which option likely fits, what factors will
  * shift the conversation in consultation, and a directional cost range.
  *
- * Per user feedback: language is NEVER "we score you" — it's "we map your
+ * Per user feedback: language is NEVER "we score you," it's "we map your
  * situation." The output is descriptive, not a number. The user drives the
  * assessment; we don't pronounce judgment.
  */
@@ -48,7 +48,7 @@ const QUESTIONS: Question[] = [
       { id: "few", label: "2–4 teeth missing or failing" },
       { id: "arch", label: "Most of an arch is failing (upper or lower)" },
       { id: "both", label: "Both arches failing" },
-      { id: "unsure", label: "I'm not sure yet — exploring options" },
+      { id: "unsure", label: "I'm not sure yet, exploring options" },
     ],
   },
   {
@@ -57,18 +57,18 @@ const QUESTIONS: Question[] = [
     options: [
       { id: "recent", label: "Under a year" },
       { id: "mid", label: "1–3 years" },
-      { id: "long", label: "3+ years — I've been putting it off" },
+      { id: "long", label: "3+ years; I've been putting it off" },
     ],
   },
   {
     id: "elsewhere",
     text: "Have you been to other practices about this?",
-    subtitle: "There's no wrong answer — second opinions are how the highest-value cases find us.",
+    subtitle: "There's no wrong answer; second opinions are how the highest-value cases find us.",
     options: [
       { id: "first", label: "No, this is my first look" },
-      { id: "one", label: "Yes — one consultation" },
-      { id: "many", label: "Yes — multiple quotes that varied a lot" },
-      { id: "started", label: "Yes — had work started but not finished" },
+      { id: "one", label: "Yes, one consultation" },
+      { id: "many", label: "Yes, multiple quotes that varied a lot" },
+      { id: "started", label: "Yes, had work started but not finished" },
     ],
   },
   {
@@ -79,7 +79,7 @@ const QUESTIONS: Question[] = [
     options: [
       { id: "chew", label: "Chewing comfortably again" },
       { id: "natural", label: "Looking natural" },
-      { id: "speed", label: "Speed — done as fast as possible" },
+      { id: "speed", label: "Speed, done as fast as possible" },
       { id: "cost", label: "Minimizing cost" },
       { id: "longevity", label: "Best long-term outcome" },
       { id: "minimal", label: "Minimally invasive" },
@@ -118,7 +118,7 @@ const QUESTIONS: Question[] = [
     options: [
       { id: "soon", label: "I want this resolved in the next 90 days" },
       { id: "mid", label: "Planning for the next 6–12 months" },
-      { id: "research", label: "Researching — no rush" },
+      { id: "research", label: "Researching, no rush" },
     ],
   },
   {
@@ -129,7 +129,7 @@ const QUESTIONS: Question[] = [
       { id: "out", label: "I'd want to do this without financing if possible" },
       { id: "finance", label: "I'm fine financing over 2–5 years" },
       { id: "constraint", label: "Cost is the biggest constraint" },
-      { id: "outcome", label: "Cost isn't the constraint — outcome is" },
+      { id: "outcome", label: "Cost isn't the constraint; outcome is" },
     ],
   },
 ]
@@ -165,30 +165,30 @@ function generateRead(a: Answers): { headline: string; option: string; range: st
       range = situation === "both" ? "$30,000 – $50,000 for both" : "$15,000 – $25,000 per arch"
       headline = `The path most consistent with your situation looks like an implant-supported denture for ${arches}.`
     } else {
-      option = `Fixed full-arch (All-on-4/6) — ${arches}`
+      option = `Fixed full-arch (All-on-4/6), ${arches}`
       range = situation === "both" ? "$50,000 – $100,000 for both" : "$25,000 – $50,000 per arch"
       headline = `The path most consistent with your situation looks like fixed full-arch (All-on-4/6) on ${arches}.`
     }
   } else {
     option = "We'll know after the consultation"
     range = "$4,000 – $50,000 depending on path"
-    headline = "Your situation maps to multiple possible paths — the consultation is where we narrow it."
+    headline = "Your situation maps to multiple possible paths: the consultation is where we narrow it."
   }
 
   // Identify factors that will shift the recommendation in consultation
   const factors: string[] = []
-  if (health.includes("diabetes")) factors.push("Your diabetes management — well-controlled diabetes is compatible with implants; uncontrolled increases complication risk meaningfully")
-  if (health.includes("smoke")) factors.push("Smoking — implant survival drops to ~85% at 10 years in smokers vs. ~95% in non-smokers; we'll discuss timing around cessation")
-  if (health.includes("bone")) factors.push("Bone density — 3D CBCT scan will tell us if grafting is needed; this affects both cost and timeline")
-  if (health.includes("bisphos")) factors.push("Bisphosphonate history — this requires a careful surgical conversation and possibly a drug holiday coordinated with your physician")
-  if (health.includes("grind")) factors.push("Bruxism — sleep-disordered breathing is the most under-screened cause of implant failure; we'll screen with STOP-BANG before loading")
-  if (health.includes("perio")) factors.push("Periodontal history — affects the maintenance protocol and long-term prognosis")
-  if (family.includes("perio")) factors.push("Family periodontal history — we use the AAP/EFP framework to grade your heritable risk")
-  if (family.includes("heart")) factors.push("Family cardiovascular pattern — we coordinate with cardiology where indicated")
+  if (health.includes("diabetes")) factors.push("Your diabetes management: well-controlled diabetes is compatible with implants; uncontrolled increases complication risk meaningfully")
+  if (health.includes("smoke")) factors.push("Smoking: implant survival drops to ~85% at 10 years in smokers vs. ~95% in non-smokers; we'll discuss timing around cessation")
+  if (health.includes("bone")) factors.push("Bone density: 3D CBCT scan will tell us if grafting is needed; this affects both cost and timeline")
+  if (health.includes("bisphos")) factors.push("Bisphosphonate history: this requires a careful surgical conversation and possibly a drug holiday coordinated with your physician")
+  if (health.includes("grind")) factors.push("Bruxism (teeth grinding): sleep-disordered breathing is the most under-screened cause of implant failure; we'll screen with STOP-BANG before loading")
+  if (health.includes("perio")) factors.push("Periodontal history: affects the maintenance protocol and long-term prognosis")
+  if (family.includes("perio")) factors.push("Family periodontal history: we use the AAP/EFP framework to grade your heritable risk")
+  if (family.includes("heart")) factors.push("Family cardiovascular pattern: we coordinate with cardiology where indicated")
 
   if (factors.length === 0) {
     factors.push("Your bite mechanics and how they distribute force across the planned implants")
-    factors.push("Bone volume on the 3D CBCT — the determining factor for whether grafting is needed")
+    factors.push("Bone volume on the 3D CBCT: the determining factor for whether grafting is needed")
     factors.push("Material choice (titanium vs. zirconia) based on biocompatibility and aesthetic needs")
   }
 

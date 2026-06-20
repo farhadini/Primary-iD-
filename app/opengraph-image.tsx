@@ -7,7 +7,7 @@ import { ImageResponse } from "next/og"
 // ─────────────────────────────────────────────────────────────────────
 
 export const runtime = "edge"
-export const alt = "Primary Integrative Dentistry — Brentwood, Los Angeles"
+export const alt = "Primary Integrative Dentistry, Los Angeles"
 export const size = { width: 1200, height: 630 }
 export const contentType = "image/png"
 
@@ -31,7 +31,7 @@ export default async function OpenGraphImage() {
           fontFamily: "Georgia, serif",
         }}
       >
-        {/* Top row — practice wordmark + locale */}
+        {/* Top row : practice wordmark + locale */}
         <div
           style={{
             display: "flex",
@@ -71,11 +71,11 @@ export default async function OpenGraphImage() {
               fontFamily: "system-ui, sans-serif",
             }}
           >
-            Integrative · Brentwood · LA
+            Integrative · Los Angeles
           </div>
         </div>
 
-        {/* Center — display headline (matches the homepage hero language) */}
+        {/* Center : display headline (matches the homepage hero language) */}
         <div style={{ display: "flex", flexDirection: "column", maxWidth: 960 }}>
           <div
             style={{
@@ -94,7 +94,7 @@ export default async function OpenGraphImage() {
           </div>
         </div>
 
-        {/* Bottom row — subhead + rating */}
+        {/* Bottom row : subhead + rating */}
         <div
           style={{
             display: "flex",

@@ -146,7 +146,7 @@ export function SiteFooter() {
             Primary
           </div>
           <p style={{ lineHeight: 1.6, opacity: 0.75 }}>
-            Integrative dentistry in Brentwood, Los Angeles. Whole-body care led by Dr. Tzur Gabi.
+            Integrative dentistry in Los Angeles. Whole-body care led by Dr. Tzur Gabi.
           </p>
         </div>
         <div>
@@ -212,7 +212,7 @@ export function SiteFooter() {
         }}
       >
         <span>© {new Date().getFullYear()} Primary Integrative Dentistry. All rights reserved.</span>
-        <span>Brentwood · Los Angeles</span>
+        <span>Los Angeles</span>
       </div>
     </footer>
   )

@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * The Research Library — /research
+ * The Research Library : /research
  * Chronological citation hub for the oral-systemic evidence
  * behind Primary iD.
  */
@@ -71,7 +71,7 @@ const ARTICLES: Article[] = [
     authors: "Umezaki Y, et al.",
     publication: "Frontiers in Oral Health",
     summary:
-      "Eleven RCTs in diabetic patients. Treating periodontitis dropped HbA1c by 0.64% at 3 months and 0.33% at 6 months, with reductions in C-reactive protein — positioning periodontal care as a direct adjunct to diabetes management.",
+      "Eleven RCTs in diabetic patients. Treating periodontitis dropped HbA1c by 0.64% at 3 months and 0.33% at 6 months, with reductions in C-reactive protein, positioning periodontal care as a direct adjunct to diabetes management.",
     url: "https://www.frontiersin.org/journals/oral-health",
     readLabel: "Read the study",
   },
@@ -85,7 +85,7 @@ const ARTICLES: Article[] = [
     authors: "Lola Butcher",
     publication: "Knowable Magazine (Annual Reviews)",
     summary:
-      "Investigative long-read on the historical separation of dentistry from medicine. Profiles integration models — embedded hygienists in medical clinics, combined dental-medical practices, coalitions pushing to \"put the mouth back in the body.\"",
+      "Investigative long-read on the historical separation of dentistry from medicine. Profiles integration models: embedded hygienists in medical clinics, combined dental-medical practices, coalitions pushing to \"put the mouth back in the body.\"",
     url: "https://knowablemagazine.org/content/article/health-disease/2024/why-isnt-dental-health-considered-primary-medical-care",
     readLabel: "Read the article",
   },
@@ -97,7 +97,7 @@ const ARTICLES: Article[] = [
     authors: "Centers for Disease Control & Prevention",
     publication: "CDC HAI Toolkit",
     summary:
-      "Veterans Affairs oral-care programs reduced non-ventilator hospital-acquired pneumonia rates by 40–60% and saved hundreds of thousands of dollars per site — positioning oral hygiene as infection control.",
+      "Veterans Affairs oral-care programs reduced non-ventilator hospital-acquired pneumonia rates by 40–60% and saved hundreds of thousands of dollars per site, positioning oral hygiene as infection control.",
     url: "https://www.cdc.gov/infection-control/hcp/hospital-pneumonia/",
     readLabel: "Read the toolkit",
   },
@@ -109,7 +109,7 @@ const ARTICLES: Article[] = [
     authors: "National Assoc. of Chronic Disease Directors",
     publication: "NACDD / CDC whitepaper",
     summary:
-      "Public-health framing of oral health as an under-recognized driver of diabetes and cardiovascular outcomes. Urges bidirectional referrals — dental providers screening for diabetes and hypertension, medical providers flagging oral disease.",
+      "Public-health framing of oral health as an under-recognized driver of diabetes and cardiovascular outcomes. Urges bidirectional referrals: dental providers screening for diabetes and hypertension, medical providers flagging oral disease.",
     url: "https://chronicdisease.org/",
     readLabel: "Read the report",
   },
@@ -135,7 +135,7 @@ const ARTICLES: Article[] = [
     authors: "The New York Times",
     publication: "NYT Well",
     summary:
-      "Reviews the evidence that treating periodontal disease may reduce cardiovascular risk — and honestly names the limits of current proof.",
+      "Reviews the evidence that treating periodontal disease may reduce cardiovascular risk, and honestly names the limits of current proof.",
     url: "https://www.nytimes.com/2023/07/04/well/live/gum-disease-prevention-treatment.html",
     readLabel: "Read the article",
   },
@@ -147,7 +147,7 @@ const ARTICLES: Article[] = [
     authors: "The New York Times",
     publication: "NYT Well",
     summary:
-      "Patient-accessible summary of the oral-systemic links — heart disease, diabetes, pregnancy complications, pneumonia, and more.",
+      "Patient-accessible summary of the oral-systemic links: heart disease, diabetes, pregnancy complications, pneumonia, and more.",
     url: "https://www.nytimes.com/2023/04/06/well/oral-health-hygiene.html",
     readLabel: "Read the article",
   },
@@ -159,7 +159,7 @@ const ARTICLES: Article[] = [
     authors: "Beck JD, et al. (AHA Writing Group)",
     publication: "Circulation",
     summary:
-      "Mainstream cardiology recognition. The American Heart Association finds periodontal disease independently associated with coronary heart disease, stroke, and peripheral artery disease — calling for periodontal status in cardiovascular risk assessment.",
+      "Mainstream cardiology recognition. The American Heart Association finds periodontal disease independently associated with coronary heart disease, stroke, and peripheral artery disease, calling for periodontal status in cardiovascular risk assessment.",
     url: "https://www.ahajournals.org/doi/10.1161/circ.148.suppl_1.17580",
     readLabel: "Read the statement",
   },
@@ -171,7 +171,7 @@ const ARTICLES: Article[] = [
     authors: "Mark Hyman, MD",
     publication: "drhyman.com",
     summary:
-      "Functional-medicine framing of the oral microbiome's role in brain health — connecting P. gingivalis to Alzheimer's pathology, and oral-gut microbial crosstalk to rheumatoid arthritis and chronic inflammation.",
+      "Functional-medicine framing of the oral microbiome's role in brain health, connecting P. gingivalis to Alzheimer's pathology, and oral-gut microbial crosstalk to rheumatoid arthritis and chronic inflammation.",
     url: "https://drhyman.com/blogs/content/clean-mouth-clean-brain/",
     readLabel: "Read the post",
   },
@@ -185,7 +185,7 @@ const ARTICLES: Article[] = [
     authors: "Botelho J, et al.",
     publication: "Nature Communications",
     summary:
-      "Umbrella review of meta-analyses identified <strong>28 non-communicable diseases</strong> strongly associated with oral disease — including 5 cancers, diabetes, cardiovascular disease, depression, neurodegeneration, and inflammatory bowel disease. Echoes the WHO's 2021 call to integrate oral health into primary care.",
+      "Umbrella review of meta-analyses identified <strong>28 non-communicable diseases</strong> strongly associated with oral disease, including 5 cancers, diabetes, cardiovascular disease, depression, neurodegeneration, and inflammatory bowel disease. Echoes the WHO's 2021 call to integrate oral health into primary care.",
     url: "https://www.nature.com/articles/s41467-022-35337-8",
     readLabel: "Read the review",
   },
@@ -210,7 +210,7 @@ const ARTICLES: Article[] = [
     authors: "U.S. Dept. of Health & Human Services (NIDCR)",
     publication: "NIH (Surgeon General-style report)",
     summary:
-      "Landmark 20-year update to the 2000 Surgeon General report. Calls for \"integrated oral, medical, and behavioral health care\" as national policy — the most authoritative federal endorsement of the oral-systemic model.",
+      "Landmark 20-year update to the 2000 Surgeon General report. Calls for \"integrated oral, medical, and behavioral health care\" as national policy: the most authoritative federal endorsement of the oral-systemic model.",
     url: "https://www.nidcr.nih.gov/research/oralhealthinamerica",
     readLabel: "Read the report",
   },
@@ -222,7 +222,7 @@ const ARTICLES: Article[] = [
     authors: "Shervin Molayem",
     publication: "Nature Outlook: Oral Health",
     summary:
-      "<em>Porphyromonas gingivalis</em> — the keystone gum disease bacterium — and its gingipain toxins detected in Alzheimer brain tissue. Suggests chronic oral infection as a modifiable risk factor for neurodegeneration.",
+      "<em>Porphyromonas gingivalis</em>, the keystone gum disease bacterium, and its gingipain toxins detected in Alzheimer brain tissue. Suggests chronic oral infection as a modifiable risk factor for neurodegeneration.",
     url: "https://www.nature.com/articles/d41586-021-02919-3",
     readLabel: "Read the report",
   },
@@ -246,7 +246,7 @@ const ARTICLES: Article[] = [
     authors: "Primary Care Collaborative (PCC)",
     publication: "PCC Report",
     summary:
-      "Documents successful medical-dental integration programs — prenatal oral health initiatives, geriatric oral care in nursing facilities, co-located dentists in primary clinics. Aligns oral health with patient-centered medical home principles.",
+      "Documents successful medical-dental integration programs: prenatal oral health initiatives, geriatric oral care in nursing facilities, co-located dentists in primary clinics. Aligns oral health with patient-centered medical home principles.",
     url: "https://www.pcpcc.org/",
     readLabel: "Read the report",
   },
@@ -260,7 +260,7 @@ const ARTICLES: Article[] = [
     authors: "Wang J, Yang X, Zou X, et al.",
     publication: "Journal of Periodontal Research",
     summary:
-      "Pooled observational data confirms periodontal disease is significantly associated with increased lung cancer incidence — implicating chronic oral inflammation in respiratory carcinogenesis.",
+      "Pooled observational data confirms periodontal disease is significantly associated with increased lung cancer incidence, implicating chronic oral inflammation in respiratory carcinogenesis.",
     url: "https://onlinelibrary.wiley.com/doi/10.1111/jre.12730",
     readLabel: "Read the study",
   },
@@ -272,7 +272,7 @@ const ARTICLES: Article[] = [
     authors: "Gethings-Behncke C, et al.",
     publication: "Cancer Epidemiology, Biomarkers & Prevention",
     summary:
-      "Analysis of 45 studies. The oral pathogen <em>F. nucleatum</em> is roughly <strong>10× more prevalent</strong> in colorectal tumor tissue than in normal controls — and high levels correlate with worse survival. A microbial mechanism tying the mouth to distant cancer.",
+      "Analysis of 45 studies. The oral pathogen <em>F. nucleatum</em> is roughly <strong>10× more prevalent</strong> in colorectal tumor tissue than in normal controls, and high levels correlate with worse survival. A microbial mechanism tying the mouth to distant cancer.",
     url: "https://aacrjournals.org/cebp/article/29/3/539",
     readLabel: "Read the study",
   },
@@ -284,7 +284,7 @@ const ARTICLES: Article[] = [
     authors: "Sanz M, Marco del Castillo A, Jepsen S, et al.",
     publication: "J. Clinical Periodontology (EFP / World Heart Federation)",
     summary:
-      "Joint workshop of the European Federation of Periodontology and the World Heart Federation. Confirms an independent association between severe periodontitis and CVD — a paradigmatic medical-dental collaboration statement.",
+      "Joint workshop of the European Federation of Periodontology and the World Heart Federation. Confirms an independent association between severe periodontitis and CVD, a paradigmatic medical-dental collaboration statement.",
     url: "https://onlinelibrary.wiley.com/doi/10.1111/jcpe.13285",
     readLabel: "Read the consensus",
   },
@@ -298,7 +298,7 @@ const ARTICLES: Article[] = [
     authors: "Mark Hyman, MD",
     publication: "drhyman.com",
     summary:
-      "Early functional-medicine summary citing research that <em>P. gingivalis</em> gingipains can travel to the brain and release neuron-damaging toxins implicated in Alzheimer's — reframing oral hygiene as brain hygiene.",
+      "Early functional-medicine summary citing research that <em>P. gingivalis</em> gingipains can travel to the brain and release neuron-damaging toxins implicated in Alzheimer's, reframing oral hygiene as brain hygiene.",
     url: "https://drhyman.com/blogs/content/clean-mouth-clean-brain/",
     readLabel: "Read the post",
   },
@@ -335,7 +335,7 @@ const ARTICLES: Article[] = [
     title: "Dental insurance isn't a scam — but it's also not insurance",
     publication: "Vox",
     summary:
-      "Explainer on why dental coverage sits apart from medical insurance — and how the structural split reinforces the artificial boundary between mouth and body.",
+      "Explainer on why dental coverage sits apart from medical insurance, and how the structural split reinforces the artificial boundary between mouth and body.",
     url: "https://www.vox.com/23901293/dentist-delta-dental-insurance-cigna-aspen-metlife-aetna",
     readLabel: "Read the article",
   },
@@ -346,7 +346,7 @@ const ARTICLES: Article[] = [
     title: "Gum Infection Could Be A Major Sign Of Heart Trouble, Researchers Find",
     publication: "The Brighter Side News",
     summary:
-      "Accessible summary of recent findings tying gum infection to increased cardiovascular risk — a patient-friendly on-ramp to the AHA and Sanz et al. literature above.",
+      "Accessible summary of recent findings tying gum infection to increased cardiovascular risk, a patient-friendly on-ramp to the AHA and Sanz et al. literature above.",
     url: "https://www.thebrighterside.news/post/gum-infection-could-be-a-major-sign-of-heart-trouble-researchers-find/",
     readLabel: "Read the article",
   },
@@ -716,7 +716,7 @@ export default function ResearchPage() {
             }}
           >
             Every claim we make about the mouth-body connection is built on published science, government
-            reports, and mainstream reporting. This is the library — curated, current, and linked directly
+            reports, and mainstream reporting. This is the library: curated, current, and linked directly
             to the source.
           </p>
 
@@ -1043,7 +1043,7 @@ export default function ResearchPage() {
           }}
         >
           This library is updated as new evidence lands. If you&apos;re a clinician or researcher and want a
-          paper added to the review, write us — we&apos;d rather our science keep growing than settle.
+          paper added to the review, write us. We&apos;d rather our science keep growing than settle.
         </p>
       </section>
 

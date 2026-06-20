@@ -8,7 +8,7 @@ import { BreadcrumbSchema } from "@/components/schema"
 // Five appointment pathways. Each renders the SiteShell with pathway-specific
 // copy, an assessment CTA, and a tel: fallback. The actual scheduler embed
 // will be wired in once we confirm Subscribili's recommended scheduler
-// partner (NexHealth, LocalMed, or Modento) — until then this page resolves
+// partner (NexHealth, LocalMed, or Modento). Until then this page resolves
 // cleanly so the redirects from /book?pathway=X don't 404.
 // ─────────────────────────────────────────────────────────────────────────
 
@@ -49,12 +49,12 @@ const PATHWAYS: Record<string, Pathway> = {
     description:
       "Sleep-disordered breathing is the most under-screened condition in modern medicine. We use STOP-BANG, CBCT airway analysis, and oral structural exam to identify it early and coordinate the right next step.",
     intro:
-      "If you snore, wake unrefreshed, grind your teeth, or have been told you've stopped breathing in your sleep — the dentist's chair is one of the most reliable places to start. The mouth is the front door to the airway.",
+      "If you snore, wake unrefreshed, grind your teeth, or have been told you've stopped breathing in your sleep, the dentist's chair is one of the most reliable places to start. The mouth is the front door to the airway.",
     what: [
       "STOP-BANG sleep apnea screener",
       "CBCT airway and palatal analysis",
       "Tongue position, palate vault, nasal patency exam",
-      "Bite mechanics and bruxism evaluation",
+      "Bite mechanics and bruxism (teeth grinding) evaluation",
       "Coordination with sleep medicine if indicated",
       "Oral appliance options when appropriate",
     ],
@@ -67,7 +67,7 @@ const PATHWAYS: Record<string, Pathway> = {
     description:
       "Cosmetic dentistry built on biology, not just appearance. Veneers, whitening, bonding, and full smile design with biocompatible materials and digital smile design.",
     intro:
-      "The smile that lasts at 70 is built on a bite that's balanced at 35. Cosmetic work at Primary starts with the foundation: biocompatibility, function, and material sensitivity testing — then aesthetics.",
+      "The smile that lasts at 70 is built on a bite that's balanced at 35. Cosmetic work at Primary starts with the foundation: biocompatibility, function, and material sensitivity testing, then aesthetics.",
     what: [
       "Digital smile design preview before any tooth is touched",
       "Material sensitivity testing when indicated (MELISA)",
@@ -83,7 +83,7 @@ const PATHWAYS: Record<string, Pathway> = {
     title: "Book a dental implant consultation",
     eyebrow: "Implants · Primary iD",
     description:
-      "Zirconia and titanium dental implants planned with 3D imaging and placed by Dr. Tzur Gabi — a functional prosthodontist with 25+ years of full-arch and biocompatible implant experience.",
+      "Zirconia and titanium dental implants planned with 3D imaging and placed by Dr. Tzur Gabi, a functional prosthodontist with 25+ years of full-arch and biocompatible implant experience.",
     intro:
       "A well-planned implant restores function, protects bone, and keeps your bite aligned for decades. A poorly planned one does the opposite. The difference is almost entirely upstream of the surgery: imaging, material choice, and clinician judgment.",
     what: [
@@ -103,7 +103,7 @@ const PATHWAYS: Record<string, Pathway> = {
     description:
       "Beyond dental: oral microbiome, nutrition, sleep, metabolic markers, and biomarker labs interpreted alongside oral findings. The Primary iD Plus visit for patients optimizing for healthspan.",
     intro:
-      "The mouth tells you things about your systemic health most doctors won't ask about. Inflammation, microbiome, sleep, metabolic load — and we interpret them together rather than in silos.",
+      "The mouth tells you things about your systemic health most doctors won't ask about. Inflammation, microbiome, sleep, metabolic load, and we interpret them together rather than in silos.",
     what: [
       "Full Primary iD scoring across five dimensions",
       "MEDAS nutrition and Life's Essential 8 (LE8) baseline",
@@ -178,7 +178,7 @@ export default async function BookPathwayPage({
           <strong style={{ color: PALETTE.navy }}>Duration:</strong> {p.duration}
         </p>
 
-        {/* Scheduler placeholder — will be replaced with the real embed
+        {/* Scheduler placeholder : will be replaced with the real embed
             (NexHealth / LocalMed / Modento per Subscribili's recommendation) */}
         <div
           style={{
@@ -215,7 +215,7 @@ export default async function BookPathwayPage({
           </h3>
 
           <p style={{ color: PALETTE.body, lineHeight: 1.65, marginBottom: 24 }}>
-            Our intake is built around the Primary iD assessment — a 6-minute online
+            Our intake is built around the Primary iD assessment, a 6-minute online
             score across five dimensions of health. It tells us what to focus on
             before you arrive, so the visit itself can be more productive. Or call
             and we'll book you the old-fashioned way.

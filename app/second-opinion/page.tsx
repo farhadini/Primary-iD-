@@ -6,11 +6,11 @@ const SERIF = "Georgia, 'Times New Roman', serif"
 const SANS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
 
 const FAQ_ITEMS = [
-  { q: "What does a second opinion cost?", a: "If you bring your existing CBCT scan, X-rays, and treatment plan from another practice, the case-review consultation is offered at a reduced rate compared to a full comprehensive intake. If we need to run our own diagnostics, that's billed separately and discussed up front. Most patients spend $250–$500 on the consult itself — meaningful relative to a $25K–$50K case decision." },
-  { q: "What if you tell me the other quote was right?", a: "We will. That's the point of the opinion being honest. Some second opinions confirm — that's a valid and useful outcome. You leave with confidence in the plan instead of paying for work you weren't sure about." },
+  { q: "What does a second opinion cost?", a: "If you bring your existing CBCT scan, X-rays, and treatment plan from another practice, the case-review consultation is offered at a reduced rate compared to a full comprehensive intake. If we need to run our own diagnostics, that's billed separately and discussed up front. Most patients spend $250–$500 on the consult itself, meaningful relative to a $25K–$50K case decision." },
+  { q: "What if you tell me the other quote was right?", a: "We will. That's the point of the opinion being honest. Some second opinions confirm, and that's a valid and useful outcome. You leave with confidence in the plan instead of paying for work you weren't sure about." },
   { q: "Do I need to switch practices to you?", a: "No. Some second-opinion patients take our findings back to their original practice and continue care there. Others switch. Both are fine. We don't make the consultation contingent on you becoming a patient." },
   { q: "What records should I bring?", a: "Most useful: your CBCT scan (DICOM files), recent X-rays, the proposed treatment plan in writing, and any quote you've received. If you don't have the CBCT, we can request it from the practice that took it, or take one ourselves if needed." },
-  { q: "Will you contact my current dentist?", a: "Only if you ask us to. Most second-opinion patients prefer privacy at this stage — we honor that. If you want us to coordinate or share findings with your current practice, we will." },
+  { q: "Will you contact my current dentist?", a: "Only if you ask us to. Most second-opinion patients prefer privacy at this stage, and we honor that. If you want us to coordinate or share findings with your current practice, we will." },
   { q: "How long is the consultation?", a: "60–90 minutes. We review your records, discuss your medical context, examine if needed, then walk through what we'd do differently and why. Same-day write-up of our findings if you want to take it back to compare." },
 ]
 
@@ -32,7 +32,7 @@ function ReviewIcon() {
       <line x1="52" y1="64" x2="92" y2="64" stroke="#0E2240" strokeWidth="1.2" opacity="0.3" />
       <line x1="52" y1="72" x2="100" y2="72" stroke="#0E2240" strokeWidth="1.2" opacity="0.3" />
       <line x1="52" y1="80" x2="84" y2="80" stroke="#0E2240" strokeWidth="1.2" opacity="0.3" />
-      {/* Highlight on a line — what we'd verify */}
+      {/* Highlight on a line : what we'd verify */}
       <rect x="50" y="89" width="55" height="9" fill="#E8985E" opacity="0.22" />
       <line x1="52" y1="94" x2="100" y2="94" stroke="#E8985E" strokeWidth="1.4" />
       {/* Checkmark badge */}
@@ -101,7 +101,7 @@ export default function SecondOpinionPage() {
                 fontSize: 17, lineHeight: 1.65, color: "rgba(254,252,249,0.85)",
                 margin: "0 0 36px", maxWidth: 620, fontFamily: SANS,
               }}>
-                Most of the people who come to us for full arch or complex implant work already have a quote from somewhere else. We&apos;ll review what was proposed against your Primary iD risk picture — and tell you what we&apos;d verify, what we&apos;d do differently, and why.
+                Most of the people who come to us for full arch or complex implant work already have a quote from somewhere else. We&apos;ll review what was proposed against your Primary iD risk picture, and tell you what we&apos;d verify, what we&apos;d do differently, and why.
               </p>
               <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
                 <a href="mailto:hello@myprimaryid.com?subject=Second opinion request" style={{
@@ -132,13 +132,13 @@ export default function SecondOpinionPage() {
       <section style={{ background: PALETTE.warmWhite, padding: "88px 28px" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
           <p style={{ fontFamily: SERIF, fontSize: 22, lineHeight: 1.55, color: PALETTE.body, margin: "0 0 22px" }}>
-            A $30,000 dental quote should feel like a real decision — not a sales meeting you&apos;re already trying to back out of.
+            A $30,000 dental quote should feel like a real decision, not a sales meeting you&apos;re already trying to back out of.
           </p>
           <p style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 22, lineHeight: 1.55, color: PALETTE.navy, margin: "0 0 28px" }}>
-            If something about your quote felt off — pace, pressure, vagueness about materials, no mention of your medical history — that&apos;s a signal worth honoring.
+            If something about your quote felt off, like pace, pressure, vagueness about materials, or no mention of your medical history, that&apos;s a signal worth honoring.
           </p>
           <div style={{ fontFamily: SANS, fontSize: 13, color: PALETTE.muted, letterSpacing: "0.04em" }}>
-            — Dr. Tzur Gabi, Functional Prosthodontist
+            Dr. Tzur Gabi, Functional Prosthodontist
           </div>
         </div>
       </section>
@@ -154,7 +154,7 @@ export default function SecondOpinionPage() {
               The questions we&apos;d ask <em style={{ color: PALETTE.blue }}>about your plan</em>.
             </h2>
             <p style={{ fontSize: 17, lineHeight: 1.65, color: PALETTE.body, margin: 0 }}>
-              Not a critique of the other practice — a structured second pass at whether the proposed plan fits <em>you</em>. Here&apos;s what we evaluate.
+              Not a critique of the other practice, but a structured second pass at whether the proposed plan fits <em>you</em>. Here&apos;s what we evaluate.
             </p>
           </div>
 
@@ -166,15 +166,15 @@ export default function SecondOpinionPage() {
               },
               {
                 title: "Is the material choice defensible for your biology?",
-                body: "Titanium vs. zirconia. Acrylic vs. hybrid vs. monolithic zirconia for the prosthesis. We check whether the choice was discussed or defaulted, and whether it accounts for any sensitivity, autoimmune, or bruxism context.",
+                body: "Titanium vs. zirconia. Acrylic vs. hybrid vs. monolithic zirconia for the prosthesis. We check whether the choice was discussed or defaulted, and whether it accounts for any sensitivity, autoimmune, or bruxism (teeth grinding) context.",
               },
               {
                 title: "Does the number of implants make sense?",
-                body: "All-on-4 vs. All-on-6 vs. All-on-8 isn&apos;t a marketing decision — it&apos;s a biomechanics decision. Bone volume, bite force, opposing arch all matter. We re-check the math.",
+                body: "All-on-4 vs. All-on-6 vs. All-on-8 isn&apos;t a marketing decision. It&apos;s a biomechanics decision. Bone volume, bite force, opposing arch all matter. We re-check the math.",
               },
               {
                 title: "What does your medical context say?",
-                body: "Diabetes, smoking, bisphosphonates, sleep-disordered breathing, family periodontal history. Each one shifts the prognosis. A plan built without these isn&apos;t a plan — it&apos;s a quote with a 3D scanner.",
+                body: "Diabetes, smoking, bisphosphonates, sleep-disordered breathing, family periodontal history. Each one shifts the prognosis. A plan built without these isn&apos;t a plan. It&apos;s a quote with a 3D scanner.",
               },
               {
                 title: "Are the warranty terms clear and reasonable?",
@@ -190,7 +190,7 @@ export default function SecondOpinionPage() {
               },
               {
                 title: "Who is actually doing the surgery?",
-                body: "In some high-volume practices, the doctor who consults you isn&apos;t the doctor who operates on you. Worth knowing in advance — not a problem necessarily, just a question you have the right to ask.",
+                body: "In some high-volume practices, the doctor who consults you isn&apos;t the doctor who operates on you. Worth knowing in advance, not a problem necessarily, just a question you have the right to ask.",
               },
             ].map((c, i) => (
               <div key={i} style={{
@@ -274,7 +274,7 @@ export default function SecondOpinionPage() {
             We don&apos;t need <em style={{ color: PALETTE.blue }}>your case</em> to come to us.
           </h2>
           <p style={{ fontSize: 17, lineHeight: 1.7, color: "rgba(254,252,249,0.85)", margin: "0 0 18px" }}>
-            That&apos;s the structural reason the opinion can be honest. We&apos;re a referral-driven practice serving a wellness-literate Los Angeles patient base. Whether you proceed with us, return to your original practice, or take our read to a third provider — the consultation is the same.
+            That&apos;s the structural reason the opinion can be honest. We&apos;re a referral-driven practice serving a wellness-literate Los Angeles patient base. Whether you proceed with us, return to your original practice, or take our read to a third provider, the consultation is the same.
           </p>
           <p style={{ fontSize: 17, lineHeight: 1.7, color: "rgba(254,252,249,0.85)", margin: "0 0 36px" }}>
             About half of second-opinion patients eventually choose to do the work with us. About a quarter take our read back to confirm or renegotiate with their original practice. The rest go elsewhere with a clearer picture. All three are good outcomes.

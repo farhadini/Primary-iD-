@@ -647,7 +647,7 @@ function TheGap() {
 // ── The Comparison Section ────────────────────────────────────
 const COMPARISON_ROWS = [
   { label: "Training", conventional: "DDS / DMD only", primary: "DDS + functional, integrative & airway", highlight: "functional, integrative & airway" },
-  { label: "Initial visit length", conventional: "15–30 min with a doctor", primary: "60–90 min with a doctor", highlight: "60–90 min" },
+  { label: "Time with the doctor", conventional: "5–10 min with a general dentist", primary: "30+ min with a prosthodontist specialist", highlight: "30+ min" },
   { label: "Diagnostics", conventional: "2D X-ray, occasional pano", primary: "3D CBCT + intra-oral scan + biomarker panels + microbiome + at-home sleep", highlight: "3D CBCT" },
   { label: "Assessment", conventional: "Single-tooth check", primary: "5-dimension Primary iD score", highlight: "5-dimension Primary iD" },
   { label: "Care team", conventional: "Dentist + hygienist", primary: "Dentist + hygienist + nutrition, sleep & microbiome partners", highlight: "nutrition, sleep & microbiome partners" },
@@ -710,7 +710,7 @@ function TheComparison() {
             transform: loaded ? "translateY(0)" : "translateY(12px)",
             transition: "all 0.8s ease-out 0.4s",
           }}>
-            On paper, every dentist looks the same. What actually happens in the room — and what you walk out with — is not.
+            On paper, every dentist looks the same. What actually happens in the room, and what you walk out with, is not.
           </p>
         </div>
 
@@ -831,11 +831,11 @@ function TheComparison() {
 
 // ── How We See You (Dimensions) ────────────────────────────────
 const DIMENSIONS = [
-  { num: "01", key: "oral", name: "Oral", desc: "Your mouth, bite, and airway — the front door to everything downstream.", color: B.blue, colorSoft: "rgba(36, 167, 224, 0.15)" },
-  { num: "02", key: "sleep", name: "Sleep", desc: "How well your nights restore you — breath, brain, and recovery.", color: "#7B68EE", colorSoft: "rgba(123, 104, 238, 0.18)" },
-  { num: "03", key: "nutrition", name: "Nutrition", desc: "What fuels you and how — food, absorption, and the microbiome.", color: B.green, colorSoft: "rgba(72, 194, 140, 0.15)" },
-  { num: "04", key: "family", name: "Family", desc: "The patterns written in your history — and the ones you can shift.", color: B.gold, colorSoft: "rgba(212, 181, 132, 0.15)" },
-  { num: "05", key: "longevity", name: "Longevity", desc: "The biomarkers and habits that add years — and life to them.", color: "#D97757", colorSoft: "rgba(217, 119, 87, 0.15)" },
+  { num: "01", key: "oral", name: "Oral", desc: "Your mouth, bite, and airway: the front door to everything downstream.", color: B.blue, colorSoft: "rgba(36, 167, 224, 0.15)" },
+  { num: "02", key: "sleep", name: "Sleep", desc: "How well your nights restore you: breath, brain, and recovery.", color: "#7B68EE", colorSoft: "rgba(123, 104, 238, 0.18)" },
+  { num: "03", key: "nutrition", name: "Nutrition", desc: "What fuels you and how: food, absorption, and the microbiome.", color: B.green, colorSoft: "rgba(72, 194, 140, 0.15)" },
+  { num: "04", key: "family", name: "Family", desc: "The patterns written in your history, and the ones you can shift.", color: B.gold, colorSoft: "rgba(212, 181, 132, 0.15)" },
+  { num: "05", key: "longevity", name: "Longevity", desc: "The biomarkers and habits that add years, and life to them.", color: "#D97757", colorSoft: "rgba(217, 119, 87, 0.15)" },
 ];
 
 function HowWeSeeYou() {
@@ -894,7 +894,7 @@ function HowWeSeeYou() {
             transform: loaded ? "translateY(0)" : "translateY(12px)",
             transition: "all 0.8s ease-out 0.45s",
           }}>
-            A live read across five dimensions — so the care fits the actual you, not just your teeth.
+            A live read across five dimensions, so the care fits the actual you, not just your teeth.
           </p>
         </div>
 
@@ -1055,7 +1055,7 @@ const PARTNERS = [
     gradient: "linear-gradient(135deg, #D4B584 0%, #E8985E 100%)",
     eyebrow: "Biomarker labs",
     headline: "Over 100 biomarkers, ordered and interpreted as part of your membership.",
-    description: "The hormone, vitamin, metabolic, and inflammation markers your PCP doesn't routinely run — ordered alongside your oral findings and interpreted together.",
+    description: "The hormone, vitamin, metabolic, and inflammation markers your PCP doesn't routinely run, ordered alongside your oral findings and interpreted together.",
     unlocks: [
       "Hormone, thyroid, and metabolic panels",
       "Inflammatory markers (hs-CRP, HbA1c, homocysteine)",
@@ -1068,8 +1068,8 @@ const PARTNERS = [
     name: "Happy Sleep",
     gradient: "linear-gradient(135deg, #7B68EE 0%, #24A7E0 100%)",
     eyebrow: "At-home sleep diagnostics",
-    headline: "Real sleep diagnosis — covered by most medical insurance.",
-    description: "An at-home sleep study plus a smart ring that tracks your nightly recovery, so sleep apnea, bruxism, and airway dysfunction get diagnosed without a hospital lab.",
+    headline: "Real sleep diagnosis, covered by most medical insurance.",
+    description: "An at-home sleep study plus a smart ring that tracks your nightly recovery, so sleep apnea, bruxism (teeth grinding), and airway dysfunction get diagnosed without a hospital lab.",
     unlocks: [
       "At-home polysomnography (no sleep lab)",
       "Smart ring for nightly recovery tracking",
@@ -1083,7 +1083,7 @@ const PARTNERS = [
     gradient: "linear-gradient(135deg, #48C28C 0%, #24A7E0 100%)",
     eyebrow: "Microbiome + early detection",
     headline: "Organism-level read of your mouth and gut.",
-    description: "Oral and gut microbiome testing paired with early-detection screening for oral and esophageal cancer — the two cancers a dentist is best positioned to catch first.",
+    description: "Oral and gut microbiome testing paired with early-detection screening for oral and esophageal cancer, the two cancers a dentist is best positioned to catch first.",
     unlocks: [
       "Oral + gut microbiome analysis",
       "Personalized food and supplement guidance",
@@ -1135,7 +1135,7 @@ function TheEcosystem() {
             transform: loaded ? "translateY(0)" : "translateY(12px)",
             transition: "all 0.8s ease-out 0.4s",
           }}>
-            We don&apos;t rebuild what already exists. We partner with the world&apos;s best — so your labs, your sleep study, and your microbiome all land in one place, interpreted by a team that actually talks to each other.
+            We don&apos;t rebuild what already exists. We partner with the world&apos;s best, so your labs, your sleep study, and your microbiome all land in one place, interpreted by a team that actually talks to each other.
           </p>
         </div>
 
@@ -1241,7 +1241,7 @@ function TheEcosystem() {
           opacity: loaded ? 1 : 0,
           transition: "opacity 0.8s ease-out 0.75s",
         }}>
-          Additional partners across supplementation, coaching, and continuous monitoring — announced as they&apos;re added.
+          Additional partners across supplementation, coaching, and continuous monitoring, announced as they&apos;re added.
         </p>
       </div>
 
@@ -1262,7 +1262,7 @@ const TECH_CARDS = [
   {
     key: "cbct",
     title: "3D CBCT imaging",
-    desc: "A cone-beam scan that maps your airway, sinus, jaw, nerves, and bone in three dimensions — in under 20 seconds.",
+    desc: "A cone-beam scan that maps your airway, sinus, jaw, nerves, and bone in three dimensions, in under 20 seconds.",
     unlocks: ["Airway diagnosis", "Implant planning to within 0.5 mm", "Pathology that 2D X-rays miss"],
     gradient: "linear-gradient(135deg, rgba(36,167,224,0.3), rgba(36,167,224,0.1))",
     stroke: "#5BC0EC",
@@ -1275,7 +1275,7 @@ const TECH_CARDS = [
   {
     key: "scanner",
     title: "Intra-oral scanner + clinical photography",
-    desc: "Digital impressions and a full visual baseline of your mouth — no goopy trays, no guesswork.",
+    desc: "Digital impressions and a full visual baseline of your mouth, no goopy trays, no guesswork.",
     unlocks: ["Year-over-year documented change", "Faster lab turnaround", "Better fit on every restoration"],
     gradient: "linear-gradient(135deg, rgba(212,181,132,0.3), rgba(212,181,132,0.1))",
     stroke: "#D4B584",
@@ -1301,7 +1301,7 @@ const TECH_CARDS = [
   {
     key: "smart",
     title: "SMART amalgam removal",
-    desc: "Safe Mercury Amalgam Removal Technique — full IAOMT protocol when removing old silver fillings.",
+    desc: "Safe Mercury Amalgam Removal Technique: full IAOMT protocol when removing old silver fillings.",
     unlocks: ["Protects the patient", "Protects the clinical team", "Protects the environment from mercury vapor"],
     gradient: "linear-gradient(135deg, rgba(72,194,140,0.3), rgba(72,194,140,0.1))",
     stroke: "#48C28C",
@@ -1314,7 +1314,7 @@ const TECH_CARDS = [
   {
     key: "ozone",
     title: "Ozone therapy",
-    desc: "Antimicrobial sterilization without antibiotics — at the tissue, pocket, or canal level.",
+    desc: "Antimicrobial sterilization without antibiotics, at the tissue, pocket, or canal level.",
     unlocks: ["Deep tissue sterilization", "Periodontal pocket treatment", "Root canal disinfection, no systemic drugs"],
     gradient: "linear-gradient(135deg, rgba(123,104,238,0.3), rgba(123,104,238,0.1))",
     stroke: "#7B68EE",
@@ -1327,7 +1327,7 @@ const TECH_CARDS = [
   {
     key: "printing",
     title: "3D printing in-office",
-    desc: "Same-day aligners, surgical guides, and restorations printed in the building — not shipped from a lab.",
+    desc: "Same-day surgical guides, restorations, and appliances printed in the building, not shipped from a lab.",
     unlocks: ["Same-day turnaround", "Tighter fit, fewer revisions", "Lower cost per restoration"],
     gradient: "linear-gradient(135deg, rgba(232,152,94,0.3), rgba(232,152,94,0.1))",
     stroke: "#E8985E",
@@ -1391,7 +1391,7 @@ function TheTechnology() {
             transform: loaded ? "translateY(0)" : "translateY(12px)",
             transition: "all 0.8s ease-out 0.4s",
           }}>
-            &ldquo;Whole-body dentistry&rdquo; becomes real in the room — or stays theory in the marketing. Here&apos;s what&apos;s at every chair in our practice.
+            Whole-body dentistry only matters if it shows up in the room, not just the marketing. Here is what sits at every chair in our practice.
           </p>
         </div>
 
@@ -1730,7 +1730,7 @@ function TheOutcome() {
             fontFamily: SERIF, fontSize: 18, lineHeight: 1.6,
             color: B.inkSoft, marginBottom: 20, maxWidth: 520,
           }}>
-            When the airway is clear, when the inflammation is settled, when the nutrition is working — the smile that shows up at the end isn&apos;t cosmetic. It&apos;s the visible proof of a whole system that&apos;s finally aligned.
+            When the airway is clear, when the inflammation is settled, when the nutrition is working, the smile that shows up at the end isn&apos;t cosmetic. It&apos;s the visible proof of a whole system that&apos;s finally aligned.
           </p>
           <p style={{
             fontFamily: SERIF, fontSize: 18, lineHeight: 1.6,

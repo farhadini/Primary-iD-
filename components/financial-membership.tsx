@@ -46,7 +46,7 @@ const MEMBERSHIP_ITEMS = [
   { yes: true, text: "Nutrition & longevity coaching", bold: true, suffix: " (MEDAS + LE8)" },
   { yes: true, text: "Two cleanings + exams a year, included" },
   { yes: true, text: "Member pricing on restorative & cosmetic work" },
-  { yes: true, text: "Priority scheduling — no claim forms, no surprises" },
+  { yes: true, text: "Priority scheduling: no claim forms, no surprises" },
 ];
 
 const INSURERS = ["Delta Dental", "Aetna", "MetLife", "Cigna", "Guardian", "United Concordia", "& more"];
@@ -127,7 +127,7 @@ export default function FinancialMembership() {
             margin: "0 0 56px",
           }}
         >
-          Insurance covers teeth. It doesn&apos;t cover <em>wellbeing</em> —
+          Insurance covers teeth. It doesn&apos;t cover <em>wellbeing</em>:
           the airway, the inflammation, the longevity layer that makes a smile
           actually last. So we built a membership that does.
         </p>
@@ -210,7 +210,7 @@ export default function FinancialMembership() {
                     letterSpacing: "-0.015em",
                   }}
                 >
-                  Great — we <em style={{ fontStyle: "italic", fontWeight: 400 }}>accept most.</em>
+                  Great. We <em style={{ fontStyle: "italic", fontWeight: 400 }}>accept most.</em>
                 </h3>
                 <p
                   style={{
@@ -392,9 +392,9 @@ export default function FinancialMembership() {
                     maxWidth: 420,
                   }}
                 >
-                  Your five scores become your plan. We cover the support your
-                  Primary iD actually says you need — nothing you don&apos;t.
-                  Works alongside your insurance, or on its own.
+                  Your five scores guide the plan. Dr. Gabi confirms what your
+                  exam and imaging actually show, and your care follows those
+                  findings, not a script. Works alongside your insurance, or on its own.
                 </p>
               </div>
             </div>
@@ -464,7 +464,7 @@ export default function FinancialMembership() {
           </article>
         </div>
 
-        {/* Pricing tiers — added per audit Fix #18: visible price anchor */}
+        {/* Pricing tiers: added per audit Fix #18, visible price anchor */}
         <div
           className="fin-pricing"
           style={{
@@ -735,7 +735,7 @@ export default function FinancialMembership() {
                 maxWidth: 520,
               }}
             >
-              Your membership is built around your five scores — so you
+              Your membership is built around your five scores, so you
               only pay for the support you actually need. Takes about ten
               minutes. No card required to see your plan.
             </p>
@@ -840,7 +840,7 @@ export default function FinancialMembership() {
                 <polyline points="12 5 19 12 12 19" />
               </svg>
             </a>
-            {/* Join Primary iD Membership — external Subscribili funnel. TODO(farhad): confirm subdomain with Subscribili rep */}
+            {/* Join Primary iD Membership: external Subscribili funnel. TODO(farhad): confirm subdomain with Subscribili rep */}
             <a
               href="https://primaryid.subscribili.com"
               target="_blank"

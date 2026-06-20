@@ -20,7 +20,7 @@ const PRACTICE = {
   telephone: "+1-310-564-8990",
   email: "hello@myprimaryid.com",
   description:
-    "Integrative, whole-body dentistry in Brentwood, Los Angeles. Functional prosthodontics, airway-centered care, biocompatible materials, and the Primary iD oral-systemic scoring framework.",
+    "Integrative, whole-body dentistry in Los Angeles. Functional prosthodontics, airway-centered care, biocompatible materials, and the Primary iD oral-systemic scoring framework.",
   priceRange: "$$$",
   address: {
     "@type": "PostalAddress",
@@ -39,13 +39,13 @@ const PRACTICE = {
     {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday"],
-      opens: "08:00",
+      opens: "09:00",
       closes: "18:00",
     },
     {
       "@type": "OpeningHoursSpecification",
       dayOfWeek: "Friday",
-      opens: "08:00",
+      opens: "09:00",
       closes: "17:00",
     },
   ],
@@ -102,7 +102,7 @@ export function LocalBusinessSchema() {
   return <JsonLd data={data} />
 }
 
-// ─── Physician (Dr. Tzur Gabi — render on /about) ─────────────────────────────
+// ─── Physician (Dr. Tzur Gabi, render on /about) ─────────────────────────────
 export function PhysicianSchema() {
   const data = {
     "@context": "https://schema.org",
@@ -120,7 +120,7 @@ export function PhysicianSchema() {
       // TODO(farhad): add LinkedIn, Google Scholar, professional society pages
     ],
     description:
-      "Dr. Tzur Gabi is a functional prosthodontist and oral physician with 25+ years of experience in biocompatible, airway-centered, whole-body dentistry. Founder of Primary Integrative Dentistry in Brentwood, Los Angeles.",
+      "Dr. Tzur Gabi is a functional prosthodontist and oral physician with 25+ years of experience in biocompatible, airway-centered, whole-body dentistry. Founder of Primary Integrative Dentistry in Los Angeles.",
   }
   return <JsonLd data={data} />
 }

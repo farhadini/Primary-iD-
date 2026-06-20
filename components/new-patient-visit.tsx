@@ -1,7 +1,7 @@
 "use client";
 
 // ─────────────────────────────────────────────────────────────
-// Section 5 — The New Patient Visit, Reimagined
+// Section 5: The New Patient Visit, Reimagined
 // ─────────────────────────────────────────────────────────────
 
 const B = {
@@ -117,7 +117,7 @@ function MockAppointment() {
       iconBg: "rgba(72,194,140,0.14)",
       iconColor: B.green,
       title: "In-person visit",
-      sub: "Brentwood · 90 min",
+      sub: "Los Angeles · 90 min",
       selected: false,
     },
     {
@@ -473,17 +473,6 @@ export default function NewPatientVisit() {
           }}>
             Your care begins <em style={{ color: B.blue, fontStyle: "italic" }}>before you arrive</em>.
           </h2>
-          <p style={{
-            fontFamily: SANS,
-            fontSize: 18,
-            lineHeight: 1.6,
-            color: B.body,
-            margin: "28px auto 0",
-            maxWidth: 620,
-          }}>
-            By the time you sit in the chair, we already know you. You already have your score, your roadmap,
-            and the option to meet us virtually first.
-          </p>
         </div>
 
         {/* 3 Steps with connector line */}

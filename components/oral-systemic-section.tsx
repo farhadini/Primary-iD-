@@ -1,6 +1,6 @@
 "use client";
 
-// Primary Integrative Dentistry — Section 02: Oral-Systemic Insight
+// Primary Integrative Dentistry, Section 02: Oral-Systemic Insight
 // ---------------------------------------------------------------------------
 // Renders the dark-navy oral-systemic block with:
 //   - eyebrow, display headline ("What is your mouth telling you?"), subhead, CTA
@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 
 // ---------------------------------------------------------------------------
-// SINGLE SOURCE OF TRUTH — sample dimension scores + cycle timing
+// SINGLE SOURCE OF TRUTH: sample dimension scores + cycle timing
 // ---------------------------------------------------------------------------
 const DIMENSIONS = [
   { name: "Oral Health",           score: 72, color: "#48C28C" }, // green
@@ -50,7 +50,7 @@ import { createContext, useContext } from "react";
 const DimensionContext = createContext<{ idx: number; setIdx: (n: number) => void }>({ idx: 0, setIdx: () => {} });
 
 // ---------------------------------------------------------------------------
-// ScoreCard — animated overlay. Cycles through DIMENSIONS.
+// ScoreCard: animated overlay. Cycles through DIMENSIONS.
 // ---------------------------------------------------------------------------
 function ScoreCard() {
   const { idx, setIdx } = useContext(DimensionContext);
@@ -235,7 +235,7 @@ function ScoreCard() {
 }
 
 // ---------------------------------------------------------------------------
-// Figure — Midjourney hero image with score card overlay and highlight zones
+// Figure: Midjourney hero image with score card overlay and highlight zones
 // ---------------------------------------------------------------------------
 // Highlight positions mapped to each dimension (index-based):
 // 0 = Oral Health → teeth area

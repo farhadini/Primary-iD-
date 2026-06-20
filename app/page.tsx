@@ -11,7 +11,7 @@ import MobileStickyCTA from "@/components/mobile-sticky-cta";
 import FinancialMembership from "@/components/financial-membership";
 
 // ============================================================
-// PRIMARY — Homepage
+// PRIMARY: Homepage
 // Quiet luxury editorial · Booking-primary · Assessment as depth
 // Design: cream/navy/serif · two-column editorial · restrained motion
 // ============================================================
@@ -353,14 +353,14 @@ function Hero() {
 // Step 3: Results + email confirmation
 // ── PRE-APPOINTMENT PRESCREENING DATA ─────────────────────────
 const PS_QUESTIONS = [
-  { id:"q1", type:"multi_select", emoji:"🏠", label:"GETTING STARTED", q:"What brings you to Primary?", subtitle:"Select all that apply — there's no wrong answer.", options:[{id:"routine",text:"A routine cleaning or checkup",icon:"🪥"},{id:"specific",text:"Something specific is bothering me",icon:"🎯"},{id:"second",text:"I want a second opinion",icon:"🔍"},{id:"cosmetic",text:"I'm exploring cosmetic or alignment options",icon:"✨"},{id:"holistic",text:"I'm interested in a more holistic approach",icon:"🌿"},{id:"referred",text:"Someone recommended Primary to me",icon:"💬"}], insight:"Most of our patients come in for one reason and discover three more. That's the Primary difference — we see what others miss." },
-  { id:"q2", type:"single_select", emoji:"📅", label:"YOUR HISTORY", q:"When was your last dental visit?", subtitle:"However long it's been — you're here now.", options:[{id:"recent",text:"Within the last 6 months",icon:"✓"},{id:"year",text:"6 months to a year ago",icon:"📆"},{id:"few_years",text:"1–3 years ago",icon:"⏳"},{id:"long",text:"More than 3 years",icon:"🕰️"},{id:"unknown",text:"I honestly can't remember",icon:"🤷"}], insight:"At Primary, we see patients more often than any other doctor. However long it's been, this visit is a chance to get the full picture." },
-  { id:"q3", type:"multi_select", emoji:"👀", label:"WHAT YOU'VE NOTICED", q:"Have you noticed any of these?", subtitle:"Check anything that sounds familiar. Even if it seems minor.", options:[{id:"bleeding",text:"Bleeding when brushing or flossing",icon:"🩸"},{id:"sensitivity",text:"Sensitivity to hot, cold, or sweet",icon:"🧊"},{id:"jaw",text:"Jaw pain, clicking, or tension",icon:"😣"},{id:"loose",text:"A tooth that feels loose or different",icon:"🦷"},{id:"breath",text:"Persistent bad breath",icon:"💨"},{id:"spot",text:"Something that doesn't look right",icon:"🔎"},{id:"headache",text:"Waking up with headaches or a sore jaw",icon:"🤕"},{id:"none",text:"None of these",icon:"👍",exclusive:true}], insight:"Each of these is your body communicating. At Primary, we don't just treat symptoms — we find out what they're connected to." },
-  { id:"q4", type:"single_select", emoji:"🔧", label:"YOUR DENTAL WORK", q:"Do you have older dental work you've wondered about?", subtitle:"Fillings, crowns, bridges — anything from past visits.", options:[{id:"none",text:"I don't have any dental work",icon:"✨"},{id:"fine",text:"I have some and it's all fine",icon:"👌"},{id:"questions",text:"I have some and I've had questions",icon:"🤔"},{id:"assess",text:"I have quite a bit and I'd like it assessed",icon:"📋"},{id:"unsure",text:"I'm not sure what I have honestly",icon:"🤷"}], insight:"Dental materials don't last forever. We use advanced 3D imaging to assess every piece of existing work — because what's already in your mouth matters as much as what we put in." },
-  { id:"q5", type:"single_select", emoji:"🌡️", label:"YOUR EXPERIENCE", q:"How does your mouth feel most days?", subtitle:"There's no right answer. Just your honest experience.", options:[{id:"great",text:"Great — I don't think about it",icon:"😊"},{id:"fine",text:"Fine, but not perfect",icon:"🙂"},{id:"off",text:"Something's off but I can't pinpoint it",icon:"😐"},{id:"not_great",text:"Honestly, not great",icon:"😔"}], insight:"Your daily experience matters to us as much as what we find clinically. Sometimes the two don't match — and that gap is exactly what a comprehensive assessment uncovers." },
-  { id:"q6", type:"multi_select", emoji:"🔗", label:"THE BIGGER PICTURE", q:"Do any of these sound like you?", subtitle:"This is where dentistry meets medicine.", options:[{id:"grind",text:"I grind or clench my teeth",icon:"😬"},{id:"snore",text:"I snore or stop breathing at night",icon:"💤"},{id:"mouth_breathe",text:"I breathe through my mouth more than my nose",icon:"👄"},{id:"reflux",text:"I deal with acid reflux or digestive issues",icon:"🔥"},{id:"family",text:"Family history of heart disease, diabetes, or gum disease",icon:"👨‍👩‍👧"},{id:"dry_mouth",text:"I'm on medications that cause dry mouth",icon:"💊"},{id:"none",text:"None of these",icon:"👍",exclusive:true}], insight:"Your mouth is connected to everything — your sleep, your digestion, your heart, your DNA. We're the practice that actually looks at all of it." },
-  { id:"q7", type:"pick_two", emoji:"✨", label:"WHAT MATTERS TO YOU", q:"What matters most to you about your dental care?", subtitle:"Pick up to two.", options:[{id:"understand",text:"Understanding what's actually going on in my body",icon:"🧠"},{id:"smile",text:"My smile looking and feeling its best",icon:"😁"},{id:"prevent",text:"Preventing problems before they start",icon:"🛡️"},{id:"listen",text:"Someone who really listens and explains things",icon:"👂"},{id:"tech",text:"The most advanced technology available",icon:"🔬"}], insight:"Every answer here shapes how we personalize your visit. There are no wrong priorities — only yours." },
-  { id:"q8", type:"free_text", emoji:"💬", label:"YOUR SPACE", q:"Anything else you want us to know?", subtitle:"Dental anxiety, a past experience, something specific you're hoping for — anything at all.", placeholder:"This is totally optional. But if there's something on your mind, we'd love to hear it...", insight:"Whatever you share here, our team will read before your visit. You'll never have to repeat yourself." },
+  { id:"q1", type:"multi_select", emoji:"🏠", label:"GETTING STARTED", q:"What brings you to Primary?", subtitle:"Select all that apply. There's no wrong answer.", options:[{id:"routine",text:"A routine cleaning or checkup",icon:"🪥"},{id:"specific",text:"Something specific is bothering me",icon:"🎯"},{id:"second",text:"I want a second opinion",icon:"🔍"},{id:"cosmetic",text:"I'm exploring cosmetic or alignment options",icon:"✨"},{id:"holistic",text:"I'm interested in a more holistic approach",icon:"🌿"},{id:"referred",text:"Someone recommended Primary to me",icon:"💬"}], insight:"Most of our patients come in for one reason and discover three more. That's the Primary difference: we see what others miss." },
+  { id:"q2", type:"single_select", emoji:"📅", label:"YOUR HISTORY", q:"When was your last dental visit?", subtitle:"However long it's been, you're here now.", options:[{id:"recent",text:"Within the last 6 months",icon:"✓"},{id:"year",text:"6 months to a year ago",icon:"📆"},{id:"few_years",text:"1–3 years ago",icon:"⏳"},{id:"long",text:"More than 3 years",icon:"🕰️"},{id:"unknown",text:"I honestly can't remember",icon:"🤷"}], insight:"At Primary, we see patients more often than any other doctor. However long it's been, this visit is a chance to get the full picture." },
+  { id:"q3", type:"multi_select", emoji:"👀", label:"WHAT YOU'VE NOTICED", q:"Have you noticed any of these?", subtitle:"Check anything that sounds familiar. Even if it seems minor.", options:[{id:"bleeding",text:"Bleeding when brushing or flossing",icon:"🩸"},{id:"sensitivity",text:"Sensitivity to hot, cold, or sweet",icon:"🧊"},{id:"jaw",text:"Jaw pain, clicking, or tension",icon:"😣"},{id:"loose",text:"A tooth that feels loose or different",icon:"🦷"},{id:"breath",text:"Persistent bad breath",icon:"💨"},{id:"spot",text:"Something that doesn't look right",icon:"🔎"},{id:"headache",text:"Waking up with headaches or a sore jaw",icon:"🤕"},{id:"none",text:"None of these",icon:"👍",exclusive:true}], insight:"Each of these is your body communicating. At Primary, we don't just treat symptoms. We find out what they're connected to." },
+  { id:"q4", type:"single_select", emoji:"🔧", label:"YOUR DENTAL WORK", q:"Do you have older dental work you've wondered about?", subtitle:"Fillings, crowns, bridges, anything from past visits.", options:[{id:"none",text:"I don't have any dental work",icon:"✨"},{id:"fine",text:"I have some and it's all fine",icon:"👌"},{id:"questions",text:"I have some and I've had questions",icon:"🤔"},{id:"assess",text:"I have quite a bit and I'd like it assessed",icon:"📋"},{id:"unsure",text:"I'm not sure what I have honestly",icon:"🤷"}], insight:"Dental materials don't last forever. We use advanced 3D imaging to assess every piece of existing work, because what's already in your mouth matters as much as what we put in." },
+  { id:"q5", type:"single_select", emoji:"🌡️", label:"YOUR EXPERIENCE", q:"How does your mouth feel most days?", subtitle:"There's no right answer. Just your honest experience.", options:[{id:"great",text:"Great, I don't think about it",icon:"😊"},{id:"fine",text:"Fine, but not perfect",icon:"🙂"},{id:"off",text:"Something's off but I can't pinpoint it",icon:"😐"},{id:"not_great",text:"Honestly, not great",icon:"😔"}], insight:"Your daily experience matters to us as much as what we find clinically. Sometimes the two don't match, and that gap is exactly what a comprehensive assessment uncovers." },
+  { id:"q6", type:"multi_select", emoji:"🔗", label:"THE BIGGER PICTURE", q:"Do any of these sound like you?", subtitle:"This is where dentistry meets medicine.", options:[{id:"grind",text:"I grind or clench my teeth",icon:"😬"},{id:"snore",text:"I snore or stop breathing at night",icon:"💤"},{id:"mouth_breathe",text:"I breathe through my mouth more than my nose",icon:"👄"},{id:"reflux",text:"I deal with acid reflux or digestive issues",icon:"🔥"},{id:"family",text:"Family history of heart disease, diabetes, or gum disease",icon:"👨‍👩‍👧"},{id:"dry_mouth",text:"I'm on medications that cause dry mouth",icon:"💊"},{id:"none",text:"None of these",icon:"👍",exclusive:true}], insight:"Your mouth is connected to everything: your sleep, your digestion, your heart, your DNA. We're the practice that actually looks at all of it." },
+  { id:"q7", type:"pick_two", emoji:"✨", label:"WHAT MATTERS TO YOU", q:"What matters most to you about your dental care?", subtitle:"Pick up to two.", options:[{id:"understand",text:"Understanding what's actually going on in my body",icon:"🧠"},{id:"smile",text:"My smile looking and feeling its best",icon:"😁"},{id:"prevent",text:"Preventing problems before they start",icon:"🛡️"},{id:"listen",text:"Someone who really listens and explains things",icon:"👂"},{id:"tech",text:"The most advanced technology available",icon:"🔬"}], insight:"Every answer here shapes how we personalize your visit. There are no wrong priorities, only yours." },
+  { id:"q8", type:"free_text", emoji:"💬", label:"YOUR SPACE", q:"Anything else you want us to know?", subtitle:"Dental anxiety, a past experience, something specific you're hoping for, anything at all.", placeholder:"This is totally optional. But if there's something on your mind, we'd love to hear it...", insight:"Whatever you share here, our team will read before your visit. You'll never have to repeat yourself." },
 ];
 
 function psGenerateSnapshot(answers) {
@@ -374,8 +374,8 @@ function psGenerateSnapshot(answers) {
   let tier = "ahead";
   if (symptomCount >= 3 || systemicCount >= 3 || subjective === "not_great" || recency === "long" || recency === "unknown") tier = "full_picture";
   else if (symptomCount >= 1 || systemicCount >= 1 || subjective === "off" || recency === "few_years" || restorations === "questions" || restorations === "assess") tier = "discover";
-  const symptomMap = { bleeding:{label:"Gum health & inflammation",icon:"🩸"}, sensitivity:{label:"Tooth structure & decay screening",icon:"🧊"}, jaw:{label:"TMJ & jaw function",icon:"😣"}, loose:{label:"Bone health & periodontal assessment",icon:"🦷"}, breath:{label:"Oral microbiome balance",icon:"💨"}, spot:{label:"Soft tissue screening",icon:"🔎"}, headache:{label:"Sleep & airway connection",icon:"🤕"} };
-  const systemicMap = { grind:{label:"Bruxism & stress patterns",icon:"😬"}, snore:{label:"Sleep-disordered breathing",icon:"💤"}, mouth_breathe:{label:"Airway & breathing assessment",icon:"👄"}, reflux:{label:"Acid erosion & GI connection",icon:"🔥"}, family:{label:"Genetic predisposition screening",icon:"👨‍👩‍👧"}, dry_mouth:{label:"Salivary flow & caries risk",icon:"💊"} };
+  const symptomMap = { bleeding:{label:"Gum health & inflammation",icon:"🩸"}, sensitivity:{label:"Tooth structure & decay screening",icon:"🧊"}, jaw:{label:"TMJ & jaw function",icon:"😣"}, loose:{label:"Bone health & periodontal (gum) assessment",icon:"🦷"}, breath:{label:"Oral microbiome balance",icon:"💨"}, spot:{label:"Soft tissue screening",icon:"🔎"}, headache:{label:"Sleep & airway connection",icon:"🤕"} };
+  const systemicMap = { grind:{label:"Bruxism (teeth grinding) & stress patterns",icon:"😬"}, snore:{label:"Sleep-disordered breathing",icon:"💤"}, mouth_breathe:{label:"Airway & breathing assessment",icon:"👄"}, reflux:{label:"Acid erosion & GI connection",icon:"🔥"}, family:{label:"Genetic predisposition screening",icon:"👨‍👩‍👧"}, dry_mouth:{label:"Salivary flow & caries risk",icon:"💊"} };
   const areas = [];
   if (hasSymptoms) symptoms.forEach(s => { if (symptomMap[s]) areas.push(symptomMap[s]); });
   if (hasSystemic) systemic.forEach(s => { if (systemicMap[s]) areas.push(systemicMap[s]); });
@@ -386,15 +386,15 @@ function psGenerateSnapshot(answers) {
   if (values.includes("understand")) personalNote = "You want to understand what's really going on. We'll walk you through every finding with the kind of detail most practices never share.";
   else if (values.includes("listen")) personalNote = "You want someone who really listens. Dr. Gabi will take the time to hear your story and explain everything clearly.";
   else if (values.includes("prevent")) personalNote = "You're thinking ahead. We'll focus on what we can catch early and build a proactive plan to keep you healthy.";
-  else if (values.includes("smile")) personalNote = "Your smile matters. We'll look at function and aesthetics together — because the best results come from healthy foundations.";
+  else if (values.includes("smile")) personalNote = "Your smile matters. We'll look at function and aesthetics together, because the best results come from healthy foundations.";
   else if (values.includes("tech")) personalNote = "You appreciate precision. We'll show you exactly what our 3D imaging and advanced diagnostics reveal.";
   return { tier, areas: areas.slice(0,5), personalNote };
 }
 
 const PS_TIERS = {
-  ahead: { headline:"You're ahead of the curve.", body:"You're already paying attention to your health. A Primary evaluation will help us see the things that are invisible to the naked eye — what 3D imaging reveals, what your oral microbiome tells us, and how to keep you in this great position for years to come.", color:B.green },
-  discover: { headline:"There's more to discover.", body:"Your body is giving you signals — and that's a good thing. It means there's an opportunity to understand what's really happening beneath the surface. This is exactly what Primary's comprehensive assessment is built for.", color:B.blue },
-  full_picture: { headline:"Let's get the full picture.", body:"You're in the right place. There's a lot your body has been wanting to tell you, and we have the tools to listen. A comprehensive evaluation with advanced imaging will give us both clarity — and a clear path forward.", color:B.accent },
+  ahead: { headline:"You're ahead of the curve.", body:"You're already paying attention to your health. A Primary evaluation will help us see the things that are invisible to the naked eye: what 3D imaging reveals, what your oral microbiome tells us, and how to keep you in this great position for years to come.", color:B.green },
+  discover: { headline:"There's more to discover.", body:"Your body is giving you signals, and that's a good thing. It means there's an opportunity to understand what's really happening beneath the surface. This is exactly what Primary's comprehensive assessment is built for.", color:B.blue },
+  full_picture: { headline:"Let's get the full picture.", body:"You're in the right place. There's a lot your body has been wanting to tell you, and we have the tools to listen. A comprehensive evaluation with advanced imaging will give us both clarity and a clear path forward.", color:B.accent },
 };
 
 function PsMultiOption({ opt, isSelected, onToggle, color, disabled }) {
@@ -652,7 +652,7 @@ function PrimaryiDExperience() {
             </div>
           </div>
 
-          {/* Why we ask — collapsible */}
+          {/* Why we ask, collapsible */}
           {question.insight && (
             <div style={{ marginBottom: 20 }}>
               <button onClick={() => setShowInsight(!showInsight)} style={{ width: "100%", padding: "10px 16px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 12, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "space-between", transition: "all 0.2s ease" }}>
@@ -926,8 +926,8 @@ const DIMENSIONS = [
     id: "oral", label: "Oral Health", icon: "🦷", color: B.blue,
     intro: "Your oral health is the foundation. Let's understand where you're starting from.",
     questions: [
-      { q: "How would you describe your teeth and gums overall?", options: ["Excellent — no concerns", "Good — minor issues", "Fair — ongoing concerns", "Poor — significant problems"], scores: [10,7,4,1], why: "This gives us a baseline before we even look in your mouth." },
-      { q: "Do your gums bleed when brushing or flossing?", options: ["Never", "Rarely", "Sometimes", "Frequently"], scores: [10,7,4,1], why: "Bleeding gums are an early inflammation signal — often linked to systemic health." },
+      { q: "How would you describe your teeth and gums overall?", options: ["Excellent, no concerns", "Good, minor issues", "Fair, ongoing concerns", "Poor, significant problems"], scores: [10,7,4,1], why: "This gives us a baseline before we even look in your mouth." },
+      { q: "Do your gums bleed when brushing or flossing?", options: ["Never", "Rarely", "Sometimes", "Frequently"], scores: [10,7,4,1], why: "Bleeding gums are an early inflammation signal, often linked to systemic health." },
       { q: "When was your last comprehensive dental exam?", options: ["Within 6 months", "6–12 months ago", "1–2 years ago", "Over 2 years ago"], scores: [10,7,4,1], why: "Gaps in care often let small issues become complex ones." },
       { q: "Do you have existing dental work that concerns you?", options: ["No concerns", "Some work, it's fine", "Some concerns about older work", "Significant concerns"], scores: [10,7,4,1], why: "Older materials can degrade and affect your systemic health over time." },
     ],
@@ -937,36 +937,36 @@ const DIMENSIONS = [
     intro: "Most people don't realize their dentist can spot sleep apnea. Your sleep affects everything.",
     questions: [
       { q: "How would you rate your overall sleep quality?", options: ["I sleep great, wake refreshed", "Generally okay with occasional issues", "I frequently struggle to sleep", "Chronic sleep problems"], scores: [10,7,4,1], why: "Poor sleep is directly linked to inflammation, weight, and heart disease." },
-      { q: "Has anyone mentioned you snore or gasp during sleep?", options: ["No, never", "Occasionally", "Yes, regularly", "Yes — told it's concerning"], scores: [10,7,4,1], why: "80% of people with sleep apnea don't know they have it." },
+      { q: "Has anyone mentioned you snore or gasp during sleep?", options: ["No, never", "Occasionally", "Yes, regularly", "Yes, told it's concerning"], scores: [10,7,4,1], why: "80% of people with sleep apnea don't know they have it." },
       { q: "Do you grind your teeth or clench your jaw at night?", options: ["No, never", "Occasionally", "Frequently", "Yes, I have a guard or jaw pain"], scores: [10,7,4,1], why: "Bruxism often signals airway stress and disrupted sleep cycles." },
-      { q: "How often do you feel fatigued during the day?", options: ["Rarely — I have good energy", "Sometimes after poor sleep", "Most days I feel tired", "Constant fatigue"], scores: [10,7,4,1], why: "Daytime fatigue is often the first sign of sleep-disordered breathing." },
+      { q: "How often do you feel fatigued during the day?", options: ["Rarely, I have good energy", "Sometimes after poor sleep", "Most days I feel tired", "Constant fatigue"], scores: [10,7,4,1], why: "Daytime fatigue is often the first sign of sleep-disordered breathing." },
     ],
   },
   {
     id: "nutrition", label: "Nutrition", icon: "🥬", color: B.green,
-    intro: "What you eat shapes your oral microbiome — and your whole-body health starts in your mouth.",
+    intro: "What you eat shapes your oral microbiome, and your whole-body health starts in your mouth.",
     questions: [
-      { q: "How would you describe your daily diet?", options: ["Mostly whole foods & vegetables", "Generally healthy, some processed", "Fairly processed, limited whole foods", "Mostly processed & convenience foods"], scores: [10,7,4,1], why: "Your diet directly feeds the bacteria in your mouth — for better or worse." },
+      { q: "How would you describe your daily diet?", options: ["Mostly whole foods & vegetables", "Generally healthy, some processed", "Fairly processed, limited whole foods", "Mostly processed & convenience foods"], scores: [10,7,4,1], why: "Your diet directly feeds the bacteria in your mouth, for better or worse." },
       { q: "How often do you consume sugary drinks or snacks?", options: ["Rarely or never", "A few times a week", "Daily", "Multiple times daily"], scores: [10,7,4,1], why: "Sugar is the primary fuel for harmful oral bacteria." },
       { q: "Do you include fermented foods in your diet?", options: ["Regularly", "Sometimes", "Rarely", "Never"], scores: [10,7,4,1], why: "Fermented foods introduce beneficial bacteria to your oral and gut microbiome." },
-      { q: "How much water do you drink daily?", options: ["8+ glasses", "5–7 glasses", "3–4 glasses", "Fewer than 3 glasses"], scores: [10,7,4,1], why: "Hydration directly impacts saliva production — your mouth's built-in defense system." },
+      { q: "How much water do you drink daily?", options: ["8+ glasses", "5–7 glasses", "3–4 glasses", "Fewer than 3 glasses"], scores: [10,7,4,1], why: "Hydration directly impacts saliva production, your mouth's built-in defense system." },
     ],
   },
   {
     id: "genetics", label: "Genetics & Microbiome", icon: "🧬", color: "#E05BBF",
     intro: "Your unique genetics and microbiome influence everything from inflammation to heart health.",
     questions: [
-      { q: "Do you have family history of gum disease, heart disease, or diabetes?", options: ["No known family history", "One condition in family", "Multiple conditions", "Unsure — don't know my history"], scores: [10,7,4,2], why: "Genetic predispositions can make you more susceptible to certain oral-systemic conditions." },
-      { q: "Have you ever had genetic or microbiome testing?", options: ["Yes, comprehensive testing", "Basic genetic testing (23andMe etc.)", "No, but I'm interested", "No — not sure what it involves"], scores: [10,7,5,3], why: "Knowing your genetic profile lets us personalize your care from day one." },
+      { q: "Do you have family history of gum disease, heart disease, or diabetes?", options: ["No known family history", "One condition in family", "Multiple conditions", "Unsure, don't know my history"], scores: [10,7,4,2], why: "Genetic predispositions can make you more susceptible to certain oral-systemic conditions." },
+      { q: "Have you ever had genetic or microbiome testing?", options: ["Yes, comprehensive testing", "Basic genetic testing (23andMe etc.)", "No, but I'm interested", "No, not sure what it involves"], scores: [10,7,5,3], why: "Knowing your genetic profile lets us personalize your care from day one." },
       { q: "Do you experience chronic inflammation symptoms?", options: ["None", "Mild, occasional", "Moderate, recurring", "Significant, chronic"], scores: [10,7,4,1], why: "Chronic inflammation is the common thread between gum disease and systemic conditions." },
-      { q: "Do you have known sensitivities to metals or materials?", options: ["No, none", "Mild sensitivities", "Yes, confirmed allergies", "Unsure — never tested"], scores: [10,7,4,3], why: "Metal sensitivities in dental work can cause systemic reactions that go undiagnosed for years." },
+      { q: "Do you have known sensitivities to metals or materials?", options: ["No, none", "Mild sensitivities", "Yes, confirmed allergies", "Unsure, never tested"], scores: [10,7,4,3], why: "Metal sensitivities in dental work can cause systemic reactions that go undiagnosed for years." },
     ],
   },
   {
     id: "airway", label: "Airway Health", icon: "💨", color: B.accent,
     intro: "Your airway is the hidden dimension. It affects how you sleep, breathe, and feel every day.",
     questions: [
-      { q: "Do you primarily breathe through your nose or mouth?", options: ["Almost always nose", "Mostly nose, sometimes mouth", "Often through my mouth", "Primarily mouth breather"], scores: [10,7,4,1], why: "Nasal breathing produces nitric oxide — a molecule critical for oxygen absorption and immunity." },
+      { q: "Do you primarily breathe through your nose or mouth?", options: ["Almost always nose", "Mostly nose, sometimes mouth", "Often through my mouth", "Primarily mouth breather"], scores: [10,7,4,1], why: "Nasal breathing produces nitric oxide, a molecule critical for oxygen absorption and immunity." },
       { q: "Do you feel congested or have difficulty breathing through your nose?", options: ["Rarely or never", "Seasonally", "Frequently", "Almost always"], scores: [10,7,4,1], why: "Chronic congestion forces mouth breathing, which disrupts sleep and dries out your oral environment." },
       { q: "Do you experience dry mouth, morning headaches, or jaw tension?", options: ["None of these", "One occasionally", "Two or more occasionally", "Multiple symptoms regularly"], scores: [10,7,4,1], why: "This cluster often indicates airway compromise during sleep." },
       { q: "Where does your tongue rest when your mouth is closed?", options: ["Against the roof of my mouth", "Behind my front teeth", "At the bottom of my mouth", "I'm not sure / never noticed"], scores: [10,7,3,4], why: "Tongue posture directly affects airway patency. Most people's is suboptimal and don't know it." },
@@ -974,7 +974,7 @@ const DIMENSIONS = [
   },
 ];
 
-// ── OLD AssessmentCTA removed — replaced by PrimaryiDExperience above ──
+// ── OLD AssessmentCTA removed, replaced by PrimaryiDExperience above ──
 // eslint-disable-next-line no-unused-vars
 function AssessmentCTA_DELETED() {
   const [ref, visible] = useReveal(0.06);
@@ -1060,7 +1060,7 @@ function AssessmentCTA_DELETED() {
               <span style={{ fontStyle: "italic", color: B.blue }}>We'll show you what we see.</span>
             </h2>
             <p style={{ fontFamily: "Georgia,serif", fontSize: 14, color: "rgba(255,255,255,0.35)", lineHeight: 1.7, margin: 0 }}>
-              Answer a few questions across five dimensions of health. As you do, your Primary iD begins to take shape — and you'll start to see connections you've never been shown before.
+              Answer a few questions across five dimensions of health. As you do, your Primary iD begins to take shape, and you'll start to see connections you've never been shown before.
             </p>
           </div>
         </div>
@@ -1115,7 +1115,7 @@ function AssessmentCTA_DELETED() {
                   Your Primary iD<br /><span style={{ fontStyle: "italic", color: B.blue }}>is ready to go deeper.</span>
                 </h3>
                 <p style={{ fontFamily: "Georgia,serif", fontSize: 14, color: "rgba(255,255,255,0.45)", lineHeight: 1.7, margin: "0 0 28px" }}>
-                  What you just answered is the surface. A full Primary visit includes 3D imaging, salivary diagnostics, airway analysis, and a conversation with Dr. Gabi — giving you a clinical picture that no online assessment can match.
+                  What you just answered is the surface. A full Primary visit includes 3D imaging, salivary diagnostics, airway analysis, and a conversation with Dr. Gabi, giving you a clinical picture that no online assessment can match.
                 </p>
                 <a href="#book" style={{
                   background: B.white, color: B.navy, textDecoration: "none",
@@ -1455,7 +1455,7 @@ function BookingCTA() {
             <span style={{ fontStyle: "italic", color: B.blue }}>the way we do.</span>
           </h2>
           <p style={{ fontFamily: "Georgia,serif", fontSize: 16, color: B.body, lineHeight: 1.7, margin: "0 auto 40px", maxWidth: 480, opacity: 0.7 }}>
-            Schedule a visit and experience what it feels like when dental care looks at the whole you — not just the problem in front of us.
+            Schedule a visit and experience what it feels like when dental care looks at the whole you, not just the problem in front of us.
           </p>
 
           <a href="/new-patient/" style={{
@@ -1512,7 +1512,7 @@ function MembershipStrip() {
               Care that grows with you,<br /><span style={{ fontStyle: "italic" }}>not against you.</span>
             </h3>
             <p style={{ fontFamily: "Georgia,serif", fontSize: 14, color: B.body, lineHeight: 1.65, margin: 0, opacity: 0.7 }}>
-              Our membership plans replace traditional insurance with a model built around your ongoing wellness — not your episodic problems.
+              Our membership plans replace traditional insurance with a model built around your ongoing wellness, not your episodic problems.
             </p>
           </div>
           <a href="https://primaryid.subscribili.com" target="_blank" rel="noopener" style={{
@@ -1640,7 +1640,7 @@ function NewPatientSection() {
     {
       n: "04",
       title: "Receive your Primary iD",
-      sub: "A scored health roadmap — same day",
+      sub: "A scored health roadmap, same day",
       detail: "Oral health, sleep, nutrition, genetics, airway",
       color: "#7B68EE",
     },

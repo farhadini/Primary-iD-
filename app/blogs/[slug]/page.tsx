@@ -81,7 +81,7 @@ export default async function BlogPostPage({
             <p>
               The full text of this article is being migrated from our previous site and will be back online
               shortly. In the meantime, if you'd like Dr. Gabi's perspective on this topic, the most direct
-              path is to bring it up at your next visit — it's exactly the kind of conversation a comprehensive
+              path is to bring it up at your next visit. It's exactly the kind of conversation a comprehensive
               intake is designed for.
             </p>
             <p style={{ color: PALETTE.muted, fontStyle: "italic", fontSize: 15 }}>
@@ -89,7 +89,7 @@ export default async function BlogPostPage({
             </p>
           </div>
         )}
-        {/* Conversion footer — appears at the bottom of every blog post */}
+        {/* Conversion footer : appears at the bottom of every blog post */}
         <div
           style={{
             marginTop: 64,
@@ -127,7 +127,7 @@ export default async function BlogPostPage({
             Want this evaluated for your mouth?
           </h3>
           <p style={{ fontSize: 16, lineHeight: 1.6, opacity: 0.85, margin: 0 }}>
-            Start with the 6-minute Primary iD assessment — your scored health
+            Start with the 6-minute Primary iD assessment, your scored health
             roadmap across five dimensions. Or talk to us directly.
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 8 }}>

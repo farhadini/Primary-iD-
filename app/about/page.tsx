@@ -6,7 +6,7 @@ const SERIF = "Georgia, 'Times New Roman', serif"
 const SANS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
 
 function PortraitFrame() {
-  // Abstract portrait stand-in — a circular gradient with subtle geometry
+  // Abstract portrait stand-in: a circular gradient with subtle geometry
   // that reads as "person" without requiring an actual photograph.
   return (
     <svg viewBox="0 0 240 240" style={{ width: "100%", maxWidth: 320 }}>
@@ -62,7 +62,7 @@ export default function AboutPage() {
                 Functional prosthodontist. Twenty-five years of putting the mouth back in the body.
               </p>
               <p style={{ fontSize: 17, lineHeight: 1.65, color: PALETTE.body, margin: "0 0 28px", maxWidth: 600, fontFamily: SANS }}>
-                Trained as a prosthodontist — the dental specialty for reconstructive, restorative, cosmetic, and implant work. Background in genetics and artificial intelligence. Mentor to thousands of dentists worldwide on how to handle the cases other practices refer away. Known in the field as <em>The Dental Architect</em>.
+                Trained as a prosthodontist, the dental specialty for reconstructive, restorative, cosmetic, and implant work. Background in genetics and artificial intelligence. Mentor to thousands of dentists worldwide on how to handle the cases other practices refer away. Known in the field as <em>The Dental Architect</em>.
               </p>
               <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
                 <Link href="/book/preventive/" style={{ background: PALETTE.navy, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15 }}>
@@ -103,6 +103,21 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* WHAT IS A PROSTHODONTIST */}
+      <section style={{ background: PALETTE.warmWhite, padding: "72px 28px", borderBottom: `1px solid ${PALETTE.border}` }}>
+        <div style={{ maxWidth: 760, margin: "0 auto" }}>
+          <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>
+            The specialty
+          </div>
+          <h2 style={{ fontFamily: SERIF, fontSize: "clamp(28px, 4vw, 38px)", fontWeight: 400, color: PALETTE.navy, lineHeight: 1.15, letterSpacing: "-0.02em", margin: "0 0 22px" }}>
+            What is a <em style={{ color: PALETTE.blue }}>prosthodontist</em>?
+          </h2>
+          <p style={{ fontSize: 17, lineHeight: 1.75, color: PALETTE.body, fontFamily: SANS, margin: 0 }}>
+            Dr. Gabi is a prosthodontist, one of a small number of dental specialties formally recognized by the American Dental Association. It means three or more years of advanced training beyond dental school, focused on restoring and replacing teeth: implants, crowns, veneers, full-mouth rehabilitation, and bite and jaw function. In practice, the complex work a general dentist usually refers out is planned and done here, by a specialist, start to finish.
+          </p>
+        </div>
+      </section>
+
       {/* THE STORY */}
       <section style={{ background: PALETTE.warmWhite, padding: "96px 28px" }}>
         <div style={{ maxWidth: 760, margin: "0 auto" }}>
@@ -115,7 +130,7 @@ export default function AboutPage() {
 
           <div style={{ fontSize: 17, lineHeight: 1.75, color: PALETTE.body, fontFamily: SANS }}>
             <p style={{ margin: "0 0 22px" }}>
-              For most of dental history, the field has been organized around the tooth. One tooth at a time. One filling at a time. One crown at a time. The assumption was that the mouth was a closed system — sealed off from sleep, from heart, from gut, from the rest of you.
+              For most of dental history, the field has been organized around the tooth. One tooth at a time. One filling at a time. One crown at a time. The assumption was that the mouth was a closed system, sealed off from sleep, from heart, from gut, from the rest of you.
             </p>
             <p style={{ margin: "0 0 22px" }}>
               That assumption is wrong. The mouth turns out to be one of the most diagnostically rich places in the entire body. Sleep-disordered breathing announces itself in your jaw posture before any sleep study catches it. Cardiovascular inflammation shows up in your gums before it shows up in your bloodwork. Family periodontal history predicts heart-attack risk almost as well as it predicts tooth loss. The mouth is the front door to systemic health.
@@ -128,17 +143,17 @@ export default function AboutPage() {
               The training
             </h3>
             <p style={{ margin: "0 0 22px" }}>
-              I trained as a prosthodontist — the dental specialty that exists for the hardest restorative work. Full-arch reconstructions. Complex implant cases. Cosmetic transformations that have to last decades. The cases that other practices refer out, prosthodontists are trained to handle.
+              I trained as a prosthodontist, the dental specialty that exists for the hardest restorative work. Full-arch reconstructions. Complex implant cases. Cosmetic transformations that have to last decades. The cases that other practices refer out, prosthodontists are trained to handle.
             </p>
             <p style={{ margin: "0 0 22px" }}>
-              My background before dentistry was in genetics and artificial intelligence. I spent years thinking about how biology encodes outcomes — and how technology can read that encoding faster than a human clinician can. When I came to dentistry, I didn&apos;t leave that framework behind. It became the lens.
+              My background before dentistry was in genetics and artificial intelligence. I spent years thinking about how biology encodes outcomes, and how technology can read that encoding faster than a human clinician can. When I came to dentistry, I didn&apos;t leave that framework behind. It became the lens.
             </p>
 
             <h3 style={{ fontFamily: SERIF, fontSize: 26, fontWeight: 500, color: PALETTE.navy, margin: "48px 0 16px", lineHeight: 1.25 }}>
               The Dental Architect
             </h3>
             <p style={{ margin: "0 0 22px" }}>
-              Patients gave me the nickname. The idea is that you don&apos;t restore a mouth the way you fix a car part — you design it the way you&apos;d design a structure: thinking about load distribution, material biology, how the airway interacts with the bite, how the bite interacts with sleep, how sleep interacts with the inflammation that eventually kills the implant if you ignore it. Each tooth is a load-bearing member of a system that has to last.
+              Patients gave me the nickname. The idea is that you don&apos;t restore a mouth the way you fix a car part. You design it the way you&apos;d design a structure: thinking about load distribution, material biology, how the airway interacts with the bite, how the bite interacts with sleep, how sleep interacts with the inflammation that eventually kills the implant if you ignore it. Each tooth is a load-bearing member of a system that has to last.
             </p>
             <p style={{ margin: "0 0 22px" }}>
               That&apos;s the approach behind everything we do at Primary. It&apos;s why our first visits are 90 minutes instead of 20. It&apos;s why we image in 3D instead of 2D. It&apos;s why we ask about your sleep and your nutrition and your family medical history before we even pick up an instrument.
@@ -148,24 +163,24 @@ export default function AboutPage() {
               The teaching
             </h3>
             <p style={{ margin: "0 0 22px" }}>
-              In parallel with the practice, I&apos;ve spent the last fifteen-plus years teaching this approach to other dentists — thousands of them, across the U.S. and internationally. The lectures, the mentorship, the case reviews — they exist because the gap between what dentistry has historically been and what it could be is wide enough to spend a career closing.
+              In parallel with the practice, I&apos;ve spent the last fifteen-plus years teaching this approach to other dentists, thousands of them, across the U.S. and internationally. The lectures, the mentorship, the case reviews: they exist because the gap between what dentistry has historically been and what it could be is wide enough to spend a career closing.
             </p>
             <p style={{ margin: "0 0 22px" }}>
-              I co-founded Caligenix to extend the work past dentistry — into the broader space where genetics, microbiome, and clinical wellness intersect. The thesis is the same as Primary&apos;s: the body has been over-divided into specialties, and the highest-leverage work happens where those specialties meet.
+              I co-founded Caligenix to extend the work past dentistry, into the broader space where genetics, microbiome, and clinical wellness intersect. The thesis is the same as Primary&apos;s: the body has been over-divided into specialties, and the highest-leverage work happens where those specialties meet.
             </p>
 
             <h3 style={{ fontFamily: SERIF, fontSize: 26, fontWeight: 500, color: PALETTE.navy, margin: "48px 0 16px", lineHeight: 1.25 }}>
               The practice
             </h3>
             <p style={{ margin: "0 0 22px" }}>
-              Primary Integrative Dentistry is what I&apos;ve been building toward. Brentwood, Los Angeles. The whole-body framework in one practice. A first-visit experience that treats you like a person who lives in a body, not a mouth that needs servicing. The Primary iD — a structured way to see your five interconnected health dimensions on one page — so we can plan the work around the picture instead of around the procedure.
+              Primary Integrative Dentistry is what I&apos;ve been building toward. Los Angeles. The whole-body framework in one practice. A first-visit experience that treats you like a person who lives in a body, not a mouth that needs servicing. The Primary iD, a structured way to see your five interconnected health dimensions on one page, so we can plan the work around the picture instead of around the procedure.
             </p>
             <p style={{ margin: "0 0 22px" }}>
-              If you&apos;ve been managing something for a while — a tooth you&apos;ve been eating around, a smile you&apos;ve been hiding, a quote that didn&apos;t sit right — come in. Most of what people are afraid of about dentistry is gone before the second visit.
+              If you&apos;ve been managing something for a while, a tooth you&apos;ve been eating around, a smile you&apos;ve been hiding, a quote that didn&apos;t sit right, come in. Most of what people are afraid of about dentistry is gone before the second visit.
             </p>
 
             <p style={{ margin: "32px 0 0", fontFamily: SERIF, fontStyle: "italic", fontSize: 19, color: PALETTE.navy }}>
-              — Dr. Tzur Gabi
+              Dr. Tzur Gabi
             </p>
           </div>
         </div>
@@ -215,9 +230,9 @@ export default function AboutPage() {
               </h2>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 12 }}>
                 {[
-                  "First DNA dentist in the United States — pioneering genetic-informed dental care",
+                  "First DNA dentist in the United States, pioneering genetic-informed dental care",
                   "Mentor to thousands of dentists worldwide on advanced restorative and reconstructive work",
-                  "Co-founder, Caligenix — genetics-informed wellness platform",
+                  "Co-founder, Caligenix, a genetics-informed wellness platform",
                   "Active speaker on integrative dentistry and the oral-systemic connection",
                 ].map((r, i) => (
                   <li key={i} style={{
@@ -238,14 +253,14 @@ export default function AboutPage() {
                 The writing.
               </h2>
               <p style={{ fontSize: 15.5, color: PALETTE.body, lineHeight: 1.65, margin: "0 0 18px", fontFamily: SANS }}>
-                Dr. Gabi&apos;s perspective on the oral-systemic connection, integrative dentistry frameworks, and patient-centered care lives in the Primary Journal — accessible directly from this site.
+                Dr. Gabi&apos;s perspective on the oral-systemic connection, integrative dentistry frameworks, and patient-centered care lives in the Primary Journal, accessible directly from this site.
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
                 <Link href="/blogs/" style={{ fontFamily: SANS, fontSize: 14, color: PALETTE.navy, textDecoration: "underline", textDecorationColor: "rgba(14,34,64,0.3)", textUnderlineOffset: 4, fontWeight: 500 }}>
-                  Primary Journal — articles and essays →
+                  Primary Journal: articles and essays →
                 </Link>
                 <a href="https://www.linkedin.com/in/drgabi" target="_blank" rel="noopener" style={{ fontFamily: SANS, fontSize: 14, color: PALETTE.navy, textDecoration: "underline", textDecorationColor: "rgba(14,34,64,0.3)", textUnderlineOffset: 4, fontWeight: 500 }}>
-                  LinkedIn — @drgabi →
+                  LinkedIn: @drgabi →
                 </a>
                 <Link href="/five-dimensions/" style={{ fontFamily: SANS, fontSize: 14, color: PALETTE.navy, textDecoration: "underline", textDecorationColor: "rgba(14,34,64,0.3)", textUnderlineOffset: 4, fontWeight: 500 }}>
                   The Five Dimensions framework →
@@ -263,10 +278,10 @@ export default function AboutPage() {
             Two ways to start
           </div>
           <h2 style={{ fontFamily: SERIF, fontSize: "clamp(34px, 5vw, 52px)", fontWeight: 400, color: PALETTE.navy, lineHeight: 1.1, letterSpacing: "-0.02em", margin: "0 0 28px" }}>
-            See if Primary is <em style={{ color: PALETTE.blue }}>right for you</em>.
+            Start where it <em style={{ color: PALETTE.blue }}>makes sense for you</em>.
           </h2>
           <p style={{ fontSize: 17, lineHeight: 1.6, color: PALETTE.body, margin: "0 0 36px" }}>
-            Take the 6-minute online assessment for a directional read on your situation. Or schedule a 90-minute first visit and have a treatment roadmap the same day. Both are how patients usually start with me.
+            Most people come to us for one real thing: a cavity, a chipped tooth, a missing tooth they have lived with too long, or finally wanting a brighter smile. That is the door in. From there, take the 6-minute assessment to get your Primary iD, then sit down with Dr. Gabi for a comprehensive first visit and leave with a plan the same day.
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "center", marginBottom: 28 }}>
             <Link href="/diagnostics/" style={{ background: PALETTE.navy, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15 }}>
@@ -277,7 +292,7 @@ export default function AboutPage() {
             </Link>
           </div>
           <p style={{ fontFamily: SANS, fontSize: 13.5, color: PALETTE.muted, margin: 0 }}>
-            Or call (310) 564-8990 — we&apos;re here Mon–Thu 8a–6p, Fri 8a–5p.
+            Or call (310) 564-8990. We&apos;re here Mon–Thu 8a–6p, Fri 8a–5p.
           </p>
         </div>
       </section>

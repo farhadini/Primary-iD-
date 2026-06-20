@@ -7,7 +7,7 @@ export default function WholisticDentistryPage() {
       <SiteHeader />
       <ServiceSchema
         serviceType="Wholistic Dentistry"
-        description="Whole-body dentistry incorporating airway screening, microbiome assessment, nutrition, sleep, and metabolic markers — not just dental treatment."
+        description="Whole-body dentistry incorporating airway screening, microbiome assessment, nutrition, sleep, and metabolic markers, not just dental treatment."
         url="https://myprimaryid.com/wholistic-dentistry/"
       />
       <BreadcrumbSchema items={[
@@ -18,8 +18,8 @@ export default function WholisticDentistryPage() {
       <ArticleContainer>
         <Hero
           eyebrow="Integrative Care"
-          title="Wholistic Dentistry in Brentwood."
-          subtitle="Dentistry that sees the whole you — your airway, your microbiome, your sleep, your metabolism — not just your teeth."
+          title="Wholistic Dentistry in Los Angeles."
+          subtitle="Dentistry that sees the whole you: your airway, your microbiome, your sleep, your metabolism, not just your teeth."
         />
 
         <p>
@@ -31,7 +31,7 @@ export default function WholisticDentistryPage() {
 
         <p>
           The evidence behind that question is overwhelming and now widely accepted: gum disease triples the
-          risk of a second heart attack. Untreated sleep apnea — diagnosable through the mouth and airway —
+          risk of a second heart attack. Untreated sleep apnea, diagnosable through the mouth and airway,
           dramatically raises long-term cardiovascular and metabolic risk. The oral microbiome predicts and
           influences the gut microbiome. Bite mechanics drive chronic headaches and TMJ pain that no number of
           generalist visits resolves. Material choices in your mouth interact with autoimmune load, especially
@@ -40,8 +40,8 @@ export default function WholisticDentistryPage() {
         </p>
 
         <p>
-          Wholistic dentistry — sometimes called integrative, biological, or holistic dentistry; the words
-          overlap — is the version of dentistry that does integrate it. At Primary, we've built our practice
+          Wholistic dentistry, sometimes called integrative, biological, or holistic dentistry (the words
+          overlap), is the version of dentistry that does integrate it. At Primary, we've built our practice
           around five dimensions of health that the mouth is connected to, screened systematically at every
           comprehensive visit.
         </p>
@@ -50,24 +50,26 @@ export default function WholisticDentistryPage() {
 
         <H3>1. Oral health</H3>
         <p>
-          The foundation. Periodontal staging (AAP-EFP framework), caries risk (CAMBRA protocol), occlusion,
-          and mucosal screening. The classical dental exam — done with more rigor and 3D imaging — but always
+          The foundation. AAP-EFP (periodontal staging), CAMBRA (caries-risk assessment), occlusion,
+          and mucosal screening. The classical dental exam, done with more rigor and 3D imaging, but always
           in the context of the other four dimensions.
         </p>
 
         <H3>2. Airway and sleep</H3>
         <p>
-          Most patients with sleep-disordered breathing have never been screened. STOP-BANG questionnaire,
+          Most patients with sleep-disordered breathing have never been screened. STOP-BANG (sleep-apnea screen) questionnaire,
           airway analysis from the CBCT scan, tongue position, palate vault, nasal patency. If the data points
           toward sleep apnea or upper-airway resistance, we refer for a home sleep test and coordinate care
-          with sleep medicine.
+          with sleep medicine. CBCT also maps bone height, width, and density, which shows whether an implant
+          site has enough support and reveals bone loss from periodontal (gum) disease (many implants fail because
+          they were planned on a 2D x-ray that hid a lack of bone width or density).
         </p>
 
         <H3>3. Nutrition and longevity</H3>
         <p>
           We use the MEDAS (Mediterranean diet adherence) screener and the American Heart Association's Life's
           Essential 8 framework. Nutrition is connected to caries risk, periodontal inflammation, salivary flow,
-          and bone health — and dentistry is one of the few places it can be assessed alongside hard data
+          and bone health, and dentistry is one of the few places it can be assessed alongside hard data
           (your salivary diagnostics).
         </p>
 
@@ -80,7 +82,7 @@ export default function WholisticDentistryPage() {
 
         <H3>5. Whole-body and systemic load</H3>
         <p>
-          Material biocompatibility — the question of what's in your mouth and how your body responds to it.
+          Material biocompatibility: the question of what's in your mouth and how your body responds to it.
           For most patients, this is a confirmation that no intervention is needed. For some, it's a roadmap
           for amalgam removal, metal sensitivity testing, or material replacement.
         </p>
@@ -117,9 +119,9 @@ export default function WholisticDentistryPage() {
 
         <H2>What we screen for that most dentists don't</H2>
         <ul style={{ color: PALETTE.body, lineHeight: 1.8 }}>
-          <li><strong style={{ color: PALETTE.navy }}>Sleep-disordered breathing</strong> via STOP-BANG and CBCT airway analysis</li>
+          <li><strong style={{ color: PALETTE.navy }}>Sleep-disordered breathing</strong> via STOP-BANG (sleep-apnea screen) and CBCT airway analysis</li>
           <li><strong style={{ color: PALETTE.navy }}>Oral microbiome</strong> dysbiosis via salivary diagnostics</li>
-          <li><strong style={{ color: PALETTE.navy }}>Periodontal staging</strong> using the AAP-EFP framework, not just probing depths</li>
+          <li><strong style={{ color: PALETTE.navy }}>Periodontal (gum-disease) staging</strong> using the AAP-EFP framework, not just probing depths</li>
           <li><strong style={{ color: PALETTE.navy }}>Caries risk</strong> with CAMBRA (Caries Management by Risk Assessment)</li>
           <li><strong style={{ color: PALETTE.navy }}>Nutrition</strong> baseline with MEDAS adherence + LE8 lifestyle markers</li>
           <li><strong style={{ color: PALETTE.navy }}>Material sensitivities</strong> when there's a clinical reason (autoimmune history, multiple sensitivities, prior reactions)</li>
@@ -128,7 +130,7 @@ export default function WholisticDentistryPage() {
 
         <H2>A note on the spelling</H2>
         <p style={{ color: PALETTE.muted, fontSize: 15, fontStyle: "italic" }}>
-          "Wholistic" is the older spelling — emphasizing wholeness — and it's the spelling our community has
+          "Wholistic" is the older spelling, emphasizing wholeness, and it's the spelling our community has
           known us by. The contemporary spelling "holistic" means the same thing. We'll answer to either.
         </p>
 

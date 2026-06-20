@@ -14,14 +14,14 @@ const SITE_URL = "https://myprimaryid.com"
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Brentwood Holistic Dentist | Primary Integrative Dentistry",
+    default: "Los Angeles Holistic Dentist | Primary Integrative Dentistry",
     template: "%s | Primary Integrative Dentistry",
   },
   description:
-    "A whole-body approach to dental care in Brentwood, Los Angeles. Comprehensive oral-systemic, airway, and biocompatible dentistry led by Dr. Tzur Gabi.",
+    "A whole-body approach to dental care in Los Angeles. Comprehensive oral-systemic, airway, and biocompatible dentistry led by Dr. Tzur Gabi.",
   applicationName: "Primary Integrative Dentistry",
   keywords: [
-    "Brentwood dentist",
+    "Los Angeles dentist",
     "holistic dentist Los Angeles",
     "integrative dentistry",
     "biocompatible dentistry",
@@ -43,16 +43,16 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: "Primary Integrative Dentistry",
-    title: "Brentwood Holistic Dentist | Primary Integrative Dentistry",
+    title: "Los Angeles Holistic Dentist | Primary Integrative Dentistry",
     description:
-      "A whole-body approach to dental care. Oral-systemic, airway, and biocompatible dentistry in Brentwood, Los Angeles.",
+      "A whole-body approach to dental care. Oral-systemic, airway, and biocompatible dentistry in Los Angeles.",
     // OG image auto-injected from app/opengraph-image.tsx
   },
   twitter: {
     card: "summary_large_image",
-    title: "Brentwood Holistic Dentist | Primary Integrative Dentistry",
+    title: "Los Angeles Holistic Dentist | Primary Integrative Dentistry",
     description:
-      "A whole-body approach to dental care. Oral-systemic, airway, and biocompatible dentistry in Brentwood, Los Angeles.",
+      "A whole-body approach to dental care. Oral-systemic, airway, and biocompatible dentistry in Los Angeles.",
     // Twitter image auto-injected from app/twitter-image.tsx (we share opengraph-image.tsx via re-export below)
   },
   robots: {
@@ -92,7 +92,7 @@ export default function RootLayout({
         <DentistSchema />
         <LocalBusinessSchema />
 
-        {/* Google Tag Manager — head */}
+        {/* Google Tag Manager : head */}
         {gtmId && (
           <Script id="gtm" strategy="afterInteractive">{`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -103,7 +103,7 @@ export default function RootLayout({
           `}</Script>
         )}
 
-        {/* GA4 — gtag.js */}
+        {/* GA4 : gtag.js */}
         {ga4Id && (
           <>
             <Script
@@ -120,7 +120,7 @@ export default function RootLayout({
         )}
       </head>
       <body className={`font-sans antialiased`}>
-        {/* GTM — body noscript fallback */}
+        {/* GTM : body noscript fallback */}
         {gtmId && (
           <noscript>
             <iframe
