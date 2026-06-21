@@ -152,7 +152,7 @@ function Hero() {
   useEffect(() => { setTimeout(() => setLoaded(true), 80); }, []);
 
   const trustItems = [
-    { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3z"/><polyline points="9 12 11 14 15 10"/></svg>, text: "Rated 4.9 by 373+ patients on Google" },
+    { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3z"/><polyline points="9 12 11 14 15 10"/></svg>, text: "Rated 4.9 by 425+ patients on Google" },
     { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}><path d="M4 4h10l6 6v10H4z"/><path d="M8 9h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>, text: "Functional prosthodontist + integrative team" },
     { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}><path d="M11 20A7 7 0 0 1 4 13c0-4 3-8 8-11 5 3 8 7 8 11a7 7 0 0 1-7 7z"/><path d="M12 4v16"/></svg>, text: "Whole-body dentistry, not just teeth" },
     { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>, text: "Start with a free 6-minute online assessment" },
@@ -1476,7 +1476,7 @@ function BookingCTA() {
           <div style={{ marginTop: 40, display: "flex", justifyContent: "center", gap: 32, flexWrap: "wrap" }}>
             {[
               { n: "25+", label: "Years experience" },
-              { n: "373+", label: "5★ Google reviews" },
+              { n: "425+", label: "5★ Google reviews" },
               { n: "360°", label: "Health evaluation" },
             ].map(stat => (
               <div key={stat.n} style={{ textAlign: "center" }}>

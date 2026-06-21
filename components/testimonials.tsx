@@ -97,7 +97,7 @@ export default function Testimonials() {
               maxWidth: 680,
             }}
           >
-            Rated <span style={{ color: B.blue, fontStyle: "italic" }}>4.9 by 373+</span> patients on Google.
+            Rated <span style={{ color: B.blue, fontStyle: "italic" }}>4.9 by 425+</span> patients on Google.
           </h2>
         </div>
 
@@ -173,7 +173,7 @@ export default function Testimonials() {
               opacity: 0.85,
             }}
           >
-            Read all 373+ reviews on Google →
+            Read all 425+ reviews on Google →
           </a>
         </div>
       </div>

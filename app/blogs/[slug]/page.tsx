@@ -179,7 +179,7 @@ export default async function BlogPostPage({
             </a>
           </div>
           <p style={{ fontSize: 12, opacity: 0.55, margin: "8px 0 0" }}>
-            PPO-friendly. Membership available. We accept most major insurance.
+            All PPO plans accepted. Membership available.
           </p>
         </div>
       </ArticleContainer>

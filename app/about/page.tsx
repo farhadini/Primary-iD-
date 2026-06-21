@@ -86,7 +86,7 @@ export default function AboutPage() {
           <div className="cred-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 32, alignItems: "center" }}>
             {[
               { num: "25+", label: "Years of practice" },
-              { num: "4.9", label: "Average rating across 373+ reviews" },
+              { num: "4.9", label: "Average rating across 425+ reviews" },
               { num: "1,000s", label: "Dentists mentored worldwide" },
               { num: "First", label: "DNA dentist in the US" },
             ].map((c, i) => (

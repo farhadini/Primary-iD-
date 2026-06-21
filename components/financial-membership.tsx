@@ -210,7 +210,7 @@ export default function FinancialMembership() {
                     letterSpacing: "-0.015em",
                   }}
                 >
-                  Great. We <em style={{ fontStyle: "italic", fontWeight: 400 }}>accept most.</em>
+                  Great. We <em style={{ fontStyle: "italic", fontWeight: 400 }}>accept all PPO plans.</em>
                 </h3>
                 <p
                   style={{
@@ -222,7 +222,7 @@ export default function FinancialMembership() {
                     maxWidth: 420,
                   }}
                 >
-                  We&apos;re in-network with major carriers and handle the paperwork
+                  We accept all PPO plans and handle the paperwork
                   for you. You use your benefits exactly the way you expect to.
                 </p>
               </div>
@@ -641,7 +641,7 @@ export default function FinancialMembership() {
               color: B.muted,
             }}
           >
-            In-network with
+            PPO plans accepted, including
           </span>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8, flex: 1 }}>
             {INSURERS.map((name, i) => (

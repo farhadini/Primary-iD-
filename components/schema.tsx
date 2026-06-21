@@ -59,7 +59,7 @@ const PRACTICE = {
   aggregateRating: {
     "@type": "AggregateRating",
     ratingValue: "4.9",
-    reviewCount: "373",
+    reviewCount: "425",
     bestRating: "5",
   },
 } as const
