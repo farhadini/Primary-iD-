@@ -74,7 +74,11 @@ export default function AboutPage() {
               </div>
             </div>
             <div style={{ display: "flex", justifyContent: "center" }}>
-              <PortraitFrame />
+              <img
+                src="/images/image.png"
+                alt="Dr. Tzur Gabi, functional prosthodontist"
+                style={{ width: "100%", maxWidth: 360, borderRadius: 20, display: "block", boxShadow: "0 24px 60px -28px rgba(14,34,64,0.40)" }}
+              />
             </div>
           </div>
         </div>

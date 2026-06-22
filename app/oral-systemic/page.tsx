@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { SiteNav } from "@/components/site-nav";
+import { SiteFooter } from "@/components/site-footer";
 
 // ── BRAND ──────────────────────────────────────────────────────
 const B = {
@@ -61,42 +63,6 @@ function Reveal({ children, delay = 0, style = {} }: { children: React.ReactNode
   );
 }
 
-// ── NAV ────────────────────────────────────────────────────────
-function Nav() {
-  return (
-    <nav style={{
-      position: "sticky", top: 0, zIndex: 50,
-      background: "rgba(14,34,64,0.92)",
-      backdropFilter: "blur(10px)",
-      borderBottom: "1px solid rgba(255,255,255,0.06)",
-    }}>
-      <div style={{
-        maxWidth: 1180, margin: "0 auto",
-        padding: "16px 32px",
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-      }}>
-        <Link href="/" style={{ fontFamily: SERIF, fontSize: 22, color: B.warm, letterSpacing: "-0.01em", textDecoration: "none" }}>
-          Primary <em style={{ color: B.blue, fontStyle: "italic", fontWeight: 400 }}>iD</em>
-        </Link>
-        <div style={{ display: "flex", gap: 28, alignItems: "center" }}>
-          <Link href="/why-primary/" style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 500, color: "rgba(254,252,249,0.82)", textDecoration: "none" }}>Why Primary</Link>
-          <Link href="/five-dimensions/" style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 500, color: "rgba(254,252,249,0.82)", textDecoration: "none" }}>Five Dimensions</Link>
-          <Link href="/oral-systemic/" style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 500, color: B.blue, textDecoration: "none" }}>The Science</Link>
-          <Link href="/about/" style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 500, color: "rgba(254,252,249,0.82)", textDecoration: "none" }}>Dr. Gabi</Link>
-          <Link href="/new-patient/" style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 500, color: "rgba(254,252,249,0.82)", textDecoration: "none" }}>New Patients</Link>
-          <Link href="/blogs/" style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 500, color: "rgba(254,252,249,0.82)", textDecoration: "none" }}>Journal</Link>
-          <Link href="/diagnostics/" style={{
-            fontFamily: SANS, fontSize: 13, fontWeight: 600,
-            background: B.blue, color: B.warm,
-            padding: "10px 18px", borderRadius: 999, textDecoration: "none",
-          }}>
-            Start my Primary iD
-          </Link>
-        </div>
-      </div>
-    </nav>
-  );
-}
 
 // ── BREADCRUMB ─────────────────────────────────────────────────
 function Breadcrumb() {
@@ -763,31 +729,11 @@ function FinalCTA() {
   );
 }
 
-// ── FOOTER ─────────────────────────────────────────────────────
-function Footer() {
-  return (
-    <footer style={{ background: B.navy, color: "rgba(254,252,249,0.7)", padding: "48px 32px 32px", fontFamily: SANS, fontSize: 13 }}>
-      <div style={{ maxWidth: 1180, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 20, flexWrap: "wrap" }}>
-        <Link href="/" style={{ fontFamily: SERIF, fontSize: 20, color: B.warm, textDecoration: "none" }}>
-          Primary <em style={{ color: B.blue, fontStyle: "italic" }}>iD</em>
-        </Link>
-        <nav style={{ display: "flex", gap: 22, flexWrap: "wrap" }}>
-          <Link href="/why-primary/" style={{ color: "rgba(254,252,249,0.7)", textDecoration: "none" }}>Why Primary</Link>
-          <Link href="/oral-systemic/" style={{ color: "rgba(254,252,249,0.7)", textDecoration: "none" }}>The Science</Link>
-          <Link href="/primary-id-plus/" style={{ color: "rgba(254,252,249,0.7)", textDecoration: "none" }}>Membership</Link>
-          <Link href="/new-patient/" style={{ color: "rgba(254,252,249,0.7)", textDecoration: "none" }}>New Patients</Link>
-          <Link href="/book/" style={{ color: "rgba(254,252,249,0.7)", textDecoration: "none" }}>Book a visit</Link>
-        </nav>
-      </div>
-    </footer>
-  );
-}
-
 // ── MAIN PAGE ──────────────────────────────────────────────────
 export default function OralSystemicPage() {
   return (
     <main>
-      <Nav />
+      <SiteNav />
       <Breadcrumb />
       <Hero />
       <StatsStrip />
@@ -806,7 +752,7 @@ export default function OralSystemicPage() {
         cite="Dr. Tzur Gabi"
       />
       <FinalCTA />
-      <Footer />
+      <SiteFooter />
     </main>
   );
 }

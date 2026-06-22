@@ -8,6 +8,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { SiteNav } from "@/components/site-nav";
+import { SiteFooter } from "@/components/site-footer";
 
 /* ── Brand Tokens ─────────────────────────────────────────── */
 const B = {
@@ -397,222 +399,6 @@ const NUMERIC_YEARS = ARTICLES.map((a) => a.year).filter((y): y is number => typ
 const YEAR_SPAN = Math.max(...NUMERIC_YEARS) - Math.min(...NUMERIC_YEARS) + 1;
 const CHIP_TYPES: SourceType[] = ["peer", "gov", "paper", "patient", "press", "blog"];
 
-/* ── Nav Component ────────────────────────────────────────── */
-function Nav({ scrolled }: { scrolled: boolean }) {
-  return (
-    <header
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 100,
-        padding: scrolled ? "14px 32px" : "20px 32px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        background: scrolled ? "rgba(254,252,249,0.92)" : "transparent",
-        backdropFilter: scrolled ? "blur(12px)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
-        borderBottom: scrolled ? `1px solid ${B.line}` : "1px solid transparent",
-        transition: "all 0.3s ease",
-      }}
-    >
-      <Link href="/" style={{ textDecoration: "none" }}>
-        <img
-          src="/images/primary-brand-logo.png"
-          alt="Primary"
-          style={{ height: 36, width: "auto" }}
-        />
-      </Link>
-
-      <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
-        {[
-          { label: "Why Primary", href: "/why-primary/" },
-          { label: "Five Dimensions", href: "/five-dimensions/" },
-          { label: "The Science", href: "/oral-systemic/" },
-          { label: "Dr. Gabi", href: "/about/" },
-          { label: "New Patients", href: "/new-patient/" },
-          { label: "Journal", href: "/blogs/" },
-        ].map((item) => (
-          <Link
-            key={item.label}
-            href={item.href}
-            style={{
-              fontFamily: SERIF,
-              fontSize: 13,
-              color: item.active ? B.blue : B.body,
-              textDecoration: "none",
-              opacity: item.active ? 1 : 0.7,
-              transition: "opacity 0.2s",
-            }}
-          >
-            {item.label}
-          </Link>
-        ))}
-      </div>
-
-      <Link
-        href="/book/"
-        style={{
-          fontFamily: SANS,
-          fontSize: 12,
-          fontWeight: 600,
-          letterSpacing: "0.04em",
-          padding: "10px 20px",
-          borderRadius: 999,
-          background: B.navy,
-          color: B.white,
-          textDecoration: "none",
-          transition: "background 0.2s ease",
-        }}
-      >
-        Book a visit
-      </Link>
-    </header>
-  );
-}
-
-/* ── Footer Component ─────────────────────────────────────── */
-function Footer() {
-  const footerLinks = [
-    {
-      heading: "Visit",
-      links: [
-        { label: "Book appointment", href: "/book/" },
-        { label: "New patients", href: "/new-patient/" },
-        { label: "Our location", href: "https://maps.app.goo.gl/oQoaV1MrCoMEQ1CS8", external: true },
-      ],
-    },
-    {
-      heading: "Care",
-      links: [
-        { label: "Preventive care", href: "/book/preventive/" },
-        { label: "Aligners & airway", href: "/book/airway/" },
-        { label: "Cosmetic dentistry", href: "/cosmetic-dentistry/" },
-        { label: "Implants", href: "/dental-implant/" },
-      ],
-    },
-    {
-      heading: "Learn",
-      links: [
-        { label: "Our approach", href: "/oral-systemic/" },
-        { label: "Research library", href: "/research/" },
-        { label: "Why Primary", href: "/why-primary/" },
-        { label: "Primary ID+", href: "/primary-id-plus/" },
-      ],
-    },
-  ];
-
-  return (
-    <footer style={{ background: B.navy, padding: "56px 32px 36px" }}>
-      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "2fr 1fr 1fr 1fr",
-            gap: 48,
-            marginBottom: 48,
-            paddingBottom: 44,
-            borderBottom: "1px solid rgba(255,255,255,0.12)",
-          }}
-        >
-          <div>
-            <div style={{ marginBottom: 18 }}>
-              <img
-                src="/images/primary-brand-logo.png"
-                alt="Primary"
-                style={{ height: 52, width: "auto", filter: "brightness(0) invert(1)" }}
-              />
-            </div>
-            <p
-              style={{
-                fontFamily: SERIF,
-                fontSize: 13,
-                color: "rgba(255,255,255,0.65)",
-                lineHeight: 1.65,
-                maxWidth: 260,
-              }}
-            >
-              Integrative dentistry that looks at your whole health picture, not just your teeth.
-            </p>
-            <p style={{ fontFamily: SERIF, fontSize: 12, color: "rgba(255,255,255,0.5)", marginTop: 16 }}>
-              11980 San Vicente Blvd, Suite 902
-              <br />
-              Los Angeles, CA 90049
-              <br />
-              <span style={{ color: B.blue }}>(310) 564-8990</span>
-            </p>
-          </div>
-
-          {footerLinks.map((col) => (
-            <div key={col.heading}>
-              <div
-                style={{
-                  fontFamily: SERIF,
-                  fontSize: 11,
-                  fontWeight: 600,
-                  color: "rgba(255,255,255,0.5)",
-                  letterSpacing: "0.08em",
-                  marginBottom: 16,
-                }}
-              >
-                {col.heading.toUpperCase()}
-              </div>
-              {col.links.map((link) => (
-                link.external ? (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener"
-                    style={{
-                      display: "block",
-                      fontFamily: SERIF,
-                      fontSize: 14,
-                      color: "rgba(255,255,255,0.75)",
-                      textDecoration: "none",
-                      marginBottom: 10,
-                      transition: "color 0.2s",
-                    }}
-                  >
-                    {link.label}
-                  </a>
-                ) : (
-                  <Link
-                    key={link.label}
-                    href={link.href}
-                    style={{
-                      display: "block",
-                      fontFamily: SERIF,
-                      fontSize: 14,
-                      color: "rgba(255,255,255,0.75)",
-                      textDecoration: "none",
-                      marginBottom: 10,
-                      transition: "color 0.2s",
-                    }}
-                  >
-                    {link.label}
-                  </Link>
-                )
-              ))}
-            </div>
-          ))}
-        </div>
-
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span style={{ fontFamily: SERIF, fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
-            © 2025 Primary Integrative Dentistry
-          </span>
-          <span style={{ fontFamily: SERIF, fontSize: 12, color: "rgba(255,255,255,0.35)", fontStyle: "italic" }}>
-            Dr. Tzur Gabi, Founder
-          </span>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 /* ── Chip Component ───────────────────────────────────────── */
 function Chip({ type }: { type: SourceType }) {
   const colors = TYPE_COLORS[type];
@@ -654,12 +440,12 @@ export default function ResearchPage() {
 
   return (
     <main style={{ background: B.cream, minHeight: "100vh" }}>
-      <Nav scrolled={scrolled} />
+      <SiteNav />
 
       {/* ─── HERO ─── */}
       <section
         style={{
-          padding: "140px 40px 60px",
+          padding: "72px 40px 60px",
           background: `linear-gradient(180deg, ${B.cream} 0%, ${B.warm} 100%)`,
         }}
       >
@@ -1047,7 +833,7 @@ export default function ResearchPage() {
         </p>
       </section>
 
-      <Footer />
+      <SiteFooter />
 
       <style>{`
         @media (max-width: 820px) {

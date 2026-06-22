@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { SiteNav } from "@/components/site-nav";
+import { SiteFooter } from "@/components/site-footer";
 
 // ── BRAND, exact match to primary-homepage.jsx ───────────────
 const B = {
@@ -118,63 +120,6 @@ function GhostLink({ href = "#", children, light = false }) {
         <path d="M5 12h14M12 5l7 7-7 7" />
       </svg>
     </a>
-  );
-}
-
-// ── NAV, exact homepage nav + ID+ pill ───────────────────────
-function Nav() {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", fn);
-    return () => window.removeEventListener("scroll", fn);
-  }, []);
-  return (
-    <nav style={{
-      position: "fixed", top: 0, left: 0, right: 0, zIndex: 200,
-      background: scrolled ? "rgba(250,248,245,0.96)" : "transparent",
-      backdropFilter: scrolled ? "blur(16px)" : "none",
-      borderBottom: scrolled ? `1px solid ${B.border}` : "none",
-      transition: "all 0.4s ease", padding: "0 32px",
-    }}>
-      <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
-        <a href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-          <img 
-            src="/images/primary-brand-logo.png" 
-            alt="Primary" 
-            style={{ height: 48, width: "auto" }} 
-          />
-          <span style={{
-            fontFamily: "Georgia,serif", fontSize: 10, color: B.blue,
-            background: B.lightBlue, border: `1px solid rgba(36,167,224,0.2)`,
-            borderRadius: 10, padding: "3px 10px", letterSpacing: "0.08em",
-          }}>ID+</span>
-        </a>
-        <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
-          {[
-            { label: "Why Primary", href: "/why-primary/" },
-            { label: "Five Dimensions", href: "/five-dimensions/" },
-            { label: "The Science", href: "/oral-systemic/" },
-            { label: "Dr. Gabi", href: "/about/" },
-            { label: "New Patients", href: "/new-patient/" },
-            { label: "Journal", href: "/blogs/" },
-          ].map(item => (
-            <a key={item.label} href={item.href} style={{ fontFamily: "Georgia,serif", fontSize: 13, color: B.body, textDecoration: "none", opacity: 0.7, transition: "opacity 0.2s" }}
-              onMouseOver={e => e.target.style.opacity = 1}
-              onMouseOut={e => e.target.style.opacity = 0.7}
-            >{item.label}</a>
-          ))}
-        </div>
-        <a href="/book/" style={{
-          background: B.navy, color: B.white, textDecoration: "none",
-          borderRadius: 8, padding: "9px 20px", fontFamily: "Georgia,serif", fontSize: 13,
-          boxShadow: "0 2px 12px rgba(14,34,64,0.18)", transition: "background 0.2s ease", display: "inline-block",
-        }}
-          onMouseOver={e => e.currentTarget.style.background = "#1a3a5c"}
-          onMouseOut={e => e.currentTarget.style.background = B.navy}
-        >Book consultation</a>
-      </div>
-    </nav>
   );
 }
 
@@ -875,7 +820,7 @@ export default function PrimaryIDPlus() {
   return (
     <main>
       <style>{`*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }`}</style>
-      <Nav />
+      <SiteNav />
       <Hero />
       <PeptideIntro />
       <HowMade />
@@ -886,7 +831,7 @@ export default function PrimaryIDPlus() {
       <Consultation />
       <OngoingManagement />
       <ClosingCTA />
-      <Footer />
+      <SiteFooter />
     </main>
   );
 }

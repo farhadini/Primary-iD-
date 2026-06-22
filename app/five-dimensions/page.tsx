@@ -164,6 +164,7 @@ function DimensionSection({ d, reverse }: { d: typeof DIMENSIONS[number]; revers
         >
           {/* Visual panel */}
           <div
+            className="dim-visual"
             style={{
               direction: "ltr",
               background: PALETTE.navy,
@@ -498,6 +499,19 @@ export default function FiveDimensionsPage() {
 
       {/* Responsive tweaks */}
       <style>{`
+        .dim-visual {
+          min-height: 460px;
+          justify-content: center;
+          box-shadow: 0 20px 50px -32px rgba(14,34,64,0.45);
+          transition: transform 0.45s cubic-bezier(0.23,1,0.32,1), box-shadow 0.45s ease;
+        }
+        .dim-visual:hover {
+          transform: translateY(-6px);
+          box-shadow: 0 34px 70px -30px rgba(14,34,64,0.55);
+        }
+        @media (max-width: 880px) {
+          .dim-visual { min-height: 0; }
+        }
         @media (max-width: 880px) {
           .dim-grid { grid-template-columns: 1fr !important; direction: ltr !important; gap: 36px !important; }
           .tier-grid { grid-template-columns: 1fr 1fr !important; }

@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
+import { SiteNav } from "@/components/site-nav";
+import { SiteFooter } from "@/components/site-footer";
 
 // ── Brand tokens ──────────────────────────────────────────────
 const B = {
@@ -25,56 +27,6 @@ const B = {
 
 const SERIF = "Georgia, 'Times New Roman', serif";
 const SANS = "'Montserrat', 'Helvetica Neue', Arial, sans-serif";
-
-// ── Nav ───────────────────────────────────────────────────────
-function Nav({ scrolled }: { scrolled: boolean }) {
-  return (
-    <nav style={{
-      position: "fixed", top: 0, left: 0, right: 0, zIndex: 200,
-      background: scrolled ? "rgba(250,248,245,0.96)" : "transparent",
-      backdropFilter: scrolled ? "blur(16px)" : "none",
-      borderBottom: scrolled ? `1px solid ${B.lineSoft}` : "none",
-      transition: "all 0.4s ease",
-      padding: "0 32px",
-    }}>
-      <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
-        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <img src="/images/primary-brand-logo.png" alt="Primary" style={{ height: 64, width: "auto" }} />
-        </Link>
-
-        <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
-          {[
-            { label: "Why Primary", href: "/why-primary/", active: true },
-            { label: "Five Dimensions", href: "/five-dimensions/", active: false },
-            { label: "The Science", href: "/oral-systemic/", active: false },
-            { label: "Dr. Gabi", href: "/about/", active: false },
-            { label: "New Patients", href: "/new-patient/", active: false },
-            { label: "Journal", href: "/blogs/", active: false },
-          ].map(item => (
-            <Link key={item.label} href={item.href} style={{
-              fontFamily: "Georgia,serif", fontSize: 13,
-              color: item.active ? B.blue : B.body,
-              textDecoration: "none",
-              opacity: item.active ? 1 : 0.7,
-              transition: "opacity 0.2s, color 0.2s",
-            }}>{item.label}</Link>
-          ))}
-        </div>
-
-        <Link href="/diagnostics/" style={{
-          background: B.navy, color: B.white, textDecoration: "none",
-          borderRadius: 8, padding: "9px 20px",
-          fontFamily: "Georgia,serif", fontSize: 13, fontWeight: 400,
-          letterSpacing: "0.01em",
-          boxShadow: "0 2px 12px rgba(14,34,64,0.18)",
-          transition: "all 0.2s ease",
-        }}>
-          Build my Primary iD
-        </Link>
-      </div>
-    </nav>
-  );
-}
 
 // ── Slider Data ───────────────────────────────────────────────
 const SLIDES = [
@@ -281,7 +233,7 @@ function Hero() {
       background: `radial-gradient(1200px 600px at 85% 20%, rgba(36, 167, 224, 0.08), transparent 60%),
                    radial-gradient(900px 500px at 10% 90%, rgba(232, 152, 94, 0.07), transparent 60%),
                    ${B.cream}`,
-      padding: "140px 40px 120px",
+      padding: "80px 40px 120px",
       overflow: "hidden",
     }}>
       <div style={{
@@ -476,7 +428,7 @@ function Hero() {
           section > div { grid-template-columns: 1fr !important; gap: 60px !important; }
         }
         @media (max-width: 640px) {
-          section { padding: 100px 24px 80px !important; }
+          section { padding: 60px 24px 80px !important; }
         }
       `}</style>
     </section>
@@ -1776,91 +1728,11 @@ function TheOutcome() {
   );
 }
 
-// ── Footer ────────────────────────────────────────────────────
-function Footer() {
-  const footerLinks = [
-    { heading: "Visit", links: [
-      { label: "Book appointment", href: "/book/" },
-      { label: "New patients", href: "/new-patient/" },
-      { label: "Our location", href: "https://maps.app.goo.gl/oQoaV1MrCoMEQ1CS8", external: true },
-    ]},
-    { heading: "Care", links: [
-      { label: "Preventive care", href: "/book/preventive/" },
-      { label: "Aligners & airway", href: "/book/airway/" },
-      { label: "Cosmetic dentistry", href: "/cosmetic-dentistry/" },
-      { label: "Implants", href: "/dental-implant/" },
-    ]},
-{ heading: "Learn", links: [
-  { label: "Our approach", href: "/oral-systemic/" },
-  { label: "Research library", href: "/research/" },
-  { label: "About us", href: "/about/" },
-  { label: "Health assessment", href: "/diagnostics/" },
-  ]},
-  ];
-
-  return (
-    <footer style={{ background: B.navy, padding: "56px 32px 36px" }}>
-      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 48, marginBottom: 48, paddingBottom: 44, borderBottom: "1px solid rgba(255,255,255,0.12)" }}>
-          {/* Brand */}
-          <div>
-            <div style={{ marginBottom: 18 }}>
-              <img 
-                src="/images/primary-brand-logo.png" 
-                alt="Primary" 
-                style={{ height: 52, width: "auto", filter: "brightness(0) invert(1)" }} 
-              />
-            </div>
-            <p style={{ fontFamily: "Georgia,serif", fontSize: 13, color: "rgba(255,255,255,0.65)", lineHeight: 1.65, maxWidth: 260 }}>
-              Integrative dentistry that looks at your whole health picture, not just your teeth.
-            </p>
-            <p style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "rgba(255,255,255,0.5)", marginTop: 16 }}>
-              11980 San Vicente Blvd, Suite 902<br />
-              Los Angeles, CA 90049<br />
-              <span style={{ color: B.blue }}>(310) 564-8990</span>
-            </p>
-          </div>
-
-          {footerLinks.map(col => (
-            <div key={col.heading}>
-              <div style={{ fontFamily: "Georgia,serif", fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.5)", letterSpacing: "0.08em", marginBottom: 16 }}>{col.heading.toUpperCase()}</div>
-              {col.links.map(link => (
-                link.external ? (
-                  <a key={link.label} href={link.href} target="_blank" rel="noopener" style={{ display: "block", fontFamily: "Georgia,serif", fontSize: 14, color: "rgba(255,255,255,0.75)", textDecoration: "none", marginBottom: 10, transition: "color 0.2s" }}>{link.label}</a>
-                ) : (
-                  <Link key={link.label} href={link.href} style={{ display: "block", fontFamily: "Georgia,serif", fontSize: 14, color: "rgba(255,255,255,0.75)", textDecoration: "none", marginBottom: 10, transition: "color 0.2s" }}>{link.label}</Link>
-                )
-              ))}
-            </div>
-          ))}
-        </div>
-
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
-            © 2025 Primary Integrative Dentistry
-          </span>
-          <span style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "rgba(255,255,255,0.35)", fontStyle: "italic" }}>
-            Dr. Tzur Gabi, Founder
-          </span>
-        </div>
-      </div>
-    </footer>
-  );
-}
-
 // ── Page ──────────────────────────────────────────────────────
 export default function WhyPrimaryPage() {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   return (
     <main style={{ background: B.cream, minHeight: "100vh" }}>
-      <Nav scrolled={scrolled} />
+      <SiteNav />
       <Hero />
       <TheGap />
       <TheComparison />
@@ -1868,7 +1740,7 @@ export default function WhyPrimaryPage() {
       <TheEcosystem />
       <TheTechnology />
       <TheOutcome />
-      <Footer />
+      <SiteFooter />
     </main>
   );
 }

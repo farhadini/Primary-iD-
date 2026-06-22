@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { ArrowRight, Check, ChevronDown, RotateCcw, Calendar, Sparkles } from "lucide-react";
+import { SiteNav } from "@/components/site-nav";
 
 // ── CUSTOM SVG DIMENSION ICONS ────────────────────────────────
 // Each returns a sized SVG mark, stroked in the passed color
@@ -400,31 +401,7 @@ function Landing({ onStart, onStartAll }) {
       <div style={{ position: "absolute", bottom: "15%", left: "8%", width: 180, height: 180, borderRadius: "50%", border: "1px solid rgba(72,194,140,0.1)", animation: "float1 9s ease-in-out infinite", pointerEvents: "none" }} />
 
       {/* Nav */}
-      <div style={{ padding: "20px 32px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <a href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-            <img
-              src="/images/primary-brand-logo.png"
-              alt="Primary"
-              style={{ height: 48, width: "auto", filter: "brightness(0) invert(1)" }}
-            />
-          </a>
-          <span style={{ fontFamily: "Georgia,serif", fontSize: 10, color: B.blue, background: "rgba(36,167,224,0.12)", border: "1px solid rgba(36,167,224,0.2)", borderRadius: 10, padding: "3px 10px", letterSpacing: "0.07em" }}>Health Score</span>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-          {[
-            { label: "Why Primary", href: "/why-primary/" },
-            { label: "Five Dimensions", href: "/five-dimensions/" },
-            { label: "The Science", href: "/oral-systemic/" },
-            { label: "Dr. Gabi", href: "/about/" },
-            { label: "New Patients", href: "/new-patient/" },
-            { label: "Journal", href: "/blogs/" },
-          ].map(item => (
-            <a key={item.label} href={item.href} style={{ fontFamily: "Georgia,serif", fontSize: 13, color: "rgba(255,255,255,0.7)", textDecoration: "none" }}>{item.label}</a>
-          ))}
-          <a href="/book/" style={{ fontFamily: "Georgia,serif", fontSize: 13, color: B.white, background: B.blue, borderRadius: 8, padding: "9px 18px", textDecoration: "none" }}>Book a visit</a>
-        </div>
-      </div>
+      <SiteNav />
 
       <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px 24px 48px", maxWidth: 640, margin: "0 auto", width: "100%" }}>
 

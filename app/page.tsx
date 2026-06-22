@@ -9,6 +9,8 @@ import OurApproach from "@/components/our-approach";
 import Testimonials from "@/components/testimonials";
 import MobileStickyCTA from "@/components/mobile-sticky-cta";
 import FinancialMembership from "@/components/financial-membership";
+import { SiteNav } from "@/components/site-nav";
+import { SiteFooter } from "@/components/site-footer";
 
 // ============================================================
 // PRIMARY: Homepage
@@ -161,7 +163,7 @@ function Hero() {
   return (
     <section style={{
       background: B.cream,
-      padding: "120px 48px 96px",
+      padding: "72px 48px 96px",
       position: "relative", overflow: "hidden",
     }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "minmax(0, 1.05fr) minmax(0, 1fr)", gap: 64, alignItems: "center", position: "relative", zIndex: 1 }}>
@@ -1815,17 +1817,17 @@ export default function PrimaryHomepage() {
 
   return (
     <div style={{ fontFamily: "Georgia,serif", background: B.cream, minHeight: "100vh" }}>
-      <Nav scrolled={scrolled} />
+      <SiteNav />
       <Hero />
 
-      {/* Why Primary - the differentiated approach (build conviction first) */}
-      <OurApproach />
-
-      {/* The proprietary Primary iD score */}
+      {/* What your mouth reveals - the Primary iD, directly under the hero */}
       <MeetYourPrimaryID />
 
-      {/* What we treat - care pathways */}
+      {/* What we treat - care pathways (third section) */}
       <div id="services"><CarePathways /></div>
+
+      {/* Why Primary - the differentiated approach */}
+      <OurApproach />
 
       {/* Social proof - trust before the ask */}
       <Testimonials />
@@ -1845,7 +1847,7 @@ export default function PrimaryHomepage() {
       <BookingCTA />
 
       <MobileStickyCTA />
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }

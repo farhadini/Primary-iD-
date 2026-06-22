@@ -10,6 +10,8 @@
 
 import Link from "next/link"
 import type React from "react"
+import { SiteNav } from "@/components/site-nav"
+import { SiteFooter as SharedFooter } from "@/components/site-footer"
 
 export const PALETTE = {
   navy: "#0E2240",
@@ -29,193 +31,11 @@ const SERIF = "Georgia,serif"
 const SANS = "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif"
 
 export function SiteHeader() {
-  return (
-    <nav
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 50,
-        background: "rgba(250,248,245,0.96)",
-        backdropFilter: "blur(16px)",
-        borderBottom: `1px solid ${PALETTE.border}`,
-        padding: "0 32px",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: 1100,
-          margin: "0 auto",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          height: 64,
-        }}
-      >
-        <Link
-          href="/"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-            textDecoration: "none",
-            color: PALETTE.navy,
-            fontFamily: SERIF,
-            fontSize: 18,
-            fontWeight: 500,
-          }}
-        >
-          Primary
-        </Link>
-        <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
-          {[
-            { label: "Why Primary", href: "/why-primary/" },
-            { label: "Five Dimensions", href: "/five-dimensions/" },
-            { label: "The Science", href: "/oral-systemic/" },
-            { label: "Dr. Gabi", href: "/about/" },
-            { label: "New Patients", href: "/new-patient/" },
-            { label: "Journal", href: "/blogs/" },
-          ].map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              style={{
-                fontFamily: SERIF,
-                fontSize: 13,
-                color: PALETTE.body,
-                textDecoration: "none",
-                opacity: 0.75,
-              }}
-            >
-              {item.label}
-            </Link>
-          ))}
-          <a
-            href="tel:+13105648990"
-            style={{
-              fontFamily: SERIF,
-              fontSize: 13,
-              color: PALETTE.navy,
-              textDecoration: "none",
-              opacity: 0.85,
-            }}
-          >
-            (310) 564-8990
-          </a>
-          <Link
-            href="/book/"
-            style={{
-              background: PALETTE.navy,
-              color: PALETTE.white,
-              textDecoration: "none",
-              borderRadius: 8,
-              padding: "9px 20px",
-              fontFamily: SERIF,
-              fontSize: 13,
-            }}
-          >
-            Book a visit
-          </Link>
-        </div>
-      </div>
-    </nav>
-  )
+  return <SiteNav />
 }
 
 export function SiteFooter() {
-  return (
-    <footer
-      style={{
-        background: PALETTE.navy,
-        color: "rgba(254,252,249,0.85)",
-        padding: "60px 32px 40px",
-        fontFamily: SANS,
-        fontSize: 14,
-      }}
-    >
-      <div
-        style={{
-          maxWidth: 1100,
-          margin: "0 auto",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-          gap: 40,
-        }}
-      >
-        <div>
-          <div style={{ fontFamily: SERIF, fontSize: 18, marginBottom: 12, color: "#FEFCF9" }}>
-            Primary
-          </div>
-          <p style={{ lineHeight: 1.6, opacity: 0.75 }}>
-            Integrative dentistry in Los Angeles. Whole-body care led by Dr. Tzur Gabi.
-          </p>
-        </div>
-        <div>
-          <div style={{ textTransform: "uppercase", fontSize: 11, letterSpacing: "0.14em", marginBottom: 12, opacity: 0.6 }}>
-            Care
-          </div>
-          {[
-            ["Dental implants", "/dental-implant/"],
-            ["Cosmetic dentistry", "/cosmetic-dentistry/"],
-            ["Safe mercury removal", "/safe-mercury-removal/"],
-            ["Wholistic dentistry", "/wholistic-dentistry/"],
-            ["Second opinion", "/second-opinion/"],
-          ].map(([t, h]) => (
-            <Link key={h} href={h} style={{ display: "block", color: "inherit", textDecoration: "none", lineHeight: 2, opacity: 0.75 }}>
-              {t}
-            </Link>
-          ))}
-        </div>
-        <div>
-          <div style={{ textTransform: "uppercase", fontSize: 11, letterSpacing: "0.14em", marginBottom: 12, opacity: 0.6 }}>
-            About
-          </div>
-          {[
-            ["Why Primary", "/why-primary/"],
-            ["Five Dimensions", "/five-dimensions/"],
-            ["The Science", "/oral-systemic/"],
-            ["Dr. Gabi", "/about/"],
-            ["Second Opinion", "/second-opinion/"],
-            ["Primary Journal", "/blogs/"],
-          ].map(([t, h]) => (
-            <Link key={h} href={h} style={{ display: "block", color: "inherit", textDecoration: "none", lineHeight: 2, opacity: 0.75 }}>
-              {t}
-            </Link>
-          ))}
-        </div>
-        <div>
-          <div style={{ textTransform: "uppercase", fontSize: 11, letterSpacing: "0.14em", marginBottom: 12, opacity: 0.6 }}>
-            Visit
-          </div>
-          <a href="tel:+13105648990" style={{ display: "block", color: "inherit", textDecoration: "none", lineHeight: 2, opacity: 0.75 }}>
-            (310) 564-8990
-          </a>
-          <Link href="/new-patient/" style={{ display: "block", color: "inherit", textDecoration: "none", lineHeight: 2, opacity: 0.75 }}>
-            New patients
-          </Link>
-          <Link href="/faq/" style={{ display: "block", color: "inherit", textDecoration: "none", lineHeight: 2, opacity: 0.75 }}>
-            FAQ
-          </Link>
-        </div>
-      </div>
-      <div
-        style={{
-          maxWidth: 1100,
-          margin: "40px auto 0",
-          paddingTop: 24,
-          borderTop: "1px solid rgba(254,252,249,0.12)",
-          fontSize: 12,
-          opacity: 0.5,
-          display: "flex",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-          gap: 12,
-        }}
-      >
-        <span>© {new Date().getFullYear()} Primary Integrative Dentistry. All rights reserved.</span>
-        <span>Los Angeles</span>
-      </div>
-    </footer>
-  )
+  return <SharedFooter />
 }
 
 export function ArticleContainer({ children }: { children: React.ReactNode }) {

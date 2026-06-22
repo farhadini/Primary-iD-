@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { SiteNav } from "@/components/site-nav";
+import { SiteFooter } from "@/components/site-footer";
 
 // ============================================================
 // PRIMARY : New Patient Experience Page
@@ -37,54 +39,6 @@ function useReveal(threshold = 0.1) {
   return [ref, visible];
 }
 
-// ── Nav ───────────────────────────────────────────────────────
-function Nav() {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", fn, { passive: true });
-    return () => window.removeEventListener("scroll", fn);
-  }, []);
-
-  return (
-    <nav style={{
-      position: "fixed", top: 0, left: 0, right: 0, zIndex: 200,
-      background: scrolled ? "rgba(250,248,245,0.96)" : "rgba(250,248,245,0.9)",
-      backdropFilter: "blur(16px)",
-      borderBottom: scrolled ? `1px solid ${B.border}` : "none",
-      transition: "all 0.4s ease", padding: "0 32px",
-    }}>
-      <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 64 }}>
-        <a href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-          <img 
-            src="/images/primary-brand-logo.png" 
-            alt="Primary" 
-            style={{ height: 36, width: "auto" }} 
-          />
-        </a>
-        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-          {[
-            { label: "Why Primary", href: "/why-primary/" },
-            { label: "Five Dimensions", href: "/five-dimensions/" },
-            { label: "The Science", href: "/oral-systemic/" },
-            { label: "Dr. Gabi", href: "/about/" },
-            { label: "New Patients", href: "/new-patient/", active: true },
-            { label: "Journal", href: "/blogs/" },
-          ].map(item => (
-            <a key={item.label} href={item.href} style={{ fontFamily: "Georgia,serif", fontSize: 13, color: item.active ? B.blue : B.body, textDecoration: "none", opacity: item.active ? 1 : 0.7 }}>{item.label}</a>
-          ))}
-          <a href="/book/" style={{
-            background: B.navy, color: B.white, textDecoration: "none",
-            borderRadius: 8, padding: "9px 20px",
-            fontFamily: "Georgia,serif", fontSize: 13,
-            boxShadow: "0 2px 12px rgba(14,34,64,0.18)",
-          }}>Book a visit</a>
-        </div>
-      </div>
-    </nav>
-  );
-}
-
 // ── Hero ──────────────────────────────────────────────────────
 function Hero() {
   const [loaded, setLoaded] = useState(false);
@@ -92,7 +46,7 @@ function Hero() {
 
   return (
     <section style={{
-      background: B.navy, padding: "140px 32px 80px",
+      background: B.navy, padding: "72px 32px 80px",
       position: "relative", overflow: "hidden",
     }}>
       {/* Architectural circles */}
@@ -738,22 +692,6 @@ function BookCTA() {
   );
 }
 
-// ── Footer ────────────────────────────────────────────────────
-function Footer() {
-  return (
-    <footer style={{ background: B.navy, borderTop: "1px solid rgba(255,255,255,0.05)", padding: "24px 32px" }}>
-      <div style={{ maxWidth: 1100, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <span style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "rgba(255,255,255,0.25)" }}>
-          © 2025 Primary Integrative Dentistry
-        </span>
-        <a href="/" style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "rgba(255,255,255,0.35)", textDecoration: "none" }}>
-          ← Back to home
-        </a>
-      </div>
-    </footer>
-  );
-}
-
 // ============================================================
 // HOMEPAGE SECTION COMPONENT
 // Drop this into primary-homepage.jsx between Appointments and AssessmentCTA
@@ -877,7 +815,7 @@ export function NewPatientSection({ onNavigate }) {
 export default function NewPatientPage() {
   return (
     <div style={{ fontFamily: "Georgia,serif", background: B.cream, minHeight: "100vh" }}>
-      <Nav />
+      <SiteNav />
       <Hero />
       <PhaseDivider label="PHASE 01 · BEFORE YOUR VISIT" color={B.blue} />
       <PreVisit />
@@ -886,7 +824,7 @@ export default function NewPatientPage() {
       <PhaseDivider label="THE SPACE · YOUR ROOMS" color={B.green} />
       <TheSpace />
       <BookCTA />
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }
