@@ -441,7 +441,7 @@ export default function OurApproach() {
         <h2
           style={{
             fontFamily: SERIF,
-            fontSize: "clamp(32px, 4.5vw, 46px)",
+            fontSize: "clamp(40px, 5vw, 56px)",
             lineHeight: 1.12,
             color: B.navy,
             margin: "16px 0 14px",

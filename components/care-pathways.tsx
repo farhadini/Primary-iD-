@@ -129,7 +129,7 @@ export default function CarePathways() {
   };
 
   return (
-    <section style={{ padding: "80px 48px 120px", maxWidth: 1280, margin: "0 auto" }}>
+    <section style={{ padding: "72px 48px 80px", maxWidth: 1280, margin: "0 auto" }}>
       {/* Header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 40, gap: 24, flexWrap: "wrap" }}>
         <div>
@@ -267,6 +267,15 @@ export default function CarePathways() {
   );
 }
 
+// Each pathway links to its dedicated page (next to the booking CTA).
+const PATHWAY_PAGES: Record<string, string> = {
+  preventive: "/wholistic-dentistry/",
+  airway: "/oral-systemic/",
+  cosmetic: "/cosmetic-dentistry/",
+  implants: "/dental-implant/",
+  longevity: "/primary-id-plus/",
+};
+
 function PathwayCard({ pathway }: { pathway: typeof PATHWAYS[0] }) {
   const [hovered, setHovered] = useState(false);
 
@@ -347,20 +356,34 @@ function PathwayCard({ pathway }: { pathway: typeof PATHWAYS[0] }) {
         ))}
       </ul>
 
-      {/* CTA */}
-      <a
-        href={`/book?pathway=${pathway.id}`}
-        style={{
-          marginTop: "auto", fontSize: 13.5, fontWeight: 600, color: B.navy,
-          textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6,
-          paddingTop: 8, borderTop: `1px solid ${B.border}`, zIndex: 1,
-          transition: "gap 0.2s ease, color 0.2s ease",
-        }}
-        onMouseOver={(e) => { e.currentTarget.style.gap = "10px"; e.currentTarget.style.color = pathway.color; }}
-        onMouseOut={(e) => { e.currentTarget.style.gap = "6px"; e.currentTarget.style.color = B.navy; }}
-      >
-        Book this visit →
-      </a>
+      {/* CTAs: learn more + book, side by side */}
+      <div style={{
+        marginTop: "auto", paddingTop: 10, borderTop: `1px solid ${B.border}`,
+        display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, zIndex: 1,
+      }}>
+        <a
+          href={PATHWAY_PAGES[pathway.id]}
+          style={{
+            fontSize: 13, fontWeight: 600, color: B.body, textDecoration: "none",
+            display: "inline-flex", alignItems: "center", gap: 5, transition: "color 0.2s ease",
+          }}
+          onMouseOver={(e) => { e.currentTarget.style.color = pathway.color; }}
+          onMouseOut={(e) => { e.currentTarget.style.color = B.body; }}
+        >
+          Learn more →
+        </a>
+        <a
+          href={`/book/${pathway.id}/`}
+          style={{
+            fontSize: 13, fontWeight: 600, color: pathway.color, textDecoration: "none",
+            display: "inline-flex", alignItems: "center", gap: 5, transition: "gap 0.2s ease",
+          }}
+          onMouseOver={(e) => { e.currentTarget.style.gap = "9px"; }}
+          onMouseOut={(e) => { e.currentTarget.style.gap = "5px"; }}
+        >
+          Book this visit →
+        </a>
+      </div>
     </article>
   );
 }

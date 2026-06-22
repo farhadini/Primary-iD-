@@ -434,7 +434,7 @@ export default function NewPatientVisit() {
   return (
     <section style={{
       background: B.cream,
-      padding: "120px 48px",
+      padding: "84px 48px",
       position: "relative",
       overflow: "hidden",
     }}>
