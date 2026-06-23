@@ -219,9 +219,9 @@ function MockPlaybook() {
   const chips = [
     { label: "Oral", bg: "rgba(72,194,140,0.16)", color: "#2d8a5f" },
     { label: "Sleep", bg: "rgba(36,167,224,0.16)", color: B.blue },
-    { label: "Nutrition", bg: "rgba(232,152,94,0.16)", color: "#b56a31" },
+    { label: "Nutrition", bg: "rgba(199,48,90,0.14)", color: "#C7305A" },
     { label: "Genetics", bg: "rgba(123,104,238,0.16)", color: B.purple },
-    { label: "Longevity", bg: "rgba(212,181,132,0.22)", color: "#9c823a" },
+    { label: "Longevity", bg: "rgba(14,34,64,0.10)", color: B.navy },
   ];
 
   return (

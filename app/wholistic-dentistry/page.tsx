@@ -117,7 +117,7 @@ export default function WholisticDentistryPage() {
           </tbody>
         </table>
 
-        <H2>What we screen for that most dentists don't</H2>
+        <H2>What we screen for that most checkups don't</H2>
         <ul style={{ color: PALETTE.body, lineHeight: 1.8 }}>
           <li><strong style={{ color: PALETTE.navy }}>Sleep-disordered breathing</strong> via STOP-BANG (sleep-apnea screen) and CBCT airway analysis</li>
           <li><strong style={{ color: PALETTE.navy }}>Oral microbiome</strong> dysbiosis via salivary diagnostics</li>

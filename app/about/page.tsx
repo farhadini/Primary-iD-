@@ -90,9 +90,9 @@ export default function AboutPage() {
           <div className="cred-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 32, alignItems: "center" }}>
             {[
               { num: "25+", label: "Years of practice" },
-              { num: "4.9", label: "Average rating across 425+ reviews" },
+              { num: "4.9", label: "Average rating across 442+ reviews" },
               { num: "1,000s", label: "Dentists mentored worldwide" },
-              { num: "First", label: "DNA dentist in the US" },
+              { num: "Specialist", label: "ADA-recognized prosthodontist" },
             ].map((c, i) => (
               <div key={i} style={{ borderLeft: i > 0 ? "1px solid rgba(254,252,249,0.18)" : "none", paddingLeft: i > 0 ? 24 : 0 }}>
                 <div style={{ fontFamily: SERIF, fontSize: 36, fontWeight: 400, color: PALETTE.blue, marginBottom: 4 }}>
@@ -117,7 +117,7 @@ export default function AboutPage() {
             What is a <em style={{ color: PALETTE.blue }}>prosthodontist</em>?
           </h2>
           <p style={{ fontSize: 17, lineHeight: 1.75, color: PALETTE.body, fontFamily: SANS, margin: 0 }}>
-            Dr. Gabi is a prosthodontist, one of a small number of dental specialties formally recognized by the American Dental Association. It means three or more years of advanced training beyond dental school, focused on restoring and replacing teeth: implants, crowns, veneers, full-mouth rehabilitation, and bite and jaw function. In practice, the complex work a general dentist usually refers out is planned and done here, by a specialist, start to finish.
+            Dr. Gabi is a prosthodontist, one of a small number of dental specialties formally recognized by the American Dental Association. It means three or more years of advanced training beyond dental school, focused on restoring and replacing teeth: implants, crowns, veneers, full-mouth rehabilitation, and bite and jaw function. In practice, the complex work a general practice usually refers out is planned and done here, by a specialist, start to finish.
           </p>
         </div>
       </section>
@@ -234,7 +234,7 @@ export default function AboutPage() {
               </h2>
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 12 }}>
                 {[
-                  "First DNA dentist in the United States, pioneering genetic-informed dental care",
+                  "Integrates genetics, airway, and whole-body risk into every treatment plan",
                   "Mentor to thousands of dentists worldwide on advanced restorative and reconstructive work",
                   "Co-founder, Caligenix, a genetics-informed wellness platform",
                   "Active speaker on integrative dentistry and the oral-systemic connection",

@@ -154,7 +154,7 @@ function Hero() {
   useEffect(() => { setTimeout(() => setLoaded(true), 80); }, []);
 
   const trustItems = [
-    { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3z"/><polyline points="9 12 11 14 15 10"/></svg>, text: "Rated 4.9 by 425+ patients on Google" },
+    { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3z"/><polyline points="9 12 11 14 15 10"/></svg>, text: "Rated 4.9 by 442+ patients on Google" },
     { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}><path d="M4 4h10l6 6v10H4z"/><path d="M8 9h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>, text: "Functional prosthodontist + integrative team" },
     { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}><path d="M11 20A7 7 0 0 1 4 13c0-4 3-8 8-11 5 3 8 7 8 11a7 7 0 0 1-7 7z"/><path d="M12 4v16"/></svg>, text: "Whole-body dentistry, not just teeth" },
     { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>, text: "Start with a free 6-minute online assessment" },
@@ -194,7 +194,7 @@ function Hero() {
             transform: loaded ? "translateY(0)" : "translateY(12px)",
             transition: "all 0.8s cubic-bezier(0.23,1,0.32,1) 0.35s",
           }}>
-            Most dental practices treat what&apos;s in front of them. We start with you, your sleep, your history, your whole health, and work backwards to your mouth.
+            Most practices treat what&apos;s in front of them. We start with you, your sleep, your history, your whole health, and work backwards to your mouth.
           </p>
 
           {/* CTAs */}
@@ -333,7 +333,7 @@ function Hero() {
               <iframe 
                 width="100%" 
                 height="100%" 
-                src="https://www.youtube-nocookie.com/embed/6-PaAY5zcsI?autoplay=1&rel=0" 
+                src="https://www.youtube-nocookie.com/embed/6-PaAY5zcsI?autoplay=1&mute=1&loop=1&playlist=6-PaAY5zcsI&playsinline=1&rel=0"
                 title="Meet Dr. Gabi" 
                 frameBorder="0" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -925,7 +925,7 @@ function MouthBodyDiagram() {
 // ── LIVE ASSESSMENT DATA ──────────────────────────────────────
 const DIMENSIONS = [
   {
-    id: "oral", label: "Oral Health", icon: "🦷", color: B.blue,
+    id: "oral", label: "Oral Health", icon: "🦷", color: B.green,
     intro: "Your oral health is the foundation. Let's understand where you're starting from.",
     questions: [
       { q: "How would you describe your teeth and gums overall?", options: ["Excellent, no concerns", "Good, minor issues", "Fair, ongoing concerns", "Poor, significant problems"], scores: [10,7,4,1], why: "This gives us a baseline before we even look in your mouth." },
@@ -935,8 +935,8 @@ const DIMENSIONS = [
     ],
   },
   {
-    id: "sleep", label: "Sleep & Airway", icon: "🌙", color: "#7B68EE",
-    intro: "Most people don't realize their dentist can spot sleep apnea. Your sleep affects everything.",
+    id: "sleep", label: "Sleep & Airway", icon: "🌙", color: B.blue,
+    intro: "Most people don't realize a routine exam can spot sleep apnea. Your sleep affects everything.",
     questions: [
       { q: "How would you rate your overall sleep quality?", options: ["I sleep great, wake refreshed", "Generally okay with occasional issues", "I frequently struggle to sleep", "Chronic sleep problems"], scores: [10,7,4,1], why: "Poor sleep is directly linked to inflammation, weight, and heart disease." },
       { q: "Has anyone mentioned you snore or gasp during sleep?", options: ["No, never", "Occasionally", "Yes, regularly", "Yes, told it's concerning"], scores: [10,7,4,1], why: "80% of people with sleep apnea don't know they have it." },
@@ -945,7 +945,7 @@ const DIMENSIONS = [
     ],
   },
   {
-    id: "nutrition", label: "Nutrition", icon: "🥬", color: B.green,
+    id: "nutrition", label: "Nutrition", icon: "🥬", color: "#C7305A",
     intro: "What you eat shapes your oral microbiome, and your whole-body health starts in your mouth.",
     questions: [
       { q: "How would you describe your daily diet?", options: ["Mostly whole foods & vegetables", "Generally healthy, some processed", "Fairly processed, limited whole foods", "Mostly processed & convenience foods"], scores: [10,7,4,1], why: "Your diet directly feeds the bacteria in your mouth, for better or worse." },
@@ -955,7 +955,7 @@ const DIMENSIONS = [
     ],
   },
   {
-    id: "genetics", label: "Genetics & Microbiome", icon: "🧬", color: "#E05BBF",
+    id: "genetics", label: "Genetics & Microbiome", icon: "🧬", color: "#7B68EE",
     intro: "Your unique genetics and microbiome influence everything from inflammation to heart health.",
     questions: [
       { q: "Do you have family history of gum disease, heart disease, or diabetes?", options: ["No known family history", "One condition in family", "Multiple conditions", "Unsure, don't know my history"], scores: [10,7,4,2], why: "Genetic predispositions can make you more susceptible to certain oral-systemic conditions." },
@@ -1457,7 +1457,7 @@ function BookingCTA() {
             <span style={{ fontStyle: "italic", color: B.blue }}>the way we do.</span>
           </h2>
           <p style={{ fontFamily: "Georgia,serif", fontSize: 16, color: B.body, lineHeight: 1.7, margin: "0 auto 40px", maxWidth: 480, opacity: 0.7 }}>
-            Schedule a visit and experience what it feels like when dental care looks at the whole you, not just the problem in front of us.
+            Schedule a visit and experience what it feels like when care looks at the whole you, not just the problem in front of us.
           </p>
 
           <a href="/new-patient/" style={{
@@ -1478,7 +1478,7 @@ function BookingCTA() {
           <div style={{ marginTop: 40, display: "flex", justifyContent: "center", gap: 32, flexWrap: "wrap" }}>
             {[
               { n: "25+", label: "Years experience" },
-              { n: "425+", label: "5★ Google reviews" },
+              { n: "442+", label: "5★ Google reviews" },
               { n: "360°", label: "Health evaluation" },
             ].map(stat => (
               <div key={stat.n} style={{ textAlign: "center" }}>

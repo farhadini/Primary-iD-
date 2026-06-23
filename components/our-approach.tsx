@@ -464,7 +464,7 @@ export default function OurApproach() {
             margin: "0 0 56px",
           }}
         >
-          Every patient walks in with a goal: whiter, straighter, pain-free, a better night&apos;s sleep, a longer life. Every goal has a root cause most dentists never check. Here&apos;s how we think about it, one outcome at a time.
+          Every patient walks in with a goal: whiter, straighter, pain-free, a better night&apos;s sleep, a longer life. Every goal has a root cause most routine care never checks. Here&apos;s how we think about it, one outcome at a time.
         </p>
 
         {/* Outcome grid */}

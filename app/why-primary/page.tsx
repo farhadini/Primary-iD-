@@ -9,7 +9,7 @@ const B = {
   navy: "#0E2240",
   blue: "#24A7E0",
   blueSoft: "#5BC0EC",
-  gold: "#D4B584",
+  gold: "#0E2240",
   purple: "#7B68EE",
   green: "#48C28C",
   rose: "#D97757",
@@ -474,7 +474,7 @@ const SYMPTOM_LANES = [
 function TheGap() {
   const accentColors: Record<string, { bg: string; border: string; color: string; glow: string }> = {
     blue: { bg: "rgba(36, 167, 224, 0.14)", border: "rgba(91, 192, 236, 0.55)", color: "#5BC0EC", glow: "rgba(36, 167, 224, 0.18)" },
-    gold: { bg: "rgba(212, 181, 132, 0.14)", border: "rgba(212, 181, 132, 0.55)", color: "#D4B584", glow: "rgba(212, 181, 132, 0.18)" },
+    gold: { bg: "rgba(14, 34, 64, 0.14)", border: "rgba(14, 34, 64, 0.45)", color: "#0E2240", glow: "rgba(14, 34, 64, 0.16)" },
     purple: { bg: "rgba(123, 104, 238, 0.16)", border: "rgba(123, 104, 238, 0.55)", color: "#B4A6F0", glow: "rgba(123, 104, 238, 0.18)" },
     green: { bg: "rgba(72, 194, 140, 0.14)", border: "rgba(72, 194, 140, 0.55)", color: "#7CD4A8", glow: "rgba(72, 194, 140, 0.18)" },
     rose: { bg: "rgba(217, 119, 87, 0.14)", border: "rgba(217, 119, 87, 0.55)", color: "#E8A88D", glow: "rgba(217, 119, 87, 0.18)" },
@@ -526,7 +526,7 @@ function TheGap() {
           fontSize: 19, lineHeight: 1.6, color: "rgba(254, 252, 249, 0.78)",
           maxWidth: 560, margin: "0 auto",
         }}>
-          Symptoms you&apos;ve been living with. Signals your dentist or primary care doctor never caught. Care that finally connects the two.
+          Symptoms you&apos;ve been living with. Signals that routine care or your primary care doctor never caught. Care that finally connects the two.
         </p>
       </div>
 
@@ -599,10 +599,10 @@ function TheGap() {
 // ── The Comparison Section ────────────────────────────────────
 const COMPARISON_ROWS = [
   { label: "Training", conventional: "DDS / DMD only", primary: "DDS + functional, integrative & airway", highlight: "functional, integrative & airway" },
-  { label: "Time with the doctor", conventional: "5–10 min with a general dentist", primary: "30+ min with a prosthodontist specialist", highlight: "30+ min" },
+  { label: "Time with the doctor", conventional: "5–10 min in a general practice", primary: "30+ min with a prosthodontist specialist", highlight: "30+ min" },
   { label: "Diagnostics", conventional: "2D X-ray, occasional pano", primary: "3D CBCT + intra-oral scan + biomarker panels + microbiome + at-home sleep", highlight: "3D CBCT" },
   { label: "Assessment", conventional: "Single-tooth check", primary: "5-dimension Primary iD score", highlight: "5-dimension Primary iD" },
-  { label: "Care team", conventional: "Dentist + hygienist", primary: "Dentist + hygienist + nutrition, sleep & microbiome partners", highlight: "nutrition, sleep & microbiome partners" },
+  { label: "Care team", conventional: "Clinician + hygienist", primary: "Clinician + hygienist + nutrition, sleep & microbiome partners", highlight: "nutrition, sleep & microbiome partners" },
   { label: "Between visits", conventional: "Call if something breaks", primary: "Continuous membership + your live Primary iD", highlight: "Continuous membership" },
   { label: "Plan", conventional: "Per-procedure quote", primary: "Whole-body plan, priced to your scores", highlight: "Whole-body plan" },
   { label: "Tech in the chair", conventional: "Basic", primary: "Full digital + laser + ozone + 3D printing", highlight: "Full digital" },
@@ -625,7 +625,7 @@ function TheComparison() {
         position: "absolute", inset: 0, pointerEvents: "none",
         background: `
           radial-gradient(900px 520px at 85% 10%, rgba(36, 167, 224, 0.06), transparent 60%),
-          radial-gradient(900px 520px at 15% 90%, rgba(212, 181, 132, 0.08), transparent 60%)
+          radial-gradient(900px 520px at 15% 90%, rgba(14, 34, 64, 0.06), transparent 60%)
         `,
       }} />
 
@@ -662,7 +662,7 @@ function TheComparison() {
             transform: loaded ? "translateY(0)" : "translateY(12px)",
             transition: "all 0.8s ease-out 0.4s",
           }}>
-            On paper, every dentist looks the same. What actually happens in the room, and what you walk out with, is not.
+            On paper, every practice looks the same. What actually happens in the room, and what you walk out with, is not.
           </p>
         </div>
 
@@ -786,7 +786,7 @@ const DIMENSIONS = [
   { num: "01", key: "oral", name: "Oral", desc: "Your mouth, bite, and airway: the front door to everything downstream.", color: B.blue, colorSoft: "rgba(36, 167, 224, 0.15)" },
   { num: "02", key: "sleep", name: "Sleep", desc: "How well your nights restore you: breath, brain, and recovery.", color: "#7B68EE", colorSoft: "rgba(123, 104, 238, 0.18)" },
   { num: "03", key: "nutrition", name: "Nutrition", desc: "What fuels you and how: food, absorption, and the microbiome.", color: B.green, colorSoft: "rgba(72, 194, 140, 0.15)" },
-  { num: "04", key: "family", name: "Family", desc: "The patterns written in your history, and the ones you can shift.", color: B.gold, colorSoft: "rgba(212, 181, 132, 0.15)" },
+  { num: "04", key: "family", name: "Family", desc: "The patterns written in your history, and the ones you can shift.", color: B.gold, colorSoft: "rgba(14, 34, 64, 0.12)" },
   { num: "05", key: "longevity", name: "Longevity", desc: "The biomarkers and habits that add years, and life to them.", color: "#D97757", colorSoft: "rgba(217, 119, 87, 0.15)" },
 ];
 
@@ -1004,7 +1004,7 @@ const PARTNERS = [
   {
     key: "superpower",
     name: "Superpower",
-    gradient: "linear-gradient(135deg, #D4B584 0%, #E8985E 100%)",
+    gradient: "linear-gradient(135deg, #0E2240 0%, #24A7E0 100%)",
     eyebrow: "Biomarker labs",
     headline: "Over 100 biomarkers, ordered and interpreted as part of your membership.",
     description: "The hormone, vitamin, metabolic, and inflammation markers your PCP doesn't routinely run, ordered alongside your oral findings and interpreted together.",
@@ -1035,7 +1035,7 @@ const PARTNERS = [
     gradient: "linear-gradient(135deg, #48C28C 0%, #24A7E0 100%)",
     eyebrow: "Microbiome + early detection",
     headline: "Organism-level read of your mouth and gut.",
-    description: "Oral and gut microbiome testing paired with early-detection screening for oral and esophageal cancer, the two cancers a dentist is best positioned to catch first.",
+    description: "Oral and gut microbiome testing paired with early-detection screening for oral and esophageal cancer, the two cancers we are best positioned to catch first.",
     unlocks: [
       "Oral + gut microbiome analysis",
       "Personalized food and supplement guidance",
@@ -1229,8 +1229,8 @@ const TECH_CARDS = [
     title: "Intra-oral scanner + clinical photography",
     desc: "Digital impressions and a full visual baseline of your mouth, no goopy trays, no guesswork.",
     unlocks: ["Year-over-year documented change", "Faster lab turnaround", "Better fit on every restoration"],
-    gradient: "linear-gradient(135deg, rgba(212,181,132,0.3), rgba(212,181,132,0.1))",
-    stroke: "#D4B584",
+    gradient: "linear-gradient(135deg, rgba(14,34,64,0.3), rgba(14,34,64,0.1))",
+    stroke: "#0E2240",
     icon: (
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1.5">
         <rect x="4" y="7" width="20" height="14" rx="2"/><circle cx="14" cy="14" r="4"/><path d="M9 7V5h10v2"/>

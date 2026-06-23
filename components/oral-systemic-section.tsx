@@ -17,9 +17,9 @@ import { ArrowRight } from "lucide-react";
 const DIMENSIONS = [
   { name: "Oral Health",           score: 72, color: "#48C28C" }, // green
   { name: "Sleep & Airway",        score: 68, color: "#24A7E0" }, // blue
-  { name: "Nutrition",             score: 81, color: "#E8985E" }, // accent
+  { name: "Nutrition",             score: 81, color: "#C7305A" }, // pink
   { name: "Genetics & Microbiome", score: 75, color: "#7B68EE" }, // purple
-  { name: "Longevity",             score: 64, color: "#D4B584" }, // warm gold
+  { name: "Longevity",             score: 64, color: "#0E2240" }, // navy
 ];
 const CYCLE_MS = 3000; // how long each dimension is on-screen
 const COUNT_MS = 700;  // how long the number counts up/down
@@ -246,9 +246,9 @@ function ScoreCard() {
 const HIGHLIGHTS = [
   { top: "58%", left: "28%", width: "22%", height: "14%", color: "#48C28C" }, // teeth
   { top: "38%", left: "8%",  width: "18%", height: "18%", color: "#24A7E0" }, // nose/mouth front
-  { top: "72%", left: "32%", width: "16%", height: "16%", color: "#E8985E" }, // throat
+  { top: "72%", left: "32%", width: "16%", height: "16%", color: "#C7305A" }, // throat
   { top: "18%", left: "42%", width: "28%", height: "24%", color: "#7B68EE" }, // brain
-  { top: "55%", left: "52%", width: "14%", height: "38%", color: "#D4B584" }, // spine
+  { top: "55%", left: "52%", width: "14%", height: "38%", color: "#0E2240" }, // spine
 ];
 
 function Figure() {

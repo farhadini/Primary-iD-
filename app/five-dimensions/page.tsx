@@ -52,7 +52,7 @@ const DIMENSIONS = [
     n: "03",
     slug: "nutrition",
     name: "Nutrition",
-    color: "#E8985E",
+    color: "#C7305A",
     headline: "What you drink reaches your gums before your gut.",
     subhead: "We don't prescribe diets. We map your pattern against two validated frequency tools.",
     body:
@@ -69,7 +69,7 @@ const DIMENSIONS = [
   {
     n: "04",
     slug: "family-history",
-    name: "Family History",
+    name: "Genetics & Microbiome",
     color: "#7B68EE",
     headline: "The patterns written before you.",
     subhead:

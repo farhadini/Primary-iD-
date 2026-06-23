@@ -5,22 +5,22 @@ import { useRef, useState, useEffect } from "react"
 // Real reviews scraped from the live WordPress site (Google reviews surfaced on myprimaryid.com)
 const TESTIMONIALS = [
   {
-    name: "Rinat L.",
-    quote:
-      "Dr. Gabi is the first DNA dentist in the US, which is fascinating. His Wholistic approach is unique and cutting edge — and he's a specialist who can do everything in-house, including implants. My entire family is treated by him and I highly recommend him to anyone.",
-    tag: "Whole-family patient",
-  },
-  {
     name: "Ali D., MD",
     quote:
-      "I have been treated by Dr. Gabi and his team over the past two years for everything from cleaning to crowns and implants — with excellent results. As a physician myself, I highly recommend Dr. Gabi and his team for any dental work regardless of complexity.",
+      "I have been treated by Dr. Gabi and his team for two years, for everything from cleanings to crowns and implants, with excellent results. As a physician myself, I highly recommend Dr. Gabi and his team for any work, regardless of complexity.",
     tag: "Physician patient",
   },
   {
-    name: "Sumeet S.",
+    name: "Sarah H.",
     quote:
-      "Dr. Gabi is one exceptional doctor. Modern office with great staff. He takes the time to educate and make you feel comfortable before any procedure. He's a top-notch dentist who cares about all aspects of your health.",
-    tag: "Long-term patient",
+      "I really enjoyed how personable Dr. Gabi is. He genuinely listens and is never rushed. He gave me the most thorough cleaning I have ever had, and his office and staff are lovely.",
+    tag: "New patient",
+  },
+  {
+    name: "Sivan T.",
+    quote:
+      "I called for an emergency and Dr. Tzur saw me right away. He was so comforting through the whole experience and completely changed how I feel about going in. I could not recommend a better doctor and team to take care of your smile.",
+    tag: "Came in for an emergency",
   },
 ]
 
@@ -97,7 +97,7 @@ export default function Testimonials() {
               maxWidth: 680,
             }}
           >
-            Rated <span style={{ color: B.blue, fontStyle: "italic" }}>4.9 by 425+</span> patients on Google.
+            Rated <span style={{ color: B.blue, fontStyle: "italic" }}>4.9 by 442+</span> patients on Google.
           </h2>
         </div>
 
@@ -173,7 +173,7 @@ export default function Testimonials() {
               opacity: 0.85,
             }}
           >
-            Read all 425+ reviews on Google →
+            Read all 442+ reviews on Google →
           </a>
         </div>
       </div>

@@ -25,7 +25,7 @@ const FAQ_ITEMS = [
   { q: "How long do implants last?", a: "Properly placed, properly maintained implants typically last 25+ years, and many last a lifetime. The prosthetic teeth on top may need replacement at the 15–20 year mark depending on wear. Maintenance matters: patients on a twice-yearly hygiene protocol with good home care see implant survival rates above 95% at 25 years." },
   { q: "Will insurance cover any of it?", a: "Usually a small portion. Most dental insurance plans cap at $1,500–$3,000 per year, which doesn't go far on a $35K case. We file what's coverable (extractions, bone grafts sometimes count) every time. Medical insurance occasionally covers implant work when tooth loss connects to a documented medical condition. Rare, but we'll check." },
   { q: "What about anesthesia?", a: "IV sedation for all surgical visits, administered by a board-certified anesthesia provider. You can pick the depth: light (you remember nothing, breathe on your own) or deeper (closer to general). Most patients choose light. Either way, no awareness, no panic, no pain." },
-  { q: "What if I'm scared of dentists?", a: "Most full-arch patients have been managing this longer than they wanted to because of fear. You're not unusual. We schedule first visits as conversations, with no instruments, no surprises, no sales pressure. If you want to bring someone with you, do. Many patients do." },
+  { q: "What if I'm scared of coming in?", a: "Most full-arch patients have been managing this longer than they wanted to because of fear. You're not unusual. We schedule first visits as conversations, with no instruments, no surprises, no sales pressure. If you want to bring someone with you, do. Many patients do." },
 ]
 
 // ─── Brand SVG illustrations ──────────────────────────────────────────────
@@ -161,7 +161,7 @@ const JOURNEY = [
 ]
 
 const COMPARISON = [
-  ["Time with the doctor", "5–10 min with a general dentist", "30+ minutes with Dr. Gabi, a prosthodontist, inside a 90-minute visit with diagnostics and a same-day plan"],
+  ["Time with the doctor", "5–10 min in a general practice", "30+ minutes with Dr. Gabi, a prosthodontist, inside a 90-minute visit with diagnostics and a same-day plan"],
   ["Diagnostic imaging", "2D X-ray, occasional panoramic", "3D CBCT + intra-oral scan, every patient, every plan"],
   ["Pre-surgical risk read", "Brief health-history form", "Primary iD, five dimensions of biology mapped before any surgical plan is built"],
   ["Treatment plan", "One option presented", "Plain-English, multiple options, with rationale for why we'd recommend one over another"],

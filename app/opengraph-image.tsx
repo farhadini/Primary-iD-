@@ -133,7 +133,7 @@ export default async function OpenGraphImage() {
                 fontFamily: "system-ui, sans-serif",
               }}
             >
-              ★ 4.9 · 425+ reviews
+              ★ 4.9 · 442+ reviews
             </div>
             <div
               style={{

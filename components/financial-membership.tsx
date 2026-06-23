@@ -52,11 +52,11 @@ const MEMBERSHIP_ITEMS = [
 const INSURERS = ["Delta Dental", "Aetna", "MetLife", "Cigna", "Guardian", "United Concordia", "& more"];
 
 const SCORE_DOTS = [
-  { label: "Oral", color: B.gold },
-  { label: "Sleep", color: B.purple },
-  { label: "Nutrition", color: B.green },
-  { label: "Family", color: B.rose },
-  { label: "Longevity", color: B.blue },
+  { label: "Oral", color: B.green },
+  { label: "Sleep", color: B.blue },
+  { label: "Nutrition", color: "#C7305A" },
+  { label: "Genetics", color: B.purple },
+  { label: "Longevity", color: B.navy },
 ];
 
 export default function FinancialMembership() {
@@ -77,7 +77,7 @@ export default function FinancialMembership() {
           inset: 0,
           pointerEvents: "none",
           background: `
-            radial-gradient(900px 500px at 0% 10%, rgba(232,152,94,0.08), transparent 60%),
+            radial-gradient(900px 500px at 0% 10%, rgba(36,167,224,0.08), transparent 60%),
             radial-gradient(900px 500px at 100% 90%, rgba(36,167,224,0.06), transparent 55%)
           `,
         }}
@@ -92,13 +92,13 @@ export default function FinancialMembership() {
             fontWeight: 600,
             letterSpacing: "0.14em",
             textTransform: "uppercase",
-            color: B.accent,
+            color: B.blue,
             display: "inline-flex",
             alignItems: "center",
             gap: 10,
           }}
         >
-          <span style={{ width: 22, height: 1, background: B.accent }} />
+          <span style={{ width: 22, height: 1, background: B.blue }} />
           How it works financially
         </div>
 
@@ -114,7 +114,7 @@ export default function FinancialMembership() {
           }}
         >
           Everyone deserves a smile that<br />
-          supports their <em style={{ fontStyle: "italic", color: B.accent, fontWeight: 400 }}>whole self.</em>
+          supports their <em style={{ fontStyle: "italic", color: B.blue, fontWeight: 400 }}>whole self.</em>
         </h2>
 
         <p
@@ -294,21 +294,21 @@ export default function FinancialMembership() {
             style={{
               background: B.warm,
               borderRadius: 22,
-              border: "1px solid rgba(232,152,94,0.35)",
+              border: "1px solid rgba(36,167,224,0.35)",
               overflow: "hidden",
               display: "flex",
               flexDirection: "column",
               position: "relative",
-              boxShadow: "0 20px 40px -22px rgba(232,152,94,0.4)",
+              boxShadow: "0 20px 40px -22px rgba(36,167,224,0.4)",
               transition: "transform 0.32s cubic-bezier(.22,.61,.36,1), box-shadow 0.32s cubic-bezier(.22,.61,.36,1)",
             }}
             onMouseOver={(e) => {
               e.currentTarget.style.transform = "translateY(-4px)";
-              e.currentTarget.style.boxShadow = "0 28px 52px -22px rgba(232,152,94,0.5)";
+              e.currentTarget.style.boxShadow = "0 28px 52px -22px rgba(36,167,224,0.5)";
             }}
             onMouseOut={(e) => {
               e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 20px 40px -22px rgba(232,152,94,0.4)";
+              e.currentTarget.style.boxShadow = "0 20px 40px -22px rgba(36,167,224,0.4)";
             }}
           >
             {/* Badge */}
@@ -341,7 +341,7 @@ export default function FinancialMembership() {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
-                background: "linear-gradient(135deg, #FDF2E5 0%, #F5CFA3 100%)",
+                background: "linear-gradient(135deg, #EAF6FC 0%, #BFE4F5 100%)",
               }}
             >
               <div
@@ -361,7 +361,7 @@ export default function FinancialMembership() {
                     fontWeight: 700,
                     letterSpacing: "0.16em",
                     textTransform: "uppercase",
-                    color: "#9e4628",
+                    color: "#1a6f9c",
                     display: "inline-flex",
                     alignItems: "center",
                     gap: 10,
@@ -380,7 +380,7 @@ export default function FinancialMembership() {
                     letterSpacing: "-0.015em",
                   }}
                 >
-                  A plan as <em style={{ fontStyle: "italic", fontWeight: 400, color: B.accent }}>individual</em> as your smile.
+                  A plan as <em style={{ fontStyle: "italic", fontWeight: 400, color: B.blue }}>individual</em> as your smile.
                 </h3>
                 <p
                   style={{
@@ -539,7 +539,7 @@ export default function FinancialMembership() {
               inset: 0,
               pointerEvents: "none",
               background: `
-                radial-gradient(500px 300px at 85% 15%, rgba(232,152,94,0.18), transparent 65%),
+                radial-gradient(500px 300px at 85% 15%, rgba(36,167,224,0.18), transparent 65%),
                 radial-gradient(400px 250px at 10% 90%, rgba(36,167,224,0.14), transparent 60%)
               `,
             }}
@@ -553,14 +553,14 @@ export default function FinancialMembership() {
                 fontWeight: 700,
                 letterSpacing: "0.16em",
                 textTransform: "uppercase",
-                color: B.accent,
+                color: B.blue,
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 10,
                 marginBottom: 16,
               }}
             >
-              <span style={{ width: 22, height: 1, background: B.accent }} />
+              <span style={{ width: 22, height: 1, background: B.blue }} />
               Build your plan
             </div>
             <h4
@@ -575,7 +575,7 @@ export default function FinancialMembership() {
               }}
             >
               Take the Primary iD.<br />
-              <em style={{ color: B.accent, fontStyle: "italic" }}>Get your plan.</em>
+              <em style={{ color: B.blue, fontStyle: "italic" }}>Get your plan.</em>
             </h4>
             <p
               style={{
@@ -611,7 +611,7 @@ export default function FinancialMembership() {
                   fontWeight: 700,
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
-                  color: B.accent,
+                  color: B.blue,
                   marginBottom: 14,
                 }}
               >

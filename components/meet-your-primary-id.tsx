@@ -23,7 +23,7 @@ const DIMENSIONS = [
     color: B.green,
     score: 72,
     headline: "What your mouth reveals about your whole body.",
-    stat: "Gum disease triples your risk of a second heart attack. Most dental visits never check.",
+    stat: "Gum disease triples your risk of a second heart attack. Most checkups never look.",
   },
   {
     id: "sleep",
@@ -38,10 +38,10 @@ const DIMENSIONS = [
     id: "nutrition",
     num: "03",
     label: "NUTRITION",
-    color: B.accent,
+    color: "#C7305A",
     score: 81,
     headline: "The ecosystem you never see.",
-    stat: "700+ bacterial species live in your mouth. Most dentists never test them. We do, because they shape everything downstream.",
+    stat: "700+ bacterial species live in your mouth. Most routine care never tests them. We do, because they shape everything downstream.",
   },
   {
     id: "genetics",
@@ -50,13 +50,13 @@ const DIMENSIONS = [
     color: B.purple,
     score: 75,
     headline: "Your biology, not a template.",
-    stat: "Your DNA shapes how your body responds to dental materials, inflammation, and healing. Generic plans ignore this.",
+    stat: "Your DNA shapes how your body responds to the materials we place in your mouth, inflammation, and healing. Generic plans ignore this.",
   },
   {
     id: "longevity",
     num: "05",
     label: "LONGEVITY",
-    color: B.gold,
+    color: B.navy,
     score: 64,
     headline: "Why your mouth ages you faster than anything else.",
     stat: "Chronic oral inflammation accelerates biological aging. Catching it early is the lowest-effort longevity investment most people never make.",
@@ -274,7 +274,7 @@ export default function MeetYourPrimaryID() {
     <section style={{
       position: "relative", overflow: "hidden",
       background: `radial-gradient(60% 50% at 8% 20%, rgba(36,167,224,0.06), transparent 60%),
-                   radial-gradient(50% 40% at 95% 80%, rgba(232,152,94,0.06), transparent 60%),
+                   radial-gradient(50% 40% at 95% 80%, rgba(36,167,224,0.06), transparent 60%),
                    ${B.cream}`,
       padding: "120px 0 140px",
     }}>

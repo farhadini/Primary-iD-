@@ -15,7 +15,7 @@ import { SiteFooter } from "@/components/site-footer";
 const B = {
   navy: "#0E2240",
   blue: "#24A7E0",
-  gold: "#D4B584",
+  gold: "#0E2240",
   green: "#48C28C",
   cream: "#FAF8F5",
   warm: "#FEFCF9",
@@ -46,7 +46,7 @@ const TYPE_COLORS: Record<SourceType, { color: string; bg: string; border: strin
   peer: { color: B.blue, bg: "rgba(36,167,224,0.10)", border: "rgba(36,167,224,0.25)" },
   gov: { color: B.navy, bg: "rgba(14,34,64,0.06)", border: "rgba(14,34,64,0.18)" },
   paper: { color: B.green, bg: "rgba(72,194,140,0.10)", border: "rgba(72,194,140,0.28)" },
-  patient: { color: "#A88347", bg: "rgba(212,181,132,0.15)", border: "rgba(212,181,132,0.40)" },
+  patient: { color: "#24A7E0", bg: "rgba(36,167,224,0.12)", border: "rgba(36,167,224,0.30)" },
   press: { color: "#B5713F", bg: "rgba(232,152,94,0.12)", border: "rgba(232,152,94,0.35)" },
   blog: { color: B.purple, bg: "rgba(123,104,238,0.10)", border: "rgba(123,104,238,0.28)" },
 };
