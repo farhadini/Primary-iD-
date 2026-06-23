@@ -269,8 +269,8 @@ export default function CarePathways() {
 
 // Each pathway links to its dedicated page (next to the booking CTA).
 const PATHWAY_PAGES: Record<string, string> = {
-  preventive: "/wholistic-dentistry/",
-  airway: "/oral-systemic/",
+  preventive: "/preventive-care/",
+  airway: "/airway-sleep/",
   cosmetic: "/cosmetic-dentistry/",
   implants: "/dental-implant/",
   longevity: "/primary-id-plus/",

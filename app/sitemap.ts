@@ -17,6 +17,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE}/primary-id-plus/`,       lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE}/five-dimensions/`,       lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE}/second-opinion/`,        lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${SITE}/preventive-care/`,       lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${SITE}/airway-sleep/`,          lastModified: now, changeFrequency: "monthly", priority: 0.9 },
 
     // Legacy SEO preservation
     { url: `${SITE}/dental-implant/`,        lastModified: now, changeFrequency: "monthly", priority: 0.9 },
