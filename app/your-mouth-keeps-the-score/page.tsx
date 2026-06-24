@@ -15,26 +15,19 @@ import { SiteHeader, SiteFooter, PALETTE } from "@/components/site-shell"
 // Book = the why. Primary iD = the how. Two states, one flag (LAUNCHED):
 // pre-launch shows waitlist / sample-chapter capture; launch shows
 // retailer / pre-order links. Pre-launch is what renders now.
+//
+// Visual design ported from the uploaded book-page HTML. Uses the site's
+// shared <SiteHeader /> + <SiteFooter /> instead of the design's own
+// nav/footer.
 // ─────────────────────────────────────────────────────────────────────────
-
-const SERIF = "Georgia, 'Times New Roman', serif"
-const SANS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
 
 // State flag: pre-launch (waitlist / sample chapter) vs. launch (retailers).
 const LAUNCHED = false
 
-// Locked dimension colors. Used only on the five dimension chapters and the
-// three-argument cards. No gold anywhere.
-const DIM = {
-  oral: "#48C28C",
-  sleep: "#24A7E0",
-  nutrition: "#C7305A",
-  genetics: "#7B68EE",
-  longevity: "#0E2240",
-}
-
 // ─── Email capture (client) ───────────────────────────────────────────────
-function EmailCapture({ tone = "light", buttonLabel = "Read the first chapter" }: { tone?: "light" | "dark"; buttonLabel?: string }) {
+// Rendered wherever the design has an email / "free chapter" / "get the
+// book" CTA (the hero and the signup section).
+function EmailCapture({ buttonLabel = "Send me the chapter" }: { buttonLabel?: string }) {
   const [email, setEmail] = useState("")
   const [done, setDone] = useState(false)
 
@@ -44,264 +37,28 @@ function EmailCapture({ tone = "light", buttonLabel = "Read the first chapter" }
     setDone(true)
   }
 
-  const onDark = tone === "dark"
-  const fieldText = onDark ? "#FEFCF9" : PALETTE.navy
-  const fieldBorder = onDark ? "rgba(254,252,249,0.3)" : PALETTE.border
-  const fieldBg = onDark ? "rgba(254,252,249,0.06)" : PALETTE.white
-  const microColor = onDark ? "rgba(254,252,249,0.6)" : PALETTE.muted
-
   if (done) {
     return (
-      <div style={{ maxWidth: 460 }}>
-        <div style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 20, color: onDark ? "#FEFCF9" : PALETTE.navy, lineHeight: 1.5, margin: "0 0 8px" }}>
-          Check your inbox for the prologue.
-        </div>
-        <p style={{ fontFamily: SANS, fontSize: 13.5, color: microColor, lineHeight: 1.55, margin: 0 }}>
-          We will also send a quiet note when the book ships. Nothing else.
-        </p>
+      <div className="confirm" style={{ display: "block" }}>
+        Thank you. Check your inbox for your free chapter.
       </div>
     )
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: 480 }}>
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-        <input
-          type="email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="you@email.com"
-          aria-label="Email address"
-          style={{
-            flex: "1 1 200px",
-            minWidth: 0,
-            padding: "13px 18px",
-            borderRadius: 999,
-            border: `1.5px solid ${fieldBorder}`,
-            background: fieldBg,
-            color: fieldText,
-            fontFamily: SANS,
-            fontSize: 15,
-            outline: "none",
-          }}
-        />
-        <button
-          type="submit"
-          style={{
-            background: PALETTE.blue,
-            color: "#FFFFFF",
-            padding: "13px 26px",
-            borderRadius: 999,
-            border: "none",
-            fontFamily: SANS,
-            fontWeight: 600,
-            fontSize: 15,
-            cursor: "pointer",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {buttonLabel}
-        </button>
-      </div>
-      <p style={{ marginTop: 14, fontFamily: SANS, fontSize: 12.5, color: microColor, lineHeight: 1.55, letterSpacing: "0.02em" }}>
-        No spam. The prologue in your inbox, plus a note when it ships.
-      </p>
+    <form className="signup-form" onSubmit={handleSubmit}>
+      <input
+        type="email"
+        required
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="you@email.com"
+        aria-label="Email address"
+      />
+      <button type="submit">{buttonLabel}</button>
     </form>
   )
 }
-
-// ─── Book cover mockup ────────────────────────────────────────────────────
-// TODO: swap this CSS mockup for the final cover image when available (replace with <img src=...>)
-function BookCover() {
-  return (
-    <div style={{ perspective: "1600px", width: "100%", display: "flex", justifyContent: "center" }}>
-      <div
-        style={{
-          position: "relative",
-          width: "min(320px, 80vw)",
-          transform: "rotateY(-14deg) rotateX(2deg)",
-          transformStyle: "preserve-3d",
-        }}
-      >
-        {/* drop shadow */}
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            left: "8%",
-            right: "-4%",
-            bottom: "-5%",
-            height: "92%",
-            background: "rgba(0,0,0,0.45)",
-            filter: "blur(34px)",
-            borderRadius: 14,
-            transform: "translateZ(-60px) rotateX(4deg)",
-            zIndex: 0,
-          }}
-        />
-        {/* cover face */}
-        <div
-          style={{
-            position: "relative",
-            zIndex: 1,
-            aspectRatio: "2 / 3",
-            borderRadius: "3px 8px 8px 3px",
-            background: "linear-gradient(125deg, #0E2240 0%, #142d52 48%, #0c1d38 100%)",
-            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.05)",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "44px 30px 38px",
-            overflow: "hidden",
-          }}
-        >
-          {/* spine edge (left) */}
-          <div
-            aria-hidden
-            style={{
-              position: "absolute",
-              top: 0,
-              bottom: 0,
-              left: 0,
-              width: 14,
-              background: "linear-gradient(90deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.18) 45%, rgba(255,255,255,0.05) 100%)",
-            }}
-          />
-          {/* page block edge (right) */}
-          <div
-            aria-hidden
-            style={{
-              position: "absolute",
-              top: 3,
-              bottom: 3,
-              right: -7,
-              width: 8,
-              background: "linear-gradient(90deg, #d9d2c6 0%, #efe9df 50%, #c9c2b4 100%)",
-              borderRadius: "0 3px 3px 0",
-              transform: "translateZ(-2px)",
-            }}
-          />
-
-          {/* eyebrow */}
-          <div
-            style={{
-              fontFamily: SANS,
-              fontSize: 9.5,
-              letterSpacing: "0.26em",
-              textTransform: "uppercase",
-              color: PALETTE.blue,
-              fontWeight: 700,
-              textAlign: "center",
-              marginTop: 6,
-            }}
-          >
-            A New Science of the Mouth
-          </div>
-
-          {/* title */}
-          <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
-            <h2
-              style={{
-                fontFamily: SERIF,
-                fontSize: "clamp(26px, 7vw, 34px)",
-                fontWeight: 400,
-                color: PALETTE.cream,
-                lineHeight: 1.08,
-                letterSpacing: "0.01em",
-                margin: 0,
-                textTransform: "uppercase",
-              }}
-            >
-              Your Mouth Keeps the Score
-            </h2>
-            <div aria-hidden style={{ width: 44, height: 1, background: "rgba(36,167,224,0.7)" }} />
-          </div>
-
-          {/* author */}
-          <div style={{ textAlign: "center" }}>
-            <div style={{ fontFamily: SERIF, fontSize: 15, letterSpacing: "0.08em", color: PALETTE.cream, textTransform: "uppercase" }}>
-              Dr. Tzur Gabi
-            </div>
-            <div style={{ fontFamily: SANS, fontSize: 10, letterSpacing: "0.1em", color: "rgba(254,252,249,0.6)", marginTop: 6, textTransform: "uppercase" }}>
-              Co-founder of Primary iD
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// ─── Data ─────────────────────────────────────────────────────────────────
-const ARGUMENTS = [
-  {
-    tag: "Argument One",
-    color: DIM.oral,
-    title: "The biological case",
-    body: "The mouth is a diagnostic window and a causal lever. Oral inflammation is among the largest sources of chronic systemic inflammation, and the five dimensions are one biology seen through five clinically actionable lenses.",
-  },
-  {
-    tag: "Argument Two",
-    color: DIM.nutrition,
-    title: "The cultural case",
-    body: "The smile is the closest thing we have to a public face of the self. What we do to it, and what we ignore about it, is a cultural story, not just a clinical one.",
-  },
-  {
-    tag: "Argument Three",
-    color: DIM.genetics,
-    title: "The reform case",
-    body: "The split between dentistry and medicine was a historical accident, the 1840 mistake, and reuniting them is the reform the book argues for.",
-  },
-]
-
-const PARTS = [
-  {
-    part: "Part I",
-    name: "The Problem",
-    chapters: [
-      { label: "The 1840 Mistake" },
-      { label: "What Lives in Your Mouth" },
-    ],
-  },
-  {
-    part: "Part II",
-    name: "The Five Dimensions",
-    note: "Each links to the five dimensions we score in every patient.",
-    chapters: [
-      { label: "Oral Health", color: DIM.oral, href: "/five-dimensions/" },
-      { label: "Sleep & Airway", color: DIM.sleep, href: "/five-dimensions/" },
-      { label: "Nutrition & the Microbiome", color: DIM.nutrition, href: "/five-dimensions/" },
-      { label: "Genetics & Personalized Risk", color: DIM.genetics, href: "/five-dimensions/" },
-      { label: "Longevity & Healthspan", color: DIM.longevity, href: "/five-dimensions/" },
-    ],
-  },
-  {
-    part: "Part III",
-    name: "The Human",
-    chapters: [
-      { label: "The Smile and the Self" },
-      { label: "A Visit That Could Save Your Life" },
-    ],
-  },
-  {
-    part: "Part IV",
-    name: "The Reform",
-    chapters: [
-      { label: "The Honest Limits" },
-      { label: "A New Architecture of Care" },
-    ],
-  },
-]
-
-const PODCAST_PILLARS = [
-  "The 1840 Mistake",
-  "The Five Dimensions",
-  "The Smile and the Self",
-  "The Honest Limits",
-  "A New Architecture",
-]
 
 // ─── Book JSON-LD ─────────────────────────────────────────────────────────
 const BOOK_SCHEMA = {
@@ -331,278 +88,636 @@ export default function BookPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(BOOK_SCHEMA) }}
       />
 
-      {/* 1 ── HERO (navy) */}
-      <section style={{ background: PALETTE.navy, color: "#FEFCF9", overflow: "hidden" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "120px 28px 110px" }}>
-          <div className="hero-grid" style={{ display: "grid", gridTemplateColumns: "360px 1fr", gap: 64, alignItems: "center" }}>
-            <div className="hero-cover">
-              <BookCover />
-            </div>
+      <style>{`
+        .book-page {
+          --cream: #FAF8F5;
+          --card: #FEFCF9;
+          --navy: #0E2240;
+          --navy-2: #142c54;
+          --cyan: #24A7E0;
+          --ink: #4A4A5A;
+          --muted: #8A8A9A;
+          --line: rgba(14,34,64,0.08);
+          --line-soft: rgba(14,34,64,0.05);
+          --oral: #48C28C;
+          --sleep: #24A7E0;
+          --nutrition: #C7305A;
+          --genetics: #7B68EE;
+          --longevity: #0E2240;
+          --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          --serif: Georgia, "Times New Roman", serif;
+          font-family: var(--serif);
+          background: var(--cream);
+          color: var(--navy);
+          -webkit-font-smoothing: antialiased;
+          overflow-x: hidden;
+        }
+        .book-page * { box-sizing: border-box; }
+        .book-page ::selection { background: var(--cyan); color: #fff; }
+        .book-page a { color: inherit; }
+
+        /* ---------- SHARED ---------- */
+        .book-page .eyebrow {
+          font-family: var(--sans);
+          font-size: 13px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+          color: var(--cyan); display: inline-flex; align-items: center; gap: 12px;
+        }
+        .book-page .eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--cyan); }
+        .book-page .eyebrow.center::after { content: ''; width: 32px; height: 1px; background: var(--cyan); }
+
+        .book-page h2 {
+          font-family: var(--serif); font-weight: 400;
+          font-size: clamp(34px, 5vw, 60px); line-height: 1.08; letter-spacing: -0.02em;
+          color: var(--navy);
+        }
+        .book-page h2 em { font-style: italic; color: var(--cyan); font-weight: 400; }
+
+        .book-page .lede {
+          font-family: var(--sans); font-size: 18px; line-height: 1.6; color: var(--ink);
+        }
+
+        .book-page .btn-primary {
+          background: var(--navy); color: #fff; padding: 16px 32px; border-radius: 9px;
+          text-decoration: none; font-family: var(--sans); font-weight: 600; font-size: 15px;
+          display: inline-flex; align-items: center; gap: 10px;
+          box-shadow: 0 20px 40px -16px rgba(14,34,64,0.4); transition: transform 0.2s ease, background 0.2s ease;
+        }
+        .book-page .btn-primary:hover { transform: translateY(-2px); background: var(--navy-2); }
+        .book-page .btn-ghost {
+          color: var(--navy); text-decoration: none; font-family: var(--sans); font-weight: 500; font-size: 15px;
+          display: inline-flex; align-items: center; gap: 8px;
+          border-bottom: 1px solid rgba(14,34,64,0.2); padding-bottom: 4px; transition: color 0.2s ease;
+        }
+        .book-page .btn-ghost:hover { color: var(--cyan); border-color: var(--cyan); }
+
+        /* ---------- HERO ---------- */
+        .book-page .hero {
+          padding: 80px 48px 96px; position: relative; overflow: hidden;
+        }
+        .book-page .hero .grid {
+          max-width: 1280px; margin: 0 auto;
+          display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,1fr);
+          gap: 72px; align-items: center; position: relative; z-index: 1;
+        }
+        .book-page .hero h1 {
+          font-family: var(--serif); font-weight: 400;
+          font-size: clamp(38px, 5.6vw, 80px); line-height: 1.02; letter-spacing: -0.025em;
+          color: var(--navy); margin: 0;
+        }
+        .book-page .hero h1 em { font-style: italic; color: var(--cyan); }
+        .book-page .hero .lede { max-width: 520px; margin-top: 28px; }
+        .book-page .hero .actions { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; margin-top: 40px; }
+        .book-page .hero .subnote {
+          font-family: var(--serif); font-style: italic; font-size: 13px; color: var(--muted);
+          margin-top: 18px;
+        }
+        .book-page .hero .byline {
+          margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--line);
+          font-family: var(--serif); font-size: 14px; color: var(--ink); max-width: 460px; line-height: 1.6;
+        }
+        .book-page .hero .byline a { color: var(--cyan); text-decoration: none; }
+
+        /* book cover */
+        .book-page .book-stage { display: flex; justify-content: center; align-items: center; perspective: 2000px; }
+        .book-page .book {
+          position: relative; width: 340px; height: 510px; transform-style: preserve-3d;
+          transform: rotateY(-22deg) rotateX(2deg);
+          transition: transform 0.8s cubic-bezier(0.4,0,0.2,1);
+          filter: drop-shadow(40px 50px 70px rgba(14,34,64,0.3));
+        }
+        .book-page .book:hover { transform: rotateY(-12deg) rotateX(0deg); }
+        .book-page .book .face {
+          position: absolute; inset: 0; border-radius: 3px 7px 7px 3px; overflow: hidden;
+          background: linear-gradient(150deg, #FFFFFF 0%, #F4EFE6 100%);
+          border-right: 1px solid rgba(0,0,0,0.05);
+        }
+        .book-page .book .spine {
+          position: absolute; left: -16px; top: 0; width: 16px; height: 100%;
+          background: linear-gradient(90deg, #08142a, var(--navy));
+          transform: rotateY(-90deg); transform-origin: right center;
+          display: flex; flex-direction: column; justify-content: space-between; align-items: center;
+          padding: 22px 3px;
+        }
+        .book-page .book .spine .s-top, .book-page .book .spine .s-mid, .book-page .book .spine .s-bot {
+          writing-mode: vertical-rl; transform: rotate(180deg); color: #fff; text-align: center;
+        }
+        .book-page .book .spine .s-top { font-family: var(--sans); font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); }
+        .book-page .book .spine .s-mid { font-family: var(--serif); font-size: 12px; font-weight: 700; letter-spacing: 0.02em; }
+        .book-page .book .spine .s-bot { font-family: var(--sans); font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.85; }
+        .book-page .book .pages {
+          position: absolute; right: -7px; top: 4px; bottom: 4px; width: 7px; border-radius: 0 2px 2px 0;
+          background: repeating-linear-gradient(180deg, #E8DFCA 0, #E8DFCA 1px, #F4EFE6 1px, #F4EFE6 2px);
+        }
+        .book-page .cover-pad { padding: 34px 30px 28px; height: 100%; display: flex; flex-direction: column; }
+        .book-page .cover-eyebrow {
+          font-family: var(--sans); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
+          font-weight: 700; color: var(--cyan); margin-bottom: 26px;
+        }
+        .book-page .cover-title {
+          font-family: var(--serif); font-weight: 700; color: var(--navy);
+          font-size: 46px; line-height: 0.96; letter-spacing: -0.02em;
+        }
+        .book-page .cover-band {
+          margin: 14px -30px; padding: 16px 30px 18px; background: var(--navy); color: #fff;
+        }
+        .book-page .cover-band .t2 {
+          font-family: var(--serif); font-weight: 700; font-size: 46px; line-height: 0.96;
+          letter-spacing: -0.02em; color: #fff;
+        }
+        .book-page .cover-band .t2 em { color: var(--cyan); font-style: italic; }
+        .book-page .cover-sub {
+          font-family: var(--sans); font-size: 11px; line-height: 1.5; color: var(--ink);
+          margin-top: 18px; font-weight: 500;
+        }
+        .book-page .cover-rule { width: 76px; height: 1.5px; background: var(--cyan); margin: auto 0 14px; }
+        .book-page .cover-author .name {
+          font-family: var(--serif); font-size: 15px; font-weight: 700; color: var(--navy); letter-spacing: 0.01em;
+        }
+        .book-page .cover-author .cred {
+          font-family: var(--sans); font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase;
+          color: var(--muted); font-weight: 700; margin-top: 5px;
+        }
+
+        /* ---------- PREMISE ---------- */
+        .book-page .premise {
+          background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+          padding: 96px 32px;
+        }
+        .book-page .premise .inner { max-width: 860px; margin: 0 auto; text-align: center; }
+        .book-page .premise h2 { margin: 20px auto 0; max-width: 760px; }
+        .book-page .premise .lede { max-width: 640px; margin: 28px auto 0; }
+        .book-page .pull {
+          font-family: var(--serif); font-style: italic; font-size: clamp(22px, 2.6vw, 30px);
+          line-height: 1.35; color: var(--navy); max-width: 780px; margin: 56px auto 0;
+          padding-top: 40px; border-top: 1px solid var(--line);
+        }
+        .book-page .pull em { color: var(--cyan); }
+
+        /* ---------- DIMENSIONS ---------- */
+        .book-page .dims { padding: 104px 48px; max-width: 1280px; margin: 0 auto; }
+        .book-page .dims .head { max-width: 720px; margin-bottom: 56px; }
+        .book-page .dims .head h2 { margin-top: 22px; }
+        .book-page .dims .head .lede { margin-top: 24px; max-width: 560px; }
+        .book-page .dim-grid {
+          display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px;
+        }
+        .book-page .dim {
+          --c: var(--cyan);
+          background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+          padding: 26px 22px 24px; position: relative; overflow: hidden; isolation: isolate;
+          display: flex; flex-direction: column; min-height: 280px;
+          text-decoration: none;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .book-page .dim:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -18px rgba(14,34,64,0.18); }
+        .book-page .dim::before {
+          content: ''; position: absolute; right: -40%; top: -40%; width: 80%; height: 80%; border-radius: 50%;
+          background: radial-gradient(circle, var(--c) 0%, transparent 60%); opacity: 0.1; z-index: 0;
+        }
+        .book-page .dim .bar { position: absolute; top: 0; left: 0; width: 52px; height: 5px; background: var(--c); border-radius: 0 0 5px 0; }
+        .book-page .dim .num {
+          font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+          color: var(--c); position: relative; z-index: 1; margin: 8px 0 16px;
+        }
+        .book-page .dim h3 {
+          font-family: var(--serif); font-weight: 400; font-size: 19px; line-height: 1.2;
+          color: var(--navy); position: relative; z-index: 1; letter-spacing: -0.01em; margin-bottom: 10px;
+        }
+        .book-page .dim p {
+          font-family: var(--sans); font-size: 13px; line-height: 1.55; color: var(--ink);
+          position: relative; z-index: 1; margin: 0;
+        }
+        .book-page .dim .ch {
+          font-family: var(--sans); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase;
+          color: var(--muted); font-weight: 600; margin-top: auto; padding-top: 16px; position: relative; z-index: 1;
+        }
+        @media (max-width: 1080px) { .book-page .dim-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 560px) { .book-page .dim-grid { grid-template-columns: 1fr; } }
+
+        /* ---------- INSIDE ---------- */
+        .book-page .inside {
+          background: linear-gradient(180deg, #08142a 0%, var(--navy) 55%, #0a1a33 100%);
+          color: #EEF1F6; padding: 110px 48px;
+          position: relative; overflow: hidden;
+        }
+        .book-page .inside::before {
+          content: ''; position: absolute; inset: 0; pointer-events: none;
+          background: radial-gradient(800px 480px at 92% 8%, rgba(36,167,224,0.14), transparent 60%),
+                      radial-gradient(700px 420px at 6% 92%, rgba(123,104,238,0.10), transparent 60%);
+        }
+        .book-page .inside .inner { max-width: 1080px; margin: 0 auto; position: relative; z-index: 1; }
+        .book-page .inside .eyebrow { color: var(--cyan); }
+        .book-page .inside h2 { color: #fff; margin-top: 22px; max-width: 760px; }
+        .book-page .inside h2 em { color: var(--cyan); }
+        .book-page .inside .lede { color: #B8C0D0; max-width: 620px; margin-top: 26px; }
+        .book-page .parts { margin-top: 64px; display: grid; gap: 28px; }
+        .book-page .part { display: grid; grid-template-columns: 200px 1fr; gap: 36px; align-items: start;
+          padding-bottom: 28px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .book-page .part:last-child { border-bottom: none; padding-bottom: 0; }
+        .book-page .part .label .pnum {
+          font-family: var(--sans); font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+          text-transform: uppercase; color: var(--cyan);
+        }
+        .book-page .part .label .pname {
+          font-family: var(--serif); font-size: 22px; color: #fff; line-height: 1.2; margin-top: 8px; letter-spacing: -0.01em;
+        }
+        .book-page .part .label .pname em { font-style: italic; color: var(--cyan); }
+        .book-page .part .chapters { display: flex; flex-direction: column; gap: 14px; }
+        .book-page .part .chapters .c { display: grid; grid-template-columns: 1fr; gap: 3px; text-decoration: none; }
+        .book-page .part .chapters .c .ct {
+          font-family: var(--serif); font-size: 16px; color: #fff; line-height: 1.3;
+        }
+        .book-page .part .chapters .c .ct em { color: var(--cyan); font-style: italic; }
+        .book-page .part .chapters .c .cd {
+          font-family: var(--sans); font-size: 13px; color: #9AA3B8; line-height: 1.5;
+        }
+        @media (max-width: 760px) {
+          .book-page .part { grid-template-columns: 1fr; gap: 18px; }
+        }
+
+        /* ---------- SHELF ---------- */
+        .book-page .shelf { padding: 104px 48px; max-width: 1080px; margin: 0 auto; }
+        .book-page .shelf .head { text-align: center; max-width: 720px; margin: 0 auto 56px; }
+        .book-page .shelf .head h2 { margin-top: 22px; }
+        .book-page .shelf .head .lede { margin-top: 24px; }
+        .book-page .shelf-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+        .book-page .shelf-card {
+          background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 32px 28px;
+        }
+        .book-page .shelf-card .t {
+          font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--navy); margin-bottom: 6px;
+        }
+        .book-page .shelf-card .a { font-family: var(--sans); font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; }
+        .book-page .shelf-card p { font-family: var(--sans); font-size: 14px; line-height: 1.6; color: var(--ink); }
+        @media (max-width: 820px) { .book-page .shelf-grid { grid-template-columns: 1fr; } }
+
+        /* ---------- AUTHOR ---------- */
+        .book-page .author { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 96px 48px; }
+        .book-page .author .grid { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: 0.85fr 1fr; gap: 64px; align-items: center; }
+        .book-page .author .portrait {
+          aspect-ratio: 4/5; border-radius: 18px; overflow: hidden;
+          background: radial-gradient(60% 50% at 50% 35%, rgba(36,167,224,0.18), transparent 60%),
+                      linear-gradient(160deg, #b4c8dc 0%, #6e8aa8 45%, #2a3f5e 100%);
+          box-shadow: 0 40px 80px -28px rgba(14,34,64,0.4);
+          display: flex; align-items: flex-end; padding: 28px; position: relative;
+        }
+        .book-page .author .portrait .tag {
+          font-family: var(--serif); color: #fff; font-size: 15px; line-height: 1.4;
+        }
+        .book-page .author .portrait .tag em { color: #BFE4F5; font-style: italic; }
+        .book-page .author h2 { margin-top: 22px; }
+        .book-page .author .lede { margin-top: 22px; }
+        .book-page .author p { font-family: var(--sans); font-size: 15px; line-height: 1.65; color: var(--ink); margin-top: 16px; }
+        .book-page .author .more { margin-top: 28px; }
+        @media (max-width: 820px) { .book-page .author .grid { grid-template-columns: 1fr; gap: 40px; } }
+
+        /* ---------- PODCAST ---------- */
+        .book-page .podcast { padding: 96px 48px; max-width: 1080px; margin: 0 auto; }
+        .book-page .podcast .card {
+          background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%); color: #fff;
+          border-radius: 22px; padding: 56px 56px; display: grid; grid-template-columns: 1fr auto;
+          gap: 40px; align-items: center; position: relative; overflow: hidden;
+        }
+        .book-page .podcast .card::before {
+          content: ''; position: absolute; inset: 0; pointer-events: none;
+          background: radial-gradient(500px 300px at 88% 10%, rgba(36,167,224,0.2), transparent 65%);
+        }
+        .book-page .podcast .card .txt { position: relative; z-index: 1; }
+        .book-page .podcast .card .eyebrow { color: var(--cyan); }
+        .book-page .podcast .card h3 {
+          font-family: var(--serif); font-weight: 400; font-size: clamp(26px, 3vw, 36px);
+          line-height: 1.15; color: #fff; margin: 18px 0 14px; letter-spacing: -0.01em;
+        }
+        .book-page .podcast .card h3 em { color: var(--cyan); font-style: italic; }
+        .book-page .podcast .card p { font-family: var(--sans); font-size: 15px; line-height: 1.6; color: rgba(255,255,255,0.82); max-width: 520px; }
+        .book-page .podcast .card .ico {
+          position: relative; z-index: 1; width: 96px; height: 96px; border-radius: 24px;
+          background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16);
+          display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        @media (max-width: 720px) { .book-page .podcast .card { grid-template-columns: 1fr; padding: 40px 32px; } .book-page .podcast .card .ico { display: none; } }
+
+        /* ---------- SIGNUP CTA ---------- */
+        .book-page .signup { padding: 110px 32px; text-align: center; }
+        .book-page .signup .inner { max-width: 640px; margin: 0 auto; }
+        .book-page .signup h2 { margin: 22px auto 0; }
+        .book-page .signup .lede { margin: 24px auto 36px; max-width: 480px; }
+        .book-page .signup-form {
+          display: flex; gap: 10px; max-width: 480px; margin: 0 auto; flex-wrap: wrap; justify-content: center;
+        }
+        .book-page .signup-form input {
+          flex: 1; min-width: 240px; height: 54px; padding: 0 20px; border-radius: 10px;
+          border: 1px solid var(--line); background: var(--card); font-family: var(--sans); font-size: 15px;
+          color: var(--navy); outline: none; transition: border 0.2s, box-shadow 0.2s;
+        }
+        .book-page .signup-form input:focus { border-color: var(--cyan); box-shadow: 0 0 0 4px rgba(36,167,224,0.12); }
+        .book-page .signup-form button {
+          height: 54px; padding: 0 28px; border: none; border-radius: 10px; background: var(--navy); color: #fff;
+          font-family: var(--sans); font-weight: 600; font-size: 15px; cursor: pointer;
+          box-shadow: 0 16px 36px -16px rgba(14,34,64,0.45); transition: transform 0.2s, background 0.2s;
+        }
+        .book-page .signup-form button:hover { transform: translateY(-2px); background: var(--navy-2); }
+        .book-page .signup .micro { font-family: var(--sans); font-size: 13px; color: var(--muted); margin-top: 18px; }
+        .book-page .signup .confirm {
+          font-family: var(--serif); font-style: italic; font-size: 17px; color: var(--cyan);
+          margin-top: 24px;
+        }
+        .book-page .signup .or { font-family: var(--sans); font-size: 14px; color: var(--ink); margin-top: 36px; }
+        .book-page .signup .or a { color: var(--navy); font-weight: 600; text-decoration: none; border-bottom: 1px solid rgba(14,34,64,0.25); padding-bottom: 2px; }
+
+        @media (max-width: 900px) {
+          .book-page .hero { padding: 60px 24px 72px; }
+          .book-page .hero .grid { grid-template-columns: 1fr; gap: 56px; }
+          .book-page .book { width: 280px; height: 420px; transform: rotateY(-15deg); }
+          .book-page .dims, .book-page .shelf, .book-page .podcast { padding-left: 24px; padding-right: 24px; }
+          .book-page .inside, .book-page .author { padding-left: 24px; padding-right: 24px; }
+          .book-page .cover-title, .book-page .cover-band .t2 { font-size: 38px; }
+        }
+
+        @keyframes bookFadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .book-page .hero h1, .book-page .hero .lede, .book-page .hero .actions, .book-page .hero .byline { animation: bookFadeUp 0.8s ease-out backwards; }
+        .book-page .hero .lede { animation-delay: 0.12s; }
+        .book-page .hero .actions { animation-delay: 0.24s; }
+        .book-page .hero .byline { animation-delay: 0.36s; }
+        .book-page .book { animation: bookFadeUp 1s ease-out 0.2s backwards; }
+      `}</style>
+
+      <div className="book-page">
+        {/* HERO */}
+        <section className="hero">
+          <div className="grid">
             <div>
-              <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.18em", textTransform: "uppercase", fontWeight: 700, marginBottom: 24 }}>
-                A New Science of the Mouth
-              </div>
-              <h1 style={{ fontFamily: SERIF, fontSize: "clamp(42px, 6vw, 68px)", fontWeight: 400, lineHeight: 1.04, letterSpacing: "-0.015em", margin: "0 0 22px" }}>
-                Your Mouth Keeps the <em style={{ color: PALETTE.blue }}>Score.</em>
-              </h1>
-              <p style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "clamp(20px, 2.6vw, 25px)", color: "rgba(184,226,244,0.95)", margin: "0 0 24px", lineHeight: 1.45, maxWidth: 560 }}>
-                How oral health shapes your energy, longevity, and whole-body wellbeing.
-              </p>
-              <div style={{ fontFamily: SANS, fontSize: 14, color: "rgba(254,252,249,0.7)", letterSpacing: "0.04em", marginBottom: 38 }}>
-                Dr. Tzur Gabi · Co-founder of Primary iD
-              </div>
+              <span className="eyebrow">A new science of the mouth · The book</span>
+              <h1 style={{ marginTop: 24 }}>Your mouth keeps <em>the score</em>.</h1>
+              <p className="lede">The most-visited part of your body is the one the rest of medicine refuses to read. A practicing clinician's case for why your mouth is the earliest, clearest window into your whole-body health, and the highest-leverage place to start.</p>
 
               {LAUNCHED ? (
-                // Launch state: retailer / pre-order buttons would render here.
-                <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                <div className="actions">
                   {["Amazon", "Bookshop", "Apple Books", "Audible"].map((r) => (
-                    <a key={r} href="#" style={{ background: PALETTE.blue, color: "#FFFFFF", padding: "12px 22px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 14 }}>
-                      {r}
-                    </a>
+                    <a key={r} href="#" className="btn-primary">{r}</a>
                   ))}
                 </div>
               ) : (
-                <EmailCapture tone="dark" />
+                <div style={{ marginTop: 40, maxWidth: 480 }}>
+                  <EmailCapture buttonLabel="Get notified at launch" />
+                </div>
               )}
+
+              <div className="subnote">Free chapter for early readers · No spam, ever.</div>
+              <div className="byline">
+                By <a href="/about/">Dr. Tzur Gabi</a>, functional prosthodontist, oral physician, and founder of Primary Integrative Dentistry. The book behind the <Link href="/five-dimensions/">five-dimension</Link> framework.
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* 2 ── THE THESIS MOMENT (full-bleed cream) */}
-      <section style={{ background: PALETTE.cream, padding: "120px 28px", borderTop: `1px solid ${PALETTE.border}` }}>
-        <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center" }}>
-          <p style={{ fontFamily: SERIF, fontSize: "clamp(30px, 4.6vw, 46px)", fontWeight: 400, color: PALETTE.navy, lineHeight: 1.22, letterSpacing: "-0.015em", margin: "0 0 36px" }}>
-            The mouth has been carrying a story the rest of medicine refuses to read.
-          </p>
-          <p style={{ fontFamily: SERIF, fontSize: "clamp(18px, 2.2vw, 21px)", color: PALETTE.body, lineHeight: 1.6, margin: 0, maxWidth: 680, marginLeft: "auto", marginRight: "auto" }}>
-            The mouth is the most-visited and least-integrated part of the body, and reuniting it with the rest of healthcare is one of the highest-leverage moves available in preventive medicine.
-          </p>
-        </div>
-      </section>
-
-      {/* 3 ── THE THREE ARGUMENTS (cream, 3 cards) */}
-      <section style={{ background: PALETTE.warmWhite, padding: "96px 28px", borderTop: `1px solid ${PALETTE.border}` }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div style={{ maxWidth: 720, marginBottom: 56 }}>
-            <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>
-              The argument
-            </div>
-            <h2 style={{ fontFamily: SERIF, fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 400, color: PALETTE.navy, lineHeight: 1.12, letterSpacing: "-0.02em", margin: "0 0 18px" }}>
-              Enter through <em style={{ color: PALETTE.blue }}>any one</em>. Leave convinced by all three.
-            </h2>
-            <p style={{ fontSize: 17, lineHeight: 1.65, color: PALETTE.body, margin: 0 }}>
-              The case for reuniting the mouth with the rest of medicine is biological, cultural, and structural. The book makes all three, and each one stands on its own.
-            </p>
-          </div>
-
-          <div className="arg-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 22 }}>
-            {ARGUMENTS.map((a, i) => (
-              <div key={i} style={{ background: PALETTE.cream, border: `1px solid ${PALETTE.border}`, borderRadius: 16, padding: "30px 26px", borderTop: `3px solid ${a.color}` }}>
-                <div style={{ fontFamily: SANS, fontSize: 11, color: a.color, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 700, marginBottom: 14 }}>
-                  {a.tag}
+            <div className="book-stage">
+              <div className="book">
+                <div className="spine">
+                  <div className="s-top">A New Science of the Mouth</div>
+                  <div className="s-mid">YOUR MOUTH KEEPS THE SCORE</div>
+                  <div className="s-bot">Dr. Tzur Gabi</div>
                 </div>
-                <h3 style={{ fontFamily: SERIF, fontSize: 24, fontWeight: 400, color: PALETTE.navy, margin: "0 0 14px", lineHeight: 1.2 }}>
-                  {a.title}
-                </h3>
-                <p style={{ fontFamily: SANS, fontSize: 15, color: PALETTE.body, lineHeight: 1.65, margin: 0 }}>
-                  {a.body}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 4 ── INSIDE THE BOOK (navy) */}
-      <section style={{ background: PALETTE.navy, color: "#FEFCF9", padding: "96px 28px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div style={{ maxWidth: 720, marginBottom: 56 }}>
-            <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>
-              Inside the book
-            </div>
-            <h2 style={{ fontFamily: SERIF, fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 400, lineHeight: 1.12, letterSpacing: "-0.02em", margin: "0 0 18px" }}>
-              Four parts. Eleven chapters. One <em style={{ color: PALETTE.blue }}>argument</em>.
-            </h2>
-            <p style={{ fontSize: 17, lineHeight: 1.65, color: "rgba(254,252,249,0.82)", margin: 0 }}>
-              The structure of the book is the structure of the practice. The five chapters at the center are the five dimensions we score in every patient.
-            </p>
-          </div>
-
-          <div className="toc-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 22 }}>
-            {PARTS.map((p, i) => (
-              <div key={i} style={{ background: "rgba(254,252,249,0.04)", border: "1px solid rgba(254,252,249,0.12)", borderRadius: 16, padding: "28px 26px" }}>
-                <div style={{ fontFamily: SANS, fontSize: 11, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 700, marginBottom: 6 }}>
-                  {p.part}
-                </div>
-                <h3 style={{ fontFamily: SERIF, fontSize: 26, fontWeight: 400, color: "#FEFCF9", margin: "0 0 18px", lineHeight: 1.15 }}>
-                  {p.name}
-                </h3>
-                {p.note && (
-                  <p style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 14, color: "rgba(184,226,244,0.85)", margin: "0 0 16px", lineHeight: 1.5 }}>
-                    {p.note}
-                  </p>
-                )}
-                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 12 }}>
-                  {p.chapters.map((ch, j) => (
-                    <li key={j} style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                      <span style={{ width: 8, height: 8, borderRadius: 999, background: ch.color ?? "rgba(254,252,249,0.4)", flexShrink: 0 }} />
-                      {ch.href ? (
-                        <Link href={ch.href} style={{ fontFamily: SANS, fontSize: 15.5, color: "#FEFCF9", textDecoration: "none", fontWeight: 500, borderBottom: "1px solid rgba(36,167,224,0.5)", paddingBottom: 1 }}>
-                          {ch.label} →
-                        </Link>
-                      ) : (
-                        <span style={{ fontFamily: SANS, fontSize: 15.5, color: "rgba(254,252,249,0.92)" }}>
-                          {ch.label}
-                        </span>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          {/* Epilogue + tie line */}
-          <div style={{ marginTop: 22, background: "rgba(36,167,224,0.07)", border: "1px solid rgba(36,167,224,0.25)", borderRadius: 16, padding: "30px 28px" }}>
-            <div style={{ fontFamily: SANS, fontSize: 11, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 700, marginBottom: 8 }}>
-              Epilogue · The Person in the Chair
-            </div>
-            <p style={{ fontFamily: SERIF, fontSize: "clamp(19px, 2.4vw, 23px)", color: "#FEFCF9", lineHeight: 1.45, margin: "0 0 22px", maxWidth: 760 }}>
-              The five chapters at the center of the book are the five dimensions we score in every patient. The book is the argument; your Primary iD is the practice.
-            </p>
-            <Link href="/five-dimensions/" style={{ background: PALETTE.blue, color: "#FFFFFF", padding: "13px 26px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15, display: "inline-block" }}>
-              Build your Primary iD →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 5 ── ABOUT THE AUTHOR (cream) */}
-      <section style={{ background: PALETTE.cream, padding: "96px 28px", borderTop: `1px solid ${PALETTE.border}` }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div className="author-grid" style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: 56, alignItems: "center" }}>
-            <div>
-              <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>
-                About the author
-              </div>
-              <h2 style={{ fontFamily: SERIF, fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 400, color: PALETTE.navy, lineHeight: 1.12, letterSpacing: "-0.02em", margin: "0 0 24px" }}>
-                The architect who kept <em style={{ color: PALETTE.blue }}>widening</em> the lens.
-              </h2>
-              <p style={{ fontSize: 17, lineHeight: 1.7, color: PALETTE.body, margin: "0 0 18px" }}>
-                Dr. Tzur Gabi was born in Israel and immigrated to the United States at ten. Accepted to dental school early, he deferred to backpack through South America, then trained as a prosthodontist, the discipline of rebuilding what the mouth has lost. Colleagues came to call him the Dental Architect.
-              </p>
-              <p style={{ fontSize: 17, lineHeight: 1.7, color: PALETTE.body, margin: "0 0 28px" }}>
-                He has mentored thousands of clinicians worldwide. He founded Primary, co-founded Caligenix, and is now building Primary iD and FODO, the practice and the platform where the argument of this book becomes everyday care.
-              </p>
-              <blockquote style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "clamp(20px, 2.6vw, 25px)", color: PALETTE.navy, lineHeight: 1.45, margin: "0 0 28px", paddingLeft: 22, borderLeft: `3px solid ${PALETTE.blue}` }}>
-                I spent twenty years rebuilding mouths before I understood I had been rebuilding people the whole time.
-              </blockquote>
-              <Link href="/about/" style={{ fontFamily: SANS, fontSize: 14, color: PALETTE.navy, textDecoration: "underline", textDecorationColor: "rgba(14,34,64,0.3)", textUnderlineOffset: 4, fontWeight: 500 }}>
-                More about Dr. Gabi →
-              </Link>
-            </div>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              {/* TODO: swap for Dr. Gabi's real author photo when available (replace with <img src=...>) */}
-              <div style={{ width: "100%", maxWidth: 320, aspectRatio: "4 / 5", borderRadius: 18, background: "linear-gradient(160deg, #142d52 0%, #0E2240 100%)", border: `1px solid ${PALETTE.border}`, display: "flex", alignItems: "flex-end", padding: 24 }}>
-                <div style={{ fontFamily: SERIF, fontSize: 17, color: PALETTE.cream }}>
-                  Dr. Tzur Gabi
-                  <div style={{ fontFamily: SANS, fontSize: 12, color: "rgba(254,252,249,0.65)", marginTop: 6, letterSpacing: "0.04em" }}>
-                    Functional Prosthodontist & Oral Physician
+                <div className="pages"></div>
+                <div className="face">
+                  <div className="cover-pad">
+                    <div className="cover-eyebrow">A New Science of the Mouth</div>
+                    <div className="cover-title">YOUR<br />MOUTH</div>
+                    <div className="cover-band">
+                      <div className="t2">KEEPS<br /><em>THE</em> SCORE</div>
+                    </div>
+                    <div className="cover-sub">How oral health shapes your energy, your sleep, your longevity, and your whole-body wellbeing.</div>
+                    <div className="cover-rule"></div>
+                    <div className="cover-author">
+                      <div className="name">Dr. Tzur Gabi</div>
+                      <div className="cred">Founder of Primary Integrative Dentistry</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* 6 ── THE PODCAST (navy) */}
-      <section style={{ background: PALETTE.navy, color: "#FEFCF9", padding: "96px 28px" }}>
-        <div style={{ maxWidth: 860, margin: "0 auto", textAlign: "center" }}>
-          <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>
-            The podcast
+        {/* PREMISE */}
+        <section className="premise">
+          <div className="inner">
+            <span className="eyebrow center">The premise</span>
+            <h2>You see your dental team more than any other doctor. Almost no one connects that visit to the <em>rest of you</em>.</h2>
+            <p className="lede">Your gums talk to your heart. Your airway shapes your sleep. The bacteria in your mouth reach your gut, your brain, your bloodstream. None of it is fringe science. It is just rarely told as one story. This book tells it as one story.</p>
+            <div className="pull">The mouth is the most-visited and least-integrated part of the body. Reuniting it with the rest of your health may be the <em>highest-leverage move</em> in preventive medicine.</div>
           </div>
-          <h2 style={{ fontFamily: SERIF, fontSize: "clamp(32px, 5vw, 48px)", fontWeight: 400, lineHeight: 1.12, letterSpacing: "-0.02em", margin: "0 0 22px" }}>
-            One thesis, <em style={{ color: PALETTE.blue }}>two formats</em>.
-          </h2>
-          <p style={{ fontSize: 17, lineHeight: 1.65, color: "rgba(254,252,249,0.82)", margin: "0 0 38px", maxWidth: 640, marginLeft: "auto", marginRight: "auto" }}>
-            The same name, the same argument, the conversation continued out loud. Each season follows the pillars of the book, with the clinicians and researchers living the reunion of the mouth and the body.
-          </p>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center", marginBottom: 40 }}>
-            {PODCAST_PILLARS.map((p, i) => (
-              <span key={i} style={{ fontFamily: SANS, fontSize: 13.5, color: "rgba(254,252,249,0.9)", border: "1px solid rgba(254,252,249,0.2)", borderRadius: 999, padding: "9px 18px" }}>
-                {p}
-              </span>
-            ))}
-          </div>
-          <a href="#" style={{ background: "transparent", color: "#FEFCF9", padding: "13px 26px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15, border: "1.5px solid rgba(254,252,249,0.35)", display: "inline-block" }}>
-            {LAUNCHED ? "Follow the show →" : "Notify me when it launches →"}
-          </a>
-        </div>
-      </section>
+        </section>
 
-      {/* 7 ── CONVERSION BLOCK (cream) */}
-      <section style={{ background: PALETTE.cream, padding: "110px 28px", borderTop: `1px solid ${PALETTE.border}` }}>
-        <div style={{ maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
-          <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>
-            Read it first
+        {/* DIMENSIONS */}
+        <section className="dims">
+          <div className="head">
+            <span className="eyebrow">How the book is built</span>
+            <h2>Five dimensions. <em>One body.</em></h2>
+            <p className="lede">The book is organized around the same five lenses Primary uses in the chair, each one a different layer of how your mouth shapes your whole-body health.</p>
           </div>
-          <h2 style={{ fontFamily: SERIF, fontSize: "clamp(34px, 5vw, 52px)", fontWeight: 400, color: PALETTE.navy, lineHeight: 1.1, letterSpacing: "-0.02em", margin: "0 0 22px" }}>
-            Read the <em style={{ color: PALETTE.blue }}>prologue</em> first.
-          </h2>
-          <p style={{ fontSize: 17, lineHeight: 1.65, color: PALETTE.body, margin: "0 0 36px", maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
-            Leave your email and we will send the opening of the book straight to your inbox, plus a quiet note when it ships. The argument starts on page one.
-          </p>
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <div className="dim-grid">
+            <Link href="/five-dimensions/" className="dim" style={{ "--c": "var(--oral)" } as React.CSSProperties}>
+              <span className="bar"></span>
+              <div className="num">01 · ORAL HEALTH</div>
+              <h3>What bleeding gums are really telling you.</h3>
+              <p>Gum disease is one of the largest sources of chronic inflammation in the whole body, and most checkups never look past the tooth.</p>
+              <div className="ch">Part Two · Ch. 3</div>
+            </Link>
+            <Link href="/five-dimensions/" className="dim" style={{ "--c": "var(--sleep)" } as React.CSSProperties}>
+              <span className="bar"></span>
+              <div className="num">02 · SLEEP &amp; AIRWAY</div>
+              <h3>How you breathe shapes how you heal.</h3>
+              <p>The chapter most readers don't see coming: the airway is dental-diagnosable, and the first signs of trouble show up in the mouth, not the lungs.</p>
+              <div className="ch">Part Two · Ch. 4</div>
+            </Link>
+            <Link href="/five-dimensions/" className="dim" style={{ "--c": "var(--nutrition)" } as React.CSSProperties}>
+              <span className="bar"></span>
+              <div className="num">03 · NUTRITION</div>
+              <h3>The ecosystem you never see.</h3>
+              <p>Seven hundred species live in your mouth, the gateway to your gut. What you eat reshapes them, and they shape everything downstream.</p>
+              <div className="ch">Part Two · Ch. 5</div>
+            </Link>
+            <Link href="/five-dimensions/" className="dim" style={{ "--c": "var(--genetics)" } as React.CSSProperties}>
+              <span className="bar"></span>
+              <div className="num">04 · GENETICS</div>
+              <h3>Your biology, not a template.</h3>
+              <p>Salivary diagnostics and genetic risk are turning dentistry personal. Your DNA shapes how you inflame, heal, and respond to care.</p>
+              <div className="ch">Part Two · Ch. 6</div>
+            </Link>
+            <Link href="/five-dimensions/" className="dim" style={{ "--c": "var(--longevity)" } as React.CSSProperties}>
+              <span className="bar"></span>
+              <div className="num">05 · LONGEVITY</div>
+              <h3>Why your mouth can age you faster.</h3>
+              <p>Tooth loss tracks with all-cause mortality. Chronic oral inflammation accelerates aging. This is the chapter that earns the subtitle.</p>
+              <div className="ch">Part Two · Ch. 7</div>
+            </Link>
+          </div>
+        </section>
+
+        {/* INSIDE */}
+        <section className="inside" id="inside">
+          <div className="inner">
+            <span className="eyebrow">Inside the book</span>
+            <h2>Four parts. Eleven chapters. <em>One argument.</em></h2>
+            <p className="lede">From the 180-year-old decision that split the mouth from medicine, through the biology of the five dimensions, to a vision of care that finally puts them back together.</p>
+
+            <div className="parts">
+
+              <div className="part">
+                <div className="label">
+                  <div className="pnum">Part One</div>
+                  <div className="pname">The Mouth You Don't Know You Have</div>
+                </div>
+                <div className="chapters">
+                  <div className="c">
+                    <div className="ct">The <em>1840 Mistake</em></div>
+                    <div className="cd">Why dentistry was separated from medicine by a faculty vote, and why your cardiologist has never asked about your gums.</div>
+                  </div>
+                  <div className="c">
+                    <div className="ct">What Lives in <em>Your Mouth</em></div>
+                    <div className="cd">The oral microbiome, made readable: the gateway to the gut and the body's quietest immune conversation.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="part">
+                <div className="label">
+                  <div className="pnum">Part Two</div>
+                  <div className="pname">The Five <em>Dimensions</em></div>
+                </div>
+                <div className="chapters">
+                  <Link href="/five-dimensions/" className="c">
+                    <div className="ct">Oral Health · Sleep &amp; Airway · Nutrition</div>
+                    <div className="cd">One chapter each: what the evidence actually shows, where it's settled, and where it's still emerging.</div>
+                  </Link>
+                  <Link href="/five-dimensions/" className="c">
+                    <div className="ct">Genetics &amp; Risk · Longevity &amp; Healthspan</div>
+                    <div className="cd">Personalized dentistry and the oral-aging connection: the science behind your Primary iD score.</div>
+                  </Link>
+                </div>
+              </div>
+
+              <div className="part">
+                <div className="label">
+                  <div className="pnum">Part Three</div>
+                  <div className="pname">What the Mouth <em>Knows</em></div>
+                </div>
+                <div className="chapters">
+                  <div className="c">
+                    <div className="ct">The Smile and the <em>Self</em></div>
+                    <div className="cd">The most universal human signal, and where confidence, belonging, and class are quietly built or broken.</div>
+                  </div>
+                  <div className="c">
+                    <div className="ct">A Visit That Could <em>Save Your Life</em> · The Honest Limits</div>
+                    <div className="cd">What an integrated visit really looks like, and an unflinching tour of the controversies, told straight.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="part">
+                <div className="label">
+                  <div className="pnum">Part Four</div>
+                  <div className="pname">Reuniting Mouth and <em>Body</em></div>
+                </div>
+                <div className="chapters">
+                  <div className="c">
+                    <div className="ct">A New Architecture of <em>Care</em></div>
+                    <div className="cd">Why the dental chair is the best front door preventive medicine has, and what it takes to walk through it.</div>
+                  </div>
+                  <div className="c">
+                    <div className="ct">Epilogue · <em>The Person in the Chair</em></div>
+                    <div className="cd">Humans deserve to be deeply cared for, and to care deeply for themselves. Where the whole argument lands.</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+        {/* SHELF */}
+        <section className="shelf">
+          <div className="head">
+            <span className="eyebrow center">Where it sits on the shelf</span>
+            <h2>For readers of <em>Outlive</em>, <em>Breath</em>, and <em>The Body Keeps the Score</em>.</h2>
+            <p className="lede">It belongs in that conversation, and adds the part those books left out.</p>
+          </div>
+          <div className="shelf-grid">
+            <div className="shelf-card">
+              <div className="t">The Body Keeps the Score</div>
+              <div className="a">van der Kolk</div>
+              <p>Argued that the body carries a story medicine refuses to read. This book makes the same case for the one part of the body you visit most.</p>
+            </div>
+            <div className="shelf-card">
+              <div className="t">Outlive</div>
+              <div className="a">Attia</div>
+              <p>Made longevity a set of decisions, not a wish. Here, the mouth becomes one of the earliest and cheapest levers you can pull.</p>
+            </div>
+            <div className="shelf-card">
+              <div className="t">Breath</div>
+              <div className="a">Nestor</div>
+              <p>Turned an overlooked function into a worldview. The airway chapter picks up exactly where that book leaves off.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* AUTHOR */}
+        <section className="author">
+          <div className="grid">
+            <div className="portrait">
+              <div className="tag">Dr. Tzur Gabi<br /><em>Functional prosthodontist · Oral physician</em></div>
+            </div>
+            <div>
+              <span className="eyebrow">About the author</span>
+              <h2>Written from the chair where prevention <em>fails</em>.</h2>
+              <p className="lede">Dr. Gabi is a functional prosthodontist, the specialty that rebuilds mouths after everything upstream has gone wrong.</p>
+              <p>That vantage point is exactly why he writes about prevention. His daily work is what happens when the early signals go unread for decades. He has mentored thousands of clinicians worldwide and founded Primary Integrative Dentistry to practice a different kind of care: one that starts with your whole health and works backward to your mouth.</p>
+              <p>The book is the argument behind that practice, and behind the five-dimension Primary iD framework patients already use in the chair.</p>
+              <div className="more"><a href="/about/" className="btn-ghost">Meet Dr. Gabi</a></div>
+            </div>
+          </div>
+        </section>
+
+        {/* PODCAST */}
+        <section className="podcast">
+          <div className="card">
+            <div className="txt">
+              <span className="eyebrow">The conversation continues</span>
+              <h3>The book starts it. <em>The podcast keeps it going.</em></h3>
+              <p>Same name, same thesis: an ongoing conversation with the clinicians, researchers, and thinkers reconnecting the mouth to the rest of medicine. Launching alongside the book.</p>
+            </div>
+            <div className="ico">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#24A7E0" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="23"></line>
+                <line x1="8" y1="23" x2="16" y2="23"></line>
+              </svg>
+            </div>
+          </div>
+        </section>
+
+        {/* SIGNUP */}
+        <section className="signup" id="notify">
+          <div className="inner">
+            <span className="eyebrow center">Be first to read it</span>
+            <h2>Get the book, and a <em>free chapter</em> now.</h2>
+            <p className="lede">Join the early reader list. You'll get a chapter to read today, plus first access when the book launches.</p>
             {LAUNCHED ? (
-              // Launch state: retailer / pre-order buttons would render here.
-              <div style={{ display: "flex", gap: 12, flexWrap: "wrap", justifyContent: "center" }}>
+              <div className="signup-form">
                 {["Amazon", "Bookshop", "Apple Books", "Audible", "Pre-order"].map((r) => (
-                  <a key={r} href="#" style={{ background: PALETTE.navy, color: "#FFFFFF", padding: "12px 22px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 14 }}>
-                    {r}
-                  </a>
+                  <a key={r} href="#" className="btn-primary">{r}</a>
                 ))}
               </div>
             ) : (
-              <EmailCapture tone="light" />
+              <>
+                <EmailCapture buttonLabel="Send me the chapter" />
+                <div className="micro">Free · Private · One email, then only when it matters.</div>
+              </>
             )}
+            <div className="or">Already a patient? <a href="/diagnostics/">Get your Primary iD score</a> while you wait.</div>
           </div>
-        </div>
-      </section>
-
-      {/* 8 ── BRIDGE TO PRIMARY iD (navy, closing) */}
-      <section style={{ background: PALETTE.navy, color: "#FEFCF9", padding: "120px 28px" }}>
-        <div style={{ maxWidth: 760, margin: "0 auto", textAlign: "center" }}>
-          <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>
-            From the page to the chair
-          </div>
-          <h2 style={{ fontFamily: SERIF, fontSize: "clamp(34px, 5vw, 52px)", fontWeight: 400, lineHeight: 1.1, letterSpacing: "-0.02em", margin: "0 0 28px" }}>
-            The book is the <em style={{ color: PALETTE.blue }}>why</em>. Your Primary iD is the <em style={{ color: PALETTE.blue }}>how</em>.
-          </h2>
-          <p style={{ fontSize: 17, lineHeight: 1.65, color: "rgba(254,252,249,0.82)", margin: "0 0 38px", maxWidth: 560, marginLeft: "auto", marginRight: "auto" }}>
-            Reading the argument is the start. Living it is the five dimensions, mapped and scored, then turned into care that sees the whole you.
-          </p>
-          <div style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "center" }}>
-            <Link href="/five-dimensions/" style={{ background: PALETTE.blue, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15 }}>
-              Build your Primary iD →
-            </Link>
-            <Link href="/book/" style={{ background: "transparent", color: "#FEFCF9", padding: "13px 26px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15, border: "1.5px solid rgba(254,252,249,0.35)" }}>
-              Book a visit →
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <style>{`
-        @media (max-width: 980px) {
-          .hero-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
-          .hero-cover { order: 2; }
-          .arg-grid { grid-template-columns: 1fr !important; }
-          .toc-grid { grid-template-columns: 1fr !important; }
-          .author-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
-        }
-      `}</style>
+        </section>
+      </div>
 
       <SiteFooter />
     </>
