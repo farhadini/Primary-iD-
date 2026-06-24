@@ -248,6 +248,9 @@ export default function AboutPage() {
                   </li>
                 ))}
               </ul>
+              <Link href="/your-mouth-keeps-the-score/" style={{ display: "inline-block", marginTop: 20, fontFamily: SANS, fontSize: 14.5, color: PALETTE.navy, textDecoration: "underline", textDecorationColor: "rgba(14,34,64,0.3)", textUnderlineOffset: 4, fontWeight: 600 }}>
+                His forthcoming book, Your Mouth Keeps the Score &rarr;
+              </Link>
             </div>
             <div>
               <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>
