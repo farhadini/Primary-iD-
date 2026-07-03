@@ -25,7 +25,7 @@ const nextConfig = {
       { source: "/oral-microbiome-testing-guide/", destination: "/blogs/oral-microbiome-testing-guide/", permanent: true },
       { source: "/reducing-toxicity-and-inflammation-a-functional-approach-to-dental-wellness/", destination: "/blogs/reducing-toxicity-and-inflammation-a-functional-approach-to-dental-wellness/", permanent: true },
       { source: "/emergency-dentist-los-angeles-ca-guide-to-quick-care-and-comfort/", destination: "/blogs/emergency-dentist-los-angeles-ca-guide-to-quick-care-and-comfort/", permanent: true },
-      { source: "/cosmetic-dentistry-phoenix-arizona-creating-beautiful-comfortable-smiles-near-you/", destination: "/blogs/cosmetic-dentistry-phoenix-arizona-creating-beautiful-comfortable-smiles-near-you/", permanent: true },
+      { source: "/cosmetic-dentistry-phoenix-arizona-creating-beautiful-comfortable-smiles-near-you/", destination: "/cosmetic-dentistry/", permanent: true }, // junk post removed; repointed to relevant page
       { source: "/full-mouth-dental-implants-cost/", destination: "/blogs/full-mouth-dental-implants-cost/", permanent: true },
       { source: "/root-canal-alternatives-what-science-actually-says/", destination: "/blogs/root-canal-alternatives-what-science-actually-says/", permanent: true },
       { source: "/3d-dental-scan-cbct/", destination: "/blogs/3d-dental-scan-cbct/", permanent: true },
@@ -70,6 +70,27 @@ const nextConfig = {
       { source: "/first-visit/", destination: "/new-patient/", permanent: true },
       { source: "/services/", destination: "/", permanent: true },
       { source: "/contact/", destination: "/new-patient/", permanent: true },
+
+      // ─── Legacy ranked/backlinked service pages (SEO cutover) ──────────────
+      // These WordPress service URLs currently rank for Brentwood keywords and/or
+      // carry backlinks. The new IA folds them into pathway/dimension pages, so
+      // 301 each to its closest-fit page to preserve rankings + link equity.
+      { source: "/oral-rehabilitation/", destination: "/dental-implant/", permanent: true },       // rank 1
+      { source: "/white-spot-removal/", destination: "/cosmetic-dentistry/", permanent: true },    // rank 1
+      { source: "/exams-cleaning-and-whitening/", destination: "/preventive-care/", permanent: true }, // rank 3
+      { source: "/prf/", destination: "/dental-implant/", permanent: true },                       // rank 3
+      { source: "/ai-technology/", destination: "/diagnostics/", permanent: true },                // rank 3 (DA92 backlink)
+      { source: "/cosmetic-bonding/", destination: "/cosmetic-dentistry/", permanent: true },      // rank 4
+      { source: "/periodontics/", destination: "/preventive-care/", permanent: true },             // rank 5
+      { source: "/dna-testing/", destination: "/five-dimensions/", permanent: true },              // rank 11
+      { source: "/emergency-dentist-brentwood/", destination: "/new-patient/", permanent: true },  // rank 15
+      { source: "/smile-makeover/", destination: "/cosmetic-dentistry/", permanent: true },        // rank 19
+      { source: "/root-canals/", destination: "/wholistic-dentistry/", permanent: true },          // rank 20
+      { source: "/emergency-dentistry/", destination: "/new-patient/", permanent: true },          // rank 20
+      { source: "/crowns/", destination: "/cosmetic-dentistry/", permanent: true },                // rank 21
+      { source: "/invisalign/", destination: "/airway-sleep/", permanent: true },                  // rank 21
+      { source: "/veneers/", destination: "/cosmetic-dentistry/", permanent: true },               // rank 29
+      { source: "/oral-surgery/", destination: "/dental-implant/", permanent: true },              // DA91 backlink
 
       // /book?pathway=X (query-string) → /book/X/ (clean URL)
       // Note: Next.js redirects evaluate before query parsing, so we use `has` for query matches.
