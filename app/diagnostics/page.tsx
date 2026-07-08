@@ -151,8 +151,8 @@ export default function DiagnosticsPage() {
             <p style={{ fontSize: 12.5, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: B.blue, margin: "0 0 12px" }}>The Primary iD Assessment</p>
             <h1 style={{ fontFamily: SERIF, fontSize: 34, lineHeight: 1.14, color: B.navy, margin: "0 0 12px", fontWeight: 400 }}>See your whole health in <span style={{ fontStyle: "italic", color: B.blue }}>five dimensions</span>.</h1>
             <p style={{ fontSize: 15.5, lineHeight: 1.55, color: B.body, maxWidth: 400, margin: "0 auto 16px" }}>Built on validated instruments, translated into your Primary iD. About 6 minutes.</p>
-            <div style={{ display: "flex", justifyContent: "center", gap: 10, margin: "0 0 22px", flexWrap: "wrap" }}>
-              {DIMS.map((d) => (<div key={d.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, width: 88 }}><span style={{ width: 13, height: 13, borderRadius: "50%", background: d.color }} /><span style={{ fontSize: 10, color: B.muted, textAlign: "center", lineHeight: 1.2 }}>{d.name}</span></div>))}
+            <div style={{ display: "flex", gap: 6, margin: "0 0 22px" }}>
+              {DIMS.map((d) => (<div key={d.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, flex: 1, minWidth: 0 }}><span style={{ width: 13, height: 13, borderRadius: "50%", background: d.color }} /><span style={{ fontSize: 9.5, color: B.muted, textAlign: "center", lineHeight: 1.2 }}>{d.name}</span></div>))}
             </div>
             <div style={{ background: B.warmWhite, border: `1px solid ${B.border}`, borderRadius: 18, padding: "24px 24px 22px", boxShadow: "0 24px 50px -34px rgba(14,34,64,0.25)", textAlign: "left" }}>
               <input placeholder="First name" value={user.firstName} onChange={(e) => { setUser({ ...user, firstName: e.target.value }); setErr({ ...err, firstName: false }); }} style={{ ...inputStyle, marginTop: 0, borderColor: err.firstName ? "#C7305A" : B.border }} />
