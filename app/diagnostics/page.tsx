@@ -99,7 +99,7 @@ const optStyle: React.CSSProperties = { display: "block", width: "100%", textAli
 const inputStyle: React.CSSProperties = { width: "100%", boxSizing: "border-box", border: `1px solid ${B.border}`, background: B.white, borderRadius: 12, padding: "14px 16px", fontSize: 15, color: B.navy, fontFamily: SANS, marginTop: 10, outline: "none" };
 
 export default function DiagnosticsPage() {
-  const [stage, setStage] = useState<"intro" | "gate" | "quiz" | "done">("intro");
+  const [stage, setStage] = useState<"gate" | "quiz" | "done">("gate");
   const [di, setDi] = useState(0);
   const [qi, setQi] = useState(0);
   const [itemScores, setItemScores] = useState<number[]>([]); // current dimension
@@ -117,7 +117,7 @@ export default function DiagnosticsPage() {
     if (!user.email.includes("@") || !user.email.includes(".")) e.email = true;
     setErr(e);
     if (Object.keys(e).length) return;
-    setStage("done");
+    startQuiz();
   }
   function answer(s: number) {
     const arr = [...itemScores, s];
@@ -127,7 +127,7 @@ export default function DiagnosticsPage() {
   }
   function next() {
     if (di < DIMS.length - 1) { setDi(di + 1); setQi(0); setItemScores([]); }
-    else { setStage("gate"); }
+    else { setStage("done"); }
   }
 
   const composite = avg(scores);
@@ -143,34 +143,25 @@ export default function DiagnosticsPage() {
     <div style={{ minHeight: "100vh", background: B.cream, fontFamily: SANS }}>
       <style>{`@media (prefers-reduced-motion: reduce){ .pid-ring{ transition:none !important } }`}</style>
       <SiteNav />
-      <main style={{ maxWidth: 620, margin: "0 auto", padding: "56px 20px 80px" }}>
+      <main style={{ maxWidth: 620, margin: "0 auto", padding: "52px 20px 80px" }}>
 
-        {stage === "intro" && (
-          <div style={{ textAlign: "center" }}>
-            <p style={{ fontSize: 12.5, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: B.blue, margin: "0 0 14px" }}>The Primary iD Assessment</p>
-            <h1 style={{ fontFamily: SERIF, fontSize: 40, lineHeight: 1.12, color: B.navy, margin: "0 0 18px", fontWeight: 400 }}>See your whole health in <span style={{ fontStyle: "italic", color: B.blue }}>five dimensions</span>.</h1>
-            <p style={{ fontSize: 17, lineHeight: 1.6, color: B.body, maxWidth: 470, margin: "0 auto 12px" }}>Built on validated instruments, translated into your Primary iD: oral health, sleep and airway, nutrition, family history, and longevity.</p>
-            <div style={{ display: "flex", justifyContent: "center", gap: 10, margin: "18px 0 26px", flexWrap: "wrap" }}>
-              {DIMS.map((d) => (<div key={d.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, width: 90 }}><span style={{ width: 14, height: 14, borderRadius: "50%", background: d.color }} /><span style={{ fontSize: 10.5, color: B.muted, textAlign: "center", lineHeight: 1.2 }}>{d.name}</span></div>))}
-            </div>
-            <button onClick={startQuiz} style={{ background: B.navy, color: B.white, border: "none", borderRadius: 999, padding: "15px 30px", fontSize: 15, fontWeight: 600, cursor: "pointer", fontFamily: SANS, display: "inline-flex", alignItems: "center", gap: 8 }}>Start your Primary iD <ArrowRight size={16} /></button>
-            <p style={{ fontSize: 12.5, color: B.muted, margin: "16px 0 0" }}>Free. Private. 40 quick questions, about 6 minutes.</p>
-          </div>
-        )}
-
+        {/* ENTRY = capture screen (no separate intro click) */}
         {stage === "gate" && (
-          <div style={{ maxWidth: 400, margin: "0 auto" }}>
-            <div style={{ background: B.warmWhite, border: `1px solid ${B.border}`, borderRadius: 18, padding: "28px 26px", boxShadow: "0 24px 50px -34px rgba(14,34,64,0.25)" }}>
-              <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: B.blue, margin: "0 0 6px" }}>Last step</p>
-              <h2 style={{ fontFamily: SERIF, fontSize: 24, lineHeight: 1.25, color: B.navy, margin: "0 0 8px", fontWeight: 400 }}>See your Primary iD.</h2>
-              <p style={{ fontSize: 14, color: B.body, lineHeight: 1.55, margin: "0 0 6px" }}>Enter your details to reveal your score and save it to your profile.</p>
-              <input placeholder="First name" value={user.firstName} onChange={(e) => { setUser({ ...user, firstName: e.target.value }); setErr({ ...err, firstName: false }); }} style={{ ...inputStyle, borderColor: err.firstName ? "#C7305A" : B.border }} />
+          <div style={{ maxWidth: 440, margin: "0 auto", textAlign: "center" }}>
+            <p style={{ fontSize: 12.5, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: B.blue, margin: "0 0 12px" }}>The Primary iD Assessment</p>
+            <h1 style={{ fontFamily: SERIF, fontSize: 34, lineHeight: 1.14, color: B.navy, margin: "0 0 12px", fontWeight: 400 }}>See your whole health in <span style={{ fontStyle: "italic", color: B.blue }}>five dimensions</span>.</h1>
+            <p style={{ fontSize: 15.5, lineHeight: 1.55, color: B.body, maxWidth: 400, margin: "0 auto 16px" }}>Built on validated instruments, translated into your Primary iD. About 6 minutes.</p>
+            <div style={{ display: "flex", justifyContent: "center", gap: 10, margin: "0 0 22px", flexWrap: "wrap" }}>
+              {DIMS.map((d) => (<div key={d.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, width: 88 }}><span style={{ width: 13, height: 13, borderRadius: "50%", background: d.color }} /><span style={{ fontSize: 10, color: B.muted, textAlign: "center", lineHeight: 1.2 }}>{d.name}</span></div>))}
+            </div>
+            <div style={{ background: B.warmWhite, border: `1px solid ${B.border}`, borderRadius: 18, padding: "24px 24px 22px", boxShadow: "0 24px 50px -34px rgba(14,34,64,0.25)", textAlign: "left" }}>
+              <input placeholder="First name" value={user.firstName} onChange={(e) => { setUser({ ...user, firstName: e.target.value }); setErr({ ...err, firstName: false }); }} style={{ ...inputStyle, marginTop: 0, borderColor: err.firstName ? "#C7305A" : B.border }} />
               <input placeholder="Email address" type="email" value={user.email} onChange={(e) => { setUser({ ...user, email: e.target.value }); setErr({ ...err, email: false }); }} style={{ ...inputStyle, borderColor: err.email ? "#C7305A" : B.border }} />
               <input placeholder="Mobile (optional)" type="tel" value={user.mobile} onChange={(e) => setUser({ ...user, mobile: e.target.value })} style={inputStyle} />
               {(err.firstName || err.email) && <p style={{ fontSize: 12.5, color: "#C7305A", margin: "8px 0 0" }}>Please enter your name and a valid email to continue.</p>}
-              <button onClick={submitGate} style={{ width: "100%", marginTop: 16, background: B.navy, color: B.white, border: "none", borderRadius: 999, padding: "14px 24px", fontSize: 15, fontWeight: 600, cursor: "pointer", fontFamily: SANS, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8 }}>Reveal my Primary iD <ArrowRight size={16} /></button>
-              <p style={{ fontSize: 11.5, color: B.muted, margin: "12px 0 0", textAlign: "center", lineHeight: 1.5 }}>Private. We never share your information.</p>
+              <button onClick={submitGate} style={{ width: "100%", marginTop: 14, background: B.navy, color: B.white, border: "none", borderRadius: 999, padding: "15px 24px", fontSize: 15, fontWeight: 600, cursor: "pointer", fontFamily: SANS, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8 }}>Start my assessment <ArrowRight size={16} /></button>
             </div>
+            <p style={{ fontSize: 12, color: B.muted, margin: "14px 0 0" }}>Free and private. We never share your information.</p>
           </div>
         )}
 
