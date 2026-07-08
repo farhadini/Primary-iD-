@@ -14,56 +14,75 @@ const B = {
 const SERIF = "Georgia, 'Times New Roman', serif";
 const SANS = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
 
-// ── The five dimensions (Oral · Sleep & Airway · Nutrition · Family History · Longevity) ──
-type Opt = { l: string; pts: number; ins?: string };
-type Dim = { id: string; code: string; name: string; color: string; eb: string; headline: string; qs: { q: string; opts: Opt[] }[] };
+// ── Canonical question bank + scoring (Source of Truth: Primary_iD_Questions_and_Scoring) ──
+// Each option carries its 0–100 item score (100 = most protective). A dimension
+// score is the simple average of its 8 item scores; the composite is the equal-
+// weight average of the five dimensions. Tiers apply to both.
+type Opt = { l: string; s: number };
+type Dim = { id: string; code: string; name: string; instrument: string; color: string; eb: string; headline: string; qs: { q: string; opts: Opt[] }[] };
 
 const DIMS: Dim[] = [
-  { id: "oral", code: "01", name: "Oral Health", color: B.green, eb: "#2d8a5f", headline: "What your mouth says about the rest of you.",
+  { id: "oral", code: "01", name: "Oral Health", instrument: "CAMBRA · OHIP-14", color: B.green, eb: "#2d8a5f", headline: "What your mouth says about the rest of you.",
     qs: [
-      { q: "How often do your gums bleed when you brush or floss?", opts: [["Rarely or never",20,"A healthy, non-inflamed baseline."],["Sometimes",12,"Early inflammation, and reversible."],["Often",5,"Gums connect to the whole body. Worth acting on."]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "When was your last dental cleaning?", opts: [["Within 6 months",20,"Prevention is doing its job."],["6 to 12 months ago",13,"About time for a reset."],["Over a year ago",6,"A lot can change in a year."]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "Any sensitivity to hot, cold, or sweet?", opts: [["None",20,""],["Sometimes",12,"Often early enamel wear, very preventable."],["Often",5,"A signal worth a closer look."]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "Do you brush twice a day and floss daily?", opts: [["Yes",20,"This alone cuts gum-disease risk sharply."],["Most days",13,""],["Rarely",6,""]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "Confident in how your smile looks and feels?", opts: [["Yes",20,""],["Somewhat",13,""],["Not really",6,"Your foundation is exactly where we start."]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
+      { q: "How often do you have sugary drinks or snacks between meals?", opts: [{l:"Rarely",s:92},{l:"Once a day",s:70},{l:"2–3 times a day",s:48},{l:"Constantly",s:28}] },
+      { q: "Have you had a new cavity in the last 3 years?", opts: [{l:"No",s:90},{l:"Yes",s:42}] },
+      { q: "Do you use fluoridated toothpaste twice a day?", opts: [{l:"Yes",s:88},{l:"No",s:50}] },
+      { q: "Do your gums bleed when you brush or floss?", opts: [{l:"No",s:90},{l:"Yes",s:40}] },
+      { q: "When was your last professional cleaning?", opts: [{l:"Under 6 months",s:92},{l:"6–12 months",s:72},{l:"1–2 years",s:48},{l:"2+ years",s:28}] },
+      { q: "Do you often feel like your mouth is dry?", opts: [{l:"No",s:88},{l:"Yes",s:50}] },
+      { q: "Do you grind or clench your teeth?", opts: [{l:"No",s:85},{l:"Yes",s:55}] },
+      { q: "How confident do you feel about your smile?", opts: [{l:"Very confident",s:92},{l:"Somewhat",s:72},{l:"Not very",s:50},{l:"Not at all",s:32}] },
     ] },
-  { id: "sleep", code: "02", name: "Sleep & Airway", color: B.blue, eb: "#1a6f9c", headline: "How you breathe shapes how you heal.",
+  { id: "sleep", code: "02", name: "Sleep & Airway", instrument: "STOP-BANG · Epworth", color: B.blue, eb: "#1a6f9c", headline: "How you breathe shapes how you heal.",
     qs: [
-      { q: "How rested do you feel most mornings?", opts: [["Refreshed",20,""],["Okay",12,""],["Tired",5,"Daytime fatigue is the most missed airway sign."]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "Has anyone said you snore or stop breathing at night?", opts: [["No",20,""],["Sometimes",12,""],["Yes",5,"A strong signal worth screening for."]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "Do you grind or clench your teeth?", opts: [["No",20,""],["Sometimes",12,""],["Often",5,"Grinding is often the airway compensating at night."]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "Do you breathe mostly through your nose?", opts: [["Yes",20,"Nasal breathing drives oxygen and immunity."],["A mix",12,""],["Mouth mostly",6,""]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "Wake up with a dry mouth or morning headache?", opts: [["No",20,""],["Sometimes",12,""],["Often",5,"Classic airway signals, often dismissed as stress."]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
+      { q: "Do you snore loudly (heard through a door)?", opts: [{l:"No",s:88},{l:"Yes",s:45}] },
+      { q: "Do you often feel tired or sleepy during the day?", opts: [{l:"No",s:85},{l:"Yes",s:48}] },
+      { q: "Has anyone observed you stop breathing or gasp in sleep?", opts: [{l:"No",s:92},{l:"Yes",s:30}] },
+      { q: "Are you being treated for high blood pressure?", opts: [{l:"No",s:82},{l:"Yes",s:52}] },
+      { q: "Which best describes your build?", opts: [{l:"Slim / average",s:88},{l:"A bit heavy",s:66},{l:"Overweight",s:46},{l:"Larger",s:30}] },
+      { q: "Your age range?", opts: [{l:"Under 50",s:85},{l:"50–64",s:66},{l:"65+",s:52}] },
+      { q: "How would you describe your neck?", opts: [{l:"Slim",s:88},{l:"Average",s:68},{l:"Thick / large",s:46}] },
+      { q: "Sitting and reading, how likely are you to doze?", opts: [{l:"Would never",s:90},{l:"Slight chance",s:70},{l:"Moderate chance",s:50},{l:"High chance",s:32}] },
     ] },
-  { id: "nutrition", code: "03", name: "Nutrition", color: B.pink, eb: "#992c4a", headline: "The ecosystem you feed every day.",
+  { id: "nutrition", code: "03", name: "Nutrition", instrument: "MEDAS · BEVQ-15", color: B.pink, eb: "#992c4a", headline: "The ecosystem you feed every day.",
     qs: [
-      { q: "How often do you eat whole, unprocessed food?", opts: [["Most meals",20,""],["Sometimes",12,""],["Rarely",6,""]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "Sugary drinks or snacks between meals?", opts: [["Rarely",20,""],["Sometimes",12,""],["Daily",5,"Sugar is the main fuel for decay-causing bacteria."]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "Do you drink enough water through the day?", opts: [["Yes",20,"Saliva is your mouth's defense system."],["Some",12,""],["Not much",6,""]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "Fermented foods like yogurt, kefir, or kraut?", opts: [["Regularly",20,"Seeds a healthier microbiome."],["Sometimes",13,""],["Never",7,""]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "Would you call your diet mostly anti-inflammatory?", opts: [["Yes",20,""],["Somewhat",13,""],["No",6,"The mouth is where that change shows first."]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
+      { q: "Do you use olive oil as your main cooking fat?", opts: [{l:"Yes",s:88},{l:"No",s:58}] },
+      { q: "How many servings of vegetables per day?", opts: [{l:"2+ a day",s:92},{l:"1 a day",s:66},{l:"A few a week",s:46},{l:"Rarely",s:30}] },
+      { q: "How many fruits per day?", opts: [{l:"3+ a day",s:90},{l:"1–2 a day",s:70},{l:"A few a week",s:48},{l:"Rarely",s:30}] },
+      { q: "How often do you eat red or processed meat?", opts: [{l:"Rarely",s:90},{l:"1–2 a week",s:72},{l:"Most days",s:48},{l:"Daily",s:30}] },
+      { q: "How many sugar-sweetened beverages per week?", opts: [{l:"0–1",s:92},{l:"2–4",s:68},{l:"Daily",s:44},{l:"Several daily",s:26}] },
+      { q: "How many glasses of water per day?", opts: [{l:"6+",s:88},{l:"3–5",s:68},{l:"1–2",s:46},{l:"Rarely",s:30}] },
+      { q: "How often do you drink alcohol?", opts: [{l:"Rarely / none",s:88},{l:"Socially",s:70},{l:"A few times a week",s:52},{l:"Daily",s:34}] },
+      { q: "Are most of your grains whole-grain?", opts: [{l:"Yes",s:86},{l:"No",s:56}] },
     ] },
-  { id: "family", code: "04", name: "Family History", color: B.purple, eb: "#4f3fb0", headline: "Your biology, not a template.",
+  { id: "family", code: "04", name: "Family History", instrument: "AAP / EFP grading", color: B.purple, eb: "#4f3fb0", headline: "Your biology, not a template.",
     qs: [
-      { q: "Family history of gum disease or early tooth loss?", opts: [["No",20,""],["Some",12,""],["Yes",6,"We screen earlier when it runs in the family."]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "Heart disease or diabetes in your immediate family?", opts: [["No",20,""],["Some",12,""],["Yes",6,"These share inflammatory pathways with oral health."]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "Autoimmune conditions in the family?", opts: [["No",20,""],["Some",13,""],["Yes",7,""]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "Frequent cavities despite good habits?", opts: [["No",20,""],["Sometimes",12,""],["Often",6,"Often a treatable microbiome or enamel trait."]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "Curious what your biology says about your risk?", opts: [["Yes",20,"Curiosity is the first step, and we can test."],["Maybe",14,""],["Not yet",9,""]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
+      { q: "Did a parent or sibling lose teeth to gum disease?", opts: [{l:"No",s:88},{l:"Yes",s:46}] },
+      { q: "Does diabetes run in your immediate family?", opts: [{l:"No",s:84},{l:"Yes",s:54}] },
+      { q: "Heart attack or stroke in a parent or sibling before 65?", opts: [{l:"No",s:84},{l:"Yes",s:54}] },
+      { q: "Your smoking history?", opts: [{l:"Never",s:92},{l:"Former",s:66},{l:"Current, light",s:46},{l:"Current, heavy",s:26}] },
+      { q: "Have you lost any teeth to gum disease?", opts: [{l:"No",s:88},{l:"Yes",s:42}] },
+      { q: "Do you or a close relative have an autoimmune condition?", opts: [{l:"No",s:82},{l:"Yes",s:56}] },
+      { q: "Did you have gum problems during pregnancy (if applicable)?", opts: [{l:"No",s:80},{l:"Yes / not applicable",s:62}] },
+      { q: "How would you rate your current stress?", opts: [{l:"Low",s:88},{l:"Moderate",s:68},{l:"High",s:48},{l:"Very high",s:32}] },
     ] },
-  { id: "longevity", code: "05", name: "Longevity", color: B.navy, eb: B.navy, headline: "Why your mouth can add years, or take them.",
+  { id: "longevity", code: "05", name: "Longevity", instrument: "AHA Life's Essential 8", color: B.navy, eb: B.navy, headline: "Why your mouth can add years, or take them.",
     qs: [
-      { q: "How would you rate your overall energy?", opts: [["High",20,""],["Moderate",12,""],["Low",6,""]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "Do you move or exercise most weeks?", opts: [["Yes",20,""],["Sometimes",12,""],["Rarely",6,""]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "Do you feel on top of your overall health?", opts: [["Yes",20,""],["Mostly",13,""],["Not really",6,""]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "Managing stress in a way that works for you?", opts: [["Yes",20,""],["Somewhat",13,""],["No",6,"Stress shows up in the mouth too."]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
-      { q: "Optimizing for healthspan, not just fixing problems?", opts: [["Yes",20,"The mouth is the lowest-effort place to start."],["Curious",14,""],["Not yet",9,""]].map(([l,pts,ins])=>({l,pts,ins}) as Opt) },
+      { q: "Your tobacco or vaping exposure?", opts: [{l:"Never / none",s:95},{l:"Former",s:68},{l:"Occasional",s:48},{l:"Daily",s:26}] },
+      { q: "Minutes of moderate exercise per week?", opts: [{l:"150+",s:92},{l:"75–150",s:72},{l:"Some",s:52},{l:"Rarely",s:32}] },
+      { q: "Average hours of sleep per night?", opts: [{l:"7–9",s:92},{l:"6–7",s:70},{l:"Under 6 or over 9",s:46}] },
+      { q: "Your weight feels…", opts: [{l:"Right where I want",s:88},{l:"A little high",s:66},{l:"Higher than I'd like",s:46},{l:"Much higher",s:30}] },
+      { q: "Do you know your current cholesterol numbers?", opts: [{l:"Yes",s:80},{l:"No",s:60}] },
+      { q: "Do you have pre-diabetes or diabetes?", opts: [{l:"No",s:84},{l:"Yes",s:50}] },
+      { q: "Your blood pressure is…", opts: [{l:"Normal / great",s:90},{l:"A little high",s:66},{l:"High",s:46},{l:"Not sure",s:58}] },
+      { q: "Overall, how would you rate your diet?", opts: [{l:"Excellent",s:90},{l:"Good",s:72},{l:"Fair",s:52},{l:"Poor",s:32}] },
     ] },
 ];
 
 const C = 2 * Math.PI * 54;
 function tierWord(v: number){ return v>=85?"Thriving":v>=70?"Strong":v>=50?"Foundational":"Needs focus"; }
-function bandLine(v: number){ return v>=85?"Strong across the board. Here is how to protect it.":v>=70?"A solid foundation, with a few clear levers.":v>=50?"A real base to build on, and clear places to win.":"This is your highest-leverage place to start."; }
+function bandLine(v: number){ return v>=85?"Doing the quiet work.":v>=70?"A solid foundation, a couple of clear levers.":v>=50?"Real signal worth acting on.":"Let's slow down and do this right."; }
+function avg(a: number[]){ return a.length ? Math.round(a.reduce((x,y)=>x+y,0)/a.length) : 0; }
 
 function Ring({ value, color, size = 150, sw = 10, showNum = true }: { value: number; color: string; size?: number; sw?: number; showNum?: boolean }) {
   const off = C * (1 - Math.max(0, Math.min(100, value)) / 100);
@@ -76,22 +95,22 @@ function Ring({ value, color, size = 150, sw = 10, showNum = true }: { value: nu
   );
 }
 
-const optStyle: React.CSSProperties = { display: "block", width: "100%", textAlign: "left", border: `1px solid ${B.border}`, background: B.white, borderRadius: 12, padding: "14px 16px", fontSize: 15, color: B.navy, cursor: "pointer", marginTop: 10, fontFamily: SANS, transition: "border-color .18s, background .18s" };
+const optStyle: React.CSSProperties = { display: "block", width: "100%", textAlign: "left", border: `1px solid ${B.border}`, background: B.white, borderRadius: 12, padding: "13px 16px", fontSize: 15, color: B.navy, cursor: "pointer", marginTop: 9, fontFamily: SANS, transition: "border-color .18s, background .18s" };
 const inputStyle: React.CSSProperties = { width: "100%", boxSizing: "border-box", border: `1px solid ${B.border}`, background: B.white, borderRadius: 12, padding: "14px 16px", fontSize: 15, color: B.navy, fontFamily: SANS, marginTop: 10, outline: "none" };
 
 export default function DiagnosticsPage() {
   const [stage, setStage] = useState<"intro" | "gate" | "quiz" | "done">("intro");
   const [di, setDi] = useState(0);
   const [qi, setQi] = useState(0);
-  const [dimPts, setDimPts] = useState(0);
-  const [scores, setScores] = useState<number[]>([]);
-  const [lastIns, setLastIns] = useState("");
+  const [itemScores, setItemScores] = useState<number[]>([]); // current dimension
+  const [scores, setScores] = useState<number[]>([]);          // final per dimension
   const [user, setUser] = useState({ firstName: "", email: "", mobile: "" });
   const [err, setErr] = useState<{ firstName?: boolean; email?: boolean }>({});
 
   const D = DIMS[di];
+  const ringVal = avg(itemScores);
 
-  function startQuiz() { setStage("quiz"); setDi(0); setQi(0); setDimPts(0); setScores([]); setLastIns(""); }
+  function startQuiz() { setStage("quiz"); setDi(0); setQi(0); setItemScores([]); setScores([]); }
   function submitGate() {
     const e: { firstName?: boolean; email?: boolean } = {};
     if (!user.firstName.trim()) e.firstName = true;
@@ -100,15 +119,18 @@ export default function DiagnosticsPage() {
     if (Object.keys(e).length) return;
     startQuiz();
   }
-  function answer(pts: number, ins?: string) {
-    const np = dimPts + pts;
-    setDimPts(np); setLastIns(ins || "");
+  function answer(s: number) {
+    const arr = [...itemScores, s];
+    setItemScores(arr);
     if (qi < D.qs.length - 1) { setQi(qi + 1); }
-    else { setScores((prev) => { const c = [...prev]; c[di] = np; return c; }); setQi(D.qs.length); }
+    else { setScores((prev) => { const c = [...prev]; c[di] = avg(arr); return c; }); setQi(D.qs.length); }
   }
-  function next() { if (di < DIMS.length - 1) { setDi(di + 1); setQi(0); setDimPts(0); setLastIns(""); } else { setStage("done"); } }
+  function next() {
+    if (di < DIMS.length - 1) { setDi(di + 1); setQi(0); setItemScores([]); }
+    else { setStage("done"); }
+  }
 
-  const composite = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : 0;
+  const composite = avg(scores);
 
   useEffect(() => {
     if (stage !== "done" || scores.length < DIMS.length) return;
@@ -127,12 +149,12 @@ export default function DiagnosticsPage() {
           <div style={{ textAlign: "center" }}>
             <p style={{ fontSize: 12.5, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: B.blue, margin: "0 0 14px" }}>The Primary iD Assessment</p>
             <h1 style={{ fontFamily: SERIF, fontSize: 40, lineHeight: 1.12, color: B.navy, margin: "0 0 18px", fontWeight: 400 }}>See your whole health in <span style={{ fontStyle: "italic", color: B.blue }}>five dimensions</span>.</h1>
-            <p style={{ fontSize: 17, lineHeight: 1.6, color: B.body, maxWidth: 460, margin: "0 auto 12px" }}>Not a form. A five-minute read on your oral health, sleep and airway, nutrition, family history, and longevity, translated into your Primary iD.</p>
+            <p style={{ fontSize: 17, lineHeight: 1.6, color: B.body, maxWidth: 470, margin: "0 auto 12px" }}>Built on validated instruments, translated into your Primary iD: oral health, sleep and airway, nutrition, family history, and longevity.</p>
             <div style={{ display: "flex", justifyContent: "center", gap: 10, margin: "18px 0 26px", flexWrap: "wrap" }}>
-              {DIMS.map((d) => (<div key={d.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, width: 84 }}><span style={{ width: 14, height: 14, borderRadius: "50%", background: d.color }} /><span style={{ fontSize: 10.5, color: B.muted, textAlign: "center", lineHeight: 1.2 }}>{d.name}</span></div>))}
+              {DIMS.map((d) => (<div key={d.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, width: 90 }}><span style={{ width: 14, height: 14, borderRadius: "50%", background: d.color }} /><span style={{ fontSize: 10.5, color: B.muted, textAlign: "center", lineHeight: 1.2 }}>{d.name}</span></div>))}
             </div>
             <button onClick={() => setStage("gate")} style={{ background: B.navy, color: B.white, border: "none", borderRadius: 999, padding: "15px 30px", fontSize: 15, fontWeight: 600, cursor: "pointer", fontFamily: SANS, display: "inline-flex", alignItems: "center", gap: 8 }}>Start your Primary iD <ArrowRight size={16} /></button>
-            <p style={{ fontSize: 12.5, color: B.muted, margin: "16px 0 0" }}>Free. Private. About 5 minutes.</p>
+            <p style={{ fontSize: 12.5, color: B.muted, margin: "16px 0 0" }}>Free. Private. 40 quick questions, about 6 minutes.</p>
           </div>
         )}
 
@@ -159,21 +181,21 @@ export default function DiagnosticsPage() {
             </div>
             <div style={{ background: B.warmWhite, border: `1px solid ${B.border}`, borderRadius: 18, overflow: "hidden", boxShadow: "0 24px 50px -34px rgba(14,34,64,0.25)" }}>
               <div style={{ height: 5, background: D.color }} />
-              <div style={{ padding: "24px 24px 28px" }}>
-                <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: D.eb, margin: "0 0 6px" }}>{D.code} / {D.name}</p>
-                <div style={{ display: "flex", justifyContent: "center", margin: "8px 0 4px" }}><Ring value={dimPts} color={D.color} /></div>
+              <div style={{ padding: "22px 24px 26px" }}>
+                <p style={{ fontSize: 12, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: D.eb, margin: "0 0 2px" }}>{D.code} / {D.name}</p>
+                <p style={{ fontSize: 10.5, color: B.muted, letterSpacing: "0.06em", margin: "0 0 4px" }}>{D.instrument}</p>
+                <div style={{ display: "flex", justifyContent: "center", margin: "6px 0 4px" }}><Ring value={ringVal} color={D.color} /></div>
                 {qi < D.qs.length ? (
                   <div>
-                    <div style={{ minHeight: 18, textAlign: "center", marginBottom: 8 }}>{lastIns && <span style={{ fontSize: 13, color: D.eb, lineHeight: 1.4 }}>{lastIns}</span>}</div>
                     <div style={{ fontSize: 11, color: B.muted, letterSpacing: ".1em", textTransform: "uppercase", fontWeight: 600, marginBottom: 8, textAlign: "center" }}>Question {qi + 1} of {D.qs.length}</div>
                     <p style={{ fontFamily: SERIF, fontSize: 20, lineHeight: 1.3, color: B.navy, margin: "0 0 6px", textAlign: "center" }}>{D.qs[qi].q}</p>
-                    {D.qs[qi].opts.map((o, k) => (<button key={k} onClick={() => answer(o.pts, o.ins)} style={optStyle} onMouseEnter={(e) => { e.currentTarget.style.borderColor = B.navy; e.currentTarget.style.background = B.cream; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = B.border; e.currentTarget.style.background = B.white; }}>{o.l}</button>))}
+                    {D.qs[qi].opts.map((o, k) => (<button key={k} onClick={() => answer(o.s)} style={optStyle} onMouseEnter={(e) => { e.currentTarget.style.borderColor = B.navy; e.currentTarget.style.background = B.cream; }} onMouseLeave={(e) => { e.currentTarget.style.borderColor = B.border; e.currentTarget.style.background = B.white; }}>{o.l}</button>))}
                   </div>
                 ) : (
                   <div style={{ textAlign: "center" }}>
-                    <span style={{ display: "inline-block", background: `${D.color}1a`, color: D.eb, fontSize: 11, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", padding: "5px 13px", borderRadius: 999, margin: "4px 0 12px" }}>Your {D.name} read</span>
+                    <span style={{ display: "inline-block", background: `${D.color}1a`, color: D.eb, fontSize: 11, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", padding: "5px 13px", borderRadius: 999, margin: "4px 0 12px" }}>Your {D.name} read: {tierWord(ringVal)}</span>
                     <p style={{ fontFamily: SERIF, fontSize: 21, lineHeight: 1.3, color: B.navy, margin: "0 0 8px" }}>{D.headline}</p>
-                    <p style={{ fontSize: 14.5, color: B.body, lineHeight: 1.6, margin: "0 0 20px" }}>{bandLine(dimPts)}</p>
+                    <p style={{ fontSize: 14.5, color: B.body, lineHeight: 1.6, margin: "0 0 20px" }}>{bandLine(ringVal)}</p>
                     <button onClick={next} style={{ background: di < DIMS.length - 1 ? D.color : B.navy, color: B.white, border: "none", borderRadius: 999, padding: "13px 24px", fontSize: 14.5, fontWeight: 600, cursor: "pointer", fontFamily: SANS, display: "inline-flex", alignItems: "center", gap: 8 }}>{di < DIMS.length - 1 ? "Continue" : "See your Primary iD"} <ArrowRight size={15} /></button>
                   </div>
                 )}
@@ -193,7 +215,7 @@ export default function DiagnosticsPage() {
             </div>
             <a href="/book/" style={{ background: B.navy, color: B.white, textDecoration: "none", borderRadius: 999, padding: "15px 30px", fontSize: 15, fontWeight: 600, fontFamily: SANS, display: "inline-flex", alignItems: "center", gap: 8 }}>Book your visit with Dr. Gabi <ArrowRight size={16} /></a>
             <div style={{ marginTop: 16 }}><button onClick={startQuiz} style={{ background: "none", border: "none", color: B.navy, fontWeight: 600, fontSize: 13.5, cursor: "pointer", fontFamily: SANS, display: "inline-flex", alignItems: "center", gap: 6, textDecoration: "underline", textUnderlineOffset: 3 }}><RotateCcw size={13} /> Start over</button></div>
-            <p style={{ fontSize: 12.5, color: B.muted, margin: "22px auto 0", maxWidth: 380, lineHeight: 1.5 }}>Your Primary iD is saved. Dr. Gabi builds on it at your first visit.</p>
+            <p style={{ fontSize: 12.5, color: B.muted, margin: "22px auto 0", maxWidth: 380, lineHeight: 1.5 }}>A directional read, not a diagnosis. Dr. Gabi confirms it against the exam at your first visit.</p>
           </div>
         )}
       </main>
