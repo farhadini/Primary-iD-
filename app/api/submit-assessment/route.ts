@@ -87,7 +87,7 @@ export async function POST(request: Request) {
     try {
       await sbInsert("assessments", {
         id: assessmentId,
-        anon_session_id: anonSessionId ?? null,
+        anon_session_id: anonSessionId ?? crypto.randomUUID(), // table requires an owner id
         first_name: user.firstName ?? user.name ?? null,
         email: user.email ?? null,
         mobile: user.mobile ?? null,
