@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import OralSystemicSection from "@/components/oral-systemic-section";
 import MeetYourPrimaryID from "@/components/meet-your-primary-id";
-import CarePathways from "@/components/care-pathways";
 import NewPatientVisit from "@/components/new-patient-visit";
 import OurApproach from "@/components/our-approach";
 import Testimonials from "@/components/testimonials";
@@ -1753,11 +1752,8 @@ export default function PrimaryHomepage() {
       {/* What your mouth reveals - the Primary iD, directly under the hero */}
       <MeetYourPrimaryID />
 
-      {/* What we treat - care pathways (third section) */}
-      <div id="services"><CarePathways /></div>
-
-      {/* Why Primary - the differentiated approach */}
-      <OurApproach />
+      {/* Our approach - outcome-first, root-cause tiles */}
+      <div id="services"><OurApproach /></div>
 
       {/* Social proof - trust before the ask */}
       <Testimonials />
