@@ -148,201 +148,131 @@ function Nav({ scrolled }) {
 }
 
 // ── Hero ──────────────────────────────────────────────────────
+// Full-bleed patient video + navy wash. H1 is locked (do not change).
+// Dimension bar colors follow the locked system; Longevity is lightened
+// only because navy is invisible on the dark glass card.
+const HERO_DIMS = [
+  { name: "Oral Health", pct: 82, color: "#48C28C" },
+  { name: "Sleep & Airway", pct: 61, color: "#24A7E0" },
+  { name: "Nutrition", pct: 71, color: "#C7305A" },
+  { name: "Family History", pct: 58, color: "#7B68EE" },
+  { name: "Longevity", pct: 77, color: "#8EA9D6" },
+];
+
 function Hero() {
   const [loaded, setLoaded] = useState(false);
-  const [videoPlaying, setVideoPlaying] = useState(false);
   useEffect(() => { setTimeout(() => setLoaded(true), 80); }, []);
 
-  const trustItems = [
-    { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}><path d="M12 2 4 5v6c0 5 3.5 9 8 11 4.5-2 8-6 8-11V5l-8-3z"/><polyline points="9 12 11 14 15 10"/></svg>, text: "Rated 4.9 by 442+ patients on Google" },
-    { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}><path d="M4 4h10l6 6v10H4z"/><path d="M8 9h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>, text: "Functional prosthodontist + integrative team" },
-    { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}><path d="M11 20A7 7 0 0 1 4 13c0-4 3-8 8-11 5 3 8 7 8 11a7 7 0 0 1-7 7z"/><path d="M12 4v16"/></svg>, text: "Whole-body dentistry, not just teeth" },
-    { icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" style={{ width: 22, height: 22 }}><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>, text: "Start with a free 6-minute online assessment" },
-  ];
-
   return (
-    <section style={{
-      background: B.cream,
-      padding: "72px 48px 96px",
-      position: "relative", overflow: "hidden",
-    }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "minmax(0, 1.05fr) minmax(0, 1fr)", gap: 64, alignItems: "center", position: "relative", zIndex: 1 }}>
-        {/* Left: Content */}
-        <div>
-          {/* Headline */}
-          <h1 style={{
-            fontFamily: "Georgia,serif",
-            fontSize: "clamp(36px, 5.4vw, 78px)",
-            fontWeight: 400,
-            color: B.navy,
-            lineHeight: 1.02,
-            letterSpacing: "-0.025em",
-            margin: 0,
-            opacity: loaded ? 1 : 0,
-            transform: loaded ? "translateY(0)" : "translateY(16px)",
-            transition: "all 0.8s cubic-bezier(0.23,1,0.32,1) 0.2s",
+    <section style={{ position: "relative", overflow: "hidden", minHeight: 640, color: "#fff" }}>
+      <style>{`
+        @media (prefers-reduced-motion: reduce){ .hero-video{ display:none } }
+        @media (max-width: 980px){
+          .hero-idcard{ display:none !important }
+          .hero-h1{ font-size:40px !important }
+          .hero-wash{ background:linear-gradient(0deg, rgba(10,22,44,.94), rgba(10,22,44,.5) 55%, rgba(10,22,44,.6)) !important }
+        }
+        @media (max-width: 560px){ .hero-h1{ font-size:32px !important } }
+      `}</style>
+
+      <video
+        className="hero-video"
+        autoPlay muted loop playsInline
+        poster="/primary-hero-poster.jpg"
+        aria-hidden="true"
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "62% 30%", zIndex: 0 }}
+      >
+        <source src="/primary-hero.mp4" type="video/mp4" />
+      </video>
+
+      <div className="hero-wash" style={{
+        position: "absolute", inset: 0, zIndex: 1,
+        background: "linear-gradient(100deg, rgba(10,22,44,.95) 0%, rgba(12,26,50,.82) 32%, rgba(14,34,64,.34) 64%, rgba(14,34,64,.22) 100%), radial-gradient(120% 90% at 82% 42%, rgba(36,167,224,.20), rgba(36,167,224,0) 55%), linear-gradient(0deg, rgba(10,22,44,.62) 0%, rgba(10,22,44,0) 40%)",
+      }} />
+
+      <div style={{ position: "relative", zIndex: 2, maxWidth: 1180, margin: "0 auto", padding: "0 24px" }}>
+        <div style={{
+          minHeight: 640, display: "flex", flexDirection: "column", justifyContent: "center",
+          padding: "56px 0", maxWidth: 560,
+          opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(14px)",
+          transition: "all .8s cubic-bezier(0.23,1,0.32,1) .15s",
+        }}>
+          <h1 className="hero-h1" style={{
+            fontFamily: "Georgia,serif", fontWeight: 400, fontSize: 52, lineHeight: 1.06,
+            margin: "0 0 18px", maxWidth: "13ch", letterSpacing: "-.01em",
+            textShadow: "0 2px 30px rgba(0,0,0,.4)",
           }}>
-            Dentistry reimagined to see <span style={{ fontStyle: "italic", color: B.blue }}>the whole you</span>.
+            Dentistry reimagined to see <span style={{ color: B.blue, fontStyle: "italic" }}>the whole you</span>.
           </h1>
 
-          {/* Subheadline */}
-          <p style={{
-            fontSize: 18, lineHeight: 1.55,
-            color: B.body, maxWidth: 520,
-            marginTop: 32,
-            opacity: loaded ? 1 : 0,
-            transform: loaded ? "translateY(0)" : "translateY(12px)",
-            transition: "all 0.8s cubic-bezier(0.23,1,0.32,1) 0.35s",
-          }}>
+          <p style={{ fontSize: 17, lineHeight: 1.6, color: "#d7e2f1", maxWidth: 440, margin: "0 0 26px", textShadow: "0 1px 16px rgba(0,0,0,.4)" }}>
             Most practices treat what&apos;s in front of them. We start with you, your sleep, your history, your whole health, and work backwards to your mouth.
           </p>
 
-          {/* CTAs */}
-          <div style={{
-            display: "flex", alignItems: "center", gap: 28, flexWrap: "wrap",
-            marginTop: 40,
-            opacity: loaded ? 1 : 0,
-            transform: loaded ? "translateY(0)" : "translateY(10px)",
-            transition: "all 0.8s cubic-bezier(0.23,1,0.32,1) 0.5s",
-          }}>
-            <a href="#book" style={{
-              background: B.navy, color: B.white,
-              padding: "16px 32px", borderRadius: 9,
-              textDecoration: "none", fontWeight: 600, fontSize: 15,
-              transition: "background 0.15s ease",
+          <div style={{ display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
+            <a href="/book/" style={{
+              display: "inline-flex", alignItems: "center", gap: 9, background: "#fff", color: B.navy,
+              fontWeight: 600, fontSize: 15, textDecoration: "none", padding: "14px 26px",
+              borderRadius: 44, boxShadow: "0 14px 34px -14px rgba(0,0,0,.6)", transition: ".18s",
             }}
-              onMouseOver={e => { e.currentTarget.style.background = "#1a3259"; }}
-              onMouseOut={e => { e.currentTarget.style.background = B.navy; }}
-            >
-              Book a visit
-            </a>
+              onMouseOver={e => { e.currentTarget.style.background = B.blue; e.currentTarget.style.color = "#fff"; e.currentTarget.style.transform = "translateY(-2px)"; }}
+              onMouseOut={e => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.color = B.navy; e.currentTarget.style.transform = "translateY(0)"; }}
+            >Book a visit</a>
 
-            <a href="/diagnostics/" style={{
-              color: B.navy, textDecoration: "none", fontWeight: 500, fontSize: 15,
-              display: "inline-flex", alignItems: "center", gap: 8,
-              borderBottom: "1px solid rgba(14,34,64,0.2)",
-              paddingBottom: 4,
-              transition: "border-color 0.15s ease, color 0.15s ease",
-            }}
-              onMouseOver={e => { e.currentTarget.style.color = B.blue; e.currentTarget.style.borderBottomColor = B.blue; }}
-              onMouseOut={e => { e.currentTarget.style.color = B.navy; e.currentTarget.style.borderBottomColor = "rgba(14,34,64,0.2)"; }}
-            >
-              Take the health assessment
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </a>
-            <div style={{
-              fontFamily: "Georgia,serif",
-              fontSize: 12.5,
-              color: B.muted,
-              marginTop: -4,
-              letterSpacing: "0.01em",
-              opacity: 0.85,
-            }}>
-              Free · Private · Results sent to your inbox.
+            <div style={{ display: "flex", flexDirection: "column", gap: 7, alignItems: "flex-start" }}>
+              <a href="/diagnostics/" style={{
+                display: "inline-flex", alignItems: "center", gap: 7, color: "#fff", fontWeight: 600,
+                fontSize: 15, textDecoration: "none", borderBottom: "1px solid rgba(255,255,255,.4)",
+                paddingBottom: 2, transition: ".18s",
+              }}
+                onMouseOver={e => { e.currentTarget.style.color = "#bfe4f6"; e.currentTarget.style.borderBottomColor = "#bfe4f6"; }}
+                onMouseOut={e => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderBottomColor = "rgba(255,255,255,.4)"; }}
+              >
+                Take the health assessment
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <div style={{ fontSize: 12.5, color: "#9fb4cf" }}>Free · Private · Results sent to your inbox.</div>
             </div>
           </div>
 
-          {/* Trust Strip */}
-          <ul style={{
-            listStyle: "none", margin: "40px 0 0", padding: 0,
-            display: "grid", gridTemplateColumns: "1fr", gap: 14,
-            maxWidth: 520,
-            opacity: loaded ? 1 : 0,
-            transform: loaded ? "translateY(0)" : "translateY(10px)",
-            transition: "all 0.8s cubic-bezier(0.23,1,0.32,1) 0.6s",
-          }}>
-            {trustItems.map((item, i) => (
-              <li key={i} style={{
-                display: "grid", gridTemplateColumns: "24px 1fr", alignItems: "center", gap: 14,
-                fontSize: 16, lineHeight: 1.4, color: B.navy, fontWeight: 500,
-              }}>
-                {item.icon}
-                {item.text}
-              </li>
-            ))}
-          </ul>
-
-          {/* Credential */}
           <div style={{
-            marginTop: 48, fontFamily: "Georgia,serif", fontStyle: "italic",
-            color: B.muted, fontSize: 14, lineHeight: 1.6,
-            opacity: loaded ? 1 : 0,
-            transition: "opacity 0.8s ease 0.8s",
+            display: "flex", flexWrap: "wrap", gap: "8px 22px", marginTop: 26, paddingTop: 22,
+            borderTop: "1px solid rgba(255,255,255,.13)", fontSize: 13, color: "#d0dcec",
           }}>
-            Founded by <a href="/about/" style={{ color: B.muted, textDecoration: "none" }} onMouseOver={e => e.currentTarget.style.color = B.navy} onMouseOut={e => e.currentTarget.style.color = B.muted}>Dr. Tzur Gabi, Functional Prosthodontist &amp; Oral Physician</a>
+            <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: 15, height: 15, color: "#bfe4f6" }}><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.6 6.7L12 17.3 5.8 20.8l1.6-6.7L2.2 8.9l6.9-.6z"/></svg>
+              <span><b style={{ color: "#fff" }}>4.9</b> · 442+ Google reviews</span>
+            </span>
+            <span style={{ display: "flex", alignItems: "center", gap: 8 }}>Brentwood, Los Angeles</span>
+          </div>
+
+          <div style={{ marginTop: 18, fontFamily: "Georgia,serif", fontStyle: "italic", fontSize: 13.5, color: "#9fb4cf" }}>
+            Founded by <a href="/about/" style={{ color: "#9fb4cf", textDecoration: "none" }} onMouseOver={e => e.currentTarget.style.color = "#fff"} onMouseOut={e => e.currentTarget.style.color = "#9fb4cf"}>Dr. Tzur Gabi, Functional Prosthodontist &amp; Oral Physician</a>
           </div>
         </div>
+      </div>
 
-        {/* Right: Video Card */}
-        <div style={{
-          opacity: loaded ? 1 : 0,
-          transform: loaded ? "translateY(0)" : "translateY(20px)",
-          transition: "all 0.9s cubic-bezier(0.23,1,0.32,1) 0.4s",
-        }}>
-          <div 
-            onClick={() => setVideoPlaying(true)}
-            style={{ 
-              position: "relative", width: "100%", aspectRatio: "16/10",
-              borderRadius: 14, overflow: "hidden", background: "#0a1a2e",
-              boxShadow: "0 30px 60px -20px rgba(14,34,64,0.25)",
-              cursor: videoPlaying ? "default" : "pointer",
-            }}
-          >
-            {!videoPlaying ? (
-              <>
-                {/* Poster background - actual video thumbnail */}
-                <img 
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202026-04-26%20at%207.35.36%E2%80%AFPM-jpiQLD7s4IpU7vEnPnsGyUwMPlPe46.png"
-                  alt="Meet Dr. Tzur Gabi - Video thumbnail"
-                  style={{
-                    position: "absolute", inset: 0,
-                    width: "100%", height: "100%",
-                    objectFit: "cover", objectPosition: "center",
-                  }}
-                />
-
-                {/* Play button */}
-                <div style={{
-                  position: "absolute", top: "50%", left: "50%",
-                  transform: "translate(-50%, -50%)",
-                  width: 88, height: 62, borderRadius: 14,
-                  background: "#FF0000",
-                  display: "inline-flex", alignItems: "center", justifyContent: "center",
-                  boxShadow: "0 8px 30px rgba(0,0,0,0.4)",
-                  transition: "transform 0.15s ease, background 0.15s ease",
-                }}
-                  onMouseOver={e => { e.currentTarget.style.transform = "translate(-50%, -50%) scale(1.06)"; e.currentTarget.style.background = "#c00"; }}
-                  onMouseOut={e => { e.currentTarget.style.transform = "translate(-50%, -50%)"; e.currentTarget.style.background = "#FF0000"; }}
-                >
-                  <svg width="34" height="24" viewBox="0 0 24 24" fill="white"><polygon points="8 5 20 12 8 19 8 5"/></svg>
-                </div>
-
-                {/* Chrome bottom */}
-                <div style={{
-                  position: "absolute", bottom: 12, right: 16, zIndex: 2,
-                  background: "rgba(0,0,0,0.7)", color: "white",
-                  padding: "6px 12px", borderRadius: 20,
-                  fontSize: 12, fontWeight: 500,
-                  display: "inline-flex", alignItems: "center", gap: 6,
-                }}>
-                  Watch on
-                  <svg width="48" height="12" viewBox="0 0 90 20" fill="white"><path d="M88.3 3.1c-.4-1.5-1.6-2.7-3.1-3.1C82.5 0 45 0 45 0S7.5 0 4.8 0C3.3.4 2.1 1.6 1.7 3.1 1 5.8 1 10 1 10s0 4.2.7 6.9c.4 1.5 1.6 2.7 3.1 3.1C7.5 20 45 20 45 20s37.5 0 40.2-.7c1.5-.4 2.7-1.6 3.1-3.1.7-2.7.7-6.9.7-6.9s0-4.2-.7-6.9z"/><polygon points="36 14.3 54 10 36 5.7" fill="#c00"/></svg>
-                </div>
-              </>
-            ) : (
-              <iframe 
-                width="100%" 
-                height="100%" 
-                src="https://www.youtube-nocookie.com/embed/6-PaAY5zcsI?autoplay=1&mute=1&loop=1&playlist=6-PaAY5zcsI&playsinline=1&rel=0"
-                title="Meet Dr. Gabi" 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowFullScreen
-                style={{ position: "absolute", inset: 0, border: "none" }}
-              />
-            )}
-          </div>
+      {/* floating Primary iD card */}
+      <div className="hero-idcard" style={{
+        position: "absolute", zIndex: 3, right: "9%", top: "50%",
+        transform: "translateY(-50%) rotate(-3deg)", width: 280, padding: "18px 20px",
+        background: "rgba(17,38,68,.6)", backdropFilter: "blur(15px)", WebkitBackdropFilter: "blur(15px)",
+        border: "1px solid rgba(255,255,255,.16)", borderRadius: 16,
+        boxShadow: "0 30px 65px -28px rgba(0,0,0,.8)",
+        opacity: loaded ? 1 : 0, transition: "opacity .9s ease .5s",
+      }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12 }}>
+          <span style={{ fontSize: 10, letterSpacing: ".12em", textTransform: "uppercase", color: "#9fb0c6" }}>Sample Primary iD</span>
+          <span style={{ fontFamily: "Georgia,serif", fontSize: 34, color: "#fff" }}>74<small style={{ fontSize: 13, color: "#9fb0c6" }}>/100</small></span>
         </div>
+        {HERO_DIMS.map((d) => (
+          <div key={d.name} style={{ display: "flex", alignItems: "center", gap: 10, margin: "6px 0" }}>
+            <span style={{ fontSize: 11, width: 84, color: "#d3ddea", flex: "none" }}>{d.name}</span>
+            <span style={{ flex: 1, height: 6, borderRadius: 4, background: "rgba(255,255,255,.15)", overflow: "hidden", display: "block" }}>
+              <span style={{ display: "block", height: "100%", borderRadius: 4, width: `${d.pct}%`, background: d.color }} />
+            </span>
+          </div>
+        ))}
       </div>
     </section>
   );
