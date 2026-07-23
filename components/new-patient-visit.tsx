@@ -462,7 +462,7 @@ export default function NewPatientVisit() {
             The New Patient Visit, Reimagined
             <span style={{ width: 32, height: 1, background: B.blue }} />
           </div>
-          <h2 style={{
+          <h2 className="r-h1" style={{
             fontFamily: SERIF,
             fontWeight: 400,
             fontSize: "clamp(42px, 5.5vw, 76px)",
@@ -496,7 +496,7 @@ export default function NewPatientVisit() {
             gap: 24,
             position: "relative",
             zIndex: 1,
-          }} className="steps-grid">
+          }} className="steps-grid r-grid1 r-gap">
             <StepCard
               num="01"
               tag="Pre-assessment"
@@ -537,7 +537,7 @@ export default function NewPatientVisit() {
           gridTemplateColumns: "auto 1fr auto",
           gap: 28,
           alignItems: "center",
-        }} className="precare-strip">
+        }} className="precare-strip r-grid1 r-gap">
           <div style={{
             width: 56, height: 56,
             borderRadius: "50%",

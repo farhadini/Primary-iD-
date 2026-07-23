@@ -358,7 +358,7 @@ export default function OralSystemicSection() {
       }}
     >
       <div
-        className="pid-os-grid"
+        className="pid-os-grid r-grid1 r-gap"
         style={{
           maxWidth: MW,
           margin: "0 auto",
@@ -397,6 +397,7 @@ export default function OralSystemicSection() {
           </div>
 
           <h2
+            className="r-h1"
             style={{
               fontFamily: SERIF,
               fontWeight: 400,
@@ -440,6 +441,7 @@ export default function OralSystemicSection() {
             <a
               href="/diagnostics/"
               data-analytics="oral_systemic_cta"
+              className="r-full"
               style={{
                 background: C.blue,
                 color: "#FFFFFF",

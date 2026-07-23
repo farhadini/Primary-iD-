@@ -134,7 +134,7 @@ export default function FinancialMembership() {
 
         {/* Two cards side by side */}
         <div
-          className="fin-contrast"
+          className="fin-contrast r-grid1 r-gap"
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
@@ -518,7 +518,7 @@ export default function FinancialMembership() {
 
         {/* Navy pathway / pricing */}
         <div
-          className="fin-pathway"
+          className="fin-pathway r-grid1 r-gap"
           style={{
             background: `linear-gradient(135deg, ${B.navy} 0%, #142c54 100%)`,
             color: B.warm,

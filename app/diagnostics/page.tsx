@@ -151,7 +151,7 @@ export default function DiagnosticsPage() {
             <p style={{ fontSize: 12.5, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: B.blue, margin: "0 0 12px" }}>The Primary iD Assessment</p>
             <h1 style={{ fontFamily: SERIF, fontSize: 34, lineHeight: 1.14, color: B.navy, margin: "0 0 12px", fontWeight: 400 }}>See your whole health in <span style={{ fontStyle: "italic", color: B.blue }}>five dimensions</span>.</h1>
             <p style={{ fontSize: 15.5, lineHeight: 1.55, color: B.body, maxWidth: 400, margin: "0 auto 16px" }}>Built on validated instruments, translated into your Primary iD. About 6 minutes.</p>
-            <div style={{ display: "flex", gap: 6, margin: "0 0 22px" }}>
+            <div className="r-wrap" style={{ display: "flex", gap: 6, margin: "0 0 22px" }}>
               {DIMS.map((d) => (<div key={d.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, flex: 1, minWidth: 0 }}><span style={{ width: 13, height: 13, borderRadius: "50%", background: d.color }} /><span style={{ fontSize: 9.5, color: B.muted, textAlign: "center", lineHeight: 1.2 }}>{d.name}</span></div>))}
             </div>
             <div style={{ background: B.warmWhite, border: `1px solid ${B.border}`, borderRadius: 18, padding: "24px 24px 22px", boxShadow: "0 24px 50px -34px rgba(14,34,64,0.25)", textAlign: "left" }}>
@@ -187,7 +187,7 @@ export default function DiagnosticsPage() {
                     <span style={{ display: "inline-block", background: `${D.color}1a`, color: D.eb, fontSize: 11, fontWeight: 700, letterSpacing: ".1em", textTransform: "uppercase", padding: "5px 13px", borderRadius: 999, margin: "4px 0 12px" }}>Your {D.name} read: {tierWord(ringVal)}</span>
                     <p style={{ fontFamily: SERIF, fontSize: 21, lineHeight: 1.3, color: B.navy, margin: "0 0 8px" }}>{D.headline}</p>
                     <p style={{ fontSize: 14.5, color: B.body, lineHeight: 1.6, margin: "0 0 20px" }}>{bandLine(ringVal)}</p>
-                    <button onClick={next} style={{ background: di < DIMS.length - 1 ? D.color : B.navy, color: B.white, border: "none", borderRadius: 999, padding: "13px 24px", fontSize: 14.5, fontWeight: 600, cursor: "pointer", fontFamily: SANS, display: "inline-flex", alignItems: "center", gap: 8 }}>{di < DIMS.length - 1 ? "Continue" : "See your Primary iD"} <ArrowRight size={15} /></button>
+                    <button onClick={next} className="r-cta" style={{ background: di < DIMS.length - 1 ? D.color : B.navy, color: B.white, border: "none", borderRadius: 999, padding: "13px 24px", fontSize: 14.5, fontWeight: 600, cursor: "pointer", fontFamily: SANS, display: "inline-flex", alignItems: "center", gap: 8 }}>{di < DIMS.length - 1 ? "Continue" : "See your Primary iD"} <ArrowRight size={15} /></button>
                   </div>
                 )}
               </div>
@@ -198,13 +198,13 @@ export default function DiagnosticsPage() {
         {stage === "done" && (
           <div style={{ maxWidth: 440, margin: "0 auto", textAlign: "center" }}>
             <p style={{ fontSize: 12.5, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: B.blue, margin: "0 0 6px" }}>{user.firstName ? user.firstName + ", your" : "Your"} Primary iD</p>
-            <div style={{ fontFamily: SERIF, fontSize: 66, color: B.navy, lineHeight: 1 }}>{composite}<span style={{ fontSize: 22, color: B.muted }}> / 100</span></div>
+            <div className="r-h1" style={{ fontFamily: SERIF, fontSize: 66, color: B.navy, lineHeight: 1 }}>{composite}<span style={{ fontSize: 22, color: B.muted }}> / 100</span></div>
             <p style={{ fontFamily: SERIF, fontSize: 22, color: B.navy, margin: "8px 0 4px" }}>{tierWord(composite)}</p>
             <p style={{ fontSize: 15, color: B.body, lineHeight: 1.6, margin: "0 auto 22px", maxWidth: 380 }}>{bandLine(composite)}</p>
-            <div style={{ display: "flex", justifyContent: "space-between", gap: 4, marginBottom: 26 }}>
+            <div className="r-wrap" style={{ display: "flex", justifyContent: "space-between", gap: 4, marginBottom: 26 }}>
               {DIMS.map((d, i) => (<div key={d.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, flex: 1 }}><Ring value={scores[i] ?? 0} color={d.color} size={58} sw={12} showNum={false} /><span style={{ fontFamily: SERIF, fontSize: 17, color: B.navy, marginTop: -4 }}>{scores[i] ?? 0}</span><span style={{ fontSize: 9.5, color: B.muted, lineHeight: 1.2, maxWidth: 66 }}>{d.name}</span></div>))}
             </div>
-            <a href="/book/" style={{ background: B.navy, color: B.white, textDecoration: "none", borderRadius: 999, padding: "15px 30px", fontSize: 15, fontWeight: 600, fontFamily: SANS, display: "inline-flex", alignItems: "center", gap: 8 }}>Book your visit with Dr. Gabi <ArrowRight size={16} /></a>
+            <a href="/book/" className="r-cta" style={{ background: B.navy, color: B.white, textDecoration: "none", borderRadius: 999, padding: "15px 30px", fontSize: 15, fontWeight: 600, fontFamily: SANS, display: "inline-flex", alignItems: "center", gap: 8 }}>Book your visit with Dr. Gabi <ArrowRight size={16} /></a>
             <div style={{ marginTop: 16 }}><button onClick={startQuiz} style={{ background: "none", border: "none", color: B.navy, fontWeight: 600, fontSize: 13.5, cursor: "pointer", fontFamily: SANS, display: "inline-flex", alignItems: "center", gap: 6, textDecoration: "underline", textUnderlineOffset: 3 }}><RotateCcw size={13} /> Start over</button></div>
             <p style={{ fontSize: 12.5, color: B.muted, margin: "22px auto 0", maxWidth: 380, lineHeight: 1.5 }}>A directional read, not a diagnosis. Dr. Gabi confirms it against the exam at your first visit.</p>
           </div>

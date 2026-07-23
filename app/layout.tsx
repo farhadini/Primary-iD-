@@ -66,7 +66,6 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
-  generator: "v0.app",
   icons: {
     icon: [
       { url: "/icon-light-32x32.png", media: "(prefers-color-scheme: light)" },

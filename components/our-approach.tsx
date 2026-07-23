@@ -165,7 +165,7 @@ export default function OurApproach() {
               <span style={{ width: 26, height: 1, background: "currentColor" }} />
               Our approach
             </div>
-            <h2 className="oa-h2" style={{ fontFamily: SERIF, fontWeight: 400, color: B.navy, fontSize: 38, lineHeight: 1.08, margin: 0 }}>
+            <h2 className="oa-h2 r-h2" style={{ fontFamily: SERIF, fontWeight: 400, color: B.navy, fontSize: 38, lineHeight: 1.08, margin: 0 }}>
               Start with the outcome you want.<br />We&apos;ll fix what&apos;s <span style={{ color: B.blue, fontStyle: "italic" }}>underneath it</span>.
             </h2>
           </div>
@@ -173,7 +173,7 @@ export default function OurApproach() {
         </div>
 
         {/* anchor: the baseline visit */}
-        <div className="oa-anchor" style={{
+        <div className="oa-anchor r-grid1 r-gap" style={{
           background: "linear-gradient(120deg,#e9f3fb,#fff 78%)", border: `1px solid ${B.line}`,
           borderRadius: 18, padding: "24px 30px", marginBottom: 20,
         }}>
@@ -192,7 +192,7 @@ export default function OurApproach() {
           </div>
         </div>
 
-        <div className="oa-grid">
+        <div className="oa-grid r-grid1 r-gap">
           {TILES.map((t) => <TileCard key={t.chip} t={t} />)}
         </div>
       </div>

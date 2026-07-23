@@ -221,7 +221,7 @@ function PeptideIntro() {
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
 
         {/* Two-column headline / body, mirrors Editorial component */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "start", marginBottom: 64 }}>
+        <div className="r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "start", marginBottom: 64 }}>
           <div style={fade(0)}>
             <Eyebrow light color={B.blue}>Peptide Therapy</Eyebrow>
             <h2 style={{ fontFamily: "Georgia,serif", fontSize: "clamp(28px, 3.5vw, 48px)", fontWeight: 400, lineHeight: 1.1, letterSpacing: "-0.015em", color: B.white, margin: 0 }}>
@@ -244,7 +244,7 @@ function PeptideIntro() {
         </div>
 
         {/* Three pillars, mirrors Appointments card style */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16 }}>
+        <div className="r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 16 }}>
           {[
             { n: "01", label: "Clinically Supervised", body: "Every protocol is individually designed by Dr. Gabi based on your biomarkers, health history, and goals. Nothing templated. Nothing guessed.", color: B.blue },
             { n: "02", label: "Prepared and Ready", body: "Your compounds are prepared by a licensed compounding pharmacy and shipped directly to Primary. We schedule your pickup with your complete protocol guide and injection kit ready.", color: B.accent },
@@ -298,7 +298,7 @@ function HowMade() {
 
         {items.map((item, i) => (
           <Reveal key={i} delay={i * 0.1}>
-            <div style={{
+            <div className="r-grid1 r-gap" style={{
               display: "grid", gridTemplateColumns: "200px 1fr",
               gap: 64, padding: "44px 0",
               borderBottom: `1px solid ${B.border}`, alignItems: "start",
@@ -362,7 +362,7 @@ function WhatWeAddress() {
           </Reveal>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 16 }}>
+        <div className="r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 16 }}>
           {cats.map((c, i) => (
             <Reveal key={i} delay={0.08 + (i % 2) * 0.08}>
               <div
@@ -427,7 +427,7 @@ function TheProcess() {
           <Reveal delay={0.1}><NavyBtn href="#consultation">Book a consultation</NavyBtn></Reveal>
         </div>
 
-        <div ref={ref} style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 16 }}>
+        <div ref={ref} className="r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "repeat(5,1fr)", gap: 16 }}>
           {steps.map((s, i) => (
             <div key={i} style={{
               opacity: visible ? 1 : 0,
@@ -469,7 +469,7 @@ function Safety() {
   ];
   return (
     <section ref={ref} style={{ background: B.navy, padding: "96px 32px" }}>
-      <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "start" }}>
+      <div className="r-grid1 r-gap" style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "start" }}>
         <div style={fade(0)}>
           <Eyebrow light color={B.blue}>Safety and Transparency</Eyebrow>
           <h2 style={{ fontFamily: "Georgia,serif", fontSize: "clamp(26px, 3vw, 38px)", fontWeight: 400, lineHeight: 1.12, letterSpacing: "-0.01em", color: B.white, margin: "0 0 24px" }}>
@@ -528,7 +528,7 @@ function WhoFor() {
           </h2>
         </Reveal>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48 }}>
+        <div className="r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48 }}>
           <div>
             <Reveal>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 24 }}>
@@ -598,7 +598,7 @@ function Consultation() {
           </Reveal>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64 }}>
+        <div className="r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64 }}>
           {/* Lab work */}
           <div>
             <Reveal>
@@ -654,7 +654,7 @@ function Consultation() {
 
         {/* Sample protocol card */}
         <Reveal delay={0.3}>
-          <div style={{ marginTop: 56, padding: "40px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, display: "grid", gridTemplateColumns: "1fr auto", gap: 40, alignItems: "center" }}>
+          <div className="r-grid1 r-gap" style={{ marginTop: 56, padding: "40px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 16, display: "grid", gridTemplateColumns: "1fr auto", gap: 40, alignItems: "center" }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
                 <div style={{ width: 24, height: 1, background: "rgba(255,255,255,0.2)" }} />
@@ -703,7 +703,7 @@ function OngoingManagement() {
             </h2>
           </Reveal>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 16 }}>
+        <div className="r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 16 }}>
           {items.map((item, i) => (
             <Reveal key={i} delay={i * 0.07}>
               <div style={{ background: B.warmWhite, borderRadius: 16, padding: "28px 24px", border: `1px solid ${B.border}`, display: "flex", flexDirection: "column", gap: 10 }}>

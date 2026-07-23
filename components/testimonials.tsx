@@ -102,7 +102,7 @@ export default function Testimonials() {
         </div>
 
         <div
-          className="t-grid"
+          className="t-grid r-grid1 r-gap"
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(3, 1fr)",

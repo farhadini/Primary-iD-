@@ -703,7 +703,7 @@ function Editorial({ label, headline, subheadline, body, image, reverse = false,
   return (
     <section ref={ref} style={{ background: B.warmWhite, padding: "96px 32px" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{
+        <div className="r-grid1 r-gap" style={{
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
           gap: 80,
@@ -981,7 +981,7 @@ function AssessmentCTA_DELETED() {
             <div style={{ width: 24, height: 1, background: B.blue }} />
             <span style={{ fontFamily: "Georgia,serif", fontSize: 11, color: B.blue, letterSpacing: "0.06em" }}>YOUR PRIMARY iD</span>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, alignItems: "end" }}>
+          <div className="r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, alignItems: "end" }}>
             <h2 style={{
               fontFamily: "Georgia,serif", fontSize: "clamp(24px, 3vw, 38px)",
               fontWeight: 400, color: B.white, lineHeight: 1.12,
@@ -1003,7 +1003,7 @@ function AssessmentCTA_DELETED() {
             transform: visible ? "translateY(0)" : "translateY(12px)",
             transition: "all 0.7s ease",
           }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "start" }}>
+            <div className="r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "start" }}>
               {/* Scores */}
               <div>
                 <div style={{ fontFamily: "Georgia,serif", fontSize: 11, color: "rgba(255,255,255,0.3)", letterSpacing: "0.05em", marginBottom: 24 }}>YOUR PRIMARY iD RESULTS</div>
@@ -1073,7 +1073,7 @@ function AssessmentCTA_DELETED() {
           </div>
         ) : (
           /* ── QUESTION VIEW ── */
-          <div style={{
+          <div className="r-grid1 r-gap" style={{
             display: "grid", gridTemplateColumns: "260px 1fr",
             gap: 32, alignItems: "start",
             opacity: visible ? 1 : 0,

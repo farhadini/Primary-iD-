@@ -294,7 +294,7 @@ export default function MeetYourPrimaryID() {
   <span style={{ width: 32, height: 1, background: B.blue }} />
   Five dimensions. One score.
   </div>
-  <h2 style={{
+  <h2 className="r-h1" style={{
   fontFamily: "Georgia,serif", fontWeight: 400,
   fontSize: "clamp(40px, 5.5vw, 72px)",
   lineHeight: 1.05, letterSpacing: "-0.02em",
@@ -366,6 +366,7 @@ export default function MeetYourPrimaryID() {
         <div
           ref={carouselRef}
           onScroll={handleScroll}
+          className="r-scroll-x"
           style={{
             display: "flex", gap: 24,
             overflowX: "auto",

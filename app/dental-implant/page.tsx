@@ -196,7 +196,7 @@ export default function DentalImplantPage() {
           <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.18em", textTransform: "uppercase", fontWeight: 700, marginBottom: 28 }}>
             Pathway · Full Arch & Implants
           </div>
-          <h1 style={{ fontFamily: SERIF, fontSize: "clamp(46px, 7vw, 78px)", fontWeight: 400, lineHeight: 1.03, letterSpacing: "-0.015em", margin: "0 0 18px", maxWidth: 920 }}>
+          <h1 className="r-h1" style={{ fontFamily: SERIF, fontSize: "clamp(46px, 7vw, 78px)", fontWeight: 400, lineHeight: 1.03, letterSpacing: "-0.015em", margin: "0 0 18px", maxWidth: 920 }}>
             For when teeth need <em style={{ color: PALETTE.blue }}>more</em> than another patch.
           </h1>
           <p style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: 24, color: "rgba(184,226,244,0.95)", margin: "0 0 36px", lineHeight: 1.45, maxWidth: 680 }}>
@@ -237,18 +237,18 @@ export default function DentalImplantPage() {
       {/* INTEGRATIVE ANCHOR */}
       <section style={{ background: PALETTE.cream, padding: "96px 28px", borderTop: `1px solid ${PALETTE.border}` }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div className="anchor-grid" style={{ display: "grid", gridTemplateColumns: "1fr 320px", gap: 56, alignItems: "center" }}>
+          <div className="anchor-grid r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1fr 320px", gap: 56, alignItems: "center" }}>
             <div>
               <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>
                 The integrative approach
               </div>
-              <h2 style={{ fontFamily: SERIF, fontSize: "clamp(34px, 5vw, 50px)", fontWeight: 400, color: PALETTE.navy, lineHeight: 1.1, letterSpacing: "-0.02em", margin: "0 0 28px" }}>
+              <h2 className="r-h2" style={{ fontFamily: SERIF, fontSize: "clamp(34px, 5vw, 50px)", fontWeight: 400, color: PALETTE.navy, lineHeight: 1.1, letterSpacing: "-0.02em", margin: "0 0 28px" }}>
                 Before we plan a procedure, we <em style={{ color: PALETTE.blue }}>map your situation</em>.
               </h2>
               <p style={{ fontSize: 18, lineHeight: 1.7, color: PALETTE.body, margin: "0 0 28px" }}>
                 Implant outcomes depend on biology, yours, specifically. Diabetes affects bone integration. Smoking affects implant survival. Sleep affects bruxism (teeth grinding) affects implant loading. Family periodontal history affects long-term prognosis. A 90-minute consultation that ignores these isn&apos;t a consultation. It&apos;s a sales pitch with a 3D scanner.
               </p>
-              <div className="factor-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18, marginBottom: 28 }}>
+              <div className="factor-grid r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18, marginBottom: 28 }}>
                 {[
                   { title: "Family History", instrument: "AAP/EFP framework", body: "First-degree perio history predicts implant prognosis better than any consumer gene panel. We use the validated grading." },
                   { title: "Medical & medication", instrument: "Pre-surgical review", body: "Bisphosphonates, immunosuppressants, recent radiation, anticoagulants: each changes the surgical plan, not the surgical pitch." },
@@ -288,7 +288,7 @@ export default function DentalImplantPage() {
             </p>
           </div>
 
-          <div className="options-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 20 }}>
+          <div className="options-grid r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 20 }}>
             {OPTIONS.map((opt, i) => (
               <div key={i} style={{ background: PALETTE.cream, border: `1px solid ${PALETTE.border}`, borderRadius: 16, padding: "28px 22px", display: "flex", flexDirection: "column", gap: 14 }}>
                 <div style={{ height: 140, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -395,13 +395,13 @@ export default function DentalImplantPage() {
           </div>
 
           <div style={{ background: PALETTE.warmWhite, border: `1px solid ${PALETTE.border}`, borderRadius: 16, overflow: "hidden" }}>
-            <div className="comp-grid" style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr 1.4fr", borderBottom: `2px solid ${PALETTE.navy}` }}>
+            <div className="comp-grid r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr 1.4fr", borderBottom: `2px solid ${PALETTE.navy}` }}>
               <div style={{ padding: "16px 22px", fontFamily: SANS, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: PALETTE.muted, fontWeight: 700 }}>Topic</div>
               <div style={{ padding: "16px 22px", fontFamily: SANS, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: PALETTE.muted, fontWeight: 700 }}>Typical practice</div>
               <div style={{ padding: "16px 22px", fontFamily: SANS, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: PALETTE.blue, fontWeight: 700 }}>Primary</div>
             </div>
             {COMPARISON.map(([topic, comp, primary], i) => (
-              <div key={i} className="comp-grid" style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr 1.4fr", borderBottom: i < COMPARISON.length - 1 ? `1px solid ${PALETTE.border}` : "none" }}>
+              <div key={i} className="comp-grid r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr 1.4fr", borderBottom: i < COMPARISON.length - 1 ? `1px solid ${PALETTE.border}` : "none" }}>
                 <div style={{ padding: "20px 22px", fontFamily: SERIF, fontSize: 16, color: PALETTE.navy, fontWeight: 500 }}>{topic}</div>
                 <div style={{ padding: "20px 22px", fontFamily: SANS, fontSize: 14, color: PALETTE.body, lineHeight: 1.55 }}>{comp}</div>
                 <div style={{ padding: "20px 22px", fontFamily: SANS, fontSize: 14, color: PALETTE.navy, lineHeight: 1.55, background: "rgba(36,167,224,0.04)" }}>{primary}</div>
@@ -444,7 +444,7 @@ export default function DentalImplantPage() {
             </p>
           </div>
 
-          <div className="cost-grid" style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 32, marginBottom: 40 }}>
+          <div className="cost-grid r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 32, marginBottom: 40 }}>
             <div style={{ background: PALETTE.navy, color: "#FEFCF9", borderRadius: 18, padding: "36px 32px" }}>
               <div style={{ fontFamily: SANS, fontSize: 11, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 700, marginBottom: 14 }}>
                 Fixed Full-Arch · per arch
@@ -481,7 +481,7 @@ export default function DentalImplantPage() {
             </div>
           </div>
 
-          <div className="cost-strip" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 18 }}>
+          <div className="cost-strip r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 18 }}>
             <div style={{ padding: "20px 22px", background: PALETTE.warmWhite, border: `1px solid ${PALETTE.border}`, borderRadius: 12 }}>
               <div style={{ fontFamily: SERIF, fontSize: 16, color: PALETTE.navy, marginBottom: 6, fontWeight: 500 }}>Financing</div>
               <div style={{ fontFamily: SANS, fontSize: 13.5, color: PALETTE.body, lineHeight: 1.55 }}>

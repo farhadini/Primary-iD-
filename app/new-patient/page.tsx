@@ -67,7 +67,7 @@ function Hero() {
             </span>
           </div>
 
-          <h1 style={{
+          <h1 className="r-h1" style={{
             fontFamily: "Georgia,serif",
             fontSize: "clamp(36px, 5vw, 60px)",
             fontWeight: 400,
@@ -172,7 +172,7 @@ function PreVisit() {
             <div style={{ width: 24, height: 1, background: B.blue }} />
             <span style={{ fontFamily: "Georgia,serif", fontSize: 11, color: B.blue, letterSpacing: "0.06em" }}>BEFORE YOU ARRIVE</span>
           </div>
-          <h2 style={{
+          <h2 className="r-h2" style={{
             fontFamily: "Georgia,serif",
             fontSize: "clamp(26px, 3vw, 38px)",
             fontWeight: 400,
@@ -196,7 +196,7 @@ function PreVisit() {
         </div>
 
         {/* Two-column: assessment cards + right side */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "start" }}>
+        <div className="r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 56, alignItems: "start" }}>
 
           {/* Left: the 5 dimensions */}
           <div>
@@ -409,7 +409,7 @@ function DayOf() {
             <div style={{ width: 24, height: 1, background: B.accent }} />
             <span style={{ fontFamily: "Georgia,serif", fontSize: 11, color: B.accent, letterSpacing: "0.06em" }}>THE DAY OF YOUR VISIT</span>
           </div>
-          <h2 style={{
+          <h2 className="r-h2" style={{
             fontFamily: "Georgia,serif",
             fontSize: "clamp(26px, 3vw, 38px)",
             fontWeight: 400,
@@ -426,7 +426,7 @@ function DayOf() {
         </div>
 
         {/* Step selector + detail */}
-        <div style={{ display: "grid", gridTemplateColumns: "380px 1fr", gap: 40, alignItems: "start" }}>
+        <div className="r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "380px 1fr", gap: 40, alignItems: "start" }}>
 
           {/* Left: step list */}
           <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
@@ -555,13 +555,13 @@ function TheSpace() {
     <section ref={ref} style={{ background: B.cream, padding: "80px 32px" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "start", marginBottom: 56 }}>
+        <div className="r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "start", marginBottom: 56 }}>
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 20, opacity: visible ? 1 : 0, transition: "opacity 0.6s ease" }}>
               <div style={{ width: 24, height: 1, background: B.navy, opacity: 0.2 }} />
               <span style={{ fontFamily: "Georgia,serif", fontSize: 11, color: B.muted, letterSpacing: "0.06em" }}>THE SPACE</span>
             </div>
-            <h2 style={{
+            <h2 className="r-h2" style={{
               fontFamily: "Georgia,serif",
               fontSize: "clamp(24px, 2.8vw, 36px)",
               fontWeight: 400, color: B.navy,
@@ -581,7 +581,7 @@ function TheSpace() {
           </div>
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14 }}>
+        <div className="r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14 }}>
           {rooms.map((room, i) => (
             <div key={room.name} style={{
               background: B.warmWhite,
@@ -639,7 +639,7 @@ function BookCTA() {
             <div style={{ width: 24, height: 1, background: B.blue }} />
           </div>
 
-          <h2 style={{
+          <h2 className="r-h2" style={{
             fontFamily: "Georgia,serif",
             fontSize: "clamp(28px, 3.5vw, 44px)",
             fontWeight: 400, color: B.white,
@@ -709,7 +709,7 @@ export function NewPatientSection({ onNavigate }) {
   return (
     <section ref={ref} style={{ background: B.navy, padding: "96px 32px" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
+        <div className="r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 80, alignItems: "center" }}>
 
           {/* Left: copy */}
           <div>
@@ -721,7 +721,7 @@ export function NewPatientSection({ onNavigate }) {
               <span style={{ fontFamily: "Georgia,serif", fontSize: 11, color: B.accent, letterSpacing: "0.06em" }}>YOUR FIRST VISIT</span>
             </div>
 
-            <h2 style={{
+            <h2 className="r-h2" style={{
               fontFamily: "Georgia,serif",
               fontSize: "clamp(26px, 3vw, 40px)",
               fontWeight: 400, color: B.white,

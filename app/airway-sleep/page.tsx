@@ -223,7 +223,7 @@ export default function AirwaySleepPage() {
       {/* MAP YOUR SITUATION / PRIMARY iD ANCHOR */}
       <section style={{ background: PALETTE.cream, padding: "96px 28px", borderTop: `1px solid ${PALETTE.border}` }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div className="anchor-grid" style={{ display: "grid", gridTemplateColumns: "1fr 320px", gap: 56, alignItems: "center" }}>
+          <div className="anchor-grid r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1fr 320px", gap: 56, alignItems: "center" }}>
             <div>
               <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>
                 The integrative approach
@@ -234,7 +234,7 @@ export default function AirwaySleepPage() {
               <p style={{ fontSize: 18, lineHeight: 1.7, color: PALETTE.body, margin: "0 0 28px" }}>
                 How you breathe at night shapes far more than your sleep. It touches your energy, your focus, and your cardiovascular and metabolic health. So this pathway is led by Sleep and grounded in the rest of the Primary iD: we screen what is happening, measure it, and build a plan that treats the airway as the root, not an afterthought.
               </p>
-              <div className="factor-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18, marginBottom: 28 }}>
+              <div className="factor-grid r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 18, marginBottom: 28 }}>
                 {[
                   { title: "Sleep", color: "#24A7E0", body: "Where this pathway leads. STOP-BANG and CBCT airway analysis turn snoring and fatigue into something we can measure." },
                   { title: "Oral Health", color: "#48C28C", body: "Grinding, worn teeth, and a strained jaw are often the airway leaving its mark. We read those signs together." },
@@ -276,7 +276,7 @@ export default function AirwaySleepPage() {
             </p>
           </div>
 
-          <div className="options-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 20 }}>
+          <div className="options-grid r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 20 }}>
             {OFFERINGS.map((opt, i) => (
               <div key={i} style={{ background: PALETTE.cream, border: `1px solid ${PALETTE.border}`, borderRadius: 16, padding: "28px 22px", display: "flex", flexDirection: "column", gap: 14 }}>
                 <div style={{ height: 96, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -310,13 +310,13 @@ export default function AirwaySleepPage() {
           </div>
 
           <div style={{ background: PALETTE.warmWhite, border: `1px solid ${PALETTE.border}`, borderRadius: 16, overflow: "hidden" }}>
-            <div className="comp-grid" style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr 1.4fr", borderBottom: `2px solid ${PALETTE.navy}` }}>
+            <div className="comp-grid r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr 1.4fr", borderBottom: `2px solid ${PALETTE.navy}` }}>
               <div style={{ padding: "16px 22px", fontFamily: SANS, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: PALETTE.muted, fontWeight: 700 }}>Topic</div>
               <div style={{ padding: "16px 22px", fontFamily: SANS, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: PALETTE.muted, fontWeight: 700 }}>Typical visit</div>
               <div style={{ padding: "16px 22px", fontFamily: SANS, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: PALETTE.blue, fontWeight: 700 }}>Primary</div>
             </div>
             {COMPARISON.map(([topic, comp, primary], i) => (
-              <div key={i} className="comp-grid" style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr 1.4fr", borderBottom: i < COMPARISON.length - 1 ? `1px solid ${PALETTE.border}` : "none" }}>
+              <div key={i} className="comp-grid r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr 1.4fr", borderBottom: i < COMPARISON.length - 1 ? `1px solid ${PALETTE.border}` : "none" }}>
                 <div style={{ padding: "20px 22px", fontFamily: SERIF, fontSize: 16, color: PALETTE.navy, fontWeight: 500 }}>{topic}</div>
                 <div style={{ padding: "20px 22px", fontFamily: SANS, fontSize: 14, color: PALETTE.body, lineHeight: 1.55 }}>{comp}</div>
                 <div style={{ padding: "20px 22px", fontFamily: SANS, fontSize: 14, color: PALETTE.navy, lineHeight: 1.55, background: "rgba(36,167,224,0.04)" }}>{primary}</div>
@@ -328,7 +328,7 @@ export default function AirwaySleepPage() {
 
       {/* INSURANCE / ACCESS STRIP */}
       <section style={{ background: PALETTE.warmWhite, padding: "72px 28px", borderTop: `1px solid ${PALETTE.border}` }}>
-        <div className="cost-strip" style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 18 }}>
+        <div className="cost-strip r-grid1 r-gap" style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 18 }}>
           <div style={{ padding: "22px 24px", background: PALETTE.cream, border: `1px solid ${PALETTE.border}`, borderRadius: 12 }}>
             <div style={{ fontFamily: SERIF, fontSize: 16, color: PALETTE.navy, marginBottom: 6, fontWeight: 500 }}>Insurance</div>
             <div style={{ fontFamily: SANS, fontSize: 13.5, color: PALETTE.body, lineHeight: 1.55 }}>

@@ -40,7 +40,7 @@ export function SiteFooter() {
   return (
     <footer style={{ background: B.navy, padding: "56px 32px 36px" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 48, marginBottom: 48, paddingBottom: 44, borderBottom: "1px solid rgba(255,255,255,0.12)" }}>
+        <div className="r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: 48, marginBottom: 48, paddingBottom: 44, borderBottom: "1px solid rgba(255,255,255,0.12)" }}>
           {/* Brand */}
           <div>
             <div style={{ marginBottom: 18 }}>
@@ -73,9 +73,19 @@ export function SiteFooter() {
           ))}
         </div>
 
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div className="r-stack r-gap r-center" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <span style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
             © {new Date().getFullYear()} Primary Integrative Dentistry
+          </span>
+          <span style={{ display: "flex", gap: 18, alignItems: "center" }}>
+            <a href="/privacy/" style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "rgba(255,255,255,0.55)", textDecoration: "none" }}
+              onMouseOver={e => { (e.target as HTMLElement).style.color = B.blue; }}
+              onMouseOut={e => { (e.target as HTMLElement).style.color = "rgba(255,255,255,0.55)"; }}
+            >Privacy Policy</a>
+            <a href="/terms/" style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "rgba(255,255,255,0.55)", textDecoration: "none" }}
+              onMouseOver={e => { (e.target as HTMLElement).style.color = B.blue; }}
+              onMouseOut={e => { (e.target as HTMLElement).style.color = "rgba(255,255,255,0.55)"; }}
+            >Terms of Service</a>
           </span>
           <span style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "rgba(255,255,255,0.35)", fontStyle: "italic" }}>
             Dr. Tzur Gabi, Founder

@@ -234,3 +234,58 @@
 .animate-drawLine {
   animation: drawLine 1.5s ease-out forwards;
 }
+
+/* ============================================================
+   PRIMARY — responsive retrofit layer
+   The pages are built with inline styles (which can't hold media
+   queries). These class hooks + !important media rules reflow the
+   fixed desktop layouts for mobile without rewriting style objects.
+   Breakpoint: 760px (matches the nav). Apply .r-* on containers.
+   ============================================================ */
+
+/* Global safety net: never allow horizontal overflow; media scales. */
+html, body { max-width: 100%; overflow-x: hidden; }
+img, video, svg, canvas { max-width: 100%; }
+* { min-width: 0; }
+
+@media (max-width: 759px) {
+  /* Layout reflow */
+  .r-stack   { flex-direction: column !important; }
+  .r-stack-r { flex-direction: column-reverse !important; }
+  .r-grid1   { display: grid !important; grid-template-columns: 1fr !important; }
+  .r-wrap    { flex-wrap: wrap !important; }
+  .r-full    { width: 100% !important; max-width: 100% !important; flex: 1 1 100% !important; }
+  .r-center  { text-align: center !important; align-items: center !important; justify-content: center !important; }
+  .r-auto-h  { height: auto !important; min-height: 0 !important; }
+
+  /* Spacing — dial back desktop padding/margins */
+  .r-pad     { padding-left: 20px !important; padding-right: 20px !important; }
+  .r-pad-y   { padding-top: 40px !important; padding-bottom: 40px !important; }
+  .r-gap     { gap: 20px !important; }
+  .r-mt      { margin-top: 24px !important; }
+
+  /* Type — cap oversized desktop headings (beats inline font-size) */
+  .r-h1 { font-size: 34px !important; line-height: 1.1 !important; }
+  .r-h2 { font-size: 26px !important; line-height: 1.15 !important; }
+  .r-h3 { font-size: 20px !important; line-height: 1.2 !important; }
+  .r-lead { font-size: 16px !important; line-height: 1.6 !important; }
+
+  /* Visibility */
+  .r-hide { display: none !important; }
+  .r-only { display: block !important; }
+
+  /* Buttons/CTAs go full width and tappable */
+  .r-cta { width: 100% !important; justify-content: center !important; text-align: center !important; }
+
+  /* Carousels/rows: horizontal swipe with snap instead of overflow */
+  .r-scroll-x {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 20px;
+  }
+  .r-scroll-x > * { scroll-snap-align: start; }
+}
+
+/* Show ".r-only" elements only on mobile */
+@media (min-width: 760px) { .r-only { display: none !important; } }

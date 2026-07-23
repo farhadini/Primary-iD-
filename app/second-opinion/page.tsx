@@ -74,7 +74,7 @@ export default function SecondOpinionPage() {
       {/* HERO */}
       <section style={{ background: PALETTE.navy, color: "#FEFCF9", padding: "120px 28px 96px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div className="hero-grid" style={{ display: "grid", gridTemplateColumns: "1fr 280px", gap: 56, alignItems: "center" }}>
+          <div className="hero-grid r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1fr 280px", gap: 56, alignItems: "center" }}>
             <div>
               <div style={{
                 fontFamily: SANS, fontSize: 12, color: PALETTE.blue,
@@ -158,7 +158,7 @@ export default function SecondOpinionPage() {
             </p>
           </div>
 
-          <div className="check-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+          <div className="check-grid r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
             {[
               {
                 title: "Does the surgical plan match the imaging?",
@@ -244,7 +244,7 @@ export default function SecondOpinionPage() {
                 body: "Sometimes our answer is 'they got it right.' Sometimes we'd verify or change specific items. Sometimes we'd recommend a fundamentally different approach. Whatever the answer, it's structured, written, and free of pressure.",
               },
             ].map((s, i) => (
-              <div key={i} style={{
+              <div key={i} className="r-grid1 r-gap" style={{
                 display: "grid", gridTemplateColumns: "72px 1fr",
                 gap: 24, alignItems: "start",
                 padding: "8px 0",
@@ -300,7 +300,7 @@ export default function SecondOpinionPage() {
               You&apos;ll get the most value from this if:
             </h2>
           </div>
-          <div className="who-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
+          <div className="who-grid r-grid1 r-gap" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
             {[
               "You&apos;ve been quoted $20K+ for implant or full-arch work and want a structured read before committing",
               "You got multiple quotes and they varied widely",
