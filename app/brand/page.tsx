@@ -117,13 +117,14 @@ export default function BrandHubPage() {
   if (!authed) {
     return (
       <main style={{ minHeight: "100vh", background: B.navy, display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
-        <form onSubmit={submit} style={{ width: "100%", maxWidth: 380, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 20, padding: "40px 32px", textAlign: "center" }}>
-          <img src="/brand/logo/primary-mark-dotsmile.png" alt="Primary" style={{ height: 40, width: "auto", margin: "0 auto 20px", display: "block" }} />
-          <h1 style={{ fontFamily: "Georgia,serif", fontWeight: 400, fontSize: 24, color: B.white, margin: "0 0 6px" }}>Brand Hub</h1>
-          <p style={{ fontSize: 13.5, color: "rgba(255,255,255,0.6)", margin: "0 0 24px", lineHeight: 1.6 }}>For the Primary iD marketing team and partners. Enter the access password.</p>
+        <form onSubmit={submit} style={{ width: "100%", maxWidth: 400, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.10)", borderRadius: 20, padding: "44px 38px", textAlign: "center", boxShadow: "0 40px 90px -50px rgba(0,0,0,0.8)" }}>
+          <img src="/brand/logo/primary-logo-on-dark.png" alt="Primary Integrative Dentistry" style={{ height: 24, width: "auto", maxWidth: "84%", margin: "0 auto 26px", display: "block" }} />
+          <div style={{ textTransform: "uppercase", letterSpacing: "0.2em", fontSize: 10.5, color: B.blue, fontWeight: 600, marginBottom: 12 }}>Confidential · Partners</div>
+          <h1 style={{ fontFamily: "Georgia,serif", fontWeight: 400, fontSize: 27, color: B.white, margin: "0 0 10px", letterSpacing: "-0.01em" }}>Brand Hub</h1>
+          <p style={{ fontFamily: "-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif", fontSize: 14, color: "rgba(255,255,255,0.55)", margin: "0 0 26px", lineHeight: 1.6 }}>The single source of truth for the Primary iD brand. Enter the access password to continue.</p>
           <input
-            type="password" value={pw} onChange={(e) => setPw(e.target.value)} placeholder="Password" autoFocus
-            style={{ width: "100%", boxSizing: "border-box", padding: "13px 16px", borderRadius: 10, border: err ? `1px solid ${B.rose}` : "1px solid rgba(255,255,255,0.15)", background: "rgba(255,255,255,0.06)", color: B.white, fontSize: 15, fontFamily: "Georgia,serif", outline: "none", marginBottom: 12 }}
+            type="password" value={pw} onChange={(e) => setPw(e.target.value)} placeholder="Enter password" autoFocus
+            style={{ width: "100%", boxSizing: "border-box", padding: "14px 16px", borderRadius: 10, border: err ? `1px solid ${B.rose}` : "1px solid rgba(255,255,255,0.14)", background: "rgba(255,255,255,0.05)", color: B.white, fontSize: 15, fontFamily: "-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif", outline: "none", marginBottom: 12, textAlign: "center" }}
           />
           {err && <div style={{ color: B.rose, fontSize: 12.5, marginBottom: 12 }}>That password didn&apos;t match. Try again.</div>}
           <button type="submit" disabled={busy} style={{ width: "100%", padding: "13px", borderRadius: 10, border: "none", background: B.white, color: B.navy, fontFamily: "Georgia,serif", fontSize: 15, fontWeight: 600, cursor: "pointer" }}>{busy ? "Checking…" : "Enter"}</button>
