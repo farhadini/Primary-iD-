@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Primary iD — Your Onboarding</title>
+<style>
+  /* ============ Primary Design Guide v1.0 (reconciled 2 Aug 2026) ============ */
+  :root{
+    /* core */
+    --navy:#0E2240; --blue:#24A7E0; --blueSoft:#5BC0EC;
+    --cream:#FAF8F5; --warm:#FEFCF9;
+    /* text */
+    --ink:#121a2b; --inkSoft:#3a4a66; --muted:#7A8695;
+    --line:rgba(14,34,64,.12); --lineSoft:rgba(14,34,64,.06);
+    /* dimension hues — TAGGING & DATA-VIZ ONLY, never UI accents */
+    --d-oral:#D4B584; --d-sleep:#7B68EE; --d-nutri:#48C28C; --d-family:#E8985E; --d-long:#D97757;
+    /* semantic tiers (on-palette) */
+    --t-thriving:#48C28C; --t-strong:#24A7E0; --t-found:#E8985E; --t-needs:#D97757;
+    /* type */
+    --serif:Georgia,'Times New Roman',serif;
+    --sans:'Montserrat','Helvetica Neue',Arial,sans-serif; /* GAP-01: Montserrat spec'd, load site-wide */
+    /* radius scale — the ONLY allowed values */
+    --r-chip:8px; --r-card:16px; --r-panel:24px; --r-pill:999px;
+    --shadow:0 18px 48px -24px rgba(14,34,64,.45);
+    --shadow-sm:0 8px 24px -18px rgba(14,34,64,.4);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    font-family:var(--serif); color:var(--ink); background:var(--cream);
+    font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  .wrap{max-width:1200px; margin:0 auto; min-height:100vh; display:grid; grid-template-columns:1fr 420px}
+
+  /* eyebrow / sans labels */
+  .ey{font-family:var(--sans); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.14em; color:var(--blue); display:flex; align-items:center; gap:10px}
+  .ey::before{content:""; width:26px; height:1px; background:var(--blue)}
+  .ey.soft{color:var(--blueSoft)} .ey.soft::before{background:var(--blueSoft)}
+
+  /* ---------------- LEFT : conversation ---------------- */
+  .stage{position:relative; padding:44px 56px 120px; display:flex; flex-direction:column; min-height:100vh}
+  .topbar{display:flex; align-items:center; gap:16px; margin-bottom:6px}
+  .brand{font-family:var(--serif); font-size:22px; color:var(--navy); letter-spacing:-.01em}
+  .brand b{font-weight:400} .brand .em{font-style:italic; color:var(--blue)}
+  .progress{margin-left:auto; display:flex; align-items:center; gap:7px}
+  .progress i{width:26px; height:3px; border-radius:var(--r-pill); background:var(--line); transition:.4s}
+  .progress i.on{background:var(--blue)} .progress i.done{background:var(--navy)}
+
+  #screens{flex:1; display:flex; flex-direction:column}
+  .screen{flex:1; display:none; flex-direction:column; justify-content:center; padding:8px 0; animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
+  .screen.active{display:flex}
+  @keyframes rise{from{opacity:0; transform:translateY(16px)} to{opacity:1; transform:none}}
+
+  h1.head{font-family:var(--serif); font-weight:400; color:var(--navy); font-size:clamp(30px,3.8vw,50px); line-height:1.1; letter-spacing:-.02em; margin:18px 0 0}
+  h1.head em{font-style:italic; color:var(--blue)}
+  .lede{font-size:18px; color:var(--inkSoft); max-width:60ch; margin-top:16px; line-height:1.55}
+  .qmeta{font-family:var(--sans); font-size:12px; font-weight:600; letter-spacing:.04em; color:var(--muted); text-transform:uppercase; margin-top:4px}
+
+  /* coach */
+  .coach{display:flex; gap:14px; align-items:flex-start; margin-bottom:8px}
+  .avatar{flex:none; width:46px; height:46px; border-radius:50%; background:var(--navy); display:flex; align-items:center; justify-content:center; position:relative}
+  .avatar span{font-family:var(--serif); font-style:italic; color:var(--warm); font-size:22px; line-height:1}
+  .avatar::after{content:""; position:absolute; right:-1px; bottom:-1px; width:12px; height:12px; border-radius:50%; background:var(--t-thriving); border:3px solid var(--cream)}
+  .bubble{background:var(--warm); border:1px solid var(--line); border-radius:6px var(--r-card) var(--r-card) var(--r-card); padding:14px 18px; box-shadow:var(--shadow-sm); max-width:560px}
+  .bubble .who{font-family:var(--sans); font-size:10.5px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-bottom:4px}
+  .bubble p{font-size:16px; color:var(--inkSoft); margin:0} .bubble p+p{margin-top:8px}
+  .bubble em{font-style:italic; color:var(--blue)}
+
+  /* option list — single question per screen */
+  .opts{display:flex; flex-direction:column; gap:10px; max-width:600px; margin-top:26px}
+  .opt{display:flex; align-items:center; gap:15px; text-align:left; cursor:pointer; background:var(--warm); border:1px solid var(--line); border-radius:var(--r-card); padding:16px 20px; font-family:var(--serif); font-size:17px; color:var(--navy); transition:.16s; box-shadow:var(--shadow-sm); width:100%}
+  .opt:hover{border-color:var(--blue); transform:translateY(-2px)}
+  .opt.sel{border-color:var(--blue); background:#F2FaFe}
+  .opt .chk{margin-left:auto; width:22px; height:22px; border-radius:50%; border:1.5px solid var(--line); flex:none; position:relative; transition:.16s}
+  .opt.sel .chk{border-color:var(--blue); background:var(--blue)}
+  .opt.sel .chk::after{content:""; position:absolute; left:7px; top:3px; width:6px; height:11px; border:solid #fff; border-width:0 2px 2px 0; transform:rotate(45deg)}
+
+  /* goal tiles */
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; max-width:600px; margin-top:26px}
+  .tile{position:relative; cursor:pointer; border:1px solid var(--line); border-radius:var(--r-card); background:var(--warm); padding:20px; box-shadow:var(--shadow-sm); transition:.16s}
+  .tile:hover{transform:translateY(-2px); border-color:var(--blue)}
+  .tile .tt{font-family:var(--serif); font-size:18px; color:var(--navy)}
+  .tile .td{font-family:var(--sans); font-size:12.5px; color:var(--muted); margin-top:4px; line-height:1.4}
+  .tile .tchk{position:absolute; top:16px; right:16px; width:20px; height:20px; border-radius:50%; border:1.5px solid var(--line); transition:.16s}
+  .tile.sel{border-color:var(--blue); background:#F2FAFE}
+  .tile.sel .tchk{border-color:var(--blue); background:var(--blue)}
+  .tile.sel .tchk::after{content:""; position:absolute; top:3px; left:6px; width:6px; height:11px; border:solid #fff; border-width:0 2px 2px 0; transform:rotate(45deg)}
+
+  /* buttons */
+  .cta{display:inline-flex; align-items:center; gap:9px; cursor:pointer; font-family:var(--sans); font-weight:600; font-size:14px; letter-spacing:.02em; border:none; border-radius:var(--r-pill); padding:15px 30px; background:var(--navy); color:#fff; box-shadow:var(--shadow-sm); transition:.16s}
+  .cta:hover{transform:translateY(-2px)}
+  .cta.blue{background:var(--blue)}
+  .cta:disabled{opacity:.35; cursor:not-allowed; transform:none}
+  .ghost{background:none; border:none; cursor:pointer; font-family:var(--sans); font-size:13px; font-weight:500; color:var(--muted); padding:12px 4px}
+  .ghost:hover{color:var(--navy)}
+  .actions{display:flex; align-items:center; gap:18px; margin-top:32px; flex-wrap:wrap}
+  .hint{font-family:var(--sans); font-size:12.5px; color:var(--muted)}
+
+  .field{max-width:440px; margin-top:26px}
+  .field label{display:block; font-family:var(--sans); font-size:12px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; color:var(--navy); margin-bottom:8px}
+  .field input{width:100%; padding:14px 16px; border:1px solid var(--line); border-radius:var(--r-card); font-family:var(--serif); font-size:18px; background:var(--warm); color:var(--navy)}
+  .field input:focus{outline:none; border-color:var(--blue)}
+
+  /* dimension chip + instrument tag */
+  .dchip{display:inline-flex; align-items:center; gap:10px; font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+  .dchip .dot{width:9px; height:9px; border-radius:50%; background:var(--dc)}
+  .inst{display:inline-block; font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--dc); border:1px solid currentColor; border-radius:var(--r-chip); padding:4px 10px; margin-top:14px; opacity:.9}
+
+  .steps{display:flex; flex-direction:column; gap:2px; max-width:600px; margin-top:26px}
+  .stepitem{display:flex; gap:16px; align-items:baseline; padding:16px 0; border-bottom:1px solid var(--lineSoft)}
+  .stepitem:last-child{border-bottom:none}
+  .stepitem .num{font-family:var(--serif); font-style:italic; color:var(--blue); font-size:20px; flex:none; width:26px}
+  .stepitem h4{font-family:var(--serif); font-weight:400; font-size:19px; color:var(--navy); margin-bottom:3px}
+  .stepitem p{font-family:var(--sans); font-size:13.5px; color:var(--muted); line-height:1.5}
+  .stepitem .tag{font-family:var(--sans); font-size:10.5px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--dc)}
+
+  /* reveal */
+  .revealcard{background:var(--warm); border:1px solid var(--line); border-radius:var(--r-panel); padding:28px; box-shadow:var(--shadow); max-width:640px; margin-top:24px}
+  .rgrid{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px}
+  .rcell{border:1px solid var(--line); border-radius:var(--r-card); padding:16px 12px; text-align:center}
+  .rcell .rn{font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; color:var(--muted)}
+  .rcell .rn .rdot{display:inline-block; width:7px; height:7px; border-radius:50%; background:var(--dc); margin-right:5px; vertical-align:middle}
+  .rcell .rv{font-family:var(--serif); font-size:30px; color:var(--navy); margin-top:8px; line-height:1}
+  .rcell .rt{font-family:var(--sans); font-size:10.5px; font-weight:600; letter-spacing:.04em; text-transform:uppercase; margin-top:6px}
+  .lever{margin-top:20px; padding-top:20px; border-top:1px solid var(--line)}
+  .lever .lh{font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--blue)}
+  .lever h3{font-family:var(--serif); font-weight:400; font-size:22px; color:var(--navy); margin:6px 0 8px}
+  .lever h3 em{font-style:italic; color:var(--blue)}
+  .lever p{font-family:var(--sans); font-size:14px; color:var(--inkSoft); line-height:1.55}
+  .lever .items{display:flex; gap:8px; margin-top:12px; flex-wrap:wrap}
+  .lever .items span{font-family:var(--sans); font-size:12px; font-weight:500; color:var(--navy); background:var(--cream); border:1px solid var(--line); border-radius:var(--r-chip); padding:6px 12px}
+  .foot-note{font-family:var(--sans); font-size:12.5px; color:var(--muted); max-width:560px; margin-top:16px; line-height:1.55}
+
+  /* ---------------- RIGHT : digital twin (dark, on-brand) ---------------- */
+  .twin{background:var(--navy); color:#fff; position:relative; padding:40px 34px; display:flex; flex-direction:column; overflow:hidden}
+  .twin::before{content:""; position:absolute; inset:0; z-index:0; background:
+    radial-gradient(320px 220px at 82% 6%,rgba(91,192,236,.18),transparent 68%),
+    radial-gradient(300px 240px at 8% 96%,rgba(36,167,224,.14),transparent 70%)}
+  .twin::after{content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+    background:repeating-linear-gradient(0deg,rgba(91,192,236,.035) 0 1px,transparent 1px 4px);
+    mix-blend-mode:screen}
+  .twin>*{position:relative; z-index:1}
+  .twin .tk{font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--blueSoft)}
+  .twin .tn{font-family:var(--serif); font-size:23px; margin-top:4px; color:#fff}
+  .twin .tn em{font-style:italic; color:var(--blueSoft)}
+  .figwrap{flex:1; display:flex; align-items:center; justify-content:center; min-height:320px}
+  .fig{width:224px; height:auto; filter:drop-shadow(0 0 24px rgba(36,167,224,.22))}
+  /* holographic scan effects */
+  .hudlabel{fill:#5BC0EC; font-family:var(--sans); font-size:7px; font-weight:600; letter-spacing:.22em; opacity:.6}
+  .orbit{transform-box:fill-box; transform-origin:center; animation:spin 26s linear infinite}
+  .orbit2{transform-box:fill-box; transform-origin:center; animation:spin 18s linear infinite reverse}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .sweep{animation:sweep 3.8s cubic-bezier(.45,0,.55,1) infinite}
+  @keyframes sweep{0%{transform:translateY(-12px)} 50%{transform:translateY(316px)} 100%{transform:translateY(-12px)}}
+  .spineflow{animation:flow 1.3s linear infinite}
+  @keyframes flow{to{stroke-dashoffset:-18}}
+  /* nodes */
+  .node .ring{fill:none; stroke:rgba(255,255,255,.16); stroke-width:2; transition:1s}
+  .node .core{fill:rgba(255,255,255,.06); transition:1s}
+  .node .halo{fill:none; stroke:var(--nc); stroke-width:1; stroke-dasharray:2 4; stroke-opacity:0; transform-box:fill-box; transform-origin:center; transition:stroke-opacity 1s}
+  .node .tick{stroke:rgba(255,255,255,0); stroke-width:1.2; stroke-linecap:round; transition:1s}
+  .node text{fill:rgba(255,255,255,.32); font-family:var(--sans); font-size:8px; font-weight:600; letter-spacing:.08em; text-anchor:middle; transition:1s}
+  .node.lit .ring{stroke:var(--nc); stroke-width:2.5; filter:drop-shadow(0 0 7px var(--nc))}
+  .node.lit .core{fill:var(--nc); opacity:.95; filter:url(#glow)}
+  .node.lit .halo{stroke-opacity:.75; animation:spin 9s linear infinite}
+  .node.lit .tick{stroke:rgba(255,255,255,.55)}
+  .node.lit text{fill:rgba(255,255,255,.9)}
+  .node .pulse{fill:var(--nc); opacity:0}
+  .node.lit .pulse{animation:pl 2.4s ease-out infinite}
+  @keyframes pl{0%{opacity:.5; r:11px} 100%{opacity:0; r:26px}}
+  @media(prefers-reduced-motion:reduce){ .orbit,.orbit2,.sweep,.spineflow,.node.lit .halo,.node.lit .pulse{animation:none} }
+
+  .composite{display:flex; align-items:center; gap:18px; padding:18px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); border-radius:var(--r-panel)}
+  .composite .cl{font-family:var(--sans); font-size:10.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.6)}
+  .composite .cv{font-family:var(--serif); font-size:36px; line-height:1; color:#fff}
+  .composite .ct{font-family:var(--serif); font-style:italic; font-size:15px; margin-top:3px}
+  .dimlist{margin-top:16px; display:flex; flex-direction:column; gap:11px}
+  .dimrow{display:flex; align-items:center; gap:11px; opacity:.35; transition:.6s}
+  .dimrow.on{opacity:1}
+  .dimrow .dmk{width:9px; height:9px; border-radius:50%; flex:none; background:var(--dc)}
+  .dimrow .dnm{font-family:var(--sans); font-size:12.5px; color:rgba(255,255,255,.85)}
+  .dimrow .bar{flex:1; height:4px; border-radius:var(--r-pill); background:rgba(255,255,255,.12); overflow:hidden; max-width:88px}
+  .dimrow .bar i{display:block; height:100%; width:0; border-radius:var(--r-pill); background:var(--dc); transition:width 1s cubic-bezier(.2,.8,.2,1)}
+  .dimrow .dsc{margin-left:auto; font-family:var(--serif); font-size:15px; color:#fff; font-variant-numeric:tabular-nums}
+  .whisper{margin-top:16px; font-family:var(--serif); font-style:italic; font-size:13.5px; color:rgba(255,255,255,.6); text-align:center; min-height:18px; transition:.4s}
+
+  @media(max-width:920px){
+    .wrap{grid-template-columns:1fr}
+    .twin{order:-1; flex-direction:row; align-items:center; gap:18px; padding:18px 22px; min-height:0}
+    .figwrap{min-height:0; flex:none; width:88px} .fig{width:84px}
+    .twin .th{display:none}
+    .twin .tstats{flex:1} .dimlist,.whisper{display:none}
+    .composite{padding:12px} .composite .cv{font-size:26px}
+    .stage{padding:26px 22px 100px}
+    .grid{grid-template-columns:1fr}
+    .rgrid{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <!-- ============ LEFT ============ -->
+  <main class="stage">
+    <div class="topbar">
+      <div class="brand"><b>Primary</b> <span class="em">iD</span></div>
+      <div class="progress" id="progress"></div>
+    </div>
+    <div id="screens"></div>
+  </main>
+
+  <!-- ============ RIGHT : digital twin ============ -->
+  <aside class="twin">
+    <div class="th">
+      <div class="tk">Your digital twin</div>
+      <div class="tn" id="twinName">Building<em>…</em></div>
+    </div>
+    <div class="figwrap">
+      <svg class="fig" viewBox="0 0 200 380" id="figure" aria-hidden="true">
+        <defs>
+          <radialGradient id="scanG" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#5BC0EC" stop-opacity=".5"/>
+            <stop offset="100%" stop-color="#5BC0EC" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="sweepG" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5BC0EC" stop-opacity="0"/>
+            <stop offset="45%" stop-color="#9fdcf3" stop-opacity=".55"/>
+            <stop offset="55%" stop-color="#9fdcf3" stop-opacity=".55"/>
+            <stop offset="100%" stop-color="#5BC0EC" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="glow" x="-70%" y="-70%" width="240%" height="240%">
+            <feGaussianBlur stdDeviation="2.2" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <clipPath id="bodyClip">
+            <circle cx="100" cy="44" r="28"/>
+            <path d="M72 74 Q100 88 128 74 L140 146 Q143 162 136 166 L126 128 L124 244 Q124 256 116 256 L108 186 L92 186 L84 256 Q76 256 76 244 L74 128 L64 166 Q57 162 60 146 Z"/>
+            <path d="M94 256 L88 346 Q88 353 96 353 L100 292 L104 353 Q112 353 112 346 L106 256 Z"/>
+          </clipPath>
+        </defs>
+
+        <!-- rotating orbital field -->
+        <g class="orbit"><ellipse cx="100" cy="152" rx="84" ry="150" fill="none" stroke="#5BC0EC" stroke-opacity=".16" stroke-width="1" stroke-dasharray="2 9"/></g>
+        <g class="orbit2"><circle cx="100" cy="152" r="66" fill="none" stroke="#24A7E0" stroke-opacity=".12" stroke-width="1" stroke-dasharray="1 11"/></g>
+
+        <!-- ground platform -->
+        <ellipse cx="100" cy="356" rx="46" ry="7" fill="none" stroke="#5BC0EC" stroke-opacity=".3"/>
+        <ellipse cx="100" cy="356" rx="22" ry="4" fill="url(#scanG)"/>
+
+        <!-- holographic body fill: mesh + scan sweep, clipped to the silhouette -->
+        <g clip-path="url(#bodyClip)">
+          <rect x="55" y="8" width="90" height="352" fill="#5BC0EC" fill-opacity=".05"/>
+          <g stroke="#5BC0EC" stroke-opacity=".13" stroke-width=".6" id="mesh"></g>
+          <rect class="sweep" x="55" y="0" width="90" height="52" fill="url(#sweepG)"/>
+        </g>
+
+        <!-- body outline: doubled for a chromatic hologram edge -->
+        <g fill="none" stroke-width="1.3">
+          <g stroke="#24A7E0" stroke-opacity=".22" transform="translate(1.4,0)">
+            <circle cx="100" cy="44" r="28"/>
+            <path d="M72 74 Q100 88 128 74 L140 146 Q143 162 136 166 L126 128 L124 244 Q124 256 116 256 L108 186 L92 186 L84 256 Q76 256 76 244 L74 128 L64 166 Q57 162 60 146 Z"/>
+            <path d="M94 256 L88 346 Q88 353 96 353 L100 292 L104 353 Q112 353 112 346 L106 256 Z"/>
+          </g>
+          <g stroke="#9fdcf3" stroke-opacity=".5">
+            <circle cx="100" cy="44" r="28"/>
+            <path d="M72 74 Q100 88 128 74 L140 146 Q143 162 136 166 L126 128 L124 244 Q124 256 116 256 L108 186 L92 186 L84 256 Q76 256 76 244 L74 128 L64 166 Q57 162 60 146 Z"/>
+            <path d="M94 256 L88 346 Q88 353 96 353 L100 292 L104 353 Q112 353 112 346 L106 256 Z"/>
+          </g>
+        </g>
+
+        <!-- data spine: mouth → down through the body, with a flowing pulse -->
+        <line x1="100" y1="42" x2="100" y2="180" stroke="#5BC0EC" stroke-opacity=".3" stroke-width="1.4"/>
+        <line class="spineflow" x1="100" y1="42" x2="100" y2="180" stroke="#bfeafb" stroke-width="1.6" stroke-dasharray="3 15" filter="url(#glow)"/>
+
+        <!-- HUD frame -->
+        <g stroke="#5BC0EC" stroke-width="1.4" fill="none" stroke-opacity=".5" stroke-linecap="round">
+          <path d="M8 22 L8 8 L22 8"/><path d="M192 22 L192 8 L178 8"/>
+          <path d="M8 358 L8 372 L22 372"/><path d="M192 358 L192 372 L178 372"/>
+        </g>
+        <text class="hudlabel" x="14" y="18">LIVE SCAN</text>
+
+        <!-- dimension nodes (populated by JS) -->
+        <g id="nodes"></g>
+      </svg>
+    </div>
+    <div class="tstats">
+      <div class="composite">
+        <svg width="62" height="62" viewBox="0 0 62 62">
+          <circle cx="31" cy="31" r="26" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="5"/>
+          <circle id="cring" cx="31" cy="31" r="26" fill="none" stroke="#5BC0EC" stroke-width="5" stroke-linecap="round"
+            stroke-dasharray="163.4" stroke-dashoffset="163.4" transform="rotate(-90 31 31)" style="transition:stroke-dashoffset 1s cubic-bezier(.2,.8,.2,1)"/>
+        </svg>
+        <div>
+          <div class="cl">Primary iD · composite</div>
+          <div class="cv" id="compVal">—</div>
+          <div class="ct" id="compTier" style="color:var(--blueSoft)">Just getting started</div>
+        </div>
+      </div>
+      <div class="dimlist" id="dimlist"></div>
+      <div class="whisper" id="whisper">Every answer adds a piece of you.</div>
+    </div>
+  </aside>
+</div>
+
+<style>
+  /* chip lightning-rounds (woven history + safety + records) */
+  .chipset{display:flex; flex-direction:column; gap:20px; max-width:600px; margin-top:24px}
+  .chiprow .ql{font-family:var(--sans); font-size:13px; font-weight:600; color:var(--navy); margin-bottom:10px}
+  .chips{display:flex; flex-wrap:wrap; gap:8px}
+  .chip{cursor:pointer; font-family:var(--sans); font-size:14px; color:var(--navy); background:var(--warm); border:1px solid var(--line); border-radius:var(--r-pill); padding:9px 16px; transition:.15s; box-shadow:var(--shadow-sm)}
+  .chip:hover{border-color:var(--blue)}
+  .chip.sel{border-color:var(--blue); background:#EAF6FD; font-weight:600}
+  .addfield{max-width:600px; margin-top:18px}
+  .addfield input, textarea.notes{width:100%; padding:13px 16px; border:1px solid var(--line); border-radius:var(--r-card); font-family:var(--serif); font-size:16px; background:var(--warm); color:var(--navy)}
+  textarea.notes{max-width:600px; min-height:104px; resize:vertical; line-height:1.5; margin-top:20px}
+  textarea.notes:focus, .addfield input:focus{outline:none; border-color:var(--blue)}
+  /* pre-visit brief (the payoff) */
+  .brief{background:var(--warm); border:1px solid var(--line); border-radius:var(--r-panel); padding:28px; box-shadow:var(--shadow); max-width:640px; margin-top:22px}
+  .brief .bhead{display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid var(--line); padding-bottom:16px; margin-bottom:18px}
+  .brief .bname{font-family:var(--serif); font-size:23px; color:var(--navy)}
+  .brief .bname small{display:block; font-family:var(--sans); font-size:10.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-top:3px}
+  .brief .bcomp{text-align:right}
+  .brief .bcomp .n{font-family:var(--serif); font-size:34px; color:var(--navy); line-height:1}
+  .brief .bcomp .t{font-family:var(--sans); font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.04em; margin-top:2px}
+  .brief .brow{margin-bottom:16px}
+  .brief .brow:last-child{margin-bottom:0}
+  .brief .bk{font-family:var(--sans); font-size:10.5px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--muted); margin-bottom:7px}
+  .brief .bv{font-size:15.5px; color:var(--inkSoft); line-height:1.5}
+  .brief .bv em{font-style:italic; color:var(--blue)}
+  .brief .bscores{display:flex; gap:8px; flex-wrap:wrap}
+  .brief .bscore{text-align:center; border:1px solid var(--line); border-radius:var(--r-card); padding:9px 14px; min-width:64px}
+  .brief .bscore .n{font-family:var(--serif); font-size:20px; color:var(--navy)}
+  .brief .bscore .l{font-family:var(--sans); font-size:9px; text-transform:uppercase; letter-spacing:.03em; color:var(--muted); margin-top:3px}
+  .brief .bchips{display:flex; flex-wrap:wrap; gap:6px}
+  .brief .bchips span{font-family:var(--sans); font-size:12px; color:var(--navy); background:var(--cream); border:1px solid var(--line); border-radius:var(--r-chip); padding:5px 11px}
+  .brief .bchips.warn span{background:#FBEEE6; border-color:#EED9C8; color:#8a5a34}
+  /* organic education — "why this matters" earned insight */
+  .insight{background:#F2FAFE; border:1px solid rgba(36,167,224,.25); border-left:3px solid var(--blue); border-radius:var(--r-card); padding:16px 18px; max-width:600px; margin-top:22px}
+  .insight .il{font-family:var(--sans); font-size:10.5px; font-weight:600; letter-spacing:.09em; text-transform:uppercase; color:var(--blue); margin-bottom:6px}
+  .insight p{font-size:15.5px; color:var(--inkSoft); line-height:1.5; margin:0}
+  .insight p em{font-style:italic; color:var(--blue)}
+  /* essentials + insurance fields */
+  .fieldgrid{display:grid; grid-template-columns:1fr 1fr; gap:14px 18px; max-width:600px; margin-top:22px}
+  .fieldgrid .field{margin-top:0; max-width:none}
+  .fieldgrid .full{grid-column:1 / -1}
+  /* provider-only banner */
+  .provbanner{max-width:640px; margin-top:6px; background:var(--navy); color:#fff; border-radius:var(--r-card); padding:12px 16px; font-family:var(--sans); font-size:13px; display:flex; gap:10px; align-items:center; line-height:1.4}
+  .provbanner b{color:var(--blueSoft); letter-spacing:.09em; text-transform:uppercase; font-size:10.5px; font-weight:700; white-space:nowrap}
+  @media(max-width:560px){ .fieldgrid{grid-template-columns:1fr} }
+</style>
+
+<script>
+(function(){
+  "use strict";
+
+  var TAG = { oral:"#D4B584", sleep:"#7B68EE", nutri:"#48C28C", family:"#E8985E", long:"#D97757" };
+
+  // ---- Canonical Primary iD question bank (Master · Questions & Scoring v1) ----
+  // Each dimension: 8 items, real answer→score weights, validated instrument.
+  var DIMS = [
+    { key:"oral", name:"Oral Health", color:TAG.oral, inst:"CAMBRA · OHIP-14", node:{x:100,y:44,label:"MOUTH"},
+      lead:"We start where <em>nobody looks</em>.",
+      intro:"Your mouth is the front door to the rest of your body — and the most overlooked. Let's start here.",
+      learn:"Here's why we start here: your gums open right onto your bloodstream. Inflammation in your mouth doesn't stay in your mouth — it's tied to your heart, your brain, and your blood sugar.",
+      qs:[
+        {short:"sugary snacking", q:"How often do you have sugary drinks or snacks between meals?", a:[["Rarely",92],["Once a day",70],["2–3 times a day",48],["Constantly",28]]},
+        {short:"a recent cavity", q:"Have you had a new cavity in the last 3 years?", a:[["No",90],["Yes",42]]},
+        {short:"fluoride habit", q:"Do you use fluoridated toothpaste twice a day?", a:[["Yes",88],["No",50]]},
+        {short:"bleeding gums", q:"Do your gums bleed when you brush or floss?", a:[["No",90],["Yes",40]]},
+        {short:"time since a cleaning", q:"When was your last professional cleaning?", a:[["Under 6 months",92],["6–12 months",72],["1–2 years",48],["2+ years",28]]},
+        {short:"dry mouth", q:"Do you often feel like your mouth is dry?", a:[["No",88],["Yes",50]]},
+        {short:"grinding or clenching", q:"Do you grind or clench your teeth?", a:[["No",85],["Yes",55]]},
+        {short:"smile confidence", q:"How confident do you feel about your smile?", a:[["Very confident",92],["Somewhat",72],["Not very",50],["Not at all",32]]}
+      ],
+      hist:[
+        {id:"work", type:"multi", q:"Any existing dental work?", opts:["Implants","Crowns","Bridges","Dentures","Veneers / bonding","Whitening","None"]},
+        {id:"rootcanal", type:"yn", q:"Ever had a root canal?"},
+        {id:"extraction", type:"yn", q:"Any extractions (other than wisdom teeth)?"},
+        {id:"lastexam", type:"single", q:"Last full dental exam — not just a cleaning?", opts:["Under 1 yr","1–2 yrs","2+ yrs","Never"]},
+        {id:"lastxray", type:"single", q:"Last dental X-rays?", opts:["Under 1 yr","1–2 yrs","2+ yrs","Not sure"]},
+        {id:"anxiety", type:"single", q:"How's dental anxiety for you?", opts:["None","A little","A lot"]}
+      ]},
+    { key:"sleep", name:"Sleep & Airway", color:TAG.sleep, inst:"STOP-BANG · Epworth", node:{x:100,y:84,label:"AIRWAY"},
+      lead:"How you breathe <em>shapes how you heal</em>.",
+      intro:"How you breathe at night decides how well your body repairs. A quick read on your sleep and airway.",
+      learn:"Your airway begins in your mouth. How well you breathe at night is how well your body repairs — most people never connect the two.",
+      qs:[
+        {short:"loud snoring", q:"Do you snore loudly — loud enough to be heard through a door?", a:[["No",88],["Yes",45]]},
+        {short:"daytime tiredness", q:"Do you often feel tired or sleepy during the day?", a:[["No",85],["Yes",48]]},
+        {short:"witnessed pauses", q:"Has anyone observed you stop breathing or gasp in your sleep?", a:[["No",92],["Yes",30]]},
+        {short:"blood pressure", q:"Are you being treated for high blood pressure?", a:[["No",82],["Yes",52]]},
+        {short:"build", q:"Which best describes your build?", a:[["Slim / average",88],["A bit heavy",66],["Overweight",46],["Larger",30]]},
+        {short:"age range", q:"What's your age range?", a:[["Under 50",85],["50–64",66],["65+",52]]},
+        {short:"neck", q:"How would you describe your neck?", a:[["Slim",88],["Average",68],["Thick / large",46]]},
+        {short:"dozing off", q:"Sitting and reading — how likely are you to doze off?", a:[["Would never",90],["Slight chance",70],["Moderate chance",50],["High chance",32]]}
+      ],
+      hist:[
+        {id:"tmj", type:"yn", q:"Jaw clicking, popping, locking, or chronic headaches?"},
+        {id:"ortho_history", type:"single", q:"Have you had braces or aligners at any point?", opts:["Never","As a teenager","As an adult","I'm in treatment now"]}
+      ]},
+    { key:"nutri", name:"Nutrition", color:TAG.nutri, inst:"MEDAS · BEVQ-15", node:{x:100,y:146,label:"FUEL"},
+      lead:"The ecosystem <em>you never see</em>.",
+      intro:"What you eat and drink is the fuel everything else runs on. A quick read on your day.",
+      learn:"Everything you eat enters through your mouth — and the microbiome that runs your gut starts there too. Your nutrition begins before you swallow.",
+      qs:[
+        {short:"olive oil", q:"Do you use olive oil as your main cooking fat?", a:[["Yes",88],["No",58]]},
+        {short:"vegetables", q:"How many servings of vegetables do you eat per day?", a:[["2+ a day",92],["1 a day",66],["A few a week",46],["Rarely",30]]},
+        {short:"fruit", q:"How many servings of fruit per day?", a:[["3+ a day",90],["1–2 a day",70],["A few a week",48],["Rarely",30]]},
+        {short:"red & processed meat", q:"How often do you eat red or processed meat?", a:[["Rarely",90],["1–2 a week",72],["Most days",48],["Daily",30]]},
+        {short:"sugary drinks", q:"How many sugar-sweetened beverages do you have per week?", a:[["0–1",92],["2–4",68],["Daily",44],["Several daily",26]]},
+        {short:"water", q:"How many glasses of water do you drink per day?", a:[["6+",88],["3–5",68],["1–2",46],["Rarely",30]]},
+        {short:"alcohol", q:"How often do you drink alcohol?", a:[["Rarely / none",88],["Socially",70],["A few times a week",52],["Daily",34]]},
+        {short:"whole grains", q:"Are most of the grains you eat whole-grain?", a:[["Yes",86],["No",56]]}
+      ]},
+    { key:"family", name:"Family History", color:TAG.family, inst:"AAP / EFP 2017 grading", node:{x:100,y:178,label:"DNA"},
+      lead:"Your biology, <em>not a template</em>.",
+      intro:"Some of your story you were born with — family history and the risks you can get ahead of.",
+      learn:"Your history isn't your fate — it's your early-warning system. Knowing it is how you get ahead of things instead of reacting to them.",
+      qs:[
+        {short:"family gum disease", q:"Did a parent or sibling lose teeth to gum disease?", a:[["No",88],["Yes",46]]},
+        {short:"family diabetes", q:"Does diabetes run in your immediate family?", a:[["No",84],["Yes",54]]},
+        {short:"early family heart disease", q:"Heart attack or stroke in a parent or sibling before 65?", a:[["No",84],["Yes",54]]},
+        {short:"smoking history", q:"What's your smoking history?", a:[["Never",92],["Former",66],["Current — light",46],["Current — heavy",26]]},
+        {short:"tooth loss to gum disease", q:"Have you lost any teeth to gum disease?", a:[["No",88],["Yes",42]]},
+        {short:"autoimmune history", q:"Do you or a close relative have an autoimmune condition?", a:[["No",82],["Yes",56]]},
+        {short:"pregnancy gum changes", q:"Did you have gum problems during pregnancy?", a:[["No",80],["Yes / N/A",62]]},
+        {short:"current stress", q:"How would you rate your current stress?", a:[["Low",88],["Moderate",68],["High",48],["Very high",32]]}
+      ]},
+    { key:"long", name:"Longevity", color:TAG.long, inst:"AHA Life's Essential 8", node:{x:100,y:114,label:"HEART"},
+      lead:"One score that <em>moves over time</em>.",
+      intro:"The everyday habits that shape how strong your next decades feel.",
+      learn:"These everyday habits are the ones that actually move the needle — not a single pill or hack, but the compounding basics.",
+      qs:[
+        {short:"tobacco", q:"What's your tobacco or vaping exposure?", a:[["Never / none",95],["Former",68],["Occasional",48],["Daily",26]]},
+        {short:"exercise", q:"Minutes of moderate exercise per week?", a:[["150+",92],["75–150",72],["Some",52],["Rarely",32]]},
+        {short:"sleep hours", q:"Average hours of sleep per night?", a:[["7–9",92],["6–7",70],["Under 6 or over 9",46]]},
+        {short:"weight", q:"Your weight feels…", a:[["Right where I want it",88],["A little high",66],["Higher than I'd like",46],["Much higher",30]]},
+        {short:"knowing your labs", q:"Do you know your current cholesterol numbers?", a:[["Yes",80],["No",60]]},
+        {short:"blood sugar", q:"Do you have pre-diabetes or diabetes?", a:[["No",84],["Yes",50]]},
+        {short:"blood pressure", q:"Your blood pressure is…", a:[["Normal / great",90],["A little high",66],["High",46],["Not sure",58]]},
+        {short:"overall diet", q:"Overall, how would you rate your diet?", a:[["Excellent",90],["Good",72],["Fair",52],["Poor",32]]}
+      ]}
+  ];
+
+  var GOALS = [
+    {k:"longevity", t:"Age with strength", d:"Add healthy years, not just years"},
+    {k:"energy", t:"More energy", d:"End the afternoon crash"},
+    {k:"sleep", t:"Sleep & breathe better", d:"Wake up genuinely rested"},
+    {k:"teeth", t:"Keep my teeth for life", d:"Protect what I have"},
+    {k:"smile", t:"Love my smile", d:"Feel good showing it"},
+    {k:"concern", t:"A specific concern", d:"Something's on my mind"}
+  ];
+
+  // ---- entry doors (the site's "Choose your pathway"; each augments the same engine) ----
+  var DOORS = {
+    preventive: { label:"Preventive", pathway:"your first preventive visit",
+      desc:"Comprehensive 90-minute intake with the full Primary iD score.",
+      includes:["Comprehensive health history","3D CBCT imaging","Salivary microbiome diagnostics","Airway & STOP-BANG screening","Periodontal staging (AAP/EFP)","Your Primary iD score & roadmap"],
+      heroH:"Wellbeing starts <em>with your mouth</em>.",
+      heroSub:"We look at the whole picture — how you sleep, eat, breathe, and carry stress — and it all traces back to the one place most care overlooks. No forms, no repeating yourself. Just build your baseline with me.",
+      reason:null, track:null, rec:"first" },
+    airway: { label:"Airway & sleep", pathway:"your airway & sleep visit",
+      desc:"Sleep-disordered breathing screening, STOP-BANG, CBCT airway analysis.",
+      includes:["Sleep & airway screening (STOP-BANG)","CBCT airway analysis","Bite & jaw evaluation","Full Primary iD score across five dimensions"],
+      heroH:"How you breathe <em>shapes how you heal</em>.",
+      heroSub:"Rest, energy, and repair start with your airway — which begins in your mouth. We'll find where you stand, then build from there. No forms, no repeating yourself.",
+      reason:"prevent", track:null, rec:"airway" },
+    cosmetic: { label:"Cosmetic", pathway:"your cosmetic consult",
+      desc:"Veneers, whitening, bonding, full smile design, biocompatible by default.",
+      includes:["Smile design consult","Shade & bite evaluation","Biocompatible materials review","Full Primary iD score — the foundation under the smile"],
+      heroH:"Love your smile — <em>and what's under it</em>.",
+      heroSub:"A smile you love, built on a foundation that lasts. We start with what's holding it, then design from there.",
+      reason:"fix", track:"restorative", rec:"cosmetic" },
+    implants: { label:"Implants", pathway:"your implant assessment",
+      desc:"Zirconia and titanium implants planned with 3D imaging. Full-arch capable.",
+      includes:["3D implant planning","Bone & gum-health evaluation","Full-arch candidacy","Full Primary iD score — planned around your whole health"],
+      heroH:"Get your function <em>back</em>.",
+      heroSub:"Replacing what's missing — planned around your whole health, not just the gap. We start with what makes it last.",
+      reason:"fix", track:"restorative", rec:"implant" },
+    longevity: { label:"Longevity", pathway:"your Primary iD Plus baseline",
+      desc:"Primary iD Plus: biomarker labs, nutrition, sleep, and oral microbiome integrated.",
+      includes:["Biomarker lab integration","Nutrition & sleep baseline","Oral microbiome read","Full Primary iD score, tracked over time"],
+      heroH:"One score that <em>moves over time</em>.",
+      heroSub:"The habits and markers that shape your next decades — baselined today, tracked from here. We start at your mouth and follow what runs through it.",
+      reason:"blindspot", track:null, rec:"longevity" },
+    orthofx: { label:"Clear aligners", pathway:"your aligner fit assessment",
+      desc:"A straighter smile with less daily wear time.",
+      includes:["Aligner Fit Assessment + 3D scan","Bite, gum & airway-history review","Full Primary iD score across five dimensions"],
+      heroH:"Twelve hours a day. <em>Not twenty-two.</em>",
+      heroSub:"A straighter smile designed around your day — with a prosthodontist looking at your bite, gums and airway history before anything moves.",
+      reason:"fix", track:"alignment", rec:"airflex", cobrand:true },
+    pain: { label:"Emergency", pathway:"an emergency visit",
+      desc:"In pain, swelling, or a broken or knocked-out tooth — we'll get you seen fast.",
+      includes:["Same-day triage","Focused exam of the urgent issue","Pain relief and a clear plan","Your Primary iD baseline once you're comfortable"],
+      heroH:"Let's get you <em>seen</em>.",
+      heroSub:"When something's wrong, the first job is getting you out of pain and safe. We handle the urgent thing first, then build your baseline once you're comfortable.",
+      reason:"problem", track:null, rec:"emergency" }
+  };
+  var PICKER_DOORS = ["preventive","orthofx","airway","cosmetic","implants","longevity","pain"];
+  function doorCfg(){ return DOORS[S.door] || DOORS.preventive; }
+  function resolveDoorParam(){
+    var s=(location.search||"")+(location.hash||"");
+    var m=s.match(/[?&]door=([a-z]+)/i); if(m && DOORS[m[1].toLowerCase()]) return m[1].toLowerCase();
+    m=s.match(/[?&]pathway=([a-z]+)/i); if(m && DOORS[m[1].toLowerCase()]) return m[1].toLowerCase();
+    return null;
+  }
+  function applyDoor(key){ S.door=key; var d=DOORS[key]; if(d && d.reason) S.reason=d.reason; }
+  function pfTrack(){ return doorCfg().track || (S.reason==="fix" ? "restorative" : null); }
+
+  // tiers (Master bands + patient language)
+  function tier(v){
+    if(v>=85) return {w:"Thriving", c:"var(--t-thriving)", line:"Doing the quiet work."};
+    if(v>=70) return {w:"Strong", c:"var(--t-strong)", line:"A solid foundation, a couple of clear levers."};
+    if(v>=50) return {w:"Foundational", c:"var(--t-found)", line:"Real signal worth acting on."};
+    return {w:"Needs focus", c:"var(--t-needs)", line:"Let's slow down and do this right."};
+  }
+
+  var S = { pastDims:false, name:"", door:"", reason:"", reasonDetail:"", pf:{}, align:{}, pfTrack:"", pathfinder:false, leadFired:false, goals:[], intent:"", di:0, qi:0, scores:{}, hist:{}, safety:[], records:{}, demo:{}, insurance:{}, complaint:"" };
+  DIMS.forEach(function(d){ S.scores[d.key]=[]; });
+
+  var screensEl = document.getElementById("screens");
+  var progEl = document.getElementById("progress");
+  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+
+  // ---- shareable results link (self-contained; encodes the answers into the URL) ----
+  function b64u(str){ return btoa(unescape(encodeURIComponent(str))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,""); }
+  function ub64u(s){ s=s.replace(/-/g,"+").replace(/_/g,"/"); while(s.length%4)s+="="; return decodeURIComponent(escape(atob(s))); }
+  function encodeState(){
+    // Clinical fields (demo, insurance, hist, safety, records, complaint) are NOT
+    // encoded: this link is shareable, unauthenticated, and base64 is not encryption.
+    var o={ n:S.name, dr:S.door, al:S.align, pft:S.pfTrack, r:S.reason, rd:S.reasonDetail, pf:S.pf, pfb:S.pathfinder, g:S.goals, it:S.intent, sc:S.scores };
+    return b64u(JSON.stringify(o));
+  }
+  function resultsLink(){ return location.origin + location.pathname + "#v=" + encodeState(); }
+  function tryViewMode(){
+    var m=(location.hash||"").match(/[#&]v=([^&]+)/); if(!m) return false;
+    try{
+      var o=JSON.parse(ub64u(m[1]));
+      S.name=o.n||""; S.demo=o.d||{}; S.insurance=o.ins||{}; S.reason=o.r||""; S.reasonDetail=o.rd||"";
+      S.pf=o.pf||{}; S.pathfinder=!!o.pfb; S.goals=o.g||[]; S.intent=o.it||"";
+      S.door=o.dr||""; S.align=o.al||{}; S.pfTrack=o.pft||"";
+      S.scores=o.sc||{}; S.hist=o.h||{}; S.safety=o.sf||[]; S.records=o.rec||{}; S.complaint=o.cc||"";
+      DIMS.forEach(function(d){ if(!S.scores[d.key]) S.scores[d.key]=[]; });
+      updateTwin(""); scrProvider(); return true;
+    }catch(e){ return false; }
+  }
+  function copyLink(btn){
+    var link=resultsLink();
+    function done(){ var t=btn.textContent; btn.textContent="Link copied ✓"; setTimeout(function(){ btn.textContent=t; },1800); }
+    try{ if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(link).then(done,function(){ window.prompt("Copy this link:", link); }); return; } }catch(e){}
+    window.prompt("Copy this link:", link);
+  }
+
+  // ---- email the completed answers (no backend; FormSubmit) ----
+  var RESULTS_EMAIL = "farhad@oralhealthunited.com";
+  var _sent = false;
+  function answerLabel(dimKey, qi){ var d; for(var i=0;i<DIMS.length;i++){ if(DIMS[i].key===dimKey) d=DIMS[i]; } if(!d) return ""; var sc=S.scores[dimKey][qi], q=d.qs[qi]; for(var j=0;j<q.a.length;j++){ if(q.a[j][1]===sc) return q.a[j][0]; } return "(skipped)"; }
+  function sendResults(){
+    if(_sent) return; _sent=true;
+    var L=[];
+    L.push("PRIMARY iD — completed assessment");
+    L.push("");
+    L.push("Name: "+(S.name||"")+(S.demo.last?(" "+S.demo.last):""));
+    if(S.demo.email) L.push("Email: "+S.demo.email);
+    if(S.demo.phone) L.push("Mobile: "+S.demo.phone);
+    if(S.demo.age) L.push("Age: "+S.demo.age);
+    if(S.demo.dob) L.push("DOB: "+S.demo.dob);
+    if(S.demo.sex) L.push("Legal sex: "+S.demo.sex);
+    if(S.demo.address) L.push("Address: "+S.demo.address);
+    L.push("Insurance: "+(S.insurance.type?(S.insurance.type+(S.insurance.carrier?(" / "+S.insurance.carrier):"")+(S.insurance.member?(" #"+S.insurance.member):"")):"Not provided"));
+    L.push("");
+    L.push("Pathway (door): "+(S.door&&DOORS[S.door]?DOORS[S.door].label:"General / Book a visit"));
+    L.push("Why they came: "+reasonLabel(S.reason)+(S.reasonDetail?(" — \""+S.reasonDetail+"\""):""));
+    if(S.pathfinder) L.push("Pathfinder ("+(S.pfTrack||"restorative")+"): "+[S.pf.what,S.pf.why,S.pf.where].filter(Boolean).join(" / "));
+    if(S.pfTrack==="alignment") L.push("Aligner candidacy: "+[(S.align.wear_tolerance?"wear="+S.align.wear_tolerance:""),(S.align.ortho_history?"ortho="+S.align.ortho_history:""),(S.align.retainer_wear?"retainer="+S.align.retainer_wear:"")].filter(Boolean).join(" · "));
+    if(S.goals&&S.goals.length) L.push("What matters: "+S.goals.map(goalOf).join(", "));
+    if(S.intent) L.push("If nothing changes: "+S.intent);
+    L.push("");
+    L.push("=== PRIMARY iD SCORES ===");
+    DIMS.forEach(function(d){ var v=dimScore(d.key); L.push("");
+      L.push(d.name+" — "+v+" ("+tier(v).w+")");
+      d.qs.forEach(function(q,i){ L.push("   - "+q.q+"  =>  "+answerLabel(d.key,i)+" ("+(S.scores[d.key][i])+")"); });
+    });
+    var comp=composite(); L.push(""); L.push("COMPOSITE: "+comp+" ("+tier(comp).w+")");
+    L.push("");
+    L.push("=== MEDICAL & DENTAL HISTORY (flags, not scored) ===");
+    var oh=S.hist.oral||{}, sh=S.hist.sleep||{};
+    if(oh.work&&oh.work.length) L.push("Existing dental work: "+oh.work.join(", "));
+    if(oh.rootcanal) L.push("Root canal: "+oh.rootcanal);
+    if(oh.extraction) L.push("Extractions: "+oh.extraction);
+    if(oh.lastexam) L.push("Last dental exam: "+oh.lastexam);
+    if(oh.lastxray) L.push("Last X-rays: "+oh.lastxray);
+    if(oh.anxiety) L.push("Dental anxiety: "+oh.anxiety);
+    if(sh.tmj) L.push("Jaw/TMJ or headaches: "+sh.tmj);
+    if(sh.ortho) L.push("Ortho history: "+sh.ortho);
+    L.push("Safety flags: "+((S.safety&&S.safety.length)?S.safety.join(", "):"none selected"));
+    if(S.records.other) L.push("Also noted: "+S.records.other);
+    if(S.records.pcp) L.push("Primary care doctor: "+S.records.pcp);
+    if(S.records.labs) L.push("Recent labs: "+S.records.labs);
+    if(S.records.platforms&&S.records.platforms.length) L.push("Health platforms: "+S.records.platforms.join(", "));
+    L.push("");
+    L.push("In their words: "+(S.complaint||"(none)"));
+    var link = resultsLink();
+    L.unshift(""); L.unshift("OPEN CLINICAL BRIEF (share with the clinical team): "+link);
+    var payload = {
+      _subject: "New Primary iD — "+(S.name||"patient")+" ("+comp+" "+tier(comp).w+")",
+      _template: "box",
+      _captcha: "false",
+      name: (S.name||"")+(S.demo.last?(" "+S.demo.last):""),
+      email: S.demo.email || "no-reply@primaryid.local",
+      brief_link: link,
+      message: L.join("\n")
+    };
+    // REMOVED 25 Aug 2026 — this emailed the full clinical brief (medical and
+    // dental history, safety flags, insurance, DOB, address, chief complaint) in
+    // plaintext through formsubmit.co, a third-party relay with no BAA.
+    // Clinical answers now stay in this browser session and are never transmitted.
+    void payload;
+  }
+
+  // ---- twin ----
+  function buildNodes(){
+    var g=document.getElementById("nodes"), h="";
+    DIMS.forEach(function(d){
+      var x=d.node.x, y=d.node.y;
+      h += '<g class="node" id="node-'+d.key+'" style="--nc:'+d.color+'">'
+        + '<circle class="pulse" cx="'+x+'" cy="'+y+'" r="11"/>'
+        + '<circle class="halo" cx="'+x+'" cy="'+y+'" r="13"/>'
+        + '<circle class="core" cx="'+x+'" cy="'+y+'" r="5.5"/>'
+        + '<circle class="ring" cx="'+x+'" cy="'+y+'" r="10"/>'
+        + '<line class="tick" x1="'+(x-14)+'" y1="'+y+'" x2="'+(x-9)+'" y2="'+y+'"/>'
+        + '<line class="tick" x1="'+(x+9)+'" y1="'+y+'" x2="'+(x+14)+'" y2="'+y+'"/>'
+        + '<text x="'+x+'" y="'+(y-16)+'">'+d.node.label+'</text></g>';
+    });
+    g.innerHTML=h;
+    var mesh=document.getElementById("mesh"), m="";
+    for(var yy=18; yy<=352; yy+=11){ m+='<line x1="55" y1="'+yy+'" x2="145" y2="'+yy+'"/>'; }
+    for(var xx=64; xx<=136; xx+=12){ m+='<line x1="'+xx+'" y1="14" x2="'+xx+'" y2="356"/>'; }
+    if(mesh) mesh.innerHTML=m;
+    var dl=document.getElementById("dimlist"), r="";
+    DIMS.forEach(function(d){
+      r += '<div class="dimrow" id="row-'+d.key+'" style="--dc:'+d.color+'">'
+        + '<span class="dmk"></span><span class="dnm">'+esc(d.name)+'</span>'
+        + '<span class="bar"><i id="bar-'+d.key+'"></i></span><span class="dsc" id="sc-'+d.key+'">—</span></div>';
+    });
+    dl.innerHTML=r;
+  }
+  function dimScore(k){ var a=S.scores[k].filter(function(x){return x!=null;}); if(!a.length) return null; return Math.round(a.reduce(function(x,y){return x+y;},0)/a.length); }
+  function composite(){ var v=[]; DIMS.forEach(function(d){ var s=dimScore(d.key); if(s!=null) v.push(s); }); if(!v.length) return null; return Math.round(v.reduce(function(x,y){return x+y;},0)/v.length); }
+  function updateTwin(msg){
+    DIMS.forEach(function(d){ var v=dimScore(d.key); if(v!=null){
+      document.getElementById("node-"+d.key).classList.add("lit");
+      document.getElementById("row-"+d.key).classList.add("on");
+      document.getElementById("bar-"+d.key).style.width=v+"%";
+      document.getElementById("sc-"+d.key).textContent=v;
+    }});
+    var c=composite();
+    if(c!=null){
+      document.getElementById("compVal").textContent=c;
+      var t=tier(c), el=document.getElementById("compTier"); el.textContent=t.w; el.style.color=t.c;
+      var circ=163.4; document.getElementById("cring").style.strokeDashoffset=circ-(circ*c/100);
+    }
+    if(msg!==undefined) document.getElementById("whisper").textContent=msg;
+    if(S.name) document.getElementById("twinName").innerHTML="Welcome, <em>"+esc(S.name.split(" ")[0])+"</em>.";
+  }
+
+  // ---- progress ---- (11 stops: goals·intent·how · 5 dims · record · reflect · reveal)
+  var PROG_N = 11;
+  function renderProg(stage){
+    var h=""; for(var i=0;i<PROG_N;i++){ h+='<i class="'+(i<stage?"done":i===stage?"on":"")+'"></i>'; }
+    progEl.innerHTML=h;
+  }
+  function coach(inner, who){
+    return '<div class="coach"><div class="avatar"><span>P</span></div>'
+      + '<div class="bubble"><div class="who">'+(who||"Your Primary coach")+'</div>'+inner+'</div></div>';
+  }
+  function show(html, stage){
+    renderProg(stage);
+    screensEl.innerHTML='<div class="screen active">'+html+'</div>';
+    window.scrollTo(0,0);
+    try{ pidSync(); }catch(e){}
+  }
+  function goalOf(k){ for(var i=0;i<GOALS.length;i++){ if(GOALS[i].k===k) return GOALS[i].t; } return k; }
+
+  // ---- chip helpers (used by woven history + records) ----
+  function chipItem(item, store){
+    var sel=store[item.id], opts=item.type==="yn"?["Yes","No"]:item.opts;
+    var chips=opts.map(function(o){
+      var on=item.type==="multi"?(Array.isArray(sel)&&sel.indexOf(o)>-1):(sel===o);
+      return '<button class="chip'+(on?" sel":"")+'" data-id="'+esc(item.id)+'" data-val="'+esc(o)+'" data-type="'+item.type+'">'+esc(o)+'</button>';
+    }).join("");
+    return '<div class="chiprow"><div class="ql">'+esc(item.q)+'</div><div class="chips">'+chips+'</div></div>';
+  }
+  function rowOf(el){ while(el&&!(el.classList&&el.classList.contains("chiprow"))) el=el.parentNode; return el; }
+  function wireChips(store){
+    Array.prototype.forEach.call(document.querySelectorAll(".chipset .chip"),function(c){
+      c.onclick=function(){
+        var id=c.getAttribute("data-id"), val=c.getAttribute("data-val"), type=c.getAttribute("data-type"), row=rowOf(c);
+        if(type==="multi"){
+          var arr=Array.isArray(store[id])?store[id]:[];
+          if(val==="None"){ arr=["None"]; }
+          else { var i=arr.indexOf(val); if(i>-1)arr.splice(i,1); else { arr.push(val); var n=arr.indexOf("None"); if(n>-1)arr.splice(n,1); } }
+          store[id]=arr;
+          Array.prototype.forEach.call(row.querySelectorAll(".chip"),function(x){ x.classList.toggle("sel", arr.indexOf(x.getAttribute("data-val"))>-1); });
+        } else {
+          store[id]=val;
+          Array.prototype.forEach.call(row.querySelectorAll(".chip"),function(x){ x.classList.toggle("sel", x===c); });
+        }
+      };
+    });
+  }
+
+  // 0 — welcome
+  function scrWelcome(){
+    var d=doorCfg();
+    show(
+      coach("<p>Hi — I'm your Primary coach. The next few minutes aren't a form; they're a conversation.</p><p>By the end you'll have your <em>Primary iD</em> — a real baseline of your health, built around you.</p>")
+      + '<h1 class="head">'+d.heroH+'</h1>'
+      + '<p class="lede">'+esc(d.heroSub)+'</p>'
+      + '<div class="actions"><button class="cta blue" id="go">Begin</button><span class="hint">About 6 minutes · replaces your whole intake</span></div>',
+      0);
+    document.getElementById("go").onclick=scrGate;
+  }
+
+  // 1 — name
+  function scrName(){
+    show(
+      coach("<p>First — what should I call you? This profile is <em>yours</em>, and it starts now.</p>")
+      + '<h1 class="head">Let\'s make this <em>about you</em>.</h1>'
+      + '<div class="field"><label>Your first name</label><input id="nm" type="text" placeholder="e.g. Farhad" autocomplete="given-name" /></div>'
+      + '<div class="actions"><button class="cta" id="go" disabled>Continue</button></div>',
+      0);
+    var nm=document.getElementById("nm"), go=document.getElementById("go"); nm.focus();
+    nm.oninput=function(){ go.disabled=!nm.value.trim(); };
+    nm.onkeydown=function(e){ if(e.key==="Enter"&&nm.value.trim()) commit(); };
+    go.onclick=commit;
+    function commit(){ S.name=nm.value.trim(); updateTwin("Nice to meet you, "+esc(S.name.split(" ")[0])+"."); scrWhy(); }
+  }
+
+  // 1 — THE GATE (hero + minimum lead: name · email · mobile · age). One screen from picking a pathway.
+  // Fires the lead here, before the assessment, so an abandoner is still retargetable (PRD gate).
+  function scrGate(){
+    var d=doorCfg();
+    function v(id){ var el=document.getElementById(id); return el?el.value.trim():""; }
+    var inc=(d.includes||[]).slice(0,3).join(" · ");
+    show(
+      '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>'+esc(d.label)+' · Primary iD'+(d.cobrand?' · AirFlex':'')+'</div>'
+      + '<h1 class="head">'+d.heroH+'</h1>'
+      + '<p class="lede">'+esc(d.heroSub)+'</p>'
+      + coach("<p>Save your spot and I'll send your results — then it's a ~6-minute conversation, not a form. Private, and yours to keep.</p>")
+      + '<div class="fieldgrid">'
+        + '<div class="field"><label>First name</label><input id="g_first" type="text" value="'+esc(S.name||"")+'" /></div>'
+        + '<div class="field"><label>Last name</label><input id="g_last" type="text" value="'+esc(S.demo.last||"")+'" /></div>'
+        + '<div class="field"><label>Email</label><input id="g_email" type="email" placeholder="you@email.com" value="'+esc(S.demo.email||"")+'" /></div>'
+        + '<div class="field"><label>Mobile</label><input id="g_phone" type="tel" placeholder="(___) ___-____" value="'+esc(S.demo.phone||"")+'" /></div>'
+        + '<div class="field"><label>Age</label><input id="g_age" type="text" inputmode="numeric" placeholder="e.g. 42" value="'+esc(S.demo.age||"")+'" /></div>'
+      + '</div>'
+      + (inc?'<p class="hint" style="margin-top:12px">Your visit includes: '+esc(inc)+'</p>':'')
+      + '<div class="actions"><button class="cta blue" id="go" disabled>Save my spot &amp; start &rarr;</button><span class="hint">Free · private · results sent to your inbox</span>'
+      + (S.door?'<button class="ghost" id="back" style="margin-left:auto">Pathways</button>':'')+'</div>',
+      0);
+    var go=document.getElementById("go");
+    function chk(){ var f=v("g_first"), e=v("g_email"), p=v("g_phone"); go.disabled=!(f && e.indexOf("@")>0 && p.replace(/\D/g,"").length>=7); }
+    ["g_first","g_last","g_email","g_phone","g_age"].forEach(function(id){ var el=document.getElementById(id); if(el) el.oninput=chk; });
+    var f0=document.getElementById("g_first"); if(f0) f0.focus(); chk();
+    go.onclick=function(){
+      S.name=v("g_first"); S.demo.last=v("g_last"); S.demo.email=v("g_email"); S.demo.phone=v("g_phone"); S.demo.age=v("g_age");
+      if(!S.leadFired){ S.leadFired=true; pidLead("gate"); }
+      updateTwin("Spot saved, "+esc(S.name.split(" ")[0])+".");
+      routeAfterGate();
+    };
+    var bk=document.getElementById("back"); if(bk) bk.onclick=scrPathway;
+  }
+  // ── GHL capture ───────────────────────────────────────────────────────────
+  // Covers everything up to the five dimensions: identity, door, why, goals,
+  // intent, pathfinder track. Fires once at the gate so a drop-off is still a
+  // retained lead, then again at the dimension boundary once intent is known.
+  // Upserts the same contact both times via the shared assessment_id.
+  // NOTHING clinical is ever sent from here.
+  var PID_ID = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now());
+  function pidUtm(){
+    var out={}, q=new URLSearchParams(location.search||"");
+    ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"].forEach(function(k){
+      var v=q.get(k); if(v) out[k]=v;
+    });
+    return out;
+  }
+  function pidLead(phase){
+    try{
+      var why = S.reason ? reasonLabel(S.reason) : "";
+      fetch("/api/lead/",{
+        method:"POST", keepalive:true,
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+          mode:"appt",
+          phase: phase,
+          assessmentId: PID_ID,
+          form:{
+            firstName: S.name||"", lastName: S.demo.last||"",
+            email: S.demo.email||"", mobile: S.demo.phone||"",
+            age: S.demo.age||"", reason: why
+          },
+          pathway:    S.door||"",
+          goals:      S.goals||[],
+          intent:     S.intent||"",
+          pathfinder: !!S.pathfinder,
+          pfTrack:    S.pfTrack||"",
+          leadSource: pidUtm()
+        })
+      }).catch(function(){});
+    }catch(e){}
+  }
+
+  // Progressive capture. Every screen between the gate and the five dimensions
+  // re-upserts the same contact, so a drop-off at ANY point keeps whatever they
+  // had given by then — why, pathfinder track, goals, intent. Debounced and
+  // deduped, so idle re-renders and Back navigation cost nothing.
+  var _pidTimer = null, _pidSig = "";
+  function pidSync(){
+    if(!S.leadFired || S.pastDims) return;
+    var sig = JSON.stringify([S.door,S.reason,S.reasonDetail,S.goals,S.intent,S.pathfinder,S.pfTrack]);
+    if(sig === _pidSig) return;
+    _pidSig = sig;
+    clearTimeout(_pidTimer);
+    _pidTimer = setTimeout(function(){ pidLead("progress"); }, 400);
+  }
+
+  // The door already told us why they're here — only the general/Preventive door still asks "why".
+  function routeAfterGate(){
+    var d=doorCfg();
+    if(d.reason){
+      var t=pfTrack();
+      if(t==="alignment") scrPathfinderAlign();
+      else if(t==="restorative") scrPathfinder();
+      else scrGoals();
+    } else { scrWhy(); }
+  }
+  function backFromPF(){ if(doorCfg().reason) scrGate(); else scrWhy(); }
+
+  // 2 — WHY (the single most important signal: what actually brought them in)
+  var REASONS=[
+    {k:"problem", t:"Something's bothering me", d:"Pain, or a problem I can feel"},
+    {k:"fix", t:"A specific thing to fix", d:"A tooth, my smile, work that's failing"},
+    {k:"blindspot", t:"This is my blind spot", d:"I've optimized everything else"},
+    {k:"prevent", t:"Get ahead of it", d:"Before something goes wrong"},
+    {k:"curious", t:"Honestly, just curious", d:"I want to see where I stand"}
+  ];
+  function reasonLabel(k){ for(var i=0;i<REASONS.length;i++){ if(REASONS[i].k===k) return REASONS[i].t; } return ""; }
+  function scrWhy(){
+    var tiles=REASONS.map(function(r){ var sel=S.reason===r.k;
+      return '<div class="tile'+(sel?" sel":"")+'" data-k="'+r.k+'"><div class="tchk"></div><div class="tt">'+r.t+'</div><div class="td">'+r.d+'</div></div>';
+    }).join("");
+    show(
+      coach("<p>Before anything else — the most important thing you can tell me. What actually brought you to Primary?</p>")
+      + '<h1 class="head">Why are you <em>here</em>?</h1>'
+      + '<div class="grid">'+tiles+'</div>'
+      + '<div class="addfield"><input id="rdetail" type="text" placeholder="Want to say more? (optional)" /></div>'
+      + '<div class="actions"><button class="cta" id="go" disabled>Continue</button><button class="ghost" id="back">Back</button></div>',
+      0);
+    var go=document.getElementById("go"), det=document.getElementById("rdetail");
+    if(S.reasonDetail) det.value=S.reasonDetail;
+    if(S.reason) go.disabled=false;
+    Array.prototype.forEach.call(document.querySelectorAll(".tile"),function(t){
+      t.onclick=function(){ S.reason=t.getAttribute("data-k");
+        Array.prototype.forEach.call(document.querySelectorAll(".tile"),function(x){x.classList.remove("sel");});
+        t.classList.add("sel"); go.disabled=false;
+      };
+    });
+    det.onchange=function(){ S.reasonDetail=det.value.trim(); };
+    go.onclick=function(){ if(det.value.trim())S.reasonDetail=det.value.trim();
+      var t=pfTrack();
+      if(t==="alignment") scrPathfinderAlign();
+      else if(t==="restorative") scrPathfinder();
+      else scrGoals();
+    };
+    document.getElementById("back").onclick=scrGate;
+  }
+
+  // 2b — PATHFINDER (fires when the intention is restorative — the "why/what" of the fix)
+  var PF=[
+    {id:"what", type:"single", q:"What's going on?", opts:["A missing tooth or teeth","A tooth that's failing or loose","Old work failing (crown / bridge / implant)","Dentures I don't love","I don't like my smile"]},
+    {id:"why", type:"single", q:"What would fixing it mean for you?", opts:["Eat normally again","Feel confident smiling","Stop the pain or worry","A permanent fix, not a patch"]},
+    {id:"where", type:"single", q:"Where are you with it?", opts:["Just starting to look","I've been told I need work","I have a quote elsewhere","Ready to move now"]}
+  ];
+  // alignment track (OrthoFX) — one Pathfinder, two tracks. Only `what` forks; why/where shared.
+  var PF_ALIGN = [
+    {id:"what", type:"single", q:"What would you change about your smile?", opts:["Crowding or crooked teeth","Gaps between my teeth","How my teeth meet when I bite","They shifted back after braces","Something else about my smile"]},
+    {id:"ortho_history", type:"single", q:"Have you had braces or aligners at any point?", opts:["Never","As a teenager","As an adult","I'm in treatment now"]},
+    {id:"wear_tolerance", type:"single", q:"Realistically, how much of the day could you wear aligners?", opts:["All day — that's fine","Evenings and overnight only","This is why I've put treatment off","I'm not sure"]}
+  ];
+  var PF_RETAINER = {id:"retainer_wear", type:"single", q:"Did you keep wearing your retainers?", opts:["Still do","Stopped after a while","Never really did","Lost or broke them"]};
+  function scrPathfinder(){
+    var items=PF.map(function(it){ return chipItem(it, S.pf); }).join("");
+    show(
+      '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>Your situation</div>'
+      + coach("<p>Since you came in to fix something specific, let's get the full picture — this shapes your whole plan, and it's the part most places rush.</p>")
+      + '<h1 class="head">Let\'s get the <em>full picture</em>.</h1>'
+      + '<div class="chipset">'+items+'</div>'
+      + '<div class="actions"><button class="cta" id="go" disabled>Continue</button><button class="ghost" id="back">Back</button></div>',
+      0);
+    wireChips(S.pf);
+    var go=document.getElementById("go");
+    // enable Continue once "what" is chosen (chip handler runs first, then this bubbled check)
+    document.querySelector(".chipset").addEventListener("click", function(){ go.disabled = !S.pf.what; });
+    go.onclick=function(){
+      S.pathfinder = !!(S.pf.what && S.pf.what!=="I don't like my smile");
+      S.pfTrack="restorative";
+      scrGoals();
+    };
+    document.getElementById("back").onclick=backFromPF;
+  }
+
+  // Choose your pathway — the site's "Book a visit" entry
+  function scrPathway(){
+    var tiles=PICKER_DOORS.map(function(k){ var d=DOORS[k];
+      return '<div class="tile pw" data-k="'+k+'"><div class="tt">'+esc(d.label)+' &rarr;</div><div class="td">'+esc(d.desc)+'</div></div>';
+    }).join("");
+    show(
+      '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>Book · choose your pathway</div>'
+      + '<h1 class="head">Choose your <em>pathway</em>.</h1>'
+      + '<p class="lede">We meet you where your priority is, and broaden out from there. Every pathway includes a full Primary iD score across five dimensions.</p>'
+      + '<div class="grid">'+tiles+'</div>',
+      0);
+    Array.prototype.forEach.call(document.querySelectorAll(".tile.pw"),function(t){
+      t.onclick=function(){ applyDoor(t.getAttribute("data-k")); scrGate(); };
+    });
+  }
+
+  // Pathway intro — "Book your first X visit" + Start the assessment
+  function scrPathwayIntro(){
+    var d=doorCfg();
+    var inc=(d.includes||[]).map(function(x){ return '<div class="stepitem"><div class="num" style="font-size:12px;font-style:normal">&check;</div><div style="flex:1"><h4 style="margin:0">'+esc(x)+'</h4></div></div>'; }).join("");
+    show(
+      '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>'+esc(d.label)+' · Primary iD'+(d.cobrand?' · AirFlex':'')+'</div>'
+      + '<h1 class="head">Book '+esc(d.pathway)+'.</h1>'
+      + '<p class="lede">'+esc(d.heroSub)+'</p>'
+      + '<div class="steps">'+inc+'</div>'
+      + coach("<p>Our intake is built around the <em>Primary iD</em> — a ~6-minute score across five dimensions. It tells us what to focus on before you arrive, so the visit is about you. Start it now, or call and we'll book you the old-fashioned way.</p>")
+      + '<div class="actions"><button class="cta blue" id="go">Start the assessment</button><button class="ghost" id="back">Back to pathways</button></div>',
+      0);
+    document.getElementById("go").onclick=scrWelcome;
+    document.getElementById("back").onclick=scrPathway;
+  }
+
+  // Pathfinder — ALIGNMENT track (OrthoFX). why/where shared; only `what` forks.
+  function scrPathfinderAlign(){
+    S.align=S.align||{};
+    var items=PF_ALIGN.map(function(it){ return chipItem(it, S.align); }).join("");
+    show(
+      '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>Your smile</div>'
+      + coach("<p>Since you're here about your smile, a few quick things — they shape your whole plan, and it's the part most places rush.</p>")
+      + '<h1 class="head">Let\'s get the <em>full picture</em>.</h1>'
+      + '<div class="chipset">'+items+'</div>'
+      + '<div class="actions"><button class="cta" id="go" disabled>Continue</button><button class="ghost" id="back">Back</button></div>',
+      0);
+    wireChips(S.align);
+    var go=document.getElementById("go"); go.disabled=!S.align.what;
+    document.querySelector(".chipset").addEventListener("click", function(){ go.disabled = !S.align.what; });
+    go.onclick=function(){
+      var prior = S.align.ortho_history==="As a teenager" || S.align.ortho_history==="As an adult";
+      if(prior) scrRetainer(); else finishAlign();
+    };
+    document.getElementById("back").onclick=backFromPF;
+  }
+  function scrRetainer(){
+    S.align=S.align||{};
+    show(
+      '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>Your smile</div>'
+      + coach("<p>One more — this tells us a lot about what happened and what'll hold.</p>")
+      + '<h1 class="head">And your <em>retainers</em>?</h1>'
+      + '<div class="chipset">'+chipItem(PF_RETAINER, S.align)+'</div>'
+      + '<div class="actions"><button class="cta" id="go">Continue</button><button class="ghost" id="back">Back</button></div>',
+      0);
+    wireChips(S.align);
+    document.getElementById("go").onclick=finishAlign;
+    document.getElementById("back").onclick=scrPathfinderAlign;
+  }
+  function finishAlign(){
+    S.pf.what=S.align.what; S.pathfinder=true; S.pfTrack="alignment";
+    if(S.align.ortho_history){ S.hist.sleep=S.hist.sleep||{}; S.hist.sleep.ortho_history=S.align.ortho_history; }
+    scrGoals();
+  }
+
+  // 3 — goals (what matters — the aspiration behind the why)
+  function scrGoals(){
+    var tiles=GOALS.map(function(g){ var sel=S.goals.indexOf(g.k)>-1;
+      return '<div class="tile'+(sel?" sel":"")+'" data-k="'+g.k+'"><div class="tchk"></div><div class="tt">'+g.t+'</div><div class="td">'+g.d+'</div></div>';
+    }).join("");
+    show(
+      coach("<p>Got it. Now — what matters most to you right now? Pick as many as you like; I'll keep them close.</p>")
+      + '<h1 class="head">What matters <em>most to you</em>?</h1>'
+      + '<div class="grid">'+tiles+'</div>'
+      + '<div class="actions"><button class="cta" id="go" disabled>Continue</button><span class="hint" id="hint">There are no wrong answers</span></div>',
+      0);
+    var go=document.getElementById("go"), hint=document.getElementById("hint");
+    Array.prototype.forEach.call(document.querySelectorAll(".tile"),function(t){
+      t.onclick=function(){ var k=t.getAttribute("data-k"), i=S.goals.indexOf(k);
+        if(i>-1){S.goals.splice(i,1);t.classList.remove("sel");}else{S.goals.push(k);t.classList.add("sel");}
+        go.disabled=!S.goals.length; hint.textContent=S.goals.length?S.goals.length+" selected":"There are no wrong answers";
+      };
+    });
+    go.onclick=scrIntent;
+  }
+
+  // 3 — intent (the loss-frame — from JR's intake)
+  function scrIntent(){
+    var opts=["I keep pushing through it","It slowly slips","Honestly, I'm worried","I don't want to find out"];
+    show(
+      '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>Why now</div>'
+      + coach("<p>One honest question before we start — it tells me what's really driving this.</p>")
+      + '<h1 class="head">If nothing changes in a year — <em>then what</em>?</h1>'
+      + '<div class="opts">'+opts.map(function(o){var sel=S.intent===o;return '<button class="opt'+(sel?" sel":"")+'" data-v="'+esc(o)+'"><span>'+esc(o)+'</span><span class="chk"></span></button>';}).join("")+'</div>'
+      + '<div class="actions"><button class="ghost" id="back">Back</button></div>',
+      1);
+    Array.prototype.forEach.call(document.querySelectorAll(".opt"),function(o){
+      o.onclick=function(){ S.intent=o.getAttribute("data-v"); Array.prototype.forEach.call(document.querySelectorAll(".opt"),function(x){x.classList.remove("sel");}); o.classList.add("sel"); setTimeout(scrHow,240); };
+    });
+    document.getElementById("back").onclick=scrGoals;
+  }
+
+  // 4 — how it works
+  function scrHow(){
+    var rows=DIMS.map(function(d,i){
+      return '<div class="stepitem" style="--dc:'+d.color+'"><div class="num">'+(i+1)+'</div>'
+        + '<div style="flex:1"><h4>'+esc(d.name)+'</h4><p>'+d.intro.replace(/ Eight questions\.?$/,"")+'</p></div></div>';
+    }).join("");
+    show(
+      coach("<p>Most care looks everywhere but here. Your mouth is the front door to the rest of your body — closest to your heart and brain, and where inflammation begins.</p><p>We start there, then follow what runs through it. You'll leave with your <em>Primary iD</em> — a living record you own.</p>")
+      + '<h1 class="head">Five dimensions. <em>One you.</em></h1>'
+      + '<div class="steps">'+rows+'</div>'
+      + '<div class="actions"><button class="cta blue" id="go">Start with my mouth</button><span class="hint">You\'ll see your foundation and your clearest next step</span></div>',
+      2);
+    document.getElementById("go").onclick=function(){
+      pidLead("pre-dimensions");   // final send: intent is now known
+      S.di=0; S.qi=0; scrDimIntro();
+    };
+  }
+
+  // dimension intro
+  function scrDimIntro(){
+    // Capture stops here. Everything from this screen on is clinical and stays
+    // in this browser: history, safety flags, insurance, chief complaint.
+    S.pastDims = true;
+    var d=DIMS[S.di];
+    show(
+      '<div class="dchip" style="--dc:'+d.color+'"><span class="dot"></span>Dimension '+(S.di+1)+' of '+DIMS.length+' · '+esc(d.name)+'</div>'
+      + '<h1 class="head">'+d.lead+'</h1>'
+      + '<p class="lede">'+esc(d.intro)+'</p>'
+      + '<div class="actions"><button class="cta" id="go">Let\'s go</button>'
+      + (S.di>0?'<button class="ghost" id="back">Back</button>':'')+'</div>',
+      3+S.di);
+    document.getElementById("go").onclick=function(){ S.qi=0; scrQuestion(); };
+    var b=document.getElementById("back"); if(b) b.onclick=function(){ S.di--; var pd=DIMS[S.di]; if(pd.hist&&pd.hist.length){ scrDimHistory(pd); } else { S.qi=pd.qs.length-1; scrQuestion(); } };
+  }
+
+  // a scored question
+  function scrQuestion(){
+    var d=DIMS[S.di], q=d.qs[S.qi], cur=S.scores[d.key][S.qi];
+    var opts=q.a.map(function(a){ var sel=cur===a[1];
+      return '<button class="opt'+(sel?" sel":"")+'" data-v="'+a[1]+'"><span>'+esc(a[0])+'</span><span class="chk"></span></button>';
+    }).join("");
+    show(
+      '<div class="dchip" style="--dc:'+d.color+'"><span class="dot"></span>'+esc(d.name)+'</div>'
+      + '<div class="qmeta">Question '+(S.qi+1)+' of '+d.qs.length+'</div>'
+      + '<h1 class="head">'+esc(q.q)+'</h1>'
+      + '<div class="opts">'+opts+'</div>'
+      + '<div class="actions"><button class="ghost" id="back">Back</button></div>',
+      3+S.di);
+    Array.prototype.forEach.call(document.querySelectorAll(".opt"),function(o){
+      o.onclick=function(){
+        Array.prototype.forEach.call(document.querySelectorAll(".opt"),function(x){x.classList.remove("sel");});
+        o.classList.add("sel");
+        S.scores[d.key][S.qi]=parseFloat(o.getAttribute("data-v"));
+        setTimeout(next,240);
+      };
+    });
+    document.getElementById("back").onclick=goBack;
+  }
+  function next(){
+    var d=DIMS[S.di];
+    if(S.qi<d.qs.length-1){ S.qi++; scrQuestion(); }
+    else { var v=dimScore(d.key); updateTwin(react(d,v)); if(d.hist&&d.hist.length) scrDimHistory(d); else advanceAfterDim(d); }
+  }
+  function goBack(){
+    if(S.qi>0){ S.qi--; scrQuestion(); }
+    else { scrDimIntro(); }
+  }
+  function react(d,v){ var t=tier(v);
+    if(v>=85) return d.name+": strong. "+t.line;
+    if(v>=70) return d.name+": a solid base.";
+    if(v>=50) return d.name+": real signal here.";
+    return d.name+": a clear place to focus.";
+  }
+
+  // woven history — a lightning round native to the dimension (flags, NOT scored)
+  function scrDimHistory(d){
+    S.hist[d.key]=S.hist[d.key]||{};
+    var items=d.hist.map(function(it){ return chipItem(it, S.hist[d.key]); }).join("");
+    show(
+      '<div class="dchip" style="--dc:'+d.color+'"><span class="dot"></span>Quick record · '+esc(d.name)+'</div>'
+      + coach("<p>Lightning round — a few things your care team needs for your chart. Tap what fits; skip anything that doesn't.</p>")
+      + '<h1 class="head">A few things <em>for your chart</em>.</h1>'
+      + '<div class="chipset">'+items+'</div>'
+      + '<div class="actions"><button class="cta" id="go">Continue</button><button class="ghost" id="back">Back</button></div>',
+      3+S.di);
+    wireChips(S.hist[d.key]);
+    document.getElementById("go").onclick=function(){ advanceAfterDim(d); };
+    document.getElementById("back").onclick=function(){ S.qi=d.qs.length-1; scrQuestion(); };
+  }
+  function advanceAfterDim(d){ var v=dimScore(d.key); if(S.di<DIMS.length-1) scrDimReact(d,v); else scrSafety(); }
+
+  // between dimensions
+  function scrDimReact(d,v){
+    var nx=DIMS[S.di+1], t=tier(v);
+    show(
+      '<div class="dchip" style="--dc:'+d.color+'"><span class="dot"></span>Added to your twin</div>'
+      + coach("<p><b>"+esc(d.name)+" — "+v+".</b> "+esc(t.line)+"</p><p>That's "+(S.di+1)+" of "+DIMS.length+". Next: <em>"+esc(nx.name)+"</em>.</p>")
+      + '<h1 class="head">'+encourage(v)+'</h1>'
+      + '<p class="lede">Look right — '+esc(d.name)+' just came online on your digital twin. Keep going and watch the rest fill in.</p>'
+      + (d.learn?'<div class="insight"><div class="il">Why this matters</div><p>'+esc(d.learn)+'</p></div>':'')
+      + '<div class="actions"><button class="cta" id="go">Continue to '+esc(nx.name)+'</button><button class="ghost" id="back">Back</button></div>',
+      3+S.di);
+    document.getElementById("go").onclick=function(){ S.di++; S.qi=0; scrDimIntro(); };
+    document.getElementById("back").onclick=function(){ if(d.hist&&d.hist.length) scrDimHistory(d); else { S.qi=d.qs.length-1; scrQuestion(); } };
+  }
+  function encourage(v){ return v>=85?"You’re <em>flourishing</em> here." : v>=70?"You’re building <em>something real</em>." : "This is <em>exactly</em> why you’re here."; }
+
+  // safety check — the medical flags, one honest beat (NOT gamified into dishonesty)
+  var SAFETY=["Daily prescription meds","Drug allergy","Material allergy (latex / metals)","Heart valve / cardiac condition","Blood thinner / bleeding disorder","Cancer, chemo, or radiation history","Bone medication (bisphosphonates)","Pregnant or breastfeeding","Hospitalized or surgery in last 2 yrs"];
+  function scrSafety(){
+    updateTwin("Locking in your record…");
+    var chips=SAFETY.map(function(s){var on=S.safety.indexOf(s)>-1;return '<button class="chip'+(on?" sel":"")+'" data-val="'+esc(s)+'">'+esc(s)+'</button>';}).join("")
+      + '<button class="chip'+(S.safety.indexOf("None of these")>-1?" sel":"")+'" data-val="None of these">None of these</button>';
+    show(
+      '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>Safety check</div>'
+      + coach("<p>Last stretch. A quick safety check so your care team can treat you safely — most people tap <em>None</em>. Tap anything that applies.</p>")
+      + '<h1 class="head">Anything we should <em>know</em>?</h1>'
+      + '<div class="chips" id="safechips" style="max-width:600px">'+chips+'</div>'
+      + '<div class="addfield"><input id="addother" type="text" placeholder="Add anything else — allergies, conditions, meds…" /></div>'
+      + '<div class="actions"><button class="cta" id="go">Continue</button><button class="ghost" id="back">Back</button></div>',
+      8);
+    Array.prototype.forEach.call(document.querySelectorAll("#safechips .chip"),function(c){
+      c.onclick=function(){ var val=c.getAttribute("data-val");
+        if(val==="None of these"){ S.safety=["None of these"]; }
+        else { var i=S.safety.indexOf(val); if(i>-1)S.safety.splice(i,1); else { S.safety.push(val); var n=S.safety.indexOf("None of these"); if(n>-1)S.safety.splice(n,1); } }
+        Array.prototype.forEach.call(document.querySelectorAll("#safechips .chip"),function(x){ x.classList.toggle("sel", S.safety.indexOf(x.getAttribute("data-val"))>-1); });
+      };
+    });
+    var add=document.getElementById("addother"); if(S.records.other) add.value=S.records.other;
+    add.onchange=function(){ S.records.other=add.value.trim(); };
+    document.getElementById("go").onclick=function(){ if(add.value.trim())S.records.other=add.value.trim(); scrRecords(); };
+    document.getElementById("back").onclick=function(){ var d=DIMS[DIMS.length-1]; S.di=DIMS.length-1; S.qi=d.qs.length-1; scrQuestion(); };
+  }
+
+  // records — pull-in, don't re-ask (the data thesis)
+  function scrRecords(){
+    var items=[
+      {id:"pcp", type:"yn", q:"Do you have a primary care doctor you see regularly?"},
+      {id:"labs", type:"single", q:"Recent full lab panel — CBC, metabolic, lipid, A1c?", opts:["Under 6 mo","6–12 mo","2+ yrs","Never"]},
+      {id:"platforms", type:"multi", q:"Any health platforms you already use? We'll pull it in, not re-ask.", opts:["Superpower","Function","Hims / Hers","Other","None"]}
+    ];
+    var html=items.map(function(it){ return chipItem(it, S.records); }).join("");
+    show(
+      '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>What you already have</div>'
+      + coach("<p>If you've done the work elsewhere, we don't want you to repeat it — we connect it.</p>")
+      + '<h1 class="head">Let\'s <em>pull in</em> what exists.</h1>'
+      + '<div class="chipset">'+html+'</div>'
+      + '<div class="actions"><button class="cta" id="go">Continue</button><button class="ghost" id="back">Back</button></div>',
+      8);
+    wireChips(S.records);
+    document.getElementById("go").onclick=scrEssentials;
+    document.getElementById("back").onclick=scrSafety;
+  }
+
+  // essentials — the remaining chart data (contact already captured at the gate; never ask twice)
+  function scrEssentials(){
+    var known=[S.name, S.demo.last].filter(Boolean).join(" ")+(S.demo.email?" · "+S.demo.email:"")+(S.demo.phone?" · "+S.demo.phone:"");
+    show(
+      '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>The essentials</div>'
+      + coach("<p>Almost there. Just the last chart details — the part that makes you a patient, not only a score. We won't re-ask what you've already given us.</p>")
+      + '<h1 class="head">The <em>essentials</em>.</h1>'
+      + '<p class="lede" style="font-size:14px">On file from earlier: <b>'+esc(known||"your contact details")+'</b>.</p>'
+      + '<div class="fieldgrid">'
+        + '<div class="field"><label>Date of birth</label><input id="d_dob" type="text" placeholder="MM / DD / YYYY" value="'+esc(S.demo.dob||"")+'" /></div>'
+        + '<div class="field"><label>Legal sex</label><div class="chips" id="sexchips">'+["Female","Male","Other"].map(function(o){var on=S.demo.sex===o;return '<button class="chip'+(on?" sel":"")+'" data-v="'+o+'">'+o+'</button>';}).join("")+'</div></div>'
+        + '<div class="field full"><label>Home address</label><input id="d_address" type="text" placeholder="Street, City, State, ZIP" value="'+esc(S.demo.address||"")+'" /></div>'
+      + '</div>'
+      + '<div class="actions"><button class="cta" id="go">Continue</button><button class="ghost" id="back">Back</button></div>',
+      9);
+    ["dob","address"].forEach(function(id){ var el=document.getElementById("d_"+id); if(el) el.onchange=function(){ S.demo[id]=el.value.trim(); }; });
+    Array.prototype.forEach.call(document.querySelectorAll("#sexchips .chip"),function(c){ c.onclick=function(){ S.demo.sex=c.getAttribute("data-v"); Array.prototype.forEach.call(document.querySelectorAll("#sexchips .chip"),function(x){x.classList.toggle("sel",x===c);}); }; });
+    document.getElementById("go").onclick=function(){ ["dob","address"].forEach(function(id){var el=document.getElementById("d_"+id); if(el)S.demo[id]=el.value.trim();}); scrInsurance(); };
+    document.getElementById("back").onclick=scrRecords;
+  }
+
+  // insurance
+  function scrInsurance(){
+    var types=["PPO","HMO","Medicare / Medicaid","Self-pay","Not sure"];
+    var chips=types.map(function(o){var on=S.insurance.type===o;return '<button class="chip'+(on?" sel":"")+'" data-v="'+esc(o)+'">'+esc(o)+'</button>';}).join("");
+    show(
+      '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>Insurance</div>'
+      + coach("<p>Last practical piece — so we can check your benefits before you come in. Prefer to skip it for now? Totally fine.</p>")
+      + '<h1 class="head">Your <em>coverage</em>.</h1>'
+      + '<div class="chiprow" style="max-width:600px;margin-top:22px"><div class="ql">Do you have dental insurance?</div><div class="chips" id="inschips">'+chips+'</div></div>'
+      + '<div class="fieldgrid" id="insfields">'
+        + '<div class="field"><label>Carrier (optional)</label><input id="i_carrier" type="text" value="'+esc(S.insurance.carrier||"")+'" placeholder="e.g. Delta Dental" /></div>'
+        + '<div class="field"><label>Member ID (optional)</label><input id="i_member" type="text" value="'+esc(S.insurance.member||"")+'" /></div>'
+      + '</div>'
+      + '<div class="actions"><button class="cta" id="go">Continue</button><button class="ghost" id="skip">Skip for now</button><button class="ghost" id="back">Back</button></div>',
+      9);
+    Array.prototype.forEach.call(document.querySelectorAll("#inschips .chip"),function(c){ c.onclick=function(){ S.insurance.type=c.getAttribute("data-v"); Array.prototype.forEach.call(document.querySelectorAll("#inschips .chip"),function(x){x.classList.toggle("sel",x===c);}); }; });
+    document.getElementById("i_carrier").onchange=function(){ S.insurance.carrier=this.value.trim(); };
+    document.getElementById("i_member").onchange=function(){ S.insurance.member=this.value.trim(); };
+    document.getElementById("go").onclick=function(){ S.insurance.carrier=document.getElementById("i_carrier").value.trim(); S.insurance.member=document.getElementById("i_member").value.trim(); scrComplaint(); };
+    document.getElementById("skip").onclick=function(){ scrComplaint(); };
+    document.getElementById("back").onclick=scrEssentials;
+  }
+
+  // chief complaint — the reflective close (Master's most important field)
+  function scrComplaint(){
+    show(
+      '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>In your words</div>'
+      + coach("<p>Last one — and the most important. Forget the checkboxes for a second.</p>")
+      + '<h1 class="head">What do you want to <em>walk out with</em>?</h1>'
+      + '<p class="lede">You came in for a reason. In your own words — what would make this whole thing worth it?</p>'
+      + '<textarea class="notes" id="cc" placeholder="In your own words…">'+esc(S.complaint)+'</textarea>'
+      + '<div class="actions"><button class="cta blue" id="go">See my Primary iD</button><button class="ghost" id="back">Back</button></div>',
+      9);
+    var cc=document.getElementById("cc"); cc.focus();
+    document.getElementById("go").onclick=function(){ S.complaint=cc.value.trim(); scrReveal(); };
+    document.getElementById("back").onclick=scrInsurance;
+  }
+
+  // reveal
+  function scrReveal(){
+    updateTwin("Your baseline is complete.");
+    sendResults();
+    var c=composite(), ct=tier(c);
+    var low=null; DIMS.forEach(function(d){ var v=dimScore(d.key); if(v!=null&&(low===null||v<low.v)) low={d:d,v:v}; });
+    var levers=[];
+    if(low){ var arr=low.d.qs.map(function(q,i){ return {s:low.d.qs[i].short, v:S.scores[low.d.key][i]}; })
+      .filter(function(x){return x.v!=null;}).sort(function(a,b){return a.v-b.v;});
+      levers=arr.slice(0,2).map(function(x){return x.s;});
+    }
+    var cells=DIMS.map(function(d){ var v=dimScore(d.key), t=tier(v);
+      return '<div class="rcell" style="--dc:'+d.color+'"><div class="rn"><span class="rdot"></span>'+esc(d.name)+'</div>'
+        + '<div class="rv">'+v+'</div><div class="rt" style="color:'+t.c+'">'+t.w+'</div></div>';
+    }).join("");
+    var goalLine = S.goals.length ? 'You came in for <em>'+esc(goalOf(S.goals[0]).toLowerCase())+'</em>. This is the one thing most in the way of it.' : 'This is where a first visit moves your number the most.';
+    show(
+      coach("<p><b>"+esc(S.name.split(" ")[0])+", your Primary iD is ready.</b> This is your <em>baseline</em> — a snapshot of you today. It's not a grade; it's the map we build your care around.</p>")
+      + '<h1 class="head">Your baseline Primary iD: <em>'+c+'</em></h1>'
+      + '<p class="lede">'+esc(ct.w)+' — '+esc(ct.line)+' Here\'s your foundation and your clearest lever — the starting point for what we\'d recommend next.</p>'
+      + '<div class="revealcard">'
+        + '<div class="rgrid">'+cells+'</div>'
+        + '<div class="lever">'
+          + '<div class="lh">Your clearest lever</div>'
+          + '<h3>'+esc(low?low.d.name:"")+' — <em>'+(low?low.v:"")+'</em></h3>'
+          + '<p>'+goalLine+' Your care team can build the plan around exactly this'
+          + (levers.length?', starting with the two items pulling it down:':'.')+'</p>'
+          + (levers.length?'<div class="items"><span>'+levers.map(esc).join('</span><span>')+'</span></div>':'')
+        + '</div>'
+      + '</div>'
+      + '<p class="foot-note">No forms. This isn\'t a chart in a filing cabinet — it\'s a living record. It\'s yours, it moves, and it grows every visit.</p>'
+      + '<div class="actions"><button class="cta blue" id="go">See my recommended path →</button><button class="ghost" id="restart">Start over</button></div>',
+      10);
+    document.getElementById("go").onclick=scrJourney;
+    document.getElementById("restart").onclick=function(){ location.reload(); };
+  }
+
+  // recommended care journey — the baseline turns into a plan (JR's coaching is the "Later" tier)
+  function journeyStep(tag,title,body,color){
+    return '<div class="stepitem" style="--dc:'+color+'">'
+      + '<div class="num" style="font-style:normal;font-size:10.5px;font-weight:700;color:'+color+';text-transform:uppercase;letter-spacing:.09em;width:46px">'+tag+'</div>'
+      + '<div style="flex:1"><h4>'+title+'</h4><p style="color:var(--inkSoft)">'+body+'</p></div></div>';
+  }
+  function scrJourney(){
+    var c=composite(), ct=tier(c);
+    var ranked=DIMS.map(function(d){ return {d:d, v:dimScore(d.key)}; }).sort(function(a,b){ return a.v-b.v; });
+    var lever=ranked[0], next2=ranked.slice(1,3);
+    var flags=[]; S.safety.forEach(function(s){ if(s!=="None of these") flags.push(s); });
+    var sh=S.hist.sleep||{}; if(sh.tmj==="Yes") flags.push("TMJ / jaw");
+    var flagNote = flags.length ? ' We\'ll also keep an eye on '+esc(flags.slice(0,3).join(", "))+'.' : '';
+    var goalTxt = S.goals.length ? esc(goalOf(S.goals[0]).toLowerCase()) : "your goals";
+    var nowLead;
+    if(S.reason==="problem") nowLead = "We start with what brought you in"+(S.reasonDetail?" — “"+esc(S.reasonDetail)+"”":"")+", then ";
+    else if(S.reason==="fix") nowLead = "We start with the fix you came for"+(S.reasonDetail?" — “"+esc(S.reasonDetail)+"”":"")+", then ";
+    else if(S.reason==="blindspot") nowLead = "We close the blind spot you came to close — starting with ";
+    else if(S.reason==="prevent") nowLead = "We get ahead of it, exactly like you want — starting with ";
+    else nowLead = "A visit built around ";
+    var nowTitle="Your first visit", nowBody;
+    if(S.pathfinder){
+      nowTitle="Your restorative consult · Pathfinder";
+      nowBody = "A consult mapped to <b>"+esc(S.pf.what||"your situation")+"</b>"+(S.pf.why?", so you can "+esc(S.pf.why.toLowerCase()):"")+"."+(S.pf.where?" "+esc(S.pf.where)+".":"")+" We'll start your foundation at <b>"+esc(lever.d.name)+"</b> ("+lever.v+") in the same visit."+flagNote;
+    } else {
+      nowBody = nowLead+"<b>"+esc(lever.d.name)+"</b> ("+lever.v+") — your clearest lever toward "+goalTxt+"."+flagNote;
+    }
+    // door recommendation (Lever 4) — only the "Now" step changes; score & tiers are identical
+    var rec=doorCfg().rec;
+    if(rec==="airflex"){ nowTitle="Your AirFlex Fit Assessment";
+      nowBody="A complimentary AirFlex Fit Assessment + 3D scan — with your bite, gums and airway history reviewed first."
+        + (S.align&&S.align.wear_tolerance==="This is why I've put treatment off"?" We heard you on wear time — that's exactly what the 12-hour protocol is built for.":"")
+        + " We'll start your foundation at <b>"+esc(lever.d.name)+"</b> ("+lever.v+") in the same visit."+flagNote; }
+    else if(rec==="implant"){ nowTitle="Your Implant & Longevity Assessment";
+      nowBody="A 90-minute Implant & Longevity Assessment — bone, gums and bite mapped around <b>"+esc(S.pf.what||"your situation")+"</b> and planned for your whole health, not just the gap. We'll baseline <b>"+esc(lever.d.name)+"</b> ("+lever.v+") in the same visit."+flagNote; }
+    else if(rec==="airway"){ nowTitle="Your airway & sleep workup";
+      nowBody="A sleep & airway workup that starts from what we just saw, alongside your foundation at <b>"+esc(lever.d.name)+"</b> ("+lever.v+")."+flagNote; }
+    else if(rec==="cosmetic"){ nowTitle="Your cosmetic consult";
+      nowBody="A smile-design consult mapped to <b>"+esc(S.pf.what||"your smile")+"</b>, built on a foundation we set at <b>"+esc(lever.d.name)+"</b> ("+lever.v+")."+flagNote; }
+    else if(rec==="longevity"){ nowTitle="Your Primary iD Plus baseline";
+      nowBody="A Primary iD Plus baseline — labs, nutrition, sleep and oral microbiome integrated with your score. Your first lever: <b>"+esc(lever.d.name)+"</b> ("+lever.v+")."+flagNote; }
+    else if(rec==="emergency"){ nowTitle="Your emergency visit — we'll get you seen";
+      nowBody="We get you seen and out of pain first"+(S.reasonDetail?" — “"+esc(S.reasonDetail)+"”":"")+", then baseline <b>"+esc(lever.d.name)+"</b> ("+lever.v+") once you're comfortable."+flagNote; }
+    show(
+      coach("<p>Here's the point of all of this. Your baseline isn't the finish line — it's where your care journey begins. Here's what we'd recommend, in order.</p>")
+      + '<h1 class="head">Your recommended <em>care journey</em>.</h1>'
+      + '<p class="lede">Built from why you came and your baseline of <b>'+c+'</b> — '+esc(ct.w.toLowerCase())+'. Three steps, sequenced to how your body actually changes.</p>'
+      + '<div class="steps">'
+        + journeyStep("Now",nowTitle,nowBody, lever.d.color)
+        + journeyStep("Next","Ongoing support","We support the rest of your foundation — "+next2.map(function(x){return esc(x.d.name);}).join(" and ")+" — and track your Primary iD as it moves over time.", "var(--blue)")
+        + journeyStep("Later","Optimize &amp; perform","Once your foundation is set, deeper performance &amp; longevity coaching to push from healthy to your highest level.", "var(--navy)")
+      + '</div>'
+      + '<p class="foot-note">This is the baseline. Everything above comes from <em>your</em> answers — not a template.</p>'
+      + '<div class="actions"><button class="cta blue" id="go">This one\'s yours →</button><button class="ghost" id="back">Back to my score</button></div>',
+      10);
+    document.getElementById("go").onclick=scrYours;
+    document.getElementById("back").onclick=scrReveal;
+  }
+
+  // PATIENT takeaway — their own view (no clinical flags; they own this)
+  function scrYours(){
+    var c=composite(), ct=tier(c);
+    var scoreChips=DIMS.map(function(d){ var v=dimScore(d.key);
+      return '<div class="bscore"><div class="n">'+v+'</div><div class="l">'+esc(d.name.split(" ")[0])+'</div></div>'; }).join("");
+    var saved=[];
+    saved.push("Medical & dental history · complete");
+    if(S.insurance.type) saved.push("Insurance · "+esc(S.insurance.type));
+    var plats=(S.records.platforms||[]).filter(function(p){return p!=="None";});
+    if(plats.length) saved.push("Connecting: "+plats.join(", "));
+    show(
+      coach("<p>This part is just for you. Everything you shared is saved, private, and portable — it's yours to keep.</p>")
+      + '<h1 class="head">This one\'s <em>yours</em>.</h1>'
+      + '<p class="lede">Your Primary iD lives here — a living record you own and take with you. It grows every visit.</p>'
+      + '<div class="brief">'
+        + '<div class="bhead"><div class="bname">'+esc(S.name||"You")+'<small>Your Primary iD</small></div>'
+          + '<div class="bcomp"><div class="n">'+c+'</div><div class="t" style="color:'+ct.c+'">'+esc(ct.w)+'</div></div></div>'
+        + '<div class="brow"><div class="bk">Your five dimensions</div><div class="bscores">'+scoreChips+'</div></div>'
+        + (S.goals.length?'<div class="brow"><div class="bk">What matters to you</div><div class="bv">'+esc(S.goals.map(goalOf).join(" · "))+'</div></div>':'')
+        + (S.complaint?'<div class="brow"><div class="bk">In your words</div><div class="bv">“'+esc(S.complaint)+'”</div></div>':'')
+        + '<div class="brow"><div class="bk">Saved to your record</div><div class="bchips"><span>'+saved.map(esc).join('</span><span>')+'</span></div></div>'
+      + '</div>'
+      + '<p class="foot-note">No forms. Your record is private and portable — it moves with you.</p>'
+      + '<div class="actions"><button class="cta blue" id="book">Book my first visit</button><button class="ghost" id="copy">Copy my results link</button><button class="ghost" id="back">Back</button><button class="ghost" id="prov" style="margin-left:auto;opacity:.6">Provider view (team only)</button></div>',
+      10);
+    document.getElementById("book").onclick=scrBooked;
+    document.getElementById("copy").onclick=function(){ copyLink(this); };
+    document.getElementById("back").onclick=scrJourney;
+    document.getElementById("prov").onclick=scrProvider;
+  }
+
+  // PROVIDER view — the clinical brief. The patient never sees this in production.
+  function scrProvider(){
+    var c=composite(), ct=tier(c);
+    // flags
+    var flags=[]; S.safety.forEach(function(s){ if(s!=="None of these") flags.push(s); });
+    if(S.records.other) flags.push(S.records.other);
+    var sh=S.hist.sleep||{}, oh=S.hist.oral||{};
+    if(sh.tmj==="Yes") flags.push("TMJ / jaw symptoms");
+    if(oh.anxiety==="A lot") flags.push("High dental anxiety");
+    // on record
+    var onrec=[];
+    var work=(oh.work||[]).filter(function(w){return w!=="None";}); if(work.length) onrec.push(work.join(", "));
+    if(oh.rootcanal==="Yes") onrec.push("Root canal history");
+    if(oh.extraction==="Yes") onrec.push("Prior extractions");
+    if(sh.ortho==="Yes") onrec.push("Orthodontic history");
+    if(oh.lastexam) onrec.push("Last exam: "+oh.lastexam);
+    var plats=(S.records.platforms||[]).filter(function(p){return p!=="None";});
+    if(S.records.labs) onrec.push("Labs: "+S.records.labs);
+    if(plats.length) onrec.push("Data to pull: "+plats.join(", "));
+    if(S.records.pcp==="Yes") onrec.push("Has a primary care doctor");
+
+    var scoreChips=DIMS.map(function(d){ var v=dimScore(d.key);
+      return '<div class="bscore"><div class="n">'+v+'</div><div class="l">'+esc(d.name.split(" ")[0])+'</div></div>'; }).join("");
+    var fullName=[S.name, S.demo.last].filter(Boolean).join(" ") || "Your name";
+    var demoBits=[]; if(S.demo.dob)demoBits.push("DOB "+S.demo.dob); if(S.demo.sex)demoBits.push(S.demo.sex); if(S.demo.phone)demoBits.push(S.demo.phone); if(S.demo.email)demoBits.push(S.demo.email); if(S.demo.address)demoBits.push(S.demo.address);
+    var insLine = S.insurance.type ? (esc(S.insurance.type)+(S.insurance.carrier?" · "+esc(S.insurance.carrier):"")+(S.insurance.member?" · #"+esc(S.insurance.member):"")) : "Not provided";
+
+    show(
+      '<div class="provbanner"><b>Provider view</b> The patient never sees this screen — it\'s the clinical brief your care team gets from the same conversation.</div>'
+      + '<h1 class="head" style="margin-top:20px">Pre-visit <em>clinical brief</em>.</h1>'
+      + '<div class="brief">'
+        + '<div class="bhead"><div class="bname">'+esc(fullName)+'<small>Primary iD · pre-visit brief</small></div>'
+          + '<div class="bcomp"><div class="n">'+c+'</div><div class="t" style="color:'+ct.c+'">'+esc(ct.w)+'</div></div></div>'
+        + (demoBits.length?'<div class="brow"><div class="bk">Demographics</div><div class="bv">'+demoBits.map(esc).join(" · ")+'</div></div>':'')
+        + '<div class="brow"><div class="bk">Insurance</div><div class="bv">'+insLine+'</div></div>'
+        + (S.reason?'<div class="brow"><div class="bk">Why they came</div><div class="bv"><em>'+esc(reasonLabel(S.reason))+'</em>'+(S.reasonDetail?' — “'+esc(S.reasonDetail)+'”':'')+'</div></div>':'')
+        + (S.pathfinder?'<div class="brow"><div class="bk">Pathfinder · '+(S.pfTrack==="alignment"?"alignment":"restorative")+'</div><div class="bchips warn"><span>'+[S.pf.what,S.pf.why,S.pf.where].filter(Boolean).map(esc).join('</span><span>')+'</span></div></div>':'')
+        + (S.pfTrack==="alignment"?'<div class="brow"><div class="bk">Aligner candidacy</div><div class="bchips">'+[(S.align.wear_tolerance?"Wear: "+S.align.wear_tolerance:""),(S.align.ortho_history?"Ortho: "+S.align.ortho_history:""),(S.align.retainer_wear?"Retainer: "+S.align.retainer_wear:"")].filter(Boolean).map(function(x){return '<span>'+esc(x)+'</span>';}).join('')+'</div></div>':'')
+        + (doorCfg().rec==="implant"?'<div class="brow"><div class="bk">Implant candidacy</div><div class="bv">Read from flags — extractions, existing work, bisphosphonates (MRONJ), perio (see history). MRONJ review before any surgical plan if bisphosphonates positive.</div></div>':'')
+        + '<div class="brow"><div class="bk">The five dimensions</div><div class="bscores">'+scoreChips+'</div></div>'
+        + (S.goals.length?'<div class="brow"><div class="bk">What they want</div><div class="bv">'+esc(S.goals.map(goalOf).join(" · "))+(S.intent?' — <em>'+esc(S.intent)+'</em>':'')+'</div></div>':'')
+        + '<div class="brow"><div class="bk">Care-team flags</div>'+(flags.length?'<div class="bchips warn"><span>'+flags.map(esc).join('</span><span>')+'</span></div>':'<div class="bv">None noted — cleared to proceed.</div>')+'</div>'
+        + (onrec.length?'<div class="brow"><div class="bk">Medical &amp; dental history</div><div class="bchips"><span>'+onrec.map(esc).join('</span><span>')+'</span></div></div>':'')
+        + (S.complaint?'<div class="brow"><div class="bk">In their words</div><div class="bv">“'+esc(S.complaint)+'”</div></div>':'')
+      + '</div>'
+      + '<p class="foot-note">A richer chart than a 60-question intake — captured in one conversation, with no form.</p>'
+      + '<div class="actions"><button class="cta" id="back">← Back to patient view</button></div>',
+      10);
+    document.getElementById("back").onclick=scrYours;
+  }
+
+  function scrBooked(){
+    show(
+      coach("<p><b>You're all set, "+esc(S.name.split(" ")[0])+".</b> We'll reach out shortly to find your time — your Primary iD and your whole record come with you into your first visit.</p>")
+      + '<h1 class="head">Welcome to <em>Primary</em>.</h1>'
+      + '<p class="lede">Your digital twin is live. From here, every visit, lab, and win makes it more complete — and moves your baseline in the right direction.</p>'
+      + '<div class="actions"><button class="cta" id="restart">Replay the experience</button><button class="ghost" id="prov" style="margin-left:auto;opacity:.6">Provider view (team only)</button></div>',
+      10);
+    document.getElementById("restart").onclick=function(){ location.reload(); };
+    document.getElementById("prov").onclick=scrProvider;
+  }
+
+  buildNodes();
+  if(!tryViewMode()){
+    var dp=resolveDoorParam();
+    if(dp){ applyDoor(dp); scrGate(); }
+    else scrPathway();
+  }
+})();
+
+</script>
+</body>
+</html>

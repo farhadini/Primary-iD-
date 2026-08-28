@@ -223,7 +223,7 @@ export default async function BookPathwayPage({
 
           <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
             <Link
-              href="/diagnostics/"
+              href={`/primary-id/?door=${pathway}`}
               style={{
                 background: PALETTE.navy,
                 color: PALETTE.white,
