@@ -134,6 +134,19 @@ const nextConfig = {
         basePath: false,
       },
 
+      // ── Booking CTAs go straight into the onboarding ──────────────────────
+      // The /book/* pages were content pages whose only action was a button.
+      // Sending the CTA straight into the matching door removes a dead click and
+      // means the lead is captured at the gate instead of one page later.
+      // Not permanent (307): this is a funnel decision, and a 308 caches hard in
+      // browsers, which makes it painful to reverse.
+      { source: "/book/", destination: "/primary-id/", permanent: false },
+      { source: "/book/preventive/", destination: "/primary-id/?door=preventive", permanent: false },
+      { source: "/book/airway/",     destination: "/primary-id/?door=airway",     permanent: false },
+      { source: "/book/cosmetic/",   destination: "/primary-id/?door=cosmetic",   permanent: false },
+      { source: "/book/implants/",   destination: "/primary-id/?door=implants",   permanent: false },
+      { source: "/book/longevity/",  destination: "/primary-id/?door=longevity",  permanent: false },
+
       // TODO(farhad): add 1:1 redirects for all 31 legacy /blogs/[slug] URLs
       // once we have the WordPress export. Until then, /blogs/[slug] routes
       // are served by app/blogs/[slug]/page.tsx and the data layer.
