@@ -489,6 +489,12 @@
       heroH:"Twelve hours a day. <em>Not twenty-two.</em>",
       heroSub:"A straighter smile designed around your day — with a prosthodontist looking at your bite, gums and airway history before anything moves.",
       reason:"fix", track:"alignment", rec:"airflex", cobrand:true },
+    second_opinion: { label:"Second opinion", pathway:"your second-opinion review",
+      desc:"A plan and a quote from somewhere else, read again from the foundation up.",
+      includes:["Independent review of the proposed plan","Bite, gum and bone evaluation","What we'd do the same, and what we wouldn't","Full Primary iD score behind the decision"],
+      heroH:"Before you commit \u2014 <em>a second read</em>.",
+      heroSub:"You have a plan and a number from somewhere else. We'll look at what's driving it and tell you plainly whether we'd do the same thing. Sometimes the answer is yes.",
+      reason:"fix", track:"secondop", rec:"secondopinion" },
     pain: { label:"Emergency", pathway:"an emergency visit",
       desc:"In pain, swelling, or a broken or knocked-out tooth — we'll get you seen fast.",
       includes:["Same-day triage","Focused exam of the urgent issue","Pain relief and a clear plan","Your Primary iD baseline once you're comfortable"],
@@ -496,12 +502,12 @@
       heroSub:"When something's wrong, the first job is getting you out of pain and safe. We handle the urgent thing first, then build your baseline once you're comfortable.",
       reason:"problem", track:null, rec:"emergency" }
   };
-  var PICKER_DOORS = ["preventive","orthofx","airway","cosmetic","implants","longevity","pain"];
+  var PICKER_DOORS = ["preventive","orthofx","airway","cosmetic","implants","longevity","second_opinion","pain"];
   function doorCfg(){ return DOORS[S.door] || DOORS.preventive; }
   function resolveDoorParam(){
     var s=(location.search||"")+(location.hash||"");
-    var m=s.match(/[?&]door=([a-z]+)/i); if(m && DOORS[m[1].toLowerCase()]) return m[1].toLowerCase();
-    m=s.match(/[?&]pathway=([a-z]+)/i); if(m && DOORS[m[1].toLowerCase()]) return m[1].toLowerCase();
+    var m=s.match(/[?&]door=([a-z_]+)/i); if(m && DOORS[m[1].toLowerCase()]) return m[1].toLowerCase();
+    m=s.match(/[?&]pathway=([a-z_]+)/i); if(m && DOORS[m[1].toLowerCase()]) return m[1].toLowerCase();
     return null;
   }
   function applyDoor(key){ S.door=key; var d=DOORS[key]; if(d && d.reason) S.reason=d.reason; }
@@ -719,7 +725,7 @@
       + '<p class="lede">'+esc(d.heroSub)+'</p>'
       + '<div class="actions"><button class="cta blue" id="go">Begin</button><span class="hint">About 6 minutes · replaces your whole intake</span></div>',
       0);
-    document.getElementById("go").onclick=scrGate;
+    document.getElementById("go").onclick=routeAfterGate;
   }
 
   // 1 — name
@@ -760,16 +766,16 @@
       + (S.door?'<button class="ghost" id="back" style="margin-left:auto">Pathways</button>':'')+'</div>',
       0);
     var go=document.getElementById("go");
-    function chk(){ var f=v("g_first"), e=v("g_email"), p=v("g_phone"); go.disabled=!(f && e.indexOf("@")>0 && p.replace(/\D/g,"").length>=7); }
+    function chk(){ var f=v("g_first"), e=v("g_email"), p=v("g_phone"); go.disabled=!(f && e.indexOf("@")>0); }
     ["g_first","g_last","g_email","g_phone","g_age"].forEach(function(id){ var el=document.getElementById(id); if(el) el.oninput=chk; });
     var f0=document.getElementById("g_first"); if(f0) f0.focus(); chk();
     go.onclick=function(){
       S.name=v("g_first"); S.demo.last=v("g_last"); S.demo.email=v("g_email"); S.demo.phone=v("g_phone"); S.demo.age=v("g_age");
       if(!S.leadFired){ S.leadFired=true; pidLead("gate"); }
       updateTwin("Spot saved, "+esc(S.name.split(" ")[0])+".");
-      routeAfterGate();
+      scrHow();
     };
-    var bk=document.getElementById("back"); if(bk) bk.onclick=scrPathway;
+    var bk=document.getElementById("back"); if(bk) bk.onclick=scrIntent;
   }
   // ── GHL capture ───────────────────────────────────────────────────────────
   // Covers everything up to the five dimensions: identity, door, why, goals,
@@ -785,9 +791,22 @@
     });
     return out;
   }
+  // Score snapshot that never throws, however far through the dimensions they are.
+  function pidScores(){
+    var o={}, v=[];
+    DIMS.forEach(function(d){
+      var sc=null;
+      try{ if(S.scores[d.key] && S.scores[d.key].filter(function(x){return x!=null;}).length) sc=dimScore(d.key); }catch(e){}
+      o[d.key]=sc; if(sc!=null) v.push(sc);
+    });
+    o._c = v.length ? Math.round(v.reduce(function(a,b){return a+b;},0)/v.length) : null;
+    return o;
+  }
+
   function pidLead(phase){
     try{
       var why = S.reason ? reasonLabel(S.reason) : "";
+      var SC = pidScores();
       fetch("/api/lead/",{
         method:"POST", keepalive:true,
         headers:{"Content-Type":"application/json"},
@@ -805,7 +824,17 @@
           intent:     S.intent||"",
           pathfinder: !!S.pathfinder,
           pfTrack:    S.pfTrack||"",
-          leadSource: pidUtm()
+          pf:         S.pf||{},
+          entryDim:   (new URLSearchParams(location.search||"")).get("dim")||"",
+          leadSource: pidUtm(),
+          scores:     { oral:SC.oral, sleep:SC.sleep, nutri:SC.nutri, family:SC.family, long:SC.long },
+          composite:  SC._c,
+          tier:       (SC._c!=null ? tier(SC._c).w : ""),
+          safety:     S.safety||[],
+          complaint:  S.complaint||"",
+          insurance:  S.insurance||{},
+          records:    S.records||{},
+          demo:       { dob:S.demo.dob||"", sex:S.demo.sex||"" }
         })
       }).catch(function(){});
     }catch(e){}
@@ -831,11 +860,12 @@
     if(d.reason){
       var t=pfTrack();
       if(t==="alignment") scrPathfinderAlign();
+      else if(t==="secondop") scrPathfinderSO();
       else if(t==="restorative") scrPathfinder();
       else scrGoals();
     } else { scrWhy(); }
   }
-  function backFromPF(){ if(doorCfg().reason) scrGate(); else scrWhy(); }
+  function backFromPF(){ if(doorCfg().reason) scrWelcome(); else scrWhy(); }
 
   // 2 — WHY (the single most important signal: what actually brought them in)
   var REASONS=[
@@ -870,10 +900,11 @@
     go.onclick=function(){ if(det.value.trim())S.reasonDetail=det.value.trim();
       var t=pfTrack();
       if(t==="alignment") scrPathfinderAlign();
+      else if(t==="secondop") scrPathfinderSO();
       else if(t==="restorative") scrPathfinder();
       else scrGoals();
     };
-    document.getElementById("back").onclick=scrGate;
+    document.getElementById("back").onclick=scrWelcome;
   }
 
   // 2b — PATHFINDER (fires when the intention is restorative — the "why/what" of the fix)
@@ -889,6 +920,32 @@
     {id:"wear_tolerance", type:"single", q:"Realistically, how much of the day could you wear aligners?", opts:["All day — that's fine","Evenings and overnight only","This is why I've put treatment off","I'm not sure"]}
   ];
   var PF_RETAINER = {id:"retainer_wear", type:"single", q:"Did you keep wearing your retainers?", opts:["Still do","Stopped after a while","Never really did","Lost or broke them"]};
+  // second-opinion track — same shape as the restorative Pathfinder, different questions.
+  var PFSO=[
+    {id:"what", type:"single", q:"What's the plan for?", opts:["Implants or a full arch","Crowns, bridges or veneers","A root canal","Braces or aligners","Gum treatment","More than one thing"]},
+    {id:"stage", type:"single", q:"Where are you with it?", opts:["Just been given the plan","Getting a second view before I commit","Already started and having doubts","Quoted, and deciding now"]},
+    {id:"quote", type:"single", q:"What were you quoted?", opts:["Under $5,000","$5,000 \u2013 $15,000","$15,000 \u2013 $35,000","Over $35,000","Not quoted yet"]}
+  ];
+  function scrPathfinderSO(){
+    var items=PFSO.map(function(it){ return chipItem(it, S.pf); }).join("");
+    show(
+      '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>Your plan</div>'
+      + coach("<p>So we're reading the same thing they were. A few quick questions about the plan you were given \u2014 then we'll build your baseline underneath it.</p>")
+      + '<h1 class="head">Tell us about the <em>plan</em>.</h1>'
+      + '<div class="chipset">'+items+'</div>'
+      + '<div class="actions"><button class="cta" id="go" disabled>Continue</button><button class="ghost" id="back">Back</button></div>',
+      0);
+    wireChips(S.pf);
+    var go=document.getElementById("go"); go.disabled=!S.pf.what;
+    document.querySelector(".chipset").addEventListener("click", function(){ go.disabled = !S.pf.what; });
+    go.onclick=function(){
+      S.pathfinder = true;
+      S.pfTrack="secondop";
+      scrGoals();
+    };
+    document.getElementById("back").onclick=backFromPF;
+  }
+
   function scrPathfinder(){
     var items=PF.map(function(it){ return chipItem(it, S.pf); }).join("");
     show(
@@ -922,7 +979,7 @@
       + '<div class="grid">'+tiles+'</div>',
       0);
     Array.prototype.forEach.call(document.querySelectorAll(".tile.pw"),function(t){
-      t.onclick=function(){ applyDoor(t.getAttribute("data-k")); scrGate(); };
+      t.onclick=function(){ applyDoor(t.getAttribute("data-k")); scrWelcome(); };
     });
   }
 
@@ -1013,7 +1070,7 @@
       + '<div class="actions"><button class="ghost" id="back">Back</button></div>',
       1);
     Array.prototype.forEach.call(document.querySelectorAll(".opt"),function(o){
-      o.onclick=function(){ S.intent=o.getAttribute("data-v"); Array.prototype.forEach.call(document.querySelectorAll(".opt"),function(x){x.classList.remove("sel");}); o.classList.add("sel"); setTimeout(scrHow,240); };
+      o.onclick=function(){ S.intent=o.getAttribute("data-v"); Array.prototype.forEach.call(document.querySelectorAll(".opt"),function(x){x.classList.remove("sel");}); o.classList.add("sel"); setTimeout(scrGate,240); };
     });
     document.getElementById("back").onclick=scrGoals;
   }
@@ -1041,6 +1098,9 @@
     // Capture stops here. Everything from this screen on is clinical and stays
     // in this browser: history, safety flags, insurance, chief complaint.
     S.pastDims = true;
+    // Progressive sync is off past this point, so post explicitly at each
+    // dimension boundary — 7 upserts total instead of one per answer.
+    if(S.leadFired && S.di>0) pidLead("dim"+S.di);
     var d=DIMS[S.di];
     show(
       '<div class="dchip" style="--dc:'+d.color+'"><span class="dot"></span>Dimension '+(S.di+1)+' of '+DIMS.length+' · '+esc(d.name)+'</div>'
@@ -1129,6 +1189,7 @@
   var SAFETY=["Daily prescription meds","Drug allergy","Material allergy (latex / metals)","Heart valve / cardiac condition","Blood thinner / bleeding disorder","Cancer, chemo, or radiation history","Bone medication (bisphosphonates)","Pregnant or breastfeeding","Hospitalized or surgery in last 2 yrs"];
   function scrSafety(){
     updateTwin("Locking in your record…");
+    if(S.leadFired) pidLead("dimensions-complete");
     var chips=SAFETY.map(function(s){var on=S.safety.indexOf(s)>-1;return '<button class="chip'+(on?" sel":"")+'" data-val="'+esc(s)+'">'+esc(s)+'</button>';}).join("")
       + '<button class="chip'+(S.safety.indexOf("None of these")>-1?" sel":"")+'" data-val="None of these">None of these</button>';
     show(
@@ -1235,6 +1296,7 @@
   function scrReveal(){
     updateTwin("Your baseline is complete.");
     sendResults();
+    if(S.leadFired) pidLead("complete");
     var c=composite(), ct=tier(c);
     var low=null; DIMS.forEach(function(d){ var v=dimScore(d.key); if(v!=null&&(low===null||v<low.v)) low={d:d,v:v}; });
     var levers=[];
@@ -1423,7 +1485,7 @@
   buildNodes();
   if(!tryViewMode()){
     var dp=resolveDoorParam();
-    if(dp){ applyDoor(dp); scrGate(); }
+    if(dp){ applyDoor(dp); scrWelcome(); }
     else scrPathway();
   }
 })();
