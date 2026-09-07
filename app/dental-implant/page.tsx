@@ -423,7 +423,7 @@ export default function DentalImplantPage() {
           <p style={{ fontSize: 17, lineHeight: 1.65, color: "rgba(254,252,249,0.85)", margin: "0 0 32px" }}>
             Most of the people who come to us for full arch already have a quote from somewhere else. We&apos;ll review what was proposed against your Primary iD risk picture, and tell you what we&apos;d verify, what we&apos;d do differently, and why. Sometimes we&apos;ll tell you they got it right. The opinion is honest, regardless of where it lands.
           </p>
-          <a href="mailto:hello@myprimaryid.com?subject=Second opinion request" style={{ background: PALETTE.blue, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15, display: "inline-block" }}>
+          <a href="/book/second-opinion/" style={{ background: PALETTE.blue, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15, display: "inline-block" }}>
             Send us your treatment plan →
           </a>
         </div>
