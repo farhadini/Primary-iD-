@@ -146,6 +146,8 @@ const nextConfig = {
       { source: "/book/cosmetic/",   destination: "/primary-id/?door=cosmetic",   permanent: false },
       { source: "/book/implants/",   destination: "/primary-id/?door=implants",   permanent: false },
       { source: "/book/longevity/",  destination: "/primary-id/?door=longevity",  permanent: false },
+      { source: "/book/orthofx/",    destination: "/primary-id/?door=orthofx",    permanent: false },
+      { source: "/book/second-opinion/", destination: "/primary-id/?door=second_opinion", permanent: false },
 
       // TODO(farhad): add 1:1 redirects for all 31 legacy /blogs/[slug] URLs
       // once we have the WordPress export. Until then, /blogs/[slug] routes
