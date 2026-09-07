@@ -8,9 +8,10 @@
 // still a retained lead) and once at the dimension boundary (once intent is
 // known). GHL upserts on email/phone, so it stays one contact.
 //
-// NOTHING CLINICAL PASSES THROUGH HERE. No history, no safety flags, no
-// insurance, no chief complaint. Those stay in the browser until there is a BAA
-// and a PMS destination.
+// CLINICAL DATA PASSES THROUGH HERE (Sep 2026). Scores, safety flags, insurance,
+// chief complaint and DOB/sex are written to GHL custom fields under the signed
+// BAA. Free-text medical history (S.hist) is still NOT sent — it has no field to
+// land in and no clinical consumer yet.
 //
 // Silent until GHL_API_TOKEN + GHL_LOCATION_ID are set in Vercel.
 // ============================================================================
@@ -42,8 +43,20 @@ type Body = {
   intent?: string
   pathfinder?: boolean
   pfTrack?: string
+  pf?: Record<string, string>
+  entryDim?: string
+  scores?: { oral?: number | null; sleep?: number | null; nutri?: number | null; family?: number | null; long?: number | null }
+  composite?: number | null
+  tier?: string
+  safety?: string[]
+  complaint?: string
+  insurance?: { type?: string; carrier?: string; member?: string }
+  records?: { pcp?: string; other?: string; labs?: string; platforms?: string }
+  demo?: { dob?: string; sex?: string }
   leadSource?: Record<string, string>
 }
+
+const num = (v: number | null | undefined) => (typeof v === "number" && !isNaN(v) ? String(v) : "")
 
 const URGENT = /pain|hurt|emergency|broke|swollen|bothering/i
 
@@ -63,6 +76,14 @@ export async function POST(request: Request) {
     }
 
     const goals = Array.isArray(b.goals) ? b.goals.filter(Boolean) : []
+    const sc = b.scores ?? {}
+    const safety = Array.isArray(b.safety) ? b.safety.filter(Boolean) : []
+    const ins = b.insurance ?? {}
+    const rec = b.records ?? {}
+    const demo = b.demo ?? {}
+    const pfAnswers = b.pf && Object.keys(b.pf).length
+      ? Object.entries(b.pf).map(([k, v]) => `${k}: ${v}`).join(" · ")
+      : ""
 
     const tags = [
       "Primary iD Lead",
@@ -73,6 +94,10 @@ export async function POST(request: Request) {
       b.pfTrack ? `Track: ${b.pfTrack}` : null,
       f.reason ? `Reason: ${f.reason}` : null,
       ...goals.map((g) => `Goal: ${g}`),
+      b.phase === "complete" ? "Stage: Complete" : null,
+      b.phase === "complete" && typeof b.composite === "number" ? `Score: ${b.composite}` : null,
+      b.tier ? `Tier: ${b.tier}` : null,
+      safety.length && safety[0] !== "None of these" ? "Safety: flagged" : null,
     ].filter(Boolean) as string[]
 
     const customFields = [
@@ -88,6 +113,26 @@ export async function POST(request: Request) {
       { key: "utm_campaign",    field_value: src.utm_campaign ?? "" },
       { key: "utm_medium",      field_value: src.utm_medium ?? "" },
       { key: "utm_content",     field_value: src.utm_content ?? "" },
+      { key: "entry_dimension", field_value: b.entryDim ?? "" },
+      { key: "pathfinder_answers", field_value: pfAnswers },
+
+      // --- clinical (BAA-covered) ---------------------------------------
+      { key: "primary_id_score",  field_value: num(b.composite) },
+      { key: "primary_id_tier",   field_value: b.tier ?? "" },
+      { key: "score_oral",        field_value: num(sc.oral) },
+      { key: "score_sleep",       field_value: num(sc.sleep) },
+      { key: "score_nutrition",   field_value: num(sc.nutri) },
+      { key: "score_family",      field_value: num(sc.family) },
+      { key: "score_longevity",   field_value: num(sc.long) },
+      { key: "safety_flags",      field_value: safety.join(", ") },
+      { key: "chief_complaint",   field_value: b.complaint ?? "" },
+      { key: "insurance_type",    field_value: ins.type ?? "" },
+      { key: "insurance_carrier", field_value: ins.carrier ?? "" },
+      { key: "insurance_member",  field_value: ins.member ?? "" },
+      { key: "dob",               field_value: demo.dob ?? "" },
+      { key: "legal_sex",         field_value: demo.sex ?? "" },
+      { key: "records_pcp",       field_value: rec.pcp ?? "" },
+      { key: "records_notes",     field_value: [rec.other, rec.labs, rec.platforms].filter(Boolean).join(" · ") },
     ].filter((x) => x.field_value !== "")
 
     const base = {
