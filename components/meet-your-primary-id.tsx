@@ -15,6 +15,13 @@ const B = {
   gold: "#D4B584",
 };
 
+// Each card already tells us which dimension they care about — carry it into the
+// intake instead of dropping everyone on the generic assessment.
+const DIM_DOOR: Record<string, string> = {
+  oral: "preventive", sleep: "airway", nutrition: "longevity",
+  genetics: "longevity", longevity: "longevity",
+};
+
 const DIMENSIONS = [
   {
     id: "oral",
@@ -211,7 +218,7 @@ function Card({ dim }: { dim: typeof DIMENSIONS[0] }) {
         flexWrap: "wrap",
       }}>
         <a
-          href="/diagnostics/"
+          href={`/primary-id/?door=${DIM_DOOR[dim.id] || "preventive"}&dim=${dim.id}`}
           style={{
             background: B.navy, color: B.warm,
             padding: "11px 18px", borderRadius: 9,

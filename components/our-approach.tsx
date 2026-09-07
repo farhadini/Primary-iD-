@@ -29,42 +29,42 @@ const TILES: Tile[] = [
   {
     chip: "Whitening", ac: "#C79A3E", tint: "246,238,224", name: "Whiter ", em: "teeth",
     root: "Stains come back when your oral pH and microbiome are off. We score both, rebalance them, and choose non-abrasive care so white stays white.",
-    cta: { label: "Take the assessment →", href: "/diagnostics/" },
+    cta: { label: "Take the assessment →", href: "/book/cosmetic/" },
     learn: { label: "Learn more →", href: "/cosmetic-dentistry/" },
     icon: <svg viewBox="0 0 24 24" {...S("#C79A3E")}><path d="M7 3c-2 0-3 1.6-3 4 0 3 1 5 1.4 8.5C5.6 18 6 20 7 20c1.2 0 1-3 2-3s.8 3 2 3c1 0 1.4-2 1.6-4.5C15 12 16 10 16 7c0-2.4-1-4-3-4-1.4 0-1.6 1-3 1s-1.6-1-3-1z"/></svg>,
   },
   {
     chip: "Clear Aligners", ac: "#24A7E0", tint: "224,240,251", name: "Straighter ", em: "teeth",
     root: "Crooked teeth usually trace back to airway and tongue posture. Straightening the arch without fixing the airway invites relapse, and worse sleep.",
-    cta: { label: "Take the assessment →", href: "/diagnostics/" },
+    cta: { label: "Take the assessment →", href: "/book/orthofx/" },
     learn: { label: "Learn more →", href: "/airway-sleep/" },
     icon: <svg viewBox="0 0 24 24" {...S("#24A7E0")}><path d="M4 15c0-5 3.5-8 8-8s8 3 8 8"/><path d="M8 13v3M12 12v4M16 13v3"/></svg>,
   },
   {
     chip: "Cleanings", ac: "#3FA98A", tint: "226,242,232", name: "Fresh ", em: "breath",
     root: "Chronic bad breath is rarely a brushing problem. It is a gut-and-oral-microbiome problem, upstream of anything a rinse can reach.",
-    cta: { label: "Take the assessment →", href: "/diagnostics/" },
+    cta: { label: "Take the assessment →", href: "/book/preventive/" },
     learn: { label: "Learn more →", href: "/preventive-care/" },
     icon: <svg viewBox="0 0 24 24" {...S("#3FA98A")}><path d="M5 19c0-8 6-13 14-14 1 9-4 15-14 14z"/><path d="M5 19c3-4 6-6 10-8"/></svg>,
   },
   {
     chip: "Deep Cleanings", ac: "#D8785E", tint: "250,232,226", name: "Healthy ", em: "gums",
     root: "Bleeding gums are a systemic inflammation signal, the same inflammation behind heart disease and diabetes. We treat the signal, not just the symptom.",
-    cta: { label: "Take the assessment →", href: "/diagnostics/" },
+    cta: { label: "Take the assessment →", href: "/book/preventive/" },
     learn: { label: "Learn more →", href: "/preventive-care/" },
     icon: <svg viewBox="0 0 24 24" {...S("#D8785E")}><path d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0112 8a3.5 3.5 0 017 2.5C19 15.4 12 20 12 20z"/></svg>,
   },
   {
     chip: "Sleep & Airway", ac: "#7B68EE", tint: "235,232,250", name: "Restful ", em: "sleep",
     root: "Snoring and grinding are not habits. They are your mouth compensating to breathe. We measure the airway first, then fix the cause.",
-    cta: { label: "Take the assessment →", href: "/diagnostics/" },
+    cta: { label: "Take the assessment →", href: "/book/airway/" },
     learn: { label: "Learn more →", href: "/airway-sleep/" },
     icon: <svg viewBox="0 0 24 24" {...S("#7B68EE")}><path d="M20 14a8 8 0 11-9-11 6.5 6.5 0 009 11z"/></svg>,
   },
   {
     chip: "Longevity", ac: "#5B7BA6", tint: "228,234,244", name: "A longer ", em: "life",
     root: "Oral inflammation shortens lifespan through the same pathways as smoking. Scoring your cardiovascular and metabolic markers alongside your mouth is how we add years.",
-    cta: { label: "Take the assessment →", href: "/diagnostics/" },
+    cta: { label: "Take the assessment →", href: "/book/longevity/" },
     learn: { label: "Learn more →", href: "/primary-id-plus/" },
     icon: <svg viewBox="0 0 24 24" {...S("#5B7BA6")}><path d="M4 19h16"/><path d="M5 15l4-4 3 3 6-7"/><path d="M18 7h2v2"/></svg>,
   },
@@ -85,7 +85,7 @@ const TILES: Tile[] = [
   {
     chip: "Free Plan Review", ac: "#4A6D8C", tint: "228,235,243", name: "A second ", em: "opinion",
     root: "Already have a treatment plan or a big quote? We evaluate it against your whole-health picture before you commit to anything irreversible.",
-    cta: { label: "Get a review →", href: "/second-opinion/" },
+    cta: { label: "Get a review →", href: "/book/second-opinion/" },
     icon: <svg viewBox="0 0 24 24" {...S("#4A6D8C")}><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9z"/><path d="M8 12h8M8 16h5"/></svg>,
   },
 ];
@@ -187,7 +187,7 @@ export default function OurApproach() {
             </p>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 11, alignItems: "flex-start" }}>
-            <a href="/diagnostics/" style={{ fontSize: 15, fontWeight: 600, color: B.navy, textDecoration: "none" }}>Take the Primary iD →</a>
+            <a href="/primary-id/" style={{ fontSize: 15, fontWeight: 600, color: B.navy, textDecoration: "none" }}>Take the Primary iD →</a>
             <a href="/book/preventive/" style={{ fontSize: 13, color: B.muted, textDecoration: "none" }}>Book a cleaning</a>
           </div>
         </div>

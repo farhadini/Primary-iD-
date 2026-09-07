@@ -582,7 +582,7 @@ export default function NewPatientVisit() {
             display: "inline-flex", gap: 20, alignItems: "center",
             flexWrap: "wrap", justifyContent: "center",
           }}>
-            <a href="/diagnostics/" style={{
+            <a href="/primary-id/" style={{
               background: B.navy, color: B.warm,
               padding: "18px 32px", borderRadius: 9,
               textDecoration: "none", fontWeight: 600, fontSize: 15,

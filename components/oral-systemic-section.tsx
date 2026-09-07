@@ -439,7 +439,7 @@ export default function OralSystemicSection() {
             }}
           >
             <a
-              href="/diagnostics/"
+              href="/book/longevity/"
               data-analytics="oral_systemic_cta"
               className="r-full"
               style={{

@@ -32,7 +32,7 @@ const footerLinks = [
     { label: "Dr. Gabi", href: "/about/" },
     { label: "Second opinions", href: "/second-opinion/" },
     { label: "Primary Journal", href: "/blogs/" },
-    { label: "Health assessment", href: "/diagnostics/" },
+    { label: "Health assessment", href: "/primary-id/" },
   ]},
 ];
 

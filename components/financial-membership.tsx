@@ -667,7 +667,7 @@ export default function FinancialMembership() {
               </div>
             </div>
             <a
-              href="/diagnostics/"
+              href="/primary-id/"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
