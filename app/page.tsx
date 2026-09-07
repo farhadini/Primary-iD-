@@ -219,7 +219,7 @@ function Hero() {
             >Book a visit</a>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 7, alignItems: "flex-start" }}>
-              <a href="/diagnostics/" style={{
+              <a href="/primary-id/" style={{
                 display: "inline-flex", alignItems: "center", gap: 7, color: "#fff", fontWeight: 600,
                 fontSize: 15, textDecoration: "none", borderBottom: "1px solid rgba(255,255,255,.4)",
                 paddingBottom: 2, transition: ".18s",
@@ -1489,7 +1489,7 @@ function Footer() {
       { label: "Dr. Gabi", href: "/about/" },
       { label: "Second opinions", href: "/second-opinion/" },
       { label: "Primary Journal", href: "/blogs/" },
-      { label: "Health assessment", href: "/diagnostics/" },
+      { label: "Health assessment", href: "/primary-id/" },
     ]},
   ]
 
