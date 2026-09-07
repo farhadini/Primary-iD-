@@ -104,7 +104,7 @@ export default function SecondOpinionPage() {
                 Most of the people who come to us for full arch or complex implant work already have a quote from somewhere else. We&apos;ll review what was proposed against your Primary iD risk picture, and tell you what we&apos;d verify, what we&apos;d do differently, and why.
               </p>
               <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-                <a href="mailto:hello@myprimaryid.com?subject=Second opinion request" style={{
+                <a href="/book/second-opinion/" style={{
                   background: PALETTE.blue, color: "#FFFFFF",
                   padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600,
                   textDecoration: "none", fontSize: 15,
@@ -279,7 +279,7 @@ export default function SecondOpinionPage() {
           <p style={{ fontSize: 17, lineHeight: 1.7, color: "rgba(254,252,249,0.85)", margin: "0 0 36px" }}>
             About half of second-opinion patients eventually choose to do the work with us. About a quarter take our read back to confirm or renegotiate with their original practice. The rest go elsewhere with a clearer picture. All three are good outcomes.
           </p>
-          <a href="mailto:hello@myprimaryid.com?subject=Second opinion request" style={{
+          <a href="/book/second-opinion/" style={{
             background: PALETTE.blue, color: "#FFFFFF",
             padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600,
             textDecoration: "none", fontSize: 15, display: "inline-block",
@@ -365,7 +365,7 @@ export default function SecondOpinionPage() {
             Either way, the conversation starts honest. If you have the records ready, email is the fastest path. If you want to talk through your situation before deciding what to send, call.
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "center", marginBottom: 28 }}>
-            <a href="mailto:hello@myprimaryid.com?subject=Second opinion request" style={{
+            <a href="/book/second-opinion/" style={{
               background: PALETTE.navy, color: "#FFFFFF",
               padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600,
               textDecoration: "none", fontSize: 15,
