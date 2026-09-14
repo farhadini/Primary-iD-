@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { SiteNav } from "@/components/site-nav"
 
 export const metadata: Metadata = {
   title: "Your Primary iD | Primary Integrative Dentistry",
@@ -8,7 +9,12 @@ export const metadata: Metadata = {
 }
 
 // The onboarding engine ships as a self-contained asset in /public and is mounted
-// full-viewport here. Same origin, so its calls to /api/lead work unchanged.
+// below the shared site navigation. Same origin, so its calls to /api/lead work
+// unchanged.
+//
+// The nav is deliberately present: this page used to mount the engine as a fixed
+// full-viewport iframe, which left anyone who entered the flow with no way back
+// to the rest of the site except the browser's back button.
 //
 // The query string MUST be forwarded into the iframe: the engine reads ?door= to
 // pick the entry door, and the utm_* params to attribute the lead. Without this
@@ -29,10 +35,27 @@ export default async function PrimaryIdPage({
   const src = "/primary-id-app.html" + (q ? `?${q}` : "")
 
   return (
-    <iframe
-      src={src}
-      title="Primary iD onboarding"
-      style={{ position: "fixed", inset: 0, width: "100%", height: "100%", border: "none" }}
-    />
+    <>
+      {/* SiteNav is sticky and takes its own 64px of layout space. */}
+      <SiteNav />
+
+      {/*
+        vh first, dvh second: browsers that don't understand dvh keep the vh
+        rule, and everything modern uses dvh so the engine isn't clipped by
+        mobile browser chrome.
+      */}
+      <style>{`
+        .pid-frame {
+          display: block;
+          width: 100%;
+          border: none;
+          height: calc(100vh - 64px);
+          height: calc(100dvh - 64px);
+          min-height: 520px;
+        }
+      `}</style>
+
+      <iframe className="pid-frame" src={src} title="Primary iD onboarding" />
+    </>
   )
 }
