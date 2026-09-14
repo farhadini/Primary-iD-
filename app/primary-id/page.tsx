@@ -35,27 +35,35 @@ export default async function PrimaryIdPage({
   const src = "/primary-id-app.html" + (q ? `?${q}` : "")
 
   return (
-    <>
-      {/* SiteNav is sticky and takes its own 64px of layout space. */}
-      <SiteNav />
-
+    <div className="pid-shell">
       {/*
+        The shell is exactly one viewport tall and the engine takes whatever the
+        nav leaves, so the page never grows a stray scrollbar no matter what the
+        nav's real height turns out to be.
+
         vh first, dvh second: browsers that don't understand dvh keep the vh
         rule, and everything modern uses dvh so the engine isn't clipped by
         mobile browser chrome.
       */}
       <style>{`
+        .pid-shell {
+          display: flex;
+          flex-direction: column;
+          height: 100vh;
+          height: 100dvh;
+        }
         .pid-frame {
+          flex: 1 1 auto;
           display: block;
           width: 100%;
+          min-height: 0;
           border: none;
-          height: calc(100vh - 64px);
-          height: calc(100dvh - 64px);
-          min-height: 520px;
         }
       `}</style>
 
+      <SiteNav />
+
       <iframe className="pid-frame" src={src} title="Primary iD onboarding" />
-    </>
+    </div>
   )
 }
