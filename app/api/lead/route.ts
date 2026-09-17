@@ -13,6 +13,13 @@
 // BAA. Free-text medical history (S.hist) is still NOT sent — it has no field to
 // land in and no clinical consumer yet.
 //
+// Every arrival is also placed on the "Primary iD Journey" pipeline as an
+// opportunity, and only ever moved forward. See syncOpportunity below.
+//
+// SMS CONSENT is captured at the gate and written on every phase as both a
+// tag ("SMS Consent: Yes" / "SMS Consent: No") and four evidence fields.
+// EVERY SMS workflow must filter on the tag. See /terms/ and /privacy/.
+//
 // Silent until GHL_API_TOKEN + GHL_LOCATION_ID are set in Vercel.
 // ============================================================================
 import { NextResponse } from "next/server"
@@ -20,6 +27,21 @@ import { NextResponse } from "next/server"
 const TOKEN = process.env.GHL_API_TOKEN
 const LOCATION = process.env.GHL_LOCATION_ID
 const WF_APPT = process.env.GHL_WORKFLOW_APPT
+
+// The Primary iD Journey pipeline. Hard-coded with an env override so this
+// works without a Vercel change; these are location-scoped object ids, not
+// secrets. Created 17 Sep 2026 — before that, 32 patients had arrived and not
+// one existed as an opportunity, so nothing in GHL knew where anybody was.
+const PIPELINE = process.env.GHL_PIPELINE_ID || "YIyCuqxNh4mc9NHrh0gx"
+// Stage ids in board order. Index matters: we only ever move a card FORWARD.
+const STAGES = [
+  "d665d267-0cde-4e4b-a8f6-d032f5618694", // 0 New — assessment started
+  "00f5aa93-52c0-47c2-8d6a-c4820133cd09", // 1 Assessment complete
+  "0c7cb0cc-a880-4d1d-9bd5-4fc8e17a6e9c", // 2 Contacted
+  "5233b0b4-b246-4764-abf6-bca33f496ad4", // 3 Appointment booked
+  "8580bd59-8c6a-4880-9adc-4267d405b385", // 4 Seen
+  "ebb09e99-7c99-4bee-8b08-6f83c1e58a38", // 5 Treatment planned
+]
 const WF_SCORE = process.env.GHL_WORKFLOW_SCORE
 const LIVE = Boolean(TOKEN && LOCATION)
 
@@ -53,12 +75,73 @@ type Body = {
   insurance?: { type?: string; carrier?: string; member?: string }
   records?: { pcp?: string; other?: string; labs?: string; platforms?: string }
   demo?: { dob?: string; sex?: string }
+  smsConsent?: { given?: boolean; at?: string; version?: string; text?: string; source?: string }
   leadSource?: Record<string, string>
 }
 
 const num = (v: number | null | undefined) => (typeof v === "number" && !isNaN(v) ? String(v) : "")
 
 const URGENT = /pain|hurt|emergency|broke|swollen|bothering/i
+
+// ---------------------------------------------------------------------------
+// Put the arrival on the board, and keep it there.
+//
+// A tagged contact is a record; an opportunity is a position in a journey.
+// Without this, someone can complete forty questions and still be invisible to
+// anyone looking at GHL to answer "where is this patient?".
+//
+// THE RULE THAT MATTERS: only ever move a card FORWARD. The engine fires nine
+// upserts per completed run. Without the index check, a card a human had
+// dragged to Contacted or Appointment booked would snap back to Assessment
+// complete on the next one, and the board would quietly lie about the work
+// the practice had actually done.
+//
+// Failures here are swallowed. A pipeline write must never cost us the lead.
+async function syncOpportunity(
+  contactId: string,
+  name: string,
+  pathway: string,
+  complete: boolean,
+) {
+  const wantIdx = complete ? 1 : 0
+  const label = `${name || "Unnamed"}${pathway ? ` — ${pathway.replace(/_/g, " ")}` : ""}`
+  try {
+    const q = await fetch(
+      `https://services.leadconnectorhq.com/opportunities/search?location_id=${LOCATION}` +
+        `&pipeline_id=${PIPELINE}&contact_id=${contactId}&limit=1`,
+      { headers: H },
+    )
+    const existing = q.ok ? (await q.json())?.opportunities?.[0] : null
+
+    if (!existing) {
+      await fetch("https://services.leadconnectorhq.com/opportunities/", {
+        method: "POST",
+        headers: H,
+        body: JSON.stringify({
+          pipelineId: PIPELINE,
+          locationId: LOCATION,
+          pipelineStageId: STAGES[wantIdx],
+          name: label,
+          status: "open",
+          contactId,
+        }),
+      })
+      return
+    }
+
+    // Someone already moved this person along, or closed them out. Leave it.
+    const atIdx = STAGES.indexOf(existing.pipelineStageId)
+    if (existing.status !== "open" || atIdx < 0 || atIdx >= wantIdx) return
+
+    await fetch(`https://services.leadconnectorhq.com/opportunities/${existing.id}`, {
+      method: "PUT",
+      headers: H,
+      body: JSON.stringify({ pipelineStageId: STAGES[wantIdx], name: label }),
+    })
+  } catch (e) {
+    console.error("[lead] opportunity sync failed:", e)
+  }
+}
 
 export async function POST(request: Request) {
   try {
@@ -81,6 +164,8 @@ export async function POST(request: Request) {
     const ins = b.insurance ?? {}
     const rec = b.records ?? {}
     const demo = b.demo ?? {}
+    const consent = b.smsConsent ?? {}
+    const consentGiven = consent.given === true
     const pfAnswers = b.pf && Object.keys(b.pf).length
       ? Object.entries(b.pf).map(([k, v]) => `${k}: ${v}`).join(" · ")
       : ""
@@ -100,6 +185,10 @@ export async function POST(request: Request) {
       b.phase === "complete" && typeof b.composite === "number" ? `Score: ${b.composite}` : null,
       b.tier ? `Tier: ${b.tier}` : null,
       safety.length && safety[0] !== "None of these" ? "Safety: flagged" : null,
+      // The tag every SMS workflow must filter on. Absence of
+      // "SMS Consent: Yes" is the only thing standing between a bulk send
+      // and a TCPA claim, so it is written on EVERY phase, not just the gate.
+      consentGiven ? "SMS Consent: Yes" : "SMS Consent: No",
     ].filter(Boolean) as string[]
 
     const customFields = [
@@ -135,6 +224,15 @@ export async function POST(request: Request) {
       { key: "legal_sex",         field_value: demo.sex ?? "" },
       { key: "records_pcp",       field_value: rec.pcp ?? "" },
       { key: "records_notes",     field_value: [rec.other, rec.labs, rec.platforms].filter(Boolean).join(" · ") },
+
+      // --- SMS consent (A2P 10DLC evidence) ------------------------------
+      // Stored as the decision, the moment, and the exact wording shown.
+      // Carriers and plaintiffs both ask the same question: what did this
+      // person actually agree to, and when. These three fields answer it.
+      { key: "sms_consent",       field_value: consentGiven ? "yes" : "no" },
+      { key: "sms_consent_at",    field_value: consent.at ?? "" },
+      { key: "sms_consent_text",  field_value: consentGiven ? `[${consent.version ?? ""}] ${consent.text ?? ""}`.trim() : "" },
+      { key: "sms_consent_source",field_value: consent.source ?? "" },
     ].filter((x) => x.field_value !== "")
 
     const base = {
@@ -169,6 +267,17 @@ export async function POST(request: Request) {
         console.error("[lead] upsert with customFields failed, retrying tags-only:", fieldErr)
         contactId = await upsert(base)
         console.error("[lead] captured WITHOUT custom fields — run ghl-create-fields.mjs")
+      }
+
+      // Track the arrival on the board. Runs on every phase so a drop-off
+      // still appears, and a completion is promoted the moment it lands.
+      if (contactId) {
+        await syncOpportunity(
+          contactId,
+          [f.firstName, f.lastName].filter(Boolean).join(" "),
+          b.pathway ?? "",
+          b.phase === "complete",
+        )
       }
 
       // Enrol only on the first (gate) call, so re-sends don't double-enrol.
