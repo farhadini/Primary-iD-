@@ -100,6 +100,14 @@
   /* A2P 10DLC consent row. Deliberately quiet but never hidden — carriers
      reject campaigns whose opt-in language isn't visible at the point of
      collection, and a checkbox nobody can read isn't consent. */
+  /* Staff-only marker. Deliberately loud: the one failure mode of an
+     in-clinic device is nobody noticing it is in the wrong mode. */
+  .staffbar{display:inline-flex; align-items:center; gap:9px; margin-bottom:16px; padding:7px 13px;
+    border-radius:999px; background:#FDF1E4; border:1px solid #E8985E;
+    font-family:var(--sans); font-size:11px; font-weight:700; letter-spacing:.07em;
+    text-transform:uppercase; color:#8A5520}
+  .staffbar .dot{width:8px; height:8px; border-radius:50%; background:#E8985E}
+
   .consent{display:flex; gap:10px; align-items:flex-start; max-width:560px; margin-top:24px}
   .consent input{width:18px; height:18px; margin:2px 0 0; flex:0 0 auto; accent-color:var(--blue); cursor:pointer}
   .consent label{font-family:var(--sans); font-size:12px; line-height:1.55; color:var(--muted); cursor:pointer}
@@ -519,6 +527,23 @@
     return null;
   }
   function applyDoor(key){ S.door=key; var d=DOORS[key]; if(d && d.reason) S.reason=d.reason; }
+
+  // IN-CLINIC MODE (?ctx=clinic)
+  //
+  // Some people fill this in on a practice iPad while they are already in the
+  // chair. They are not inbound leads, and putting them on the acquisition
+  // board makes it lie about where the practice's new patients come from.
+  // This flag travels to /api/lead, which tags them and creates NO opportunity.
+  //
+  // It only ever changes labelling and routing. The questions, the scoring and
+  // the consent language are identical either way — a patient in the chair is
+  // owed exactly the same assessment as one on the sofa at home.
+  var IS_CLINIC = /[?&]ctx=clinic\b/i.test((location.search||"")+(location.hash||""));
+  function staffBar(){
+    return IS_CLINIC
+      ? '<div class="staffbar"><span class="dot"></span>In clinic · staff device</div>'
+      : '';
+  }
   function pfTrack(){ return doorCfg().track || (S.reason==="fix" ? "restorative" : null); }
 
   // tiers (Master bands + patient language)
@@ -773,7 +798,8 @@
     function v(id){ var el=document.getElementById(id); return el?el.value.trim():""; }
     var inc=(d.includes||[]).slice(0,3).join(" · ");
     show(
-      '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>'+esc(d.label)+' · Primary iD'+(d.cobrand?' · AirFlex':'')+'</div>'
+      staffBar()
+      + '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>'+esc(d.label)+' · Primary iD'+(d.cobrand?' · AirFlex':'')+'</div>'
       + '<h1 class="head">'+d.heroH+'</h1>'
       + '<p class="lede">'+esc(d.heroSub)+'</p>'
       + coach("<p>Save your spot and I'll send your results — then it's a ~6-minute conversation, not a form. Private, and yours to keep.</p>")
@@ -783,6 +809,12 @@
         + '<div class="field"><label>Email</label><input id="g_email" type="email" placeholder="you@email.com" value="'+esc(S.demo.email||"")+'" /></div>'
         + '<div class="field"><label>Mobile</label><input id="g_phone" type="tel" placeholder="(___) ___-____" value="'+esc(S.demo.phone||"")+'" /></div>'
         + '<div class="field"><label>Age</label><input id="g_age" type="text" inputmode="numeric" placeholder="e.g. 42" value="'+esc(S.demo.age||"")+'" /></div>'
+        // Staff-only. An exact Open Dental PatNum is worth more than any
+        // amount of name-and-date-of-birth matching later: it is the one key
+        // that makes joining this record to the chart unambiguous, and
+        // matching the wrong patient to a chart is a clinical problem, not a
+        // data one. Optional — never blocks the patient.
+        + (IS_CLINIC ? '<div class="field"><label>Open Dental patient # (staff)</label><input id="g_pat" type="text" inputmode="numeric" placeholder="optional" value="'+esc(S.odPatNum||"")+'" /></div>' : '')
       + '</div>'
       + (inc?'<p class="hint" style="margin-top:12px">Your visit includes: '+esc(inc)+'</p>':'')
       + '<div class="consent">'
@@ -794,10 +826,11 @@
       0);
     var go=document.getElementById("go");
     function chk(){ var f=v("g_first"), e=v("g_email"), p=v("g_phone"); go.disabled=!(f && e.indexOf("@")>0); }
-    ["g_first","g_last","g_email","g_phone","g_age"].forEach(function(id){ var el=document.getElementById(id); if(el) el.oninput=chk; });
+    ["g_first","g_last","g_email","g_phone","g_age","g_pat"].forEach(function(id){ var el=document.getElementById(id); if(el) el.oninput=chk; });
     var f0=document.getElementById("g_first"); if(f0) f0.focus(); chk();
     go.onclick=function(){
       S.name=v("g_first"); S.demo.last=v("g_last"); S.demo.email=v("g_email"); S.demo.phone=v("g_phone"); S.demo.age=v("g_age");
+      S.odPatNum=v("g_pat");
       // Record the consent decision, whichever way it went. "No" is a fact
       // worth keeping: it is what stops a later workflow from texting them.
       var smsBox=document.getElementById("g_sms");
@@ -869,7 +902,9 @@
           insurance:  S.insurance||{},
           records:    S.records||{},
           demo:       { dob:S.demo.dob||"", sex:S.demo.sex||"" },
-          smsConsent: S.smsConsent || { given:false }
+          smsConsent: S.smsConsent || { given:false },
+          context:    IS_CLINIC ? "clinic" : "web",
+          odPatNum:   S.odPatNum || ""
         })
       }).catch(function(){});
     }catch(e){}
