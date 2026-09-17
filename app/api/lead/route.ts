@@ -13,8 +13,10 @@
 // BAA. Free-text medical history (S.hist) is still NOT sent — it has no field to
 // land in and no clinical consumer yet.
 //
-// Every arrival is also placed on the "Primary iD Journey" pipeline as an
+// Every WEB arrival is also placed on the "Primary iD Journey" pipeline as an
 // opportunity, and only ever moved forward. See syncOpportunity below.
+// Runs taken on a practice iPad (?ctx=clinic) are tagged "Source: In-clinic"
+// and deliberately get NO opportunity — they are not lead acquisition.
 //
 // SMS CONSENT is captured at the gate and written on every phase as both a
 // tag ("SMS Consent: Yes" / "SMS Consent: No") and four evidence fields.
@@ -76,6 +78,8 @@ type Body = {
   records?: { pcp?: string; other?: string; labs?: string; platforms?: string }
   demo?: { dob?: string; sex?: string }
   smsConsent?: { given?: boolean; at?: string; version?: string; text?: string; source?: string }
+  context?: string
+  odPatNum?: string
   leadSource?: Record<string, string>
 }
 
@@ -166,6 +170,8 @@ export async function POST(request: Request) {
     const demo = b.demo ?? {}
     const consent = b.smsConsent ?? {}
     const consentGiven = consent.given === true
+    // Filled in on a practice iPad while the person is already in the chair.
+    const inClinic = b.context === "clinic"
     const pfAnswers = b.pf && Object.keys(b.pf).length
       ? Object.entries(b.pf).map(([k, v]) => `${k}: ${v}`).join(" · ")
       : ""
@@ -189,6 +195,7 @@ export async function POST(request: Request) {
       // "SMS Consent: Yes" is the only thing standing between a bulk send
       // and a TCPA claim, so it is written on EVERY phase, not just the gate.
       consentGiven ? "SMS Consent: Yes" : "SMS Consent: No",
+      inClinic ? "Source: In-clinic" : null,
     ].filter(Boolean) as string[]
 
     const customFields = [
@@ -233,6 +240,10 @@ export async function POST(request: Request) {
       { key: "sms_consent_at",    field_value: consent.at ?? "" },
       { key: "sms_consent_text",  field_value: consentGiven ? `[${consent.version ?? ""}] ${consent.text ?? ""}`.trim() : "" },
       { key: "sms_consent_source",field_value: consent.source ?? "" },
+
+      // Where the assessment was taken, and the exact chart it belongs to.
+      { key: "visit_context",     field_value: inClinic ? "clinic" : "web" },
+      { key: "opendental_patnum",field_value: b.odPatNum ?? "" },
     ].filter((x) => x.field_value !== "")
 
     const base = {
@@ -271,7 +282,14 @@ export async function POST(request: Request) {
 
       // Track the arrival on the board. Runs on every phase so a drop-off
       // still appears, and a completion is promoted the moment it lands.
-      if (contactId) {
+      //
+      // IN-CLINIC RUNS GET NO OPPORTUNITY. The Primary iD Journey board is a
+      // record of lead acquisition. Someone already sitting in the chair was
+      // not acquired, and putting them in "New — assessment started" makes the
+      // board misreport where the practice's new patients actually come from.
+      // Their contact, scores, tags and fields all still land — only the card
+      // is withheld. Find them by the "Source: In-clinic" tag.
+      if (contactId && !inClinic) {
         await syncOpportunity(
           contactId,
           [f.firstName, f.lastName].filter(Boolean).join(" "),
