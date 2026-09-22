@@ -125,14 +125,12 @@ const nextConfig = {
         permanent: true,
       },
 
-      // Membership → external Subscribili subdomain
-      // TODO(farhad): confirm exact subdomain with Subscribili rep, then update.
-      {
-        source: "/membership/",
-        destination: "https://primaryid.subscribili.com",
-        permanent: true,
-        basePath: false,
-      },
+      // Membership → now served by app/membership/page.tsx.
+      // The old 301 sent /membership/ straight out to Subscribili, which meant
+      // the offer was never explained on our own domain. The page now carries
+      // the explanation and links out to Subscribili to enrol.
+      // (Previous rule kept here for reference:)
+      // { source: "/membership/", destination: "https://primaryid.subscribili.com", permanent: true, basePath: false },
 
       // ── Booking CTAs go straight into the onboarding ──────────────────────
       // The /book/* pages were content pages whose only action was a button.
