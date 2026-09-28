@@ -2,6 +2,25 @@
 
 You are working on Primary Integrative Dentistry's website. Brentwood, Los Angeles. Founded by Dr. Tzur Gabi, functional prosthodontist.
 
+## How we ship changes (read first)
+
+The site is live at www.myprimaryid.com. Farhad is the owner and is not a developer — explain what you did in plain language, and never leave the live site broken.
+
+- **Stack:** Next.js 16 (App Router) + React 19 + Tailwind, deployed by Vercel project `v0-invitation-landing-page` (team `farhad-2415s-projects`) from GitHub `farhadini/Primary-iD-`. Package manager is **pnpm** — never use npm/yarn or commit `package-lock.json`.
+- **`main` = production.** Every push to `main` goes live within ~1 minute. Never push to `main` directly.
+- **Every change goes on a branch:** `git switch -c <type>/<short-name>` from an up-to-date `main` (types: `feat/`, `fix/`, `content/`, `seo/`, `chore/`). One topic per branch.
+- **Before pushing, run:** `pnpm build` (must pass) and `pnpm typecheck` (don't add new errors). For visual changes, run the `site` dev server from `.claude/launch.json` and check the page at desktop and mobile widths.
+- **Push the branch and open a pull request.** Vercel posts a preview URL on it. Give Farhad the preview link and a short plain-English summary of what changed and which pages to look at.
+- **Only merge after Farhad approves the preview.** Merge (squash) into `main`, then confirm the production deploy is READY in Vercel and spot-check the live page.
+- **If production breaks:** roll back to the previous READY production deployment in Vercel first, then fix forward on a branch.
+- **Commit messages:** say what changed for patients/staff in the first line, the why in the body.
+
+## Privacy — this GitHub repo is PUBLIC
+
+- Never commit patient data (names with health info, DOBs, chart numbers, assessment results, screenshots of records), exports, `.zip` bundles, or anything in `deploy matt dorey/`.
+- Never commit secrets. Server-side keys (GHL, Google service account) live only in Vercel environment variables; read them via `process.env` in route handlers, never in `"use client"` files or `NEXT_PUBLIC_*` vars.
+- Assessment/lead data must only flow through `app/api/*` routes — never log it with `console.log`.
+
 ## Migration context
 
 This codebase started as a v0 generation and is now in the middle of a migration from the legacy WordPress site at `www.myprimaryid.com`. Strategy and audit docs live one level up in the `Primary iD/` folder:
@@ -13,7 +32,7 @@ This codebase started as a v0 generation and is now in the middle of a migration
 
 ## Non-negotiable constraints
 
-**Canonical domain:** `https://myprimaryid.com` — always with `www`, always `https`. The Vercel preview at `*.vercel.app` is staging only.
+**Canonical domain:** `https://myprimaryid.com/` — the bare domain (no `www`), always `https`. Every canonical tag, sitemap entry and robots.txt line already uses this form; keep it that way. `www.myprimaryid.com` should 301 to it. The Vercel preview at `*.vercel.app` is staging only.
 
 **Trailing slashes:** All URLs must have trailing slashes. The legacy WordPress site used trailing slashes and we preserve them 1:1 to keep SEO equity. `next.config.mjs` has `trailingSlash: true`.
 
