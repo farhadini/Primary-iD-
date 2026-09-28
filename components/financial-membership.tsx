@@ -692,9 +692,9 @@ export default function FinancialMembership() {
                 <polyline points="12 5 19 12 12 19" />
               </svg>
             </a>
-            {/* Join Primary iD Membership: external Subscribili funnel. TODO(farhad): confirm subdomain with Subscribili rep */}
+            {/* Join Primary iD Membership: external Subscribili funnel. */}
             <a
-              href="https://primaryid.subscribili.com"
+              href="https://myprimaryid.subscribili.com/"
               target="_blank"
               rel="noopener"
               style={{

@@ -1446,7 +1446,7 @@ function MembershipStrip() {
               Our membership plans replace traditional insurance with a model built around your ongoing wellness, not your episodic problems.
             </p>
           </div>
-          <a href="https://primaryid.subscribili.com" target="_blank" rel="noopener" style={{
+          <a href="https://myprimaryid.subscribili.com/" target="_blank" rel="noopener" style={{
             background: B.green, color: B.white, textDecoration: "none",
             borderRadius: 9, padding: "14px 28px",
             fontFamily: "Georgia,serif", fontSize: 14,

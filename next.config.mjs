@@ -14,6 +14,23 @@ const nextConfig = {
   // ─── 301 Redirects (preserve WordPress URL equity) ────────────────────────
   async redirects() {
     return [
+      // www → bare domain. Canonicals, sitemap and robots all use https://myprimaryid.com/,
+      // and both hosts are attached to the Vercel project, so without this the whole site
+      // is served twice. Must stay first so it wins over every rule below. Page paths keep
+      // their trailing slash so it's one hop; file paths (anything with a dot) don't get one.
+      {
+        source: "/:path((?!.*\\.).+)",
+        has: [{ type: "host", value: "www.myprimaryid.com" }],
+        destination: "https://myprimaryid.com/:path/",
+        permanent: true,
+      },
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.myprimaryid.com" }],
+        destination: "https://myprimaryid.com/:path*",
+        permanent: true,
+      },
+
       // Legacy root blog URLs (WordPress served posts at root) -> /blogs/[slug]/ to preserve SEO equity
       { source: "/dental-implants-a-friendly-guide-to-comfort-care-and-long-lasting-smiles/", destination: "/blogs/dental-implants-a-friendly-guide-to-comfort-care-and-long-lasting-smiles/", permanent: true },
       { source: "/emergency-dentist-los-angeles-ca-quick-compassionate-care-for-tooth-pain-and-injuries/", destination: "/blogs/emergency-dentist-los-angeles-ca-quick-compassionate-care-for-tooth-pain-and-injuries/", permanent: true },
@@ -125,11 +142,10 @@ const nextConfig = {
         permanent: true,
       },
 
-      // Membership → external Subscribili subdomain
-      // TODO(farhad): confirm exact subdomain with Subscribili rep, then update.
+      // Membership → external Subscribili funnel
       {
         source: "/membership/",
-        destination: "https://primaryid.subscribili.com",
+        destination: "https://myprimaryid.subscribili.com/",
         permanent: true,
         basePath: false,
       },
