@@ -125,14 +125,8 @@ const nextConfig = {
         permanent: true,
       },
 
-      // Membership → external Subscribili subdomain
-      // TODO(farhad): confirm exact subdomain with Subscribili rep, then update.
-      {
-        source: "/membership/",
-        destination: "https://primaryid.subscribili.com",
-        permanent: true,
-        basePath: false,
-      },
+      // /membership/ is now a page (app/membership/). Its old 301 to Subscribili is gone; the page
+      // links to the Subscribili enrolment funnel itself.
 
       // ── Booking CTAs go straight into the onboarding ──────────────────────
       // The /book/* pages were content pages whose only action was a button.
