@@ -142,10 +142,11 @@ const nextConfig = {
         permanent: true,
       },
 
-      // Membership → external Subscribili funnel
+      // Membership → external Subscribili subdomain
+      // TODO(farhad): confirm exact subdomain with Subscribili rep, then update.
       {
         source: "/membership/",
-        destination: "https://myprimaryid.subscribili.com/",
+        destination: "https://primaryid.subscribili.com",
         permanent: true,
         basePath: false,
       },
