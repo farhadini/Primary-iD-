@@ -27,7 +27,8 @@ const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY ?? SUPABASE_PUBLISHAB
 
 const GHL_TOKEN = process.env.GHL_API_TOKEN;
 const GHL_LOCATION = process.env.GHL_LOCATION_ID;
-const GHL_LIVE = Boolean(GHL_TOKEN && GHL_LOCATION);
+// Never from a preview or local build. See app/api/lead/route.ts.
+const GHL_LIVE = Boolean(GHL_TOKEN && GHL_LOCATION) && process.env.VERCEL_ENV === "production";
 
 type Chapter = { slug: string; score: number; tier: string; responses?: unknown };
 

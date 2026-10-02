@@ -45,7 +45,11 @@ const STAGES = [
   "ebb09e99-7c99-4bee-8b08-6f83c1e58a38", // 5 Treatment planned
 ]
 const WF_SCORE = process.env.GHL_WORKFLOW_SCORE
-const LIVE = Boolean(TOKEN && LOCATION)
+// Preview and development builds never write to the live pipeline (spec: Agents
+// · Test). The GHL keys are production-only in Vercel today; this holds even if
+// someone later adds them to Preview. VERCEL_ENV is unset locally, so local dev
+// stays silent too.
+const LIVE = Boolean(TOKEN && LOCATION) && process.env.VERCEL_ENV === "production"
 
 const H = {
   Authorization: `Bearer ${TOKEN}`,

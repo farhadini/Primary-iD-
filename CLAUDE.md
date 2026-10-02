@@ -2,6 +2,10 @@
 
 You are working on Primary Integrative Dentistry's website. Brentwood, Los Angeles. Founded by Dr. Tzur Gabi, functional prosthodontist.
 
+## Primary iD flow spec
+
+Read `/spec/PRIMARY_ID_PHASE1_SPEC.md` before changing the Primary iD flow (the `/primary-id/` engine in `public/primary-id-app.html`, `/book/*` links, `app/api/lead/`). `/spec/primary-id-phase1-spec.json` is the same spec as data. Name the touchpoint (P1-xx) and check IDs each change satisfies.
+
 ## Migration context
 
 This codebase started as a v0 generation and is now in the middle of a migration from the legacy WordPress site at `www.myprimaryid.com`. Strategy and audit docs live one level up in the `Primary iD/` folder:
