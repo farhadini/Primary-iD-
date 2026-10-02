@@ -65,7 +65,7 @@ This codebase started as a v0 generation and is now in the middle of a migration
 ## Practice information (use these real values)
 
 - **Practice name:** Primary Integrative Dentistry
-- **Founder:** Dr. Tzur Gabi, DMD — Functional Prosthodontist & Oral Physician
+- **Founder:** Dr. Tzur Gabi, DMD — Functional Prosthodontist. Never "oral physician" (B&P 651; Membership PRD v5 and Brand OS rails). The internal investor deck and invitation pages still use it and are out of scope.
 - **Phone:** (310) 564-8990
 - **Address:** 11980 San Vicente Blvd, Suite 902, Los Angeles, CA 90049
 - **Hours:** Mon–Thu 8 AM – 6 PM, Fri 8 AM – 5 PM, Sat–Sun closed
@@ -78,6 +78,10 @@ This codebase started as a v0 generation and is now in the middle of a migration
 - Patient-facing, not practitioner-facing. The B2B "100 practitioners" invitation language is legacy — strip it from public-facing copy.
 - Hero language preserved: "Dentistry reimagined to see the whole you." with italic blue emphasis on "the whole you"
 - Whole-body / oral-systemic framing throughout
+
+## Brand source of truth
+
+The **Primary Brand OS** skill (`primary-brand-os`, downloadable from `/brand/#files`) wins over anything in this file on brand questions. Type is **Montserrat for structure (headings, labels, buttons) and Georgia for reading (body, numbers, the one italic blue phrase)**, decided 13 Sep 2026. Older pages that use other fonts are off-brand and should be reset when next touched. Strategy, briefs and designs live in `../Primary iD/` (start with the newest pack under `Strategy & Journey/`).
 
 ## Color tokens (defined inline in pages as `B`)
 
