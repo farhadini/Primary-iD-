@@ -246,7 +246,7 @@ function Hero() {
           </div>
 
           <div style={{ marginTop: 18, fontFamily: "Georgia,serif", fontStyle: "italic", fontSize: 13.5, color: "#9fb4cf" }}>
-            Founded by <a href="/about/" style={{ color: "#9fb4cf", textDecoration: "none" }} onMouseOver={e => e.currentTarget.style.color = "#fff"} onMouseOut={e => e.currentTarget.style.color = "#9fb4cf"}>Dr. Tzur Gabi, Functional Prosthodontist &amp; Oral Physician</a>
+            Founded by <a href="/about/" style={{ color: "#9fb4cf", textDecoration: "none" }} onMouseOver={e => e.currentTarget.style.color = "#fff"} onMouseOut={e => e.currentTarget.style.color = "#9fb4cf"}>Dr. Tzur Gabi, Functional Prosthodontist</a>
           </div>
         </div>
       </div>

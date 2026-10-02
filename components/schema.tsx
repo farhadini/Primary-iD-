@@ -111,7 +111,7 @@ export function PhysicianSchema() {
     name: "Tzur Gabi",
     honorificPrefix: "Dr.",
     honorificSuffix: "DMD",
-    jobTitle: "Functional Prosthodontist & Oral Physician",
+    jobTitle: "Functional Prosthodontist",
     medicalSpecialty: "Dentistry",
     worksFor: { "@id": `${SITE_URL}/#dentist` },
     url: `${SITE_URL}/about/`,
@@ -120,7 +120,7 @@ export function PhysicianSchema() {
       // TODO(farhad): add LinkedIn, Google Scholar, professional society pages
     ],
     description:
-      "Dr. Tzur Gabi is a functional prosthodontist and oral physician with 25+ years of experience in biocompatible, airway-centered, whole-body dentistry. Founder of Primary Integrative Dentistry in Los Angeles.",
+      "Dr. Tzur Gabi is a functional prosthodontist with 25+ years of experience in biocompatible, airway-centered, whole-body dentistry. Founder of Primary Integrative Dentistry in Los Angeles.",
   }
   return <JsonLd data={data} />
 }

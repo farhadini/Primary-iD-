@@ -157,7 +157,7 @@ const COMPARISON = [
   ["Muscles & tongue", "Rarely addressed", "Myofunctional therapy so the result holds and supports breathing"],
   ["Jaw & TMJ", "Looked at in isolation", "Evaluated as one system with the bite and the airway"],
   ["Whole-body context", "Stops at the mouth", "Mapped across the five dimensions of the Primary iD"],
-  ["Who you see", "Varies by visit", "Care led by Dr. Gabi, a prosthodontist and oral physician"],
+  ["Who you see", "Varies by visit", "Care led by Dr. Gabi, a prosthodontist"],
 ]
 
 export default function AirwaySleepPage() {

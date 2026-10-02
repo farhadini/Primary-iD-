@@ -276,7 +276,7 @@ export default function BrandHubPage() {
             <div style={{ fontFamily: "Georgia,serif", fontSize: 17, color: B.navy, marginBottom: 14 }}>Boilerplate &amp; facts</div>
             <div style={{ fontSize: 14.5, color: B.body, lineHeight: 1.9 }}>
               <div><strong style={{ color: B.navy }}>Name:</strong> Primary Integrative Dentistry</div>
-              <div><strong style={{ color: B.navy }}>Founder:</strong> Dr. Tzur Gabi, DMD · Functional Prosthodontist &amp; Oral Physician</div>
+              <div><strong style={{ color: B.navy }}>Founder:</strong> Dr. Tzur Gabi, DMD · Functional Prosthodontist</div>
               <div><strong style={{ color: B.navy }}>Tagline:</strong> Dentistry reimagined to see the whole you.</div>
               <div><strong style={{ color: B.navy }}>One-liner:</strong> Whole-body health, read through your mouth, the front door to your health.</div>
               <div><strong style={{ color: B.navy }}>Location:</strong> 11980 San Vicente Blvd, Suite 902, Los Angeles, CA 90049</div>
