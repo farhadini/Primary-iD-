@@ -1,9 +1,10 @@
 import type { Metadata } from "next"
-import { Inter, JetBrains_Mono } from "next/font/google"
+import { Montserrat, JetBrains_Mono } from "next/font/google"
 
-// The membership design is set in Inter with JetBrains Mono for citations.
+// Brand OS type system (decided 13 Sep 2026): Montserrat for structure, Georgia for
+// reading, JetBrains Mono for citations.
 // Self-hosted by next/font; membership.css reads these variables.
-const sans = Inter({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-pidl-sans" })
+const sans = Montserrat({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-pidl-sans" })
 const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-pidl-mono" })
 
 export const metadata: Metadata = {

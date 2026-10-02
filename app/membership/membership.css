@@ -23,7 +23,7 @@
     /* Type — as shipping on myprimaryid.com.
        Georgia is a system serif (no webfont request); Geist is the loaded brand sans. */
     --serif:Georgia,"Times New Roman",serif;
-    --sans:var(--font-pidl-sans),"Inter","Geist Variable",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    --sans:var(--font-pidl-sans),"Montserrat",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
     --mono:var(--font-pidl-mono),"JetBrains Mono","Geist Mono Variable",ui-monospace,Menlo,monospace;
 
     /* ── MOTION ──────────────────────────────────────────
@@ -714,3 +714,20 @@
   .pidl .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
   .pidl .plan .pill.ghost{width:100%;justify-content:center;margin-top:10px}
+
+  /* ── Brand OS type system (Primary Brand OS §2, decided 13 Sep 2026) ──────────────
+     The design file set headings in Georgia and body in a grotesque. The brand inverts
+     that: Montserrat for structure (headings, labels, buttons), Georgia for reading
+     (body copy, numbers, the one italic phrase). UI pieces already on var(--sans) pick
+     up Montserrat through the token; this layer moves headings and body text. */
+  .pidl{font-family:var(--serif)}
+  .pidl h1,.pidl h2,.pidl h3,.pidl .octitle,.pidl .qask,.pidl .tclaim,.pidl .ocwide h3,.pidl .ltitle,.pidl .lens b{
+    font-family:var(--sans);font-weight:600;letter-spacing:-.025em;line-height:1.1}
+  .pidl h3,.pidl .octitle,.pidl .ltitle,.pidl .lens b{letter-spacing:-.01em}
+  .pidl h1 em,.pidl h2 em,.pidl h3 em,.pidl .octitle em,.pidl .qask em,.pidl .tclaim em,.pidl .lens b em{
+    font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em}
+  .pidl table,.pidl .srow,.pidl .wrow,.pidl .lrow{font-variant-numeric:lining-nums tabular-nums}
+  /* The design's .hero{padding:56px 0 96px} cancelled .wrap's side padding, so the hero
+     sat flush against the screen edge below ~1210px wide. Restore the gutter. */
+  .pidl .hero.wrap{padding-left:44px;padding-right:44px}
+  @media(max-width:560px){.pidl .hero.wrap{padding-left:22px;padding-right:22px}}
