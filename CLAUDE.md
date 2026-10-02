@@ -2,6 +2,25 @@
 
 You are working on Primary Integrative Dentistry's website. Brentwood, Los Angeles. Founded by Dr. Tzur Gabi, functional prosthodontist.
 
+## How we ship changes (read first)
+
+The site is live at www.myprimaryid.com. Farhad is the owner and is not a developer — explain what you did in plain language, and never leave the live site broken.
+
+- **Stack:** Next.js 16 (App Router) + React 19 + Tailwind, deployed by Vercel project `v0-invitation-landing-page` (team `farhad-2415s-projects`) from GitHub `farhadini/Primary-iD-`. Package manager is **pnpm** — never use npm/yarn or commit `package-lock.json`.
+- **`main` = production.** Every push to `main` goes live within ~1 minute. Never push to `main` directly.
+- **Every change goes on a branch:** `git switch -c <type>/<short-name>` from an up-to-date `main` (types: `feat/`, `fix/`, `content/`, `seo/`, `chore/`). One topic per branch.
+- **Before pushing, run:** `pnpm build` (must pass) and `pnpm typecheck` (don't add new errors). For visual changes, run the `site` dev server from `.claude/launch.json` and check the page at desktop and mobile widths.
+- **Push the branch and open a pull request.** Vercel posts a preview URL on it. Give Farhad the preview link and a short plain-English summary of what changed and which pages to look at.
+- **Only merge after Farhad approves the preview.** Merge (squash) into `main`, then confirm the production deploy is READY in Vercel and spot-check the live page.
+- **If production breaks:** roll back to the previous READY production deployment in Vercel first, then fix forward on a branch.
+- **Commit messages:** say what changed for patients/staff in the first line, the why in the body.
+
+## Privacy — this GitHub repo is PUBLIC
+
+- Never commit patient data (names with health info, DOBs, chart numbers, assessment results, screenshots of records), exports, `.zip` bundles, or anything in `deploy matt dorey/`.
+- Never commit secrets. Server-side keys (GHL, Google service account) live only in Vercel environment variables; read them via `process.env` in route handlers, never in `"use client"` files or `NEXT_PUBLIC_*` vars.
+- Assessment/lead data must only flow through `app/api/*` routes — never log it with `console.log`.
+
 ## Migration context
 
 This codebase started as a v0 generation and is now in the middle of a migration from the legacy WordPress site at `www.myprimaryid.com`. Strategy and audit docs live one level up in the `Primary iD/` folder:
@@ -13,7 +32,7 @@ This codebase started as a v0 generation and is now in the middle of a migration
 
 ## Non-negotiable constraints
 
-**Canonical domain:** `https://myprimaryid.com` — always with `www`, always `https`. The Vercel preview at `*.vercel.app` is staging only.
+**Canonical domain:** `https://myprimaryid.com/` — the bare domain (no `www`), always `https`. Every canonical tag, sitemap entry and robots.txt line already uses this form; keep it that way. `www.myprimaryid.com` should 301 to it. The Vercel preview at `*.vercel.app` is staging only.
 
 **Trailing slashes:** All URLs must have trailing slashes. The legacy WordPress site used trailing slashes and we preserve them 1:1 to keep SEO equity. `next.config.mjs` has `trailingSlash: true`.
 
@@ -46,7 +65,7 @@ This codebase started as a v0 generation and is now in the middle of a migration
 ## Practice information (use these real values)
 
 - **Practice name:** Primary Integrative Dentistry
-- **Founder:** Dr. Tzur Gabi, DMD — Functional Prosthodontist & Oral Physician
+- **Founder:** Dr. Tzur Gabi, DMD — Functional Prosthodontist. Never "oral physician" (B&P 651; Membership PRD v5 and Brand OS rails). The internal investor deck and invitation pages still use it and are out of scope.
 - **Phone:** (310) 564-8990
 - **Address:** 11980 San Vicente Blvd, Suite 902, Los Angeles, CA 90049
 - **Hours:** Mon–Thu 8 AM – 6 PM, Fri 8 AM – 5 PM, Sat–Sun closed
@@ -59,6 +78,10 @@ This codebase started as a v0 generation and is now in the middle of a migration
 - Patient-facing, not practitioner-facing. The B2B "100 practitioners" invitation language is legacy — strip it from public-facing copy.
 - Hero language preserved: "Dentistry reimagined to see the whole you." with italic blue emphasis on "the whole you"
 - Whole-body / oral-systemic framing throughout
+
+## Brand source of truth
+
+The **Primary Brand OS** skill (`primary-brand-os`, downloadable from `/brand/#files`) wins over anything in this file on brand questions. Type is **Montserrat for structure (headings, labels, buttons) and Georgia for reading (body, numbers, the one italic blue phrase)**, decided 13 Sep 2026. Older pages that use other fonts are off-brand and should be reset when next touched. Strategy, briefs and designs live in `../Primary iD/` (start with the newest pack under `Strategy & Journey/`).
 
 ## Color tokens (defined inline in pages as `B`)
 
