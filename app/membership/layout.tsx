@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 const URL = "https://myprimaryid.com/membership/"
-const TITLE = "Membership | Primary Integrative Dentistry"
+const TITLE = "Membership"
 const DESCRIPTION =
   "One fee of $499 a year: a 3D scan, an oral cancer screening, an extra preventive visit, a longevity consultation and published member pricing on everything we do. Not insurance."
 

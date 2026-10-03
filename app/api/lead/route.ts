@@ -180,7 +180,7 @@ export async function POST(request: Request) {
       (f.lastName ?? "").trim().toLowerCase() === "rivera"
     // Where they came from (spec P1-01 L3). Kept to tags and the source line:
     // both always land, whereas a custom field missing in GHL sinks the whole upsert.
-    const clip = (v?: string) => (v ?? "").replace(/[^\w\-\/.]/g, "").slice(0, 80)
+    const clip = (v?: string) => (v ?? "").replace(/[^\w\-\/. ]/g, "").trim().slice(0, 80)
     const fromPage = clip(src.from)
     const fromCta = clip(src.cta)
     const pfAnswers = b.pf && Object.keys(b.pf).length
