@@ -1771,7 +1771,7 @@ export const POSTS: BlogPost[] = [
 
 <h3>How do I know if I qualify for a root canal alternative?</h3>
 
-<p>The only way to know is through a thorough clinical examination with advanced imaging. Factors that determine candidacy include the stage of pulp inflammation, the extent of infection, whether the tooth's root is fully formed, and the overall health of the remaining pulp. We recommend scheduling a <a href="https://myprimaryid.com/new-patient-special/">free comprehensive exam</a> to find out your options.</p>
+<p>The only way to know is through a thorough clinical examination with advanced imaging. Factors that determine candidacy include the stage of pulp inflammation, the extent of infection, whether the tooth's root is fully formed, and the overall health of the remaining pulp. We recommend scheduling a <a href="https://myprimaryid.com/new-patient-special/">comprehensive exam</a> to find out your options.</p>
 
 <h3>Are root canal alternatives covered by insurance?</h3>
 

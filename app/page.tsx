@@ -1389,7 +1389,7 @@ function BookingCTA() {
             Schedule a visit and experience what it feels like when care looks at the whole you, not just the problem in front of us.
           </p>
 
-          <a href="/new-patient/" style={{
+          <a href="/book/" style={{
             background: B.navy, color: B.white, textDecoration: "none",
             borderRadius: 9, padding: "16px 40px",
             fontFamily: "Georgia,serif", fontSize: 16,

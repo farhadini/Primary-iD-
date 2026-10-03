@@ -673,7 +673,6 @@ function Consultation() {
                 ))}
               </div>
             </div>
-            <BlueBtn href="/book/">Download Sample Protocol</BlueBtn>
           </div>
         </Reveal>
       </div>
@@ -737,8 +736,8 @@ function ClosingCTA() {
             No commitment. No pressure. Just a conversation about whether this is right for you.
           </p>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-            <BlueBtn href="/book/">Book a longevity consultation</BlueBtn>
-            <GhostLink href="/book/" light>Or mention it at your next visit</GhostLink>
+            <BlueBtn href="/book/longevity/">Book a longevity consultation</BlueBtn>
+            <GhostLink href="/book/longevity/" light>Or mention it at your next visit</GhostLink>
           </div>
           <div style={{ marginTop: 52, paddingTop: 36, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
             <p style={{ fontFamily: "Georgia,serif", fontSize: 11, color: "rgba(255,255,255,0.18)", lineHeight: 1.7, maxWidth: 480, margin: "0 auto", fontStyle: "italic" }}>

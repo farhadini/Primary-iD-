@@ -251,7 +251,7 @@ function SystemsGrid() {
       body: <>Gum disease <strong>doubles your risk of heart disease.</strong> The same bacteria that inflame your gums travel to the arterial wall, driving the same inflammatory cascade that leads to heart attacks and strokes.</>,
       stat: "+49% CV events · J. Periodontology",
       color: B.red, bg: "linear-gradient(135deg, #FDEDED 0%, #F7CFCF 100%)", statBg: B.red50, statColor: "#9e2828",
-      link: "/diagnostics",
+      link: "/primary-id/",
     },
     {
       num: "02", title: "Sleep &", titleEm: "airway",
@@ -259,7 +259,7 @@ function SystemsGrid() {
       body: <>Your jaw shape determines how you breathe at night. A narrow arch, a tongue-tie, or a high palate can close the airway during sleep, setting off snoring, grinding, and <strong>the cardiovascular toll of untreated apnea.</strong></>,
       stat: "80% undiagnosed · STOP-BANG",
       color: B.purple, bg: "linear-gradient(135deg, #F6F5FE 0%, #DDD6F7 100%)", statBg: B.purple50, statColor: "#4f3fb0",
-      link: "/diagnostics",
+      link: "/primary-id/",
     },
     {
       num: "03", title: "Skin &", titleEm: "inflammation",
@@ -267,7 +267,7 @@ function SystemsGrid() {
       body: <>Your complexion reflects your oral microbiome. Acne, rosacea, eczema flares are often downstream of an inflamed mouth. <strong>Treat the mouth, and the skin often clears</strong> without ever touching a topical.</>,
       stat: "3× skin issues · JCAD",
       color: B.accent, bg: "linear-gradient(135deg, #FDF2E5 0%, #F5CFA3 100%)", statBg: B.accent50, statColor: "#9e4628",
-      link: "/diagnostics",
+      link: "/primary-id/",
     },
     {
       num: "04", title: "", titleEm: "Longevity",
@@ -275,7 +275,7 @@ function SystemsGrid() {
       body: <>Oral health is one of the most predictive markers of lifespan. <strong>P. gingivalis, a periodontal pathogen, has been found in the brains of Alzheimer's patients.</strong> The mouth is on the front line of how long, and how well, you live.</>,
       stat: "+5–7 years · Life's Essential 8",
       color: B.green, bg: "linear-gradient(135deg, #F2FAF5 0%, #D4EEDE 100%)", statBg: B.green50, statColor: "#2d8a5f",
-      link: "/diagnostics",
+      link: "/primary-id/",
     },
   ];
 
@@ -585,7 +585,7 @@ function CancerSection() {
             <h4 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 26, lineHeight: 1.3, color: B.warm, margin: 0, position: "relative", zIndex: 1, maxWidth: 560 }}>
               Your dentist as <em style={{ color: B.blue, fontStyle: "italic" }}>early detector.</em> The frequency advantage is only an advantage if someone uses it.
             </h4>
-            <Link href="/#book" style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 600, color: B.warm, textDecoration: "none", borderBottom: "1px solid rgba(254,252,249,0.4)", paddingBottom: 2, position: "relative", zIndex: 1 }}>
+            <Link href="/book/" style={{ fontFamily: SANS, fontSize: 13.5, fontWeight: 600, color: B.warm, textDecoration: "none", borderBottom: "1px solid rgba(254,252,249,0.4)", paddingBottom: 2, position: "relative", zIndex: 1 }}>
               Book a comprehensive evaluation →
             </Link>
           </div>
@@ -631,7 +631,7 @@ function DimensionsSection() {
             </div>
           </Reveal>
           <Reveal delay={0.4}>
-            <Link href="/diagnostics/" style={{
+            <Link href="/primary-id/" style={{
               display: "inline-flex", alignItems: "center", gap: 8,
               padding: "13px 22px", borderRadius: 999,
               background: B.navy, color: B.warm,
@@ -655,7 +655,7 @@ function DimensionsSection() {
                   <div style={{ fontFamily: SERIF, fontSize: 18, color: B.navy, fontWeight: 400, letterSpacing: "-0.005em" }}>{dim.name}</div>
                   <div style={{ fontFamily: SANS, fontSize: 11.5, color: B.muted, letterSpacing: "0.06em", textTransform: "uppercase", marginTop: 4 }}>{dim.inst}</div>
                 </div>
-                <Link href="/diagnostics/" style={{ fontFamily: SANS, fontSize: 12.5, fontWeight: 600, color: B.navy, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>
+                <Link href="/primary-id/" style={{ fontFamily: SANS, fontSize: 12.5, fontWeight: 600, color: B.navy, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 6 }}>
                   Start <span>→</span>
                 </Link>
               </li>
@@ -702,7 +702,7 @@ function FinalCTA() {
         </Reveal>
         <Reveal delay={0.3}>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/diagnostics/" style={{
+            <Link href="/primary-id/" style={{
               display: "inline-flex", alignItems: "center", gap: 10,
               background: B.warm, color: B.navy,
               padding: "16px 28px", borderRadius: 999,
@@ -712,7 +712,7 @@ function FinalCTA() {
             }}>
               Build my Primary iD <span>→</span>
             </Link>
-            <Link href="/#book" style={{
+            <Link href="/book/" style={{
               display: "inline-flex", alignItems: "center", gap: 10,
               background: "transparent", color: B.warm,
               padding: "16px 28px", borderRadius: 999,

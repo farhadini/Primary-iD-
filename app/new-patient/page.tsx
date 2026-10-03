@@ -233,7 +233,7 @@ function PreVisit() {
               marginTop: 24,
               opacity: visible ? 1 : 0, transition: "opacity 0.7s ease 0.7s",
             }}>
-              <a href="/diagnostics/" style={{
+              <a href="/book/preventive/" style={{
                 background: B.navy, color: B.white, textDecoration: "none",
                 borderRadius: 9, padding: "14px 28px",
                 fontFamily: "Georgia,serif", fontSize: 14,
@@ -668,7 +668,7 @@ function BookCTA() {
             >
               Book a visit
             </a>
-            <a href="/diagnostics/" style={{
+            <a href="/book/preventive/" style={{
               background: "transparent", color: "rgba(255,255,255,0.7)", textDecoration: "none",
               borderRadius: 9, padding: "16px 28px",
               fontFamily: "Georgia,serif", fontSize: 15,

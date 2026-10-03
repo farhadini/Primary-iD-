@@ -178,6 +178,11 @@ export async function POST(request: Request) {
     const isTest =
       (f.firstName ?? "").trim().toLowerCase() === "alex" &&
       (f.lastName ?? "").trim().toLowerCase() === "rivera"
+    // Where they came from (spec P1-01 L3). Kept to tags and the source line:
+    // both always land, whereas a custom field missing in GHL sinks the whole upsert.
+    const clip = (v?: string) => (v ?? "").replace(/[^\w\-\/.]/g, "").slice(0, 80)
+    const fromPage = clip(src.from)
+    const fromCta = clip(src.cta)
     const pfAnswers = b.pf && Object.keys(b.pf).length
       ? Object.entries(b.pf).map(([k, v]) => `${k}: ${v}`).join(" · ")
       : ""
@@ -203,6 +208,11 @@ export async function POST(request: Request) {
       consentGiven ? "SMS Consent: Yes" : "SMS Consent: No",
       inClinic ? "Source: In-clinic" : null,
       isTest ? "Test contact" : null,
+      fromPage ? `From: ${fromPage}` : null,
+      fromCta ? `CTA: ${fromCta}` : null,
+      src.utm_term ? `UTM term: ${clip(src.utm_term)}` : null,
+      src.gclid ? "Ad click: Google" : null,
+      src.fbclid ? "Ad click: Meta" : null,
     ].filter(Boolean) as string[]
 
     const customFields = [
@@ -259,7 +269,7 @@ export async function POST(request: Request) {
       lastName: f.lastName || undefined,
       email: f.email || undefined,
       phone: f.mobile || undefined,
-      source: `Primary iD onboarding — ${b.pathway || "general"}`,
+      source: `Primary iD onboarding — ${b.pathway || "general"}${fromPage ? ` · from ${fromPage}` : ""}`,
       tags,
     }
 

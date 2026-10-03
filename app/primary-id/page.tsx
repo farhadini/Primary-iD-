@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { headers } from "next/headers"
 import { SiteNav } from "@/components/site-nav"
 
 export const metadata: Metadata = {
@@ -30,6 +31,16 @@ export default async function PrimaryIdPage({
   for (const [k, v] of Object.entries(sp)) {
     const val = Array.isArray(v) ? v[0] : v
     if (typeof val === "string" && val) qs.set(k, val)
+  }
+  // Spec P1-01 L3: the page they came from. A Book link on /dental-implant/
+  // arrives here (through the /book/ redirect) with that page as the referrer.
+  if (!qs.has("from")) {
+    try {
+      const ref = new URL((await headers()).get("referer") ?? "")
+      if (/(^|\.)myprimaryid\.com$|\.vercel\.app$|^localhost$/.test(ref.hostname) && ref.pathname !== "/primary-id/") {
+        qs.set("from", ref.pathname)
+      }
+    } catch {}
   }
   const q = qs.toString()
   const src = "/primary-id-app.html" + (q ? `?${q}` : "")

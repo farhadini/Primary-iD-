@@ -98,7 +98,7 @@ export default function CosmeticDentistryPage() {
         </p>
 
         <CTAGroup
-          primary={{ label: "Book a cosmetic consultation", href: "/new-patient/" }}
+          primary={{ label: "Book a cosmetic consultation", href: "/book/cosmetic/" }}
           secondary={{ label: "Talk to Dr. Gabi", href: "/about/" }}
         />
       </ArticleContainer>

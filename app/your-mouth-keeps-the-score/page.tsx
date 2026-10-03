@@ -714,7 +714,7 @@ export default function BookPage() {
                 <div className="micro">Free · Private · One email, then only when it matters.</div>
               </>
             )}
-            <div className="or">Already a patient? <a href="/diagnostics/">Get your Primary iD score</a> while you wait.</div>
+            <div className="or">Already a patient? <a href="/primary-id/">Get your Primary iD score</a> while you wait.</div>
           </div>
         </section>
       </div>

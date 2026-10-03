@@ -24,6 +24,7 @@ const NAV_LINKS = [
   { label: "The Science", href: "/oral-systemic/" },
   { label: "Dr. Gabi", href: "/about/" },
   { label: "New Patients", href: "/new-patient/" },
+  { label: "Membership", href: "/membership/" },
   { label: "Journal", href: "/blogs/" },
 ];
 

@@ -859,7 +859,8 @@
   var PID_ID = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now());
   function pidUtm(){
     var out={}, q=new URLSearchParams(location.search||"");
-    ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"].forEach(function(k){
+    // from = the page they came from, cta = the button (spec P1-01 L3).
+    ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","from","cta","gclid","fbclid"].forEach(function(k){
       var v=q.get(k); if(v) out[k]=v;
     });
     return out;

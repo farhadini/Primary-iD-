@@ -68,7 +68,7 @@ export default function AboutPage() {
                 <Link href="/book/preventive/" style={{ background: PALETTE.navy, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15 }}>
                   Book a visit with Dr. Gabi →
                 </Link>
-                <Link href="/diagnostics/" style={{ background: "transparent", color: PALETTE.navy, padding: "13px 26px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15, border: `1.5px solid ${PALETTE.navy}` }}>
+                <Link href="/primary-id/" style={{ background: "transparent", color: PALETTE.navy, padding: "13px 26px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15, border: `1.5px solid ${PALETTE.navy}` }}>
                   Start with the assessment
                 </Link>
               </div>
@@ -291,7 +291,7 @@ export default function AboutPage() {
             Most people come to us for one real thing: a cavity, a chipped tooth, a missing tooth they have lived with too long, or finally wanting a brighter smile. That is the door in. From there, take the 6-minute assessment to get your Primary iD, then sit down with Dr. Gabi for a comprehensive first visit and leave with a plan the same day.
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "center", marginBottom: 28 }}>
-            <Link href="/diagnostics/" style={{ background: PALETTE.navy, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15 }}>
+            <Link href="/primary-id/" style={{ background: PALETTE.navy, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15 }}>
               Take the assessment
             </Link>
             <Link href="/book/preventive/" style={{ background: "transparent", color: PALETTE.navy, padding: "13px 26px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15, border: `1.5px solid ${PALETTE.navy}` }}>

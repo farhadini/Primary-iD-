@@ -135,8 +135,8 @@ export default function WholisticDentistryPage() {
         </p>
 
         <CTAGroup
-          primary={{ label: "Start with your Primary iD score", href: "/diagnostics/" }}
-          secondary={{ label: "Book a first visit", href: "/new-patient/" }}
+          primary={{ label: "Start with your Primary iD score", href: "/primary-id/" }}
+          secondary={{ label: "Book a first visit", href: "/book/" }}
         />
       </ArticleContainer>
       <SiteFooter />
