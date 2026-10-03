@@ -50,7 +50,7 @@ This codebase started as a v0 generation and is now in the middle of a migration
 ## Practice information (use these real values)
 
 - **Practice name:** Primary Integrative Dentistry
-- **Founder:** Dr. Tzur Gabi, DMD — Functional Prosthodontist & Oral Physician
+- **Founder:** Dr. Tzur Gabi, DMD — Functional Prosthodontist
 - **Phone:** (310) 564-8990
 - **Address:** 11980 San Vicente Blvd, Suite 902, Los Angeles, CA 90049
 - **Hours:** Mon–Thu 8 AM – 6 PM, Fri 8 AM – 5 PM, Sat–Sun closed

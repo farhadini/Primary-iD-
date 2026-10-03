@@ -230,7 +230,7 @@ function Hero() {
                 Take the health assessment
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </a>
-              <div style={{ fontSize: 12.5, color: "#9fb4cf" }}>Free · Private · Results sent to your inbox.</div>
+              <div style={{ fontSize: 12.5, color: "#9fb4cf" }}>Private · Yours to keep.</div>
             </div>
           </div>
 
@@ -246,7 +246,7 @@ function Hero() {
           </div>
 
           <div style={{ marginTop: 18, fontFamily: "Georgia,serif", fontStyle: "italic", fontSize: 13.5, color: "#9fb4cf" }}>
-            Founded by <a href="/about/" style={{ color: "#9fb4cf", textDecoration: "none" }} onMouseOver={e => e.currentTarget.style.color = "#fff"} onMouseOut={e => e.currentTarget.style.color = "#9fb4cf"}>Dr. Tzur Gabi, Functional Prosthodontist &amp; Oral Physician</a>
+            Founded by <a href="/about/" style={{ color: "#9fb4cf", textDecoration: "none" }} onMouseOver={e => e.currentTarget.style.color = "#fff"} onMouseOut={e => e.currentTarget.style.color = "#9fb4cf"}>Dr. Tzur Gabi, Functional Prosthodontist</a>
           </div>
         </div>
       </div>

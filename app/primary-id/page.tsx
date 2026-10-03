@@ -4,7 +4,7 @@ import { SiteNav } from "@/components/site-nav"
 export const metadata: Metadata = {
   title: "Your Primary iD | Primary Integrative Dentistry",
   description:
-    "A six-minute conversation across five dimensions of your health. Free and private.",
+    "A six-minute conversation across five dimensions of your health. Private, and yours to keep.",
   robots: { index: false, follow: false },
 }
 

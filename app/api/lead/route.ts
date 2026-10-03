@@ -162,9 +162,6 @@ export async function POST(request: Request) {
     const priority =
       URGENT.test(f.reason ?? "") || b.pathway === "pain" ? "urgent" : "normal"
 
-    if (!LIVE) {
-      return NextResponse.json({ success: true, assessmentId, crm: false, priority })
-    }
 
     const goals = Array.isArray(b.goals) ? b.goals.filter(Boolean) : []
     const sc = b.scores ?? {}
@@ -176,6 +173,11 @@ export async function POST(request: Request) {
     const consentGiven = consent.given === true
     // Filled in on a practice iPad while the person is already in the chair.
     const inClinic = b.context === "clinic"
+    // The spec's one test patient. Tagged so the contact and card never count as
+    // a lead in reports, and every marketing workflow can filter it out.
+    const isTest =
+      (f.firstName ?? "").trim().toLowerCase() === "alex" &&
+      (f.lastName ?? "").trim().toLowerCase() === "rivera"
     const pfAnswers = b.pf && Object.keys(b.pf).length
       ? Object.entries(b.pf).map(([k, v]) => `${k}: ${v}`).join(" · ")
       : ""
@@ -200,6 +202,7 @@ export async function POST(request: Request) {
       // and a TCPA claim, so it is written on EVERY phase, not just the gate.
       consentGiven ? "SMS Consent: Yes" : "SMS Consent: No",
       inClinic ? "Source: In-clinic" : null,
+      isTest ? "Test contact" : null,
     ].filter(Boolean) as string[]
 
     const customFields = [
@@ -260,6 +263,15 @@ export async function POST(request: Request) {
       tags,
     }
 
+    // Preview and local builds: write nothing, and hand back exactly what would
+    // have been sent so a test run can check every field and tag against the spec.
+    if (!LIVE) {
+      return NextResponse.json({
+        success: true, assessmentId, crm: false, priority,
+        dryRun: { phase: b.phase ?? "", contact: base, customFields },
+      })
+    }
+
     async function upsert(payload: unknown) {
       const res = await fetch("https://services.leadconnectorhq.com/contacts/upsert", {
         method: "POST",
@@ -296,7 +308,7 @@ export async function POST(request: Request) {
       if (contactId && !inClinic) {
         await syncOpportunity(
           contactId,
-          [f.firstName, f.lastName].filter(Boolean).join(" "),
+          (isTest ? "TEST · " : "") + [f.firstName, f.lastName].filter(Boolean).join(" "),
           b.pathway ?? "",
           b.phase === "complete",
         )

@@ -169,7 +169,7 @@ const COMPARISON = [
   ["Nutrition", "A passing mention, if any", "Practical oral-systemic nutrition guidance built into the plan"],
   ["Whole-body context", "Stops at the mouth", "Mapped across the five dimensions of the Primary iD"],
   ["Tracking over time", "Same checkup, every visit", "Annual Primary iD reassessment so you can see what changed"],
-  ["Who you see", "Varies by visit", "Care led by Dr. Gabi, a prosthodontist and oral physician"],
+  ["Who you see", "Varies by visit", "Care led by Dr. Gabi, a prosthodontist"],
 ]
 
 export default function PreventiveCarePage() {

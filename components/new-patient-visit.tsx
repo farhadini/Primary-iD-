@@ -558,7 +558,7 @@ export default function NewPatientVisit() {
             fontStyle: "italic",
           }}>
             <strong style={{ fontStyle: "normal", fontWeight: 400 }}>You get value before you sit in the chair.</strong>{" "}
-            <em style={{ color: B.blue, fontWeight: 500 }}>Your Primary Health Score and a virtual second opinion, free and yours before any commitment. Your full Oral → Systemic Playbook follows after your first visit.</em>
+            <em style={{ color: B.blue, fontWeight: 500 }}>Your Primary Health Score and a virtual second opinion, yours before any commitment. Your full Oral → Systemic Playbook follows after your first visit.</em>
           </div>
           <a href="/about/" style={{
             background: "transparent", color: B.navy,

@@ -192,7 +192,7 @@ function Hero() {
           <div style={{ ...T(0.7), marginTop: 60, display: "flex", alignItems: "center", gap: 12 }}>
             <div style={{ width: 1, height: 32, background: B.navy, opacity: 0.2 }} />
             <div style={{ fontFamily: "Georgia,serif", fontSize: 12, color: B.body, fontStyle: "italic" }}>
-              Dr. Tzur Gabi, DMD · Oral Physician · Founder, Primary ID+
+              Dr. Tzur Gabi, DMD · Prosthodontist · Founder, Primary ID+
             </div>
           </div>
         </div>

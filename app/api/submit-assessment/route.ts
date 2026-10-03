@@ -84,8 +84,9 @@ export async function POST(request: Request) {
     const assessmentId = crypto.randomUUID();
     let stored = false;
 
-    // 1) Supabase — the marketing record (non-fatal)
-    try {
+    // 1) Supabase — the marketing record (non-fatal). Production only: test
+    // runs on a preview must not add rows to the live database.
+    if (process.env.VERCEL_ENV === "production") try {
       await sbInsert("assessments", {
         id: assessmentId,
         anon_session_id: anonSessionId ?? crypto.randomUUID(), // table requires an owner id
