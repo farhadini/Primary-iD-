@@ -576,8 +576,9 @@
   // sleep item 2, with the bank's own point values.
   var PREVIEW_Q=[["oral",7,[92,72,50,32]],["oral",3,[90,40]],["sleep",1,[85,48]]];
   function applyPreview(){
-    var m=/[?&]preview=([\d,]+)/.exec(location.search||""); if(!m) return;
-    m[1].split(",").forEach(function(v,i){
+    var raw=""; try{ raw=new URLSearchParams(location.search||"").get("preview")||""; }catch(e){}
+    if(!/^[\d,]+$/.test(raw)) return;
+    raw.split(",").forEach(function(v,i){
       var q=PREVIEW_Q[i], n=parseInt(v,10); if(!q || q[2].indexOf(n)<0) return;
       S.scores[q[0]][q[1]]=n; S.prefill[q[0]+".q"+q[1]]=true;
     });
