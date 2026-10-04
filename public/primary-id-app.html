@@ -326,6 +326,18 @@
   .chipset{display:flex; flex-direction:column; gap:20px; max-width:600px; margin-top:24px}
   .chiprow .ql{font-family:var(--sans); font-size:13px; font-weight:600; color:var(--navy); margin-bottom:10px}
   .chips{display:flex; flex-wrap:wrap; gap:8px}
+  .qwhy{font-family:var(--sans); font-size:12.5px; color:var(--muted); margin:-4px 0 10px; line-height:1.45}
+  .visit{max-width:600px; margin-top:22px; background:var(--warm); border:1px solid var(--line); border-radius:var(--r-card); padding:18px 20px}
+  .visit .vn{font-family:var(--serif); font-size:20px; color:var(--navy)}
+  .visit .vl{font-family:var(--sans); font-size:12px; color:var(--muted); margin-top:2px}
+  .visit .vi{font-size:15px; color:var(--inkSoft); line-height:1.5; margin-top:10px}
+  .visit .vx{font-size:14px; color:var(--inkSoft); line-height:1.5; margin-top:6px}
+  .visit .vp{font-family:var(--sans); font-size:15px; font-weight:600; color:var(--navy); margin-top:12px}
+  .promise{max-width:600px; margin-top:20px; display:flex; flex-direction:column; gap:10px}
+  .promise div{font-size:16px; color:var(--inkSoft); line-height:1.5; padding-left:30px; position:relative}
+  .promise b{position:absolute; left:0; top:0; font-family:var(--sans); font-size:12px; color:#fff; background:var(--blue); border-radius:50%; width:20px; height:20px; display:flex; align-items:center; justify-content:center}
+  .linkbox{max-width:600px; margin-top:16px; font-family:var(--sans); font-size:13px; word-break:break-all; background:var(--warm); border:1px solid var(--line); border-radius:var(--r-card); padding:12px 14px; color:var(--navy)}
+  .fielderr{font-family:var(--sans); font-size:12px; color:#B5552B; margin-top:4px; min-height:15px}
   .chip{cursor:pointer; font-family:var(--sans); font-size:14px; color:var(--navy); background:var(--warm); border:1px solid var(--line); border-radius:var(--r-pill); padding:9px 16px; transition:.15s; box-shadow:var(--shadow-sm)}
   .chip:hover{border-color:var(--blue)}
   .chip.sel{border-color:var(--blue); background:#EAF6FD; font-weight:600}
@@ -477,7 +489,7 @@
       includes:["Comprehensive health history","3D CBCT imaging","Salivary microbiome diagnostics","Airway & STOP-BANG screening","Periodontal staging (AAP/EFP)","Your Primary iD score & roadmap"],
       heroH:"Wellbeing starts <em>with your mouth</em>.",
       heroSub:"We look at the whole picture — how you sleep, eat, breathe, and carry stress — and it all traces back to the one place most care overlooks. No forms, no repeating yourself. Just build your baseline with me.",
-      reason:null, track:null, rec:"first" },
+      reason:"prevent", track:null, rec:"first" },
     airway: { label:"Airway & sleep", pathway:"your airway & sleep visit",
       desc:"Sleep-disordered breathing screening, STOP-BANG, CBCT airway analysis.",
       includes:["Sleep & airway screening (STOP-BANG)","CBCT airway analysis","Bite & jaw evaluation","Full Primary iD score across five dimensions"],
@@ -489,7 +501,7 @@
       includes:["Smile design consult","Shade & bite evaluation","Biocompatible materials review","Full Primary iD score — the foundation under the smile"],
       heroH:"Love your smile — <em>and what's under it</em>.",
       heroSub:"A smile you love, built on a foundation that lasts. We start with what's holding it, then design from there.",
-      reason:"fix", track:"restorative", rec:"cosmetic" },
+      reason:"fix", track:null, rec:"cosmetic" },
     implants: { label:"Implants", pathway:"your implant assessment",
       desc:"Zirconia and titanium implants planned with 3D imaging. Full-arch capable.",
       includes:["3D implant planning","Bone & gum-health evaluation","Full-arch candidacy","Full Primary iD score — planned around your whole health"],
@@ -519,10 +531,17 @@
       includes:["Same-day triage","Focused exam of the urgent issue","Pain relief and a clear plan","Your Primary iD baseline once you're comfortable"],
       heroH:"Let's get you <em>seen</em>.",
       heroSub:"When something's wrong, the first job is getting you out of pain and safe. We handle the urgent thing first, then build your baseline once you're comfortable.",
-      reason:"problem", track:null, rec:"emergency" }
+      reason:"problem", track:"pain", rec:"emergency" },
+    // The general door: header, footer and home page Book links. The reason
+    // they pick sets the track (spec: Pathfinder tracks · No door).
+    general: { label:"Primary", pathway:"your first visit",
+      desc:"", includes:[],
+      heroH:"Dentistry reimagined to see <em>the whole you</em>.",
+      heroSub:"Tell us what brings you in and we will take it from there.",
+      reason:null, track:null, rec:"first" }
   };
   var PICKER_DOORS = ["preventive","orthofx","airway","cosmetic","implants","longevity","second_opinion","pain"];
-  function doorCfg(){ return DOORS[S.door] || DOORS.preventive; }
+  function doorCfg(){ return DOORS[S.door] || DOORS.general; }
   function resolveDoorParam(){
     var s=(location.search||"")+(location.hash||"");
     var m=s.match(/[?&]door=([a-z_]+)/i); if(m && DOORS[m[1].toLowerCase()]) return m[1].toLowerCase();
@@ -547,7 +566,13 @@
       ? '<div class="staffbar"><span class="dot"></span>In clinic · staff device</div>'
       : '';
   }
-  function pfTrack(){ return doorCfg().track || (S.reason==="fix" ? "restorative" : null); }
+  function pfTrack(){
+    if(doorCfg().track) return doorCfg().track;
+    if(S.reason==="fix") return "restorative";
+    if(S.reason==="problem") return "pain";
+    return null;
+  }
+  function painPath(){ return S.inPain===true || pfTrack()==="pain"; }
 
   // tiers (Master bands + patient language)
   function tier(v){
@@ -557,7 +582,7 @@
     return {w:"Needs focus", c:"var(--t-needs)", line:"Let's slow down and do this right."};
   }
 
-  var S = { pastDims:false, name:"", door:"", reason:"", reasonDetail:"", pf:{}, align:{}, pfTrack:"", pathfinder:false, leadFired:false, goals:[], intent:"", di:0, qi:0, scores:{}, hist:{}, safety:[], records:{}, demo:{}, insurance:{}, complaint:"" };
+  var S = { prefill:{}, newRet:"", inPain:null, visit:"", bestTime:"", days:[], note:"", need:"", bridge:"", at:"", complete:false, pastDims:false, name:"", door:"", reason:"", reasonDetail:"", pf:{}, align:{}, pfTrack:"", pathfinder:false, leadFired:false, goals:[], intent:"", di:0, qi:0, scores:{}, hist:{}, safety:[], records:{}, demo:{}, insurance:{}, complaint:"" };
   DIMS.forEach(function(d){ S.scores[d.key]=[]; });
 
   var screensEl = document.getElementById("screens");
@@ -583,7 +608,7 @@
       S.door=o.dr||""; S.align=o.al||{}; S.pfTrack=o.pft||"";
       S.scores=o.sc||{}; S.hist=o.h||{}; S.safety=o.sf||[]; S.records=o.rec||{}; S.complaint=o.cc||"";
       DIMS.forEach(function(d){ if(!S.scores[d.key]) S.scores[d.key]=[]; });
-      updateTwin(""); scrProvider(); return true;
+      updateTwin(""); scrYours(); return true;
     }catch(e){ return false; }
   }
   function copyLink(btn){
@@ -731,7 +756,7 @@
       var on=item.type==="multi"?(Array.isArray(sel)&&sel.indexOf(o)>-1):(sel===o);
       return '<button class="chip'+(on?" sel":"")+'" data-id="'+esc(item.id)+'" data-val="'+esc(o)+'" data-type="'+item.type+'">'+esc(o)+'</button>';
     }).join("");
-    return '<div class="chiprow"><div class="ql">'+esc(item.q)+'</div><div class="chips">'+chips+'</div></div>';
+    return '<div class="chiprow"><div class="ql">'+esc(item.q)+'</div>'+(item.why?'<div class="qwhy">'+esc(item.why)+'</div>':'')+'<div class="chips">'+chips+'</div></div>';
   }
   function rowOf(el){ while(el&&!(el.classList&&el.classList.contains("chiprow"))) el=el.parentNode; return el; }
   function wireChips(store){
@@ -752,31 +777,23 @@
     });
   }
 
-  // 0 — welcome
+  // 0 — WELCOME (spec P1-02). One screen: the door's headline and two honest
+  // promises. W2: one italic phrase (the headline's), no exclamation marks, no
+  // promise about a score. W1: the minutes stated here must match the measured
+  // medians once they exist.
   function scrWelcome(){
     var d=doorCfg();
     show(
-      coach("<p>Hi — I'm your Primary coach. The next few minutes aren't a form; they're a conversation.</p><p>By the end you'll have your <em>Primary iD</em> — a real baseline of your health, built around you.</p>")
+      staffBar()
+      + coach("<p>This is a conversation about you, not a form. Nothing here is a diagnosis.</p>")
       + '<h1 class="head">'+d.heroH+'</h1>'
-      + '<p class="lede">'+esc(d.heroSub)+'</p>'
-      + '<div class="actions"><button class="cta blue" id="go">Begin</button><span class="hint">About 6 minutes · replaces your whole intake</span></div>',
+      + '<div class="promise">'
+        + '<div><b>1</b>About two minutes to request your visit. A person from our team then calls you to confirm it.</div>'
+        + '<div><b>2</b>About six more to build your Primary iD, which Dr. Gabi reads before he meets you.</div>'
+      + '</div>'
+      + '<div class="actions"><button class="cta blue" id="go">Begin</button></div>',
       0);
-    document.getElementById("go").onclick=routeAfterGate;
-  }
-
-  // 1 — name
-  function scrName(){
-    show(
-      coach("<p>First — what should I call you? This profile is <em>yours</em>, and it starts now.</p>")
-      + '<h1 class="head">Let\'s make this <em>about you</em>.</h1>'
-      + '<div class="field"><label>Your first name</label><input id="nm" type="text" placeholder="e.g. Farhad" autocomplete="given-name" /></div>'
-      + '<div class="actions"><button class="cta" id="go" disabled>Continue</button></div>',
-      0);
-    var nm=document.getElementById("nm"), go=document.getElementById("go"); nm.focus();
-    nm.oninput=function(){ go.disabled=!nm.value.trim(); };
-    nm.onkeydown=function(e){ if(e.key==="Enter"&&nm.value.trim()) commit(); };
-    go.onclick=commit;
-    function commit(){ S.name=nm.value.trim(); updateTwin("Nice to meet you, "+esc(S.name.split(" ")[0])+"."); scrWhy(); }
+    document.getElementById("go").onclick=scrStart;
   }
 
   // A2P 10DLC / TCPA express written consent.
@@ -797,59 +814,274 @@
     + ' See our <a href="/terms/" target="_blank" rel="noopener">Terms</a>'
     + ' and <a href="/privacy/" target="_blank" rel="noopener">Privacy Policy</a>.';
 
-  // 1 — THE GATE (hero + minimum lead: name · email · mobile · age). One screen from picking a pathway.
-  // Fires the lead here, before the assessment, so an abandoner is still retargetable (PRD gate).
-  function scrGate(){
-    var d=doorCfg();
+  // ── THE REQUEST (spec P1-04 to P1-07) ──────────────────────────────────────
+  // Nothing goes to GoHighLevel before "Request my visit" (spec P1-01).
+
+  // Who calls, and from which number. Spec open decision (Almarie · Farhad):
+  // which number shows when Cesar calls. Change it here.
+  var CALLER = "Cesar";
+  var CALL_FROM = "(310) 564-8990";
+
+  // The booking menu (spec: "The first visit each answer leads to"). V1: what is
+  // shown here must match that table. V3: no credit, no "free", no range.
+  var VISITS = {
+    ppo:     { key:"New patient visit · with insurance", name:"Your new patient visit", len:"About 90 minutes",
+               inc:"Photos, x-rays, a 3D CBCT scan and vitals, plus a 3D scan of your teeth when it is needed. An exam with Dr. Gabi and a conversation about your plan.",
+               exc:"", price:"Billed to your plan. We check your benefits with you before the visit." },
+    express: { key:"Express Visit · $99", name:"The Express Visit", len:"40 minutes",
+               inc:"Photos you see on screen, a gum screening, and x-rays only if they are needed. Fifteen minutes with Dr. Gabi and ten minutes talking through your plan.",
+               exc:"Not included: a 3D scan, a cleaning or a full treatment plan.", price:"$99" },
+    partner: { key:"Partner Express Visit", name:"The Express Visit", len:"40 minutes",
+               inc:"Photos you see on screen, a gum screening, and x-rays only if they are needed. Fifteen minutes with Dr. Gabi and ten minutes talking through your plan.",
+               exc:"Not included: a 3D scan, a cleaning or a full treatment plan.", price:"" },
+    confirm: { key:"Confirm on the call", name:"Your first visit", len:"",
+               inc:"Plans like yours work differently from one to the next. "+CALLER+" checks yours on the call and tells you which first visit fits, and what it costs, before anything is booked.",
+               exc:"", price:"" }
+  };
+  // V4: the no-charge visit only appears on a named partner link (?partner=).
+  var PARTNERS = { orthofx:"OrthoFX", restore:"Restore" };
+  var PARTNER = (function(){ var m=/[?&]partner=([a-z]+)/i.exec(location.search||""); return m && PARTNERS[m[1].toLowerCase()] ? m[1].toLowerCase() : ""; })();
+  function visitFor(){
+    var t=S.insurance.type;
+    if(t==="PPO") return VISITS.ppo;
+    if(t==="Self-pay"){ if(PARTNER){ var v=VISITS.partner; v.price="No charge, through "+PARTNERS[PARTNER]; return v; } return VISITS.express; }
+    return t ? VISITS.confirm : null;
+  }
+
+  // B1: a call window that is true for this hour and day, in Los Angeles.
+  // Mon–Thu 8–6, Fri 8–5. Holidays are not known here.
+  function laNow(){
+    var p={};
+    try{ new Intl.DateTimeFormat("en-US",{timeZone:"America/Los_Angeles",weekday:"short",hour:"numeric",minute:"numeric",hour12:false})
+      .formatToParts(new Date()).forEach(function(x){ p[x.type]=x.value; }); }catch(e){}
+    return { d:p.weekday||"", h:(parseInt(p.hour,10)||0)%24, m:parseInt(p.minute,10)||0 };
+  }
+  function callWindow(){
+    var t=laNow(), order=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], k=order.indexOf(t.d), mins=t.h*60+t.m;
+    if(k>=1 && k<=5){
+      var close=(k===5?17:18)*60;
+      if(mins>=480 && mins<=close-30) return "within the next hour";
+      if(mins<480) return "this morning, after 8 AM";
+    }
+    if(k<0) return "on the next business morning";
+    var n=k, step=0; do{ n=(n+1)%7; step++; } while(n===0||n===6);
+    return step===1 ? "tomorrow morning, after 8 AM" : "on "+["","Monday","Tuesday","Wednesday","Thursday","Friday"][n]+" morning, after 8 AM";
+  }
+
+  // P1-04: in pain now. Required, except on the pain track. Marks the request urgent.
+  function scrPain(){
+    var opts=[["yes","Yes, I'm in pain right now"],["no","No"]].map(function(o){
+      var sel=(S.inPain===true&&o[0]==="yes")||(S.inPain===false&&o[0]==="no");
+      return '<button class="opt'+(sel?" sel":"")+'" data-v="'+o[0]+'"><span>'+o[1]+'</span><span class="chk"></span></button>';
+    }).join("");
+    show(
+      coach("<p>One more before your details. If something hurts, we call you first.</p>")
+      + '<h1 class="head">Are you in <em>pain</em> right now?</h1>'
+      + '<div class="opts">'+opts+'</div>'
+      + '<div class="actions"><button class="ghost" id="back">Back</button></div>',
+      0);
+    Array.prototype.forEach.call(document.querySelectorAll(".opt"),function(o){
+      o.onclick=function(){ S.inPain = o.getAttribute("data-v")==="yes";
+        Array.prototype.forEach.call(document.querySelectorAll(".opt"),function(x){x.classList.toggle("sel",x===o);});
+        setTimeout(scrPay,240); };
+    });
+    document.getElementById("back").onclick=routePF;
+  }
+
+  // P1-05: how you pay, and the visit. The only fork. The visit and its fee are
+  // stated in full before we ask for a phone number.
+  function scrPay(){
+    var types=[["PPO","PPO"],["HMO","HMO"],["Medicare or Medicaid","Medicare or Medicaid"],["Self-pay","No insurance, I pay myself"],["Not sure","Not sure"]];
+    var chips=types.map(function(o){ var on=S.insurance.type===o[0];
+      return '<button class="chip'+(on?" sel":"")+'" data-v="'+esc(o[0])+'">'+esc(o[1])+'</button>'; }).join("");
+    var v=visitFor(), showCarrier = S.insurance.type && S.insurance.type!=="Self-pay";
+    show(
+      coach("<p>No surprises. You see the visit and what it costs before you give us your number.</p>")
+      + '<h1 class="head">Do you have <em>dental insurance</em>?</h1>'
+      + '<div class="chips" id="inschips" style="max-width:600px;margin-top:22px">'+chips+'</div>'
+      + (showCarrier ? '<div class="fieldgrid"><div class="field full"><label>Insurance company (optional)</label><input id="i_carrier" type="text" value="'+esc(S.insurance.carrier||"")+'" placeholder="e.g. Delta Dental" /></div></div>' : '')
+      + (v ? '<div class="visit"><div class="vn">'+esc(v.name)+'</div>'+(v.len?'<div class="vl">'+esc(v.len)+'</div>':'')
+          + '<div class="vi">'+esc(v.inc)+'</div>'+(v.exc?'<div class="vx">'+esc(v.exc)+'</div>':'')
+          + (v.price?'<div class="vp">'+esc(v.price)+'</div>':'')
+          + (S.insurance.type==="Not sure"?'<div class="vx">We will confirm it with you on the call.</div>':'')
+        + '</div>' : '')
+      + '<div class="actions"><button class="cta" id="go"'+(v?'':' disabled')+'>Continue</button><button class="ghost" id="back">Back</button></div>',
+      0);
+    function keepCarrier(){ var c=document.getElementById("i_carrier"); if(c) S.insurance.carrier=c.value.trim(); }
+    Array.prototype.forEach.call(document.querySelectorAll("#inschips .chip"),function(c){
+      c.onclick=function(){ keepCarrier(); S.insurance.type=c.getAttribute("data-v"); if(S.insurance.type==="Self-pay") S.insurance.carrier=""; scrPay(); };
+    });
+    document.getElementById("go").onclick=function(){ keepCarrier(); S.visit=(visitFor()||{}).key||""; scrRequest(); };
+    document.getElementById("back").onclick=function(){ keepCarrier(); if(pfTrack()==="pain") scrPathfinderPain(); else scrPain(); };
+  }
+
+  // A2P 10DLC / TCPA consent wording (see the comment above CONSENT_VER).
+  function consentBox(){
+    return '<div class="consent">'
+      + '<input id="g_sms" type="checkbox"'+((S.smsConsent&&S.smsConsent.given)?' checked':'')+' />'
+      + '<label for="g_sms">'+CONSENT_HTML+'</label>'
+    + '</div>';
+  }
+  function readConsent(){
+    var smsBox=document.getElementById("g_sms");
+    S.smsConsent = (smsBox && smsBox.checked)
+      ? { given:true, at:(new Date()).toISOString(), version:CONSENT_VER, text:CONSENT_TEXT,
+          source:((window.parent!==window && document.referrer) ? document.referrer : location.href) }
+      : { given:false, at:(new Date()).toISOString(), version:CONSENT_VER };
+  }
+  // G1: a real US mobile number.
+  function cleanMobile(p){ var d=String(p||"").replace(/\D/g,""); if(d.length===11 && d[0]==="1") d=d.slice(1); return /^[2-9]\d{9}$/.test(d) ? d : ""; }
+  function fmtMobile(d){ return "("+d.slice(0,3)+") "+d.slice(3,6)+"-"+d.slice(6); }
+  var TIMES=["Morning, 8 to 11","Midday, 11 to 2","Afternoon, 2 to 6","Any time"];
+  var DAYS=["Mon","Tue","Wed","Thu","Fri"];
+
+  // P1-06: their details, and permission to call.
+  function scrRequest(){
     function v(id){ var el=document.getElementById(id); return el?el.value.trim():""; }
-    var inc=(d.includes||[]).slice(0,3).join(" · ");
+    S.days=S.days||[];
+    var times=TIMES.map(function(t){ return '<button class="chip'+(S.bestTime===t?" sel":"")+'" data-v="'+esc(t)+'">'+esc(t)+'</button>'; }).join("");
+    var days=DAYS.map(function(t){ return '<button class="chip'+(S.days.indexOf(t)>-1?" sel":"")+'" data-v="'+t+'">'+t+'</button>'; }).join("");
     show(
       staffBar()
-      + '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>'+esc(d.label)+' · Primary iD'+(d.cobrand?' · AirFlex':'')+'</div>'
-      + '<h1 class="head">'+d.heroH+'</h1>'
-      + '<p class="lede">'+esc(d.heroSub)+'</p>'
-      + coach("<p>Save your spot — then it's a ~6-minute conversation, not a form. Private, and yours to keep.</p>")
+      + coach("<p>When you tap <em>Request my visit</em>, your request goes straight to our team and "+esc(CALLER)+" calls you to confirm a time. Nothing is booked until you have spoken.</p>")
+      + '<h1 class="head">Where can we <em>reach you</em>?</h1>'
       + '<div class="fieldgrid">'
-        + '<div class="field"><label>First name</label><input id="g_first" type="text" value="'+esc(S.name||"")+'" /></div>'
-        + '<div class="field"><label>Last name</label><input id="g_last" type="text" value="'+esc(S.demo.last||"")+'" /></div>'
-        + '<div class="field"><label>Email</label><input id="g_email" type="email" placeholder="you@email.com" value="'+esc(S.demo.email||"")+'" /></div>'
-        + '<div class="field"><label>Mobile</label><input id="g_phone" type="tel" placeholder="(___) ___-____" value="'+esc(S.demo.phone||"")+'" /></div>'
-        + '<div class="field"><label>Age</label><input id="g_age" type="text" inputmode="numeric" placeholder="e.g. 42" value="'+esc(S.demo.age||"")+'" /></div>'
-        // Staff-only. An exact Open Dental PatNum is worth more than any
-        // amount of name-and-date-of-birth matching later: it is the one key
-        // that makes joining this record to the chart unambiguous, and
-        // matching the wrong patient to a chart is a clinical problem, not a
-        // data one. Optional — never blocks the patient.
+        + '<div class="field"><label>First name</label><input id="g_first" type="text" autocomplete="given-name" value="'+esc(S.name||"")+'" /></div>'
+        + '<div class="field"><label>Last name</label><input id="g_last" type="text" autocomplete="family-name" value="'+esc(S.demo.last||"")+'" /></div>'
+        + '<div class="field"><label>Mobile</label><input id="g_phone" type="tel" autocomplete="tel" placeholder="(___) ___-____" value="'+esc(S.demo.phone||"")+'" /><div class="fielderr" id="e_phone"></div></div>'
+        + '<div class="field"><label>Email</label><input id="g_email" type="email" autocomplete="email" placeholder="you@email.com" value="'+esc(S.demo.email||"")+'" /></div>'
         + (IS_CLINIC ? '<div class="field"><label>Open Dental patient # (staff)</label><input id="g_pat" type="text" inputmode="numeric" placeholder="optional" value="'+esc(S.odPatNum||"")+'" /></div>' : '')
       + '</div>'
-      + (inc?'<p class="hint" style="margin-top:12px">Your visit includes: '+esc(inc)+'</p>':'')
-      + '<div class="consent">'
-        + '<input id="g_sms" type="checkbox"'+((S.smsConsent&&S.smsConsent.given)?' checked':'')+' />'
-        + '<label for="g_sms">'+CONSENT_HTML+'</label>'
-      + '</div>'
-      + '<div class="actions"><button class="cta blue" id="go" disabled>Save my spot &amp; start &rarr;</button><span class="hint">Private · yours to keep</span>'
-      + (S.door?'<button class="ghost" id="back" style="margin-left:auto">Pathways</button>':'')+'</div>',
+      + '<div class="chiprow" style="max-width:600px;margin-top:20px"><div class="ql">Best time to call</div><div class="chips" id="timechips">'+times+'</div></div>'
+      + '<div class="chiprow" style="max-width:600px;margin-top:16px"><div class="ql">Best days (optional)</div><div class="chips" id="daychips">'+days+'</div></div>'
+      + '<div class="addfield"><input id="g_note" type="text" maxlength="200" placeholder="Anything we should know before we call? (optional)" value="'+esc(S.note||"")+'" /></div>'
+      + consentBox()
+      + '<div class="actions"><button class="cta blue" id="go" disabled>Request my visit</button><button class="ghost" id="back">Back</button></div>',
       0);
     var go=document.getElementById("go");
-    function chk(){ var f=v("g_first"), e=v("g_email"), p=v("g_phone"); go.disabled=!(f && e.indexOf("@")>0); }
-    ["g_first","g_last","g_email","g_phone","g_age","g_pat"].forEach(function(id){ var el=document.getElementById(id); if(el) el.oninput=chk; });
-    var f0=document.getElementById("g_first"); if(f0) f0.focus(); chk();
+    function chk(){
+      var ok=v("g_first") && v("g_last") && cleanMobile(v("g_phone")) && v("g_email").indexOf("@")>0 && S.bestTime;
+      go.disabled=!ok;
+      var e=document.getElementById("e_phone"); e.textContent = (v("g_phone") && !cleanMobile(v("g_phone"))) ? "Please enter a 10-digit US mobile number." : "";
+    }
+    ["g_first","g_last","g_email","g_phone","g_pat","g_note"].forEach(function(id){ var el=document.getElementById(id); if(el) el.oninput=chk; });
+    Array.prototype.forEach.call(document.querySelectorAll("#timechips .chip"),function(c){
+      c.onclick=function(){ S.bestTime=c.getAttribute("data-v"); Array.prototype.forEach.call(document.querySelectorAll("#timechips .chip"),function(x){x.classList.toggle("sel",x===c);}); chk(); };
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("#daychips .chip"),function(c){
+      c.onclick=function(){ var d=c.getAttribute("data-v"), i=S.days.indexOf(d); if(i>-1) S.days.splice(i,1); else S.days.push(d); c.classList.toggle("sel",i<0); };
+    });
+    var f0=document.getElementById("g_first"); if(f0 && !f0.value) f0.focus(); chk();
     go.onclick=function(){
-      S.name=v("g_first"); S.demo.last=v("g_last"); S.demo.email=v("g_email"); S.demo.phone=v("g_phone"); S.demo.age=v("g_age");
+      S.name=v("g_first"); S.demo.last=v("g_last"); S.demo.email=v("g_email");
+      S.demo.phone=fmtMobile(cleanMobile(v("g_phone"))); S.note=v("g_note").slice(0,200);
       S.odPatNum=v("g_pat");
-      // Record the consent decision, whichever way it went. "No" is a fact
-      // worth keeping: it is what stops a later workflow from texting them.
-      var smsBox=document.getElementById("g_sms");
-      S.smsConsent = (smsBox && smsBox.checked)
-        ? { given:true, at:(new Date()).toISOString(), version:CONSENT_VER, text:CONSENT_TEXT,
-            source:((window.parent!==window && document.referrer) ? document.referrer : location.href) }
-        : { given:false, at:(new Date()).toISOString(), version:CONSENT_VER };
-      if(!S.leadFired){ S.leadFired=true; pidLead("gate"); }
-      updateTwin("Spot saved, "+esc(S.name.split(" ")[0])+".");
-      scrHow();
+      readConsent();
+      // G2: the request goes through whether or not the box is ticked.
+      S.leadFired=true; S.requestedAt=(new Date()).toISOString();
+      pidLead("request");
+      updateTwin("Request in, "+esc(S.name.split(" ")[0])+".");
+      scrBridge();
     };
-    var bk=document.getElementById("back"); if(bk) bk.onclick=scrIntent;
+    document.getElementById("back").onclick=scrPay;
   }
+
+  // Returning patient (P1-03): a short path, kept off the new patient pipeline
+  // and out of every marketing sequence (R1). Goes to the front desk.
+  var NEEDS=["A cleaning or check-up","Something hurts","A question about my treatment","Something else"];
+  function scrReturning(){
+    function v(id){ var el=document.getElementById(id); return el?el.value.trim():""; }
+    var needs=NEEDS.map(function(n){ return '<button class="chip'+(S.need===n?" sel":"")+'" data-v="'+esc(n)+'">'+esc(n)+'</button>'; }).join("");
+    show(
+      coach("<p>Welcome back. Tell us what you need and our front desk will call you.</p>")
+      + '<h1 class="head">Good to see you <em>again</em>.</h1>'
+      + '<div class="fieldgrid">'
+        + '<div class="field"><label>First name</label><input id="r_first" type="text" autocomplete="given-name" value="'+esc(S.name||"")+'" /></div>'
+        + '<div class="field"><label>Last name</label><input id="r_last" type="text" autocomplete="family-name" value="'+esc(S.demo.last||"")+'" /></div>'
+        + '<div class="field full"><label>Mobile</label><input id="r_phone" type="tel" autocomplete="tel" placeholder="(___) ___-____" value="'+esc(S.demo.phone||"")+'" /><div class="fielderr" id="e_phone"></div></div>'
+      + '</div>'
+      + '<div class="chiprow" style="max-width:600px;margin-top:20px"><div class="ql">What do you need?</div><div class="chips" id="needchips">'+needs+'</div></div>'
+      + '<div class="addfield"><input id="r_note" type="text" maxlength="200" placeholder="Anything else? (optional)" value="'+esc(S.note||"")+'" /></div>'
+      + consentBox()
+      + '<div class="actions"><button class="cta blue" id="go" disabled>Send my request</button><button class="ghost" id="back">Back</button></div>',
+      0);
+    var go=document.getElementById("go");
+    function chk(){
+      go.disabled=!(v("r_first") && v("r_last") && cleanMobile(v("r_phone")) && S.need);
+      document.getElementById("e_phone").textContent=(v("r_phone") && !cleanMobile(v("r_phone"))) ? "Please enter a 10-digit US mobile number." : "";
+    }
+    ["r_first","r_last","r_phone","r_note"].forEach(function(id){ document.getElementById(id).oninput=chk; });
+    Array.prototype.forEach.call(document.querySelectorAll("#needchips .chip"),function(c){
+      c.onclick=function(){ S.need=c.getAttribute("data-v"); Array.prototype.forEach.call(document.querySelectorAll("#needchips .chip"),function(x){x.classList.toggle("sel",x===c);}); chk(); };
+    });
+    chk();
+    go.onclick=function(){
+      S.name=v("r_first"); S.demo.last=v("r_last"); S.demo.phone=fmtMobile(cleanMobile(v("r_phone")));
+      S.note=v("r_note").slice(0,200); if(S.need==="Something hurts") S.inPain=true;
+      readConsent();
+      S.leadFired=true; S.requestedAt=(new Date()).toISOString();
+      pidLead("request");
+      show(
+        coach("<p>Thanks, "+esc(S.name.split(" ")[0])+". Your request is with our front desk.</p>")
+        + '<h1 class="head">We will call you <em>'+esc(callWindow())+'</em>.</h1>'
+        + '<p class="lede">The call comes from '+esc(CALL_FROM)+'. If anything changes before then, call us on the same number.</p>',
+        0);
+    };
+    document.getElementById("back").onclick=scrStart;
+  }
+
+  // P1-07: THE BRIDGE. The request is acknowledged in one breath, and the
+  // patient is invited to keep going while they are here.
+  function idAnswered(){ var n=0; DIMS.forEach(function(d){ (S.scores[d.key]||[]).forEach(function(x){ if(x!=null) n++; }); }); return n; }
+  function scrBridge(){
+    S.at="bridge";
+    var w=callWindow(), first=esc((S.name||"").split(" ")[0]);
+    if(painPath()){
+      // With pain: we call first, and do not push the rest (spec P1-07).
+      show(
+        coach("<p>Thank you, "+first+". Because you are in pain, you are first on our list.</p>")
+        + '<h1 class="head">Your request is <em>in</em>.</h1>'
+        + '<p class="lede">'+esc(CALLER)+' from our team will call you '+esc(w)+' from '+esc(CALL_FROM)+'. You do not need to do anything else now. If the pain gets worse, call us on that number.</p>'
+        + '<div class="actions"><button class="ghost" id="later">I would like to finish my Primary iD later</button></div>',
+        1);
+      document.getElementById("later").onclick=function(){ S.bridge="later"; scrLater(); };
+      return;
+    }
+    show(
+      coach("<p>Thank you, "+first+". "+esc(CALLER)+" from our team will call you "+esc(w)+" from "+esc(CALL_FROM)+" to confirm your visit.</p>")
+      + '<h1 class="head">Your request is <em>in</em>.</h1>'
+      + '<div class="steps">'
+        + '<div class="stepitem"><div class="num" style="font-style:normal">&check;</div><div style="flex:1"><h4>Your visit request</h4><p>Done. Your answers so far are already part of your Primary iD.</p></div></div>'
+        + '<div class="stepitem"><div class="num">2</div><div style="flex:1"><h4>Your Primary iD</h4><p>About six minutes. Dr. Gabi reads it before he meets you, so your visit starts with what matters to you. It is yours to keep.</p></div></div>'
+      + '</div>'
+      + '<div class="actions"><button class="cta blue" id="go">Finish my Primary iD</button><button class="ghost" id="later">Finish later</button></div>',
+      1);
+    document.getElementById("go").onclick=function(){ S.bridge="kept going"; if(S.pfTrack==="alignment" && priorBraces() && !S.align.retainer_wear) scrRetainer(); else scrGoals(); };
+    document.getElementById("later").onclick=function(){ S.bridge="later"; scrLater(); };
+  }
+
+  // B4 / E1: come back to the same question. Answers are kept on this device
+  // (spec S4: "on the same device at minimum"); a cross-device link waits on the
+  // open decision about where the Primary iD lives.
+  function resumeLink(){ return location.origin + "/primary-id/?resume=" + encodeURIComponent(PID_ID); }
+  function scrLater(){
+    save();
+    var link=resumeLink();
+    var mail = S.demo.email ? '<a class="ghost" style="text-decoration:none;display:inline-flex;align-items:center" href="mailto:'+esc(S.demo.email)+'?subject='+encodeURIComponent("My Primary iD link")+'&body='+encodeURIComponent("Pick up where you left off: "+link)+'">Email it to myself</a>' : '';
+    show(
+      coach("<p>No problem. Everything you have answered is saved.</p>")
+      + '<h1 class="head">Pick up <em>where you left off</em>.</h1>'
+      + '<p class="lede">Open this link on this device and you will land on the same question.</p>'
+      + '<div class="linkbox" id="lk">'+esc(link)+'</div>'
+      + '<div class="actions"><button class="cta" id="copy">Copy my link</button>'+mail+'<button class="ghost" id="back">Back</button></div>',
+      1);
+    document.getElementById("copy").onclick=function(){
+      var b=this, done=function(){ b.textContent="Link copied"; };
+      try{ navigator.clipboard.writeText(link).then(done,function(){ window.prompt("Copy this link:", link); }); }catch(e){ window.prompt("Copy this link:", link); }
+    };
+    document.getElementById("back").onclick=scrBridge;
+  }
+
   // ── GHL capture ───────────────────────────────────────────────────────────
   // Covers everything up to the five dimensions: identity, door, why, goals,
   // intent, pathfinder track. Fires once at the gate so a drop-off is still a
@@ -877,132 +1109,251 @@
     return o;
   }
 
-  function pidLead(phase){
-    try{
-      var why = S.reason ? reasonLabel(S.reason) : "";
-      var SC = pidScores();
-      fetch("/api/lead/",{
-        method:"POST", keepalive:true,
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({
-          mode:"appt",
-          phase: phase,
-          assessmentId: PID_ID,
-          form:{
-            firstName: S.name||"", lastName: S.demo.last||"",
-            email: S.demo.email||"", mobile: S.demo.phone||"",
-            age: S.demo.age||"", reason: why
-          },
-          pathway:    S.door||"",
-          goals:      S.goals||[],
-          intent:     S.intent||"",
-          pathfinder: !!S.pathfinder,
-          pfTrack:    S.pfTrack||"",
-          pf:         S.pf||{},
-          entryDim:   (new URLSearchParams(location.search||"")).get("dim")||"",
-          leadSource: pidUtm(),
-          scores:     { oral:SC.oral, sleep:SC.sleep, nutri:SC.nutri, family:SC.family, long:SC.long },
-          composite:  SC._c,
-          tier:       (SC._c!=null ? tier(SC._c).w : ""),
-          safety:     S.safety||[],
-          complaint:  S.complaint||"",
-          insurance:  S.insurance||{},
-          records:    S.records||{},
-          demo:       { dob:S.demo.dob||"", sex:S.demo.sex||"" },
-          smsConsent: S.smsConsent || { given:false },
-          context:    IS_CLINIC ? "clinic" : "web",
-          odPatNum:   S.odPatNum || ""
-        })
-      }).catch(function(){});
-    }catch(e){}
+  // Everything the flow knows, in the shape /api/lead/ reads.
+  function histLine(){
+    var out=[];
+    DIMS.forEach(function(d){ var h=S.hist[d.key]||{};
+      Object.keys(h).forEach(function(k){ var v=h[k]; if(v==null||(Array.isArray(v)&&!v.length)) return; out.push(k+": "+(Array.isArray(v)?v.join(", "):v)); });
+    });
+    return out.join(" · ");
+  }
+  function idStatus(){
+    if(S.complete) return "Complete";
+    var n=idAnswered();
+    return n ? "In progress · "+n+" of 40 answered" : "Pathfinder";
+  }
+  function leadBody(phase){
+    var SC = pidScores();
+    return {
+      mode:"appt",
+      phase: phase,
+      assessmentId: PID_ID,
+      form:{
+        firstName: S.name||"", lastName: S.demo.last||"",
+        email: S.demo.email||"", mobile: S.demo.phone||"",
+        reason: S.reason ? reasonLabel(S.reason) : "", reasonDetail: S.reasonDetail||""
+      },
+      newOrReturning: S.newRet||"",
+      need: S.need||"",
+      inPain: S.inPain===true,
+      visit: S.visit||"",
+      partner: PARTNER,
+      bestTime: S.bestTime||"",
+      days: S.days||[],
+      note: S.note||"",
+      bridge: S.bridge||"",
+      idStatus: idStatus(),
+      pathway:    S.door||"",
+      goals:      S.goals||[],
+      intent:     S.intent||"",
+      pathfinder: !!S.pathfinder,
+      pfTrack:    S.pfTrack||"",
+      pf:         S.pf||{},
+      entryDim:   (new URLSearchParams(location.search||"")).get("dim")||"",
+      leadSource: pidUtm(),
+      scores:     { oral:SC.oral, sleep:SC.sleep, nutri:SC.nutri, family:SC.family, long:SC.long },
+      composite:  SC._c,
+      tier:       (SC._c!=null ? tier(SC._c).w : ""),
+      safety:     S.safety||[],
+      complaint:  S.complaint||"",
+      insurance:  S.insurance||{},
+      records:    S.records||{},
+      history:    histLine(),
+      demo:       { dob:S.demo.dob||"", sex:S.demo.sex||"", address:S.demo.address||"" },
+      smsConsent: S.smsConsent || { given:false },
+      context:    IS_CLINIC ? "clinic" : "web",
+      odPatNum:   S.odPatNum || ""
+    };
   }
 
-  // Progressive capture. Every screen between the gate and the five dimensions
-  // re-upserts the same contact, so a drop-off at ANY point keeps whatever they
-  // had given by then — why, pathfinder track, goals, intent. Debounced and
-  // deduped, so idle re-renders and Back navigation cost nothing.
+  // G6: if the request cannot reach us, hold it on this device and retry. The
+  // patient sees the confirmation either way.
+  var OUTBOX="pid:outbox";
+  function post(body){
+    return fetch("/api/lead/",{ method:"POST", keepalive:true, headers:{"Content-Type":"application/json"}, body:JSON.stringify(body) })
+      .then(function(r){ return r.json(); })
+      .then(function(j){ if(!j || j.success===false) throw new Error("not captured"); return j; });
+  }
+  function hold(body){ try{ var q=JSON.parse(localStorage.getItem(OUTBOX)||"[]"); q.push(body); localStorage.setItem(OUTBOX, JSON.stringify(q.slice(-5))); }catch(e){} }
+  function flushOutbox(){
+    var q; try{ q=JSON.parse(localStorage.getItem(OUTBOX)||"[]"); }catch(e){ q=[]; }
+    if(!q.length) return;
+    try{ localStorage.removeItem(OUTBOX); }catch(e){}
+    q.forEach(function(b){ post(b).catch(function(){ hold(b); }); });
+  }
+  function pidLead(phase){
+    var body; try{ body=leadBody(phase); }catch(e){ return; }
+    if(phase==="request"){
+      var tries=0;
+      (function attempt(){
+        post(body).catch(function(){
+          if(++tries<3) setTimeout(attempt, 2000*tries); else hold(body);
+        });
+      })();
+    } else {
+      post(body).catch(function(){});
+    }
+  }
+
+  // I1: every answer is saved as it is given. Each screen re-sends the whole
+  // record once something has changed, debounced, so leaving at any point keeps
+  // what they had given by then. Nothing is sent before the request.
   var _pidTimer = null, _pidSig = "";
   function pidSync(){
-    if(!S.leadFired || S.pastDims) return;
-    var sig = JSON.stringify([S.door,S.reason,S.reasonDetail,S.goals,S.intent,S.pathfinder,S.pfTrack]);
+    if(!S.leadFired) return;
+    save();
+    var sig;
+    try{ sig = JSON.stringify([S.goals,S.intent,S.scores,S.hist,S.safety,S.records,S.demo,S.complaint,S.bridge,S.align]); }catch(e){ return; }
     if(sig === _pidSig) return;
     _pidSig = sig;
     clearTimeout(_pidTimer);
-    _pidTimer = setTimeout(function(){ pidLead("progress"); }, 400);
+    _pidTimer = setTimeout(function(){ pidLead("progress"); }, 1500);
   }
 
-  // The door already told us why they're here — only the general/Preventive door still asks "why".
-  function routeAfterGate(){
-    var d=doorCfg();
-    if(d.reason){
-      var t=pfTrack();
-      if(t==="alignment") scrPathfinderAlign();
-      else if(t==="secondop") scrPathfinderSO();
-      else if(t==="restorative") scrPathfinder();
-      else scrGoals();
-    } else { scrWhy(); }
+  // Same-device save, so a link brings them back to the same question (E1, B4).
+  var STORE="pid:v1:";
+  function save(){
+    if(!S.leadFired) return;
+    try{ localStorage.setItem(STORE+PID_ID, JSON.stringify(S)); }catch(e){}
   }
-  function backFromPF(){ if(doorCfg().reason) scrWelcome(); else scrWhy(); }
+  function tryResume(){
+    var m=/[?&]resume=([\w-]+)/.exec(location.search||""); if(!m) return false;
+    var raw=null; try{ raw=localStorage.getItem(STORE+m[1]); }catch(e){}
+    if(!raw){
+      show(coach("<p>This link opens your Primary iD on the device you started it on.</p>")
+        + '<h1 class="head">We could not find your answers <em>on this device</em>.</h1>'
+        + '<p class="lede">Open the link on the phone or computer you used before, or call us on '+esc(CALL_FROM)+' and we will help.</p>', 1);
+      return true;
+    }
+    try{
+      var o=JSON.parse(raw); Object.keys(o).forEach(function(k){ S[k]=o[k]; });
+      DIMS.forEach(function(d){ if(!S.scores[d.key]) S.scores[d.key]=[]; });
+      PID_ID=m[1]; _pidSig="";
+      updateTwin("Welcome back, "+esc((S.name||"").split(" ")[0])+".");
+      var at=S.at;
+      if(at==="dims") scrQuestion();
+      else if(at==="hist") scrDimHistory(DIMS[S.di]);
+      else if(at==="goals") scrGoals();
+      else if(at==="intent") scrIntent();
+      else if(at==="how") scrHow();
+      else if(at==="safety") scrSafety();
+      else if(at==="records") scrRecords();
+      else if(at==="essentials") scrEssentials();
+      else if(at==="complaint") scrComplaint();
+      else if(at==="done") scrYours();
+      else scrBridge();
+      return true;
+    }catch(e){ return false; }
+  }
+
+  // The door sets the track; on the general door the reason does.
+  function routePF(){
+    var t=pfTrack();
+    if(t==="alignment") scrPathfinderAlign();
+    else if(t==="secondop") scrPathfinderSO();
+    else if(t==="restorative") scrPathfinder();
+    else if(t==="pain") scrPathfinderPain();
+    else afterPF();
+  }
+  function backFromPF(){ scrStart(); }
+  // After the Pathfinder: the pain question, unless pain is already the reason.
+  function afterPF(){ if(pfTrack()==="pain") scrPay(); else scrPain(); }
 
   // 2 — WHY (the single most important signal: what actually brought them in)
   var REASONS=[
-    {k:"problem", t:"Something's bothering me", d:"Pain, or a problem I can feel"},
-    {k:"fix", t:"A specific thing to fix", d:"A tooth, my smile, work that's failing"},
-    {k:"blindspot", t:"This is my blind spot", d:"I've optimized everything else"},
+    {k:"problem", t:"Something hurts", d:"Pain, or a problem I can feel"},
+    {k:"fix", t:"Something to fix", d:"A tooth, my smile, work that's failing"},
+    {k:"blindspot", t:"A blind spot", d:"I look after everything else"},
     {k:"prevent", t:"Get ahead of it", d:"Before something goes wrong"},
-    {k:"curious", t:"Honestly, just curious", d:"I want to see where I stand"}
+    {k:"curious", t:"Just curious", d:"I want to see where I stand"}
   ];
   function reasonLabel(k){ for(var i=0;i<REASONS.length;i++){ if(REASONS[i].k===k) return REASONS[i].t; } return ""; }
-  function scrWhy(){
+  // 2 — NEW OR RETURNING, AND WHY (spec P1-03). Two taps. On a door page the
+  // reason is already set; on the general door they pick it here.
+  function scrStart(){
+    var askWhy = !doorCfg().reason;
+    var nr=[["new","I'm new to Primary","This would be my first visit"],["returning","I've been to Primary before","I'm already a patient"]].map(function(o){
+      return '<div class="tile nr'+(S.newRet===o[0]?" sel":"")+'" data-k="'+o[0]+'"><div class="tchk"></div><div class="tt">'+o[1]+'</div><div class="td">'+o[2]+'</div></div>';
+    }).join("");
     var tiles=REASONS.map(function(r){ var sel=S.reason===r.k;
-      return '<div class="tile'+(sel?" sel":"")+'" data-k="'+r.k+'"><div class="tchk"></div><div class="tt">'+r.t+'</div><div class="td">'+r.d+'</div></div>';
+      return '<div class="tile why'+(sel?" sel":"")+'" data-k="'+r.k+'"><div class="tchk"></div><div class="tt">'+r.t+'</div><div class="td">'+r.d+'</div></div>';
     }).join("");
     show(
-      coach("<p>Before anything else — the most important thing you can tell me. What actually brought you to Primary?</p>")
-      + '<h1 class="head">Why are you <em>here</em>?</h1>'
-      + '<div class="grid">'+tiles+'</div>'
-      + '<div class="addfield"><input id="rdetail" type="text" placeholder="Want to say more? (optional)" /></div>'
+      coach("<p>First, so we start in the right place.</p>")
+      + '<h1 class="head">Have you been to <em>Primary</em> before?</h1>'
+      + '<div class="grid">'+nr+'</div>'
+      + (askWhy ? '<div id="whyblock" style="display:'+(S.newRet==="new"?"block":"none")+'">'
+          + '<h2 class="head" style="font-size:24px;margin-top:28px">What brings you in?</h2>'
+          + '<div class="grid">'+tiles+'</div>'
+          + '<div class="addfield"><input id="rdetail" type="text" maxlength="200" placeholder="Want to say more? (optional)" /></div>'
+        + '</div>' : '')
       + '<div class="actions"><button class="cta" id="go" disabled>Continue</button><button class="ghost" id="back">Back</button></div>',
       0);
     var go=document.getElementById("go"), det=document.getElementById("rdetail");
-    if(S.reasonDetail) det.value=S.reasonDetail;
-    if(S.reason) go.disabled=false;
-    Array.prototype.forEach.call(document.querySelectorAll(".tile"),function(t){
-      t.onclick=function(){ S.reason=t.getAttribute("data-k");
-        Array.prototype.forEach.call(document.querySelectorAll(".tile"),function(x){x.classList.remove("sel");});
-        t.classList.add("sel"); go.disabled=false;
+    if(det && S.reasonDetail) det.value=S.reasonDetail;
+    function chk(){ go.disabled = !(S.newRet==="returning" || (S.newRet==="new" && (!askWhy || S.reason))); }
+    Array.prototype.forEach.call(document.querySelectorAll(".tile.nr"),function(t){
+      t.onclick=function(){ S.newRet=t.getAttribute("data-k");
+        Array.prototype.forEach.call(document.querySelectorAll(".tile.nr"),function(x){x.classList.toggle("sel",x===t);});
+        var wb=document.getElementById("whyblock"); if(wb) wb.style.display = S.newRet==="new" ? "block" : "none";
+        chk();
       };
     });
-    det.onchange=function(){ S.reasonDetail=det.value.trim(); };
-    go.onclick=function(){ if(det.value.trim())S.reasonDetail=det.value.trim();
-      var t=pfTrack();
-      if(t==="alignment") scrPathfinderAlign();
-      else if(t==="secondop") scrPathfinderSO();
-      else if(t==="restorative") scrPathfinder();
-      else scrGoals();
+    Array.prototype.forEach.call(document.querySelectorAll(".tile.why"),function(t){
+      t.onclick=function(){ S.reason=t.getAttribute("data-k");
+        Array.prototype.forEach.call(document.querySelectorAll(".tile.why"),function(x){x.classList.toggle("sel",x===t);});
+        chk();
+      };
+    });
+    chk();
+    go.onclick=function(){
+      if(det && det.value.trim()) S.reasonDetail=det.value.trim();
+      if(S.newRet==="returning") scrReturning(); else routePF();
     };
     document.getElementById("back").onclick=scrWelcome;
   }
 
   // 2b — PATHFINDER (fires when the intention is restorative — the "why/what" of the fix)
   var PF=[
-    {id:"what", type:"single", q:"What's going on?", opts:["A missing tooth or teeth","A tooth that's failing or loose","Old work failing (crown / bridge / implant)","Dentures I don't love","I don't like my smile"]},
-    {id:"why", type:"single", q:"What would fixing it mean for you?", opts:["Eat normally again","Feel confident smiling","Stop the pain or worry","A permanent fix, not a patch"]},
-    {id:"where", type:"single", q:"Where are you with it?", opts:["Just starting to look","I've been told I need work","I have a quote elsewhere","Ready to move now"]}
+    {id:"what", type:"single", q:"What's going on?", why:"So the person who calls you already knows which conversation this is.", opts:["A missing tooth or teeth","A tooth that's failing or loose","Old work failing (crown / bridge / implant)","Dentures I don't love","I don't like my smile"]},
+    {id:"why", type:"single", q:"What would fixing it mean for you?", why:"This is what we plan around, before anything technical.", opts:["Eat normally again","Feel confident smiling","Stop the pain or worry","A permanent fix, not a patch"]},
+    {id:"where", type:"single", q:"Where are you with it?", why:"So we start where you are, not at the beginning.", opts:["Just starting to look","I've been told I need work","I have a quote elsewhere","Ready to move now"]}
   ];
   // alignment track (OrthoFX) — one Pathfinder, two tracks. Only `what` forks; why/where shared.
   var PF_ALIGN = [
-    {id:"what", type:"single", q:"What would you change about your smile?", opts:["Crowding or crooked teeth","Gaps between my teeth","How my teeth meet when I bite","They shifted back after braces","Something else about my smile"]},
-    {id:"ortho_history", type:"single", q:"Have you had braces or aligners at any point?", opts:["Never","As a teenager","As an adult","I'm in treatment now"]},
-    {id:"wear_tolerance", type:"single", q:"Realistically, how much of the day could you wear aligners?", opts:["All day — that's fine","Evenings and overnight only","This is why I've put treatment off","I'm not sure"]}
+    {id:"what", type:"single", q:"What would you change about your smile?", why:"Aligners can move teeth in different ways. This tells us which movement matters to you.", opts:["Crowding or crooked teeth","Gaps between my teeth","How my teeth meet when I bite","They shifted back after braces","Something else about my smile"]},
+    {id:"ortho_history", type:"single", q:"Have you had braces or aligners at any point?", why:"Teeth that have moved before tend to move again, and that changes the plan.", opts:["Never","As a teenager","As an adult","I'm in treatment now"]},
+    {id:"wear_tolerance", type:"single", q:"Realistically, how much of the day could you wear aligners?", why:"Wear time decides which aligner plan fits your day.", opts:["All day — that's fine","Evenings and overnight only","This is why I've put treatment off","I'm not sure"]}
   ];
   var PF_RETAINER = {id:"retainer_wear", type:"single", q:"Did you keep wearing your retainers?", opts:["Still do","Stopped after a while","Never really did","Lost or broke them"]};
   // second-opinion track — same shape as the restorative Pathfinder, different questions.
   var PFSO=[
-    {id:"what", type:"single", q:"What's the plan for?", opts:["Implants or a full arch","Crowns, bridges or veneers","A root canal","Braces or aligners","Gum treatment","More than one thing"]},
-    {id:"stage", type:"single", q:"Where are you with it?", opts:["Just been given the plan","Getting a second view before I commit","Already started and having doubts","Quoted, and deciding now"]},
-    {id:"quote", type:"single", q:"What were you quoted?", opts:["Under $5,000","$5,000 \u2013 $15,000","$15,000 \u2013 $35,000","Over $35,000","Not quoted yet"]}
+    {id:"what", type:"single", q:"What's the plan for?", why:"So we read the same plan the other office wrote.", opts:["Implants or a full arch","Crowns, bridges or veneers","A root canal","Braces or aligners","Gum treatment","More than one thing"]},
+    {id:"stage", type:"single", q:"Where are you with it?", why:"So we know how soon you need an answer.", opts:["Just been given the plan","Getting a second view before I commit","Already started and having doubts","Quoted, and deciding now"]},
+    {id:"quote", type:"single", q:"What were you quoted?", why:"So we can tell you plainly how our view compares.", opts:["Under $5,000","$5,000 \u2013 $15,000","$15,000 \u2013 $35,000","Over $35,000","Not quoted yet"]}
   ];
+  // pain track: two unscored flags, then straight to the request (spec: Pathfinder
+  // tracks · Something hurts). The rest of the Primary iD waits.
+  var PF_PAIN=[
+    {id:"what", type:"single", q:"What is going on?", why:"So we know what to have ready when you come in.", opts:["A toothache","Swelling","A broken or chipped tooth","A knocked-out tooth","Bleeding gums","Something else"]},
+    {id:"howlong", type:"single", q:"How long has it been going on?", why:"It changes how soon we need to see you.", opts:["Since today","A few days","A week or more","On and off for a while"]}
+  ];
+  function scrPathfinderPain(){
+    var items=PF_PAIN.map(function(it){ return chipItem(it, S.pf); }).join("");
+    show(
+      '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>What is going on</div>'
+      + coach("<p>Two quick questions, then your details, and we call you first.</p>")
+      + '<h1 class="head">Tell us what <em>hurts</em>.</h1>'
+      + '<div class="chipset">'+items+'</div>'
+      + '<div class="actions"><button class="cta" id="go" disabled>Continue</button><button class="ghost" id="back">Back</button></div>',
+      0);
+    wireChips(S.pf);
+    var go=document.getElementById("go"); go.disabled=!S.pf.what;
+    document.querySelector(".chipset").addEventListener("click", function(){ go.disabled = !S.pf.what; });
+    go.onclick=function(){ S.pathfinder=true; S.pfTrack="pain"; S.inPain=true; scrPay(); };
+    document.getElementById("back").onclick=backFromPF;
+  }
+
   function scrPathfinderSO(){
     var items=PFSO.map(function(it){ return chipItem(it, S.pf); }).join("");
     show(
@@ -1018,7 +1369,7 @@
     go.onclick=function(){
       S.pathfinder = true;
       S.pfTrack="secondop";
-      scrGoals();
+      afterPF();
     };
     document.getElementById("back").onclick=backFromPF;
   }
@@ -1039,7 +1390,7 @@
     go.onclick=function(){
       S.pathfinder = !!(S.pf.what && S.pf.what!=="I don't like my smile");
       S.pfTrack="restorative";
-      scrGoals();
+      afterPF();
     };
     document.getElementById("back").onclick=backFromPF;
   }
@@ -1090,10 +1441,7 @@
     wireChips(S.align);
     var go=document.getElementById("go"); go.disabled=!S.align.what;
     document.querySelector(".chipset").addEventListener("click", function(){ go.disabled = !S.align.what; });
-    go.onclick=function(){
-      var prior = S.align.ortho_history==="As a teenager" || S.align.ortho_history==="As an adult";
-      if(prior) scrRetainer(); else finishAlign();
-    };
+    go.onclick=finishAlign;
     document.getElementById("back").onclick=backFromPF;
   }
   function scrRetainer(){
@@ -1106,17 +1454,22 @@
       + '<div class="actions"><button class="cta" id="go">Continue</button><button class="ghost" id="back">Back</button></div>',
       0);
     wireChips(S.align);
-    document.getElementById("go").onclick=finishAlign;
-    document.getElementById("back").onclick=scrPathfinderAlign;
+    document.getElementById("go").onclick=scrGoals;
+    document.getElementById("back").onclick=scrBridge;
   }
   function finishAlign(){
-    S.pf.what=S.align.what; S.pathfinder=true; S.pfTrack="alignment";
-    if(S.align.ortho_history){ S.hist.sleep=S.hist.sleep||{}; S.hist.sleep.ortho_history=S.align.ortho_history; }
-    scrGoals();
+    // Every aligner answer reaches the call, not just the first (data map).
+    ["what","ortho_history","wear_tolerance"].forEach(function(k){ if(S.align[k]) S.pf[k]=S.align[k]; });
+    S.pathfinder=true; S.pfTrack="alignment";
+    // PF3: asked here, so the sleep chapter does not ask it again.
+    if(S.align.ortho_history){ S.hist.sleep=S.hist.sleep||{}; S.hist.sleep.ortho_history=S.align.ortho_history; S.prefill["sleep.ortho_history"]=true; }
+    afterPF();
   }
+  function priorBraces(){ return S.align && (S.align.ortho_history==="As a teenager" || S.align.ortho_history==="As an adult"); }
 
   // 3 — goals (what matters — the aspiration behind the why)
   function scrGoals(){
+    S.at="goals";
     var tiles=GOALS.map(function(g){ var sel=S.goals.indexOf(g.k)>-1;
       return '<div class="tile'+(sel?" sel":"")+'" data-k="'+g.k+'"><div class="tchk"></div><div class="tt">'+g.t+'</div><div class="td">'+g.d+'</div></div>';
     }).join("");
@@ -1138,6 +1491,7 @@
 
   // 3 — intent (the loss-frame — from JR's intake)
   function scrIntent(){
+    S.at="intent";
     var opts=["I keep pushing through it","It slowly slips","Honestly, I'm worried","I don't want to find out"];
     show(
       '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>Why now</div>'
@@ -1147,13 +1501,14 @@
       + '<div class="actions"><button class="ghost" id="back">Back</button></div>',
       1);
     Array.prototype.forEach.call(document.querySelectorAll(".opt"),function(o){
-      o.onclick=function(){ S.intent=o.getAttribute("data-v"); Array.prototype.forEach.call(document.querySelectorAll(".opt"),function(x){x.classList.remove("sel");}); o.classList.add("sel"); setTimeout(scrGate,240); };
+      o.onclick=function(){ S.intent=o.getAttribute("data-v"); Array.prototype.forEach.call(document.querySelectorAll(".opt"),function(x){x.classList.remove("sel");}); o.classList.add("sel"); setTimeout(scrHow,240); };
     });
     document.getElementById("back").onclick=scrGoals;
   }
 
   // 4 — how it works
   function scrHow(){
+    S.at="how";
     var rows=DIMS.map(function(d,i){
       return '<div class="stepitem" style="--dc:'+d.color+'"><div class="num">'+(i+1)+'</div>'
         + '<div style="flex:1"><h4>'+esc(d.name)+'</h4><p>'+d.intro.replace(/ Eight questions\.?$/,"")+'</p></div></div>';
@@ -1165,19 +1520,14 @@
       + '<div class="actions"><button class="cta blue" id="go">Start with my mouth</button><span class="hint">You\'ll see your foundation and your clearest next step</span></div>',
       2);
     document.getElementById("go").onclick=function(){
-      pidLead("pre-dimensions");   // final send: intent is now known
       S.di=0; S.qi=0; scrDimIntro();
     };
   }
 
   // dimension intro
   function scrDimIntro(){
-    // Capture stops here. Everything from this screen on is clinical and stays
-    // in this browser: history, safety flags, insurance, chief complaint.
-    S.pastDims = true;
-    // Progressive sync is off past this point, so post explicitly at each
-    // dimension boundary — 7 upserts total instead of one per answer.
-    if(S.leadFired && S.di>0) pidLead("dim"+S.di);
+    // Answers from here on are saved as they are given (pidSync).
+    S.pastDims = true; S.at="dims"; S.qi=0;
     var d=DIMS[S.di];
     show(
       '<div class="dchip" style="--dc:'+d.color+'"><span class="dot"></span>Dimension '+(S.di+1)+' of '+DIMS.length+' · '+esc(d.name)+'</div>'
@@ -1192,6 +1542,7 @@
 
   // a scored question
   function scrQuestion(){
+    S.at="dims";
     var d=DIMS[S.di], q=d.qs[S.qi], cur=S.scores[d.key][S.qi];
     var opts=q.a.map(function(a){ var sel=cur===a[1];
       return '<button class="opt'+(sel?" sel":"")+'" data-v="'+a[1]+'"><span>'+esc(a[0])+'</span><span class="chk"></span></button>';
@@ -1231,8 +1582,10 @@
 
   // woven history — a lightning round native to the dimension (flags, NOT scored)
   function scrDimHistory(d){
+    S.at="hist";
     S.hist[d.key]=S.hist[d.key]||{};
-    var items=d.hist.map(function(it){ return chipItem(it, S.hist[d.key]); }).join("");
+    // PF3: anything answered in the Pathfinder is not asked again.
+    var items=d.hist.filter(function(it){ return !S.prefill[d.key+"."+it.id]; }).map(function(it){ return chipItem(it, S.hist[d.key]); }).join("");
     show(
       '<div class="dchip" style="--dc:'+d.color+'"><span class="dot"></span>Quick record · '+esc(d.name)+'</div>'
       + coach("<p>Lightning round — a few things your care team needs for your chart. Tap what fits; skip anything that doesn't.</p>")
@@ -1266,8 +1619,8 @@
   // safety check — the medical flags, one honest beat (NOT gamified into dishonesty)
   var SAFETY=["Daily prescription meds","Drug allergy","Material allergy (latex / metals)","Heart valve / cardiac condition","Blood thinner / bleeding disorder","Cancer, chemo, or radiation history","Bone medication (bisphosphonates)","Pregnant or breastfeeding","Hospitalized or surgery in last 2 yrs"];
   function scrSafety(){
+    S.at="safety";
     updateTwin("Locking in your record…");
-    if(S.leadFired) pidLead("dimensions-complete");
     var chips=SAFETY.map(function(s){var on=S.safety.indexOf(s)>-1;return '<button class="chip'+(on?" sel":"")+'" data-val="'+esc(s)+'">'+esc(s)+'</button>';}).join("")
       + '<button class="chip'+(S.safety.indexOf("None of these")>-1?" sel":"")+'" data-val="None of these">None of these</button>';
     show(
@@ -1293,6 +1646,7 @@
 
   // records — pull-in, don't re-ask (the data thesis)
   function scrRecords(){
+    S.at="records";
     var items=[
       {id:"pcp", type:"yn", q:"Do you have a primary care doctor you see regularly?"},
       {id:"labs", type:"single", q:"Recent full lab panel — CBC, metabolic, lipid, A1c?", opts:["Under 6 mo","6–12 mo","2+ yrs","Never"]},
@@ -1313,6 +1667,7 @@
 
   // essentials — the remaining chart data (contact already captured at the gate; never ask twice)
   function scrEssentials(){
+    S.at="essentials";
     var known=[S.name, S.demo.last].filter(Boolean).join(" ")+(S.demo.email?" · "+S.demo.email:"")+(S.demo.phone?" · "+S.demo.phone:"");
     show(
       '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>The essentials</div>'
@@ -1328,7 +1683,7 @@
       9);
     ["dob","address"].forEach(function(id){ var el=document.getElementById("d_"+id); if(el) el.onchange=function(){ S.demo[id]=el.value.trim(); }; });
     Array.prototype.forEach.call(document.querySelectorAll("#sexchips .chip"),function(c){ c.onclick=function(){ S.demo.sex=c.getAttribute("data-v"); Array.prototype.forEach.call(document.querySelectorAll("#sexchips .chip"),function(x){x.classList.toggle("sel",x===c);}); }; });
-    document.getElementById("go").onclick=function(){ ["dob","address"].forEach(function(id){var el=document.getElementById("d_"+id); if(el)S.demo[id]=el.value.trim();}); scrInsurance(); };
+    document.getElementById("go").onclick=function(){ ["dob","address"].forEach(function(id){var el=document.getElementById("d_"+id); if(el)S.demo[id]=el.value.trim();}); scrComplaint(); };
     document.getElementById("back").onclick=scrRecords;
   }
 
@@ -1357,6 +1712,7 @@
 
   // chief complaint — the reflective close (Master's most important field)
   function scrComplaint(){
+    S.at="complaint";
     show(
       '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>In your words</div>'
       + coach("<p>Last one — and the most important. Forget the checkboxes for a second.</p>")
@@ -1367,14 +1723,15 @@
       9);
     var cc=document.getElementById("cc"); cc.focus();
     document.getElementById("go").onclick=function(){ S.complaint=cc.value.trim(); scrReveal(); };
-    document.getElementById("back").onclick=scrInsurance;
+    document.getElementById("back").onclick=scrEssentials;
   }
 
   // reveal
   function scrReveal(){
     updateTwin("Your baseline is complete.");
     sendResults();
-    if(S.leadFired) pidLead("complete");
+    S.complete=true; S.at="done";
+    if(S.leadFired){ save(); pidLead("complete"); }
     var c=composite(), ct=tier(c);
     var low=null; DIMS.forEach(function(d){ var v=dimScore(d.key); if(v!=null&&(low===null||v<low.v)) low={d:d,v:v}; });
     var levers=[];
@@ -1493,12 +1850,17 @@
       + '</div>'
       + DISCLAIM
       + '<p class="foot-note">No forms. Your record is private and portable — it moves with you.</p>'
-      + '<div class="actions"><button class="cta blue" id="book">Book my first visit</button><button class="ghost" id="copy">Copy my results link</button><button class="ghost" id="back">Back</button><button class="ghost" id="prov" style="margin-left:auto;opacity:.6">Provider view (team only)</button></div>',
+      // S3: no second Book button. The request already went in at P1-06.
+      + (S.leadFired ? '<div class="insight"><div class="il">Your visit</div><p>Your request is in. '+esc(CALLER)+' will call you '+esc(callWindow())+' from '+esc(CALL_FROM)+' to confirm your time. You will meet Dr. Gabi, and the team confirms your Primary iD with you at the visit.</p></div>' : '')
+      + '<div class="actions"><button class="cta" id="copy">Copy my link</button><button class="ghost" id="back">Back</button>'
+      + (IS_CLINIC ? '<button class="ghost" id="prov" style="margin-left:auto;opacity:.6">Provider view (team only)</button>' : '') + '</div>',
       10);
-    document.getElementById("book").onclick=scrBooked;
-    document.getElementById("copy").onclick=function(){ copyLink(this); };
+    document.getElementById("copy").onclick=function(){
+      var link = S.leadFired ? resumeLink() : resultsLink(), b=this;
+      try{ navigator.clipboard.writeText(link).then(function(){ b.textContent="Link copied"; },function(){ window.prompt("Copy this link:", link); }); }catch(e){ window.prompt("Copy this link:", link); }
+    };
     document.getElementById("back").onclick=scrJourney;
-    document.getElementById("prov").onclick=scrProvider;
+    var pv=document.getElementById("prov"); if(pv) pv.onclick=scrProvider;
   }
 
   // PROVIDER view — the clinical brief. The patient never sees this in production.
@@ -1567,8 +1929,11 @@
   buildNodes();
   if(!tryViewMode()){
     var dp=resolveDoorParam();
-    if(dp){ applyDoor(dp); scrWelcome(); }
-    else scrPathway();
+    flushOutbox();
+    if(!tryResume()){
+      applyDoor(dp || "general");
+      scrWelcome();
+    }
   }
 })();
 
