@@ -35,7 +35,7 @@ Write anything here, top = most important. Claude reads this list at the start o
 | P1-08 The Primary iD | PR #11 | I1, I2, E1 | I3 chapter openers, I4 skip any question, I5 timing |
 | P1-09 Their Primary iD | PR #10 + #11 | S1, S3, M2; S4 same device | S2 composite still leads (score bands) |
 | P1-10 Call Card | Not started | — | Built inside GoHighLevel |
-| Membership page | PR #10 | Live on preview | Join button needs the Subscribili link |
+| Membership page | PR #11 | The marketing landing page ("Your smile, the gateway…") at /membership/; its 3 quiz answers carry into the flow | Join button needs the Subscribili link; sample deep-cleaning fee ($350/quadrant) to confirm |
 
 ## Next up (Claude)
 

@@ -11,6 +11,12 @@ const nextConfig = {
     unoptimized: true,
   },
 
+  // /membership/ is the membership marketing page, a self-contained static page
+  // (public/membership.html, built from primary-id-membership-page/reference).
+  async rewrites() {
+    return [{ source: "/membership/", destination: "/membership.html" }]
+  },
+
   // ─── 301 Redirects (preserve WordPress URL equity) ────────────────────────
   async redirects() {
     return [

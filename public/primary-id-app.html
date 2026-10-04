@@ -572,6 +572,17 @@
     if(S.reason==="problem") return "pain";
     return null;
   }
+  // ?preview=smile,bleeding,daytime from /membership/: oral item 8, oral item 4,
+  // sleep item 2, with the bank's own point values.
+  var PREVIEW_Q=[["oral",7,[92,72,50,32]],["oral",3,[90,40]],["sleep",1,[85,48]]];
+  function applyPreview(){
+    var m=/[?&]preview=([\d,]+)/.exec(location.search||""); if(!m) return;
+    m[1].split(",").forEach(function(v,i){
+      var q=PREVIEW_Q[i], n=parseInt(v,10); if(!q || q[2].indexOf(n)<0) return;
+      S.scores[q[0]][q[1]]=n; S.prefill[q[0]+".q"+q[1]]=true;
+    });
+  }
+  function prefilledQ(d,qi){ return !!S.prefill[d.key+".q"+qi]; }
   function painPath(){ return S.inPain===true || pfTrack()==="pain"; }
 
   // tiers (Master bands + patient language)
@@ -1541,12 +1552,13 @@
       + (S.di>0?'<button class="ghost" id="back">Back</button>':'')+'</div>',
       3+S.di);
     document.getElementById("go").onclick=function(){ S.qi=0; scrQuestion(); };
-    var b=document.getElementById("back"); if(b) b.onclick=function(){ S.di--; var pd=DIMS[S.di]; if(pd.hist&&pd.hist.length){ scrDimHistory(pd); } else { S.qi=pd.qs.length-1; scrQuestion(); } };
+    var b=document.getElementById("back"); if(b) b.onclick=function(){ S.di--; var pd=DIMS[S.di]; if(pd.hist&&pd.hist.length){ scrDimHistory(pd); } else { toLastQ(pd); } };
   }
 
   // a scored question
   function scrQuestion(){
     S.at="dims";
+    if(prefilledQ(DIMS[S.di], S.qi)){ next(); return; }
     var d=DIMS[S.di], q=d.qs[S.qi], cur=S.scores[d.key][S.qi];
     var opts=q.a.map(function(a){ var sel=cur===a[1];
       return '<button class="opt'+(sel?" sel":"")+'" data-v="'+a[1]+'"><span>'+esc(a[0])+'</span><span class="chk"></span></button>';
@@ -1573,7 +1585,10 @@
     if(S.qi<d.qs.length-1){ S.qi++; scrQuestion(); }
     else { var v=dimScore(d.key); updateTwin(react(d,v)); if(d.hist&&d.hist.length) scrDimHistory(d); else advanceAfterDim(d); }
   }
+  // Back onto a dimension lands on its last question that was actually asked.
+  function toLastQ(d){ var i=d.qs.length-1; while(i>0 && prefilledQ(d,i)) i--; S.qi=i; scrQuestion(); }
   function goBack(){
+    while(S.qi>0 && prefilledQ(DIMS[S.di], S.qi-1)) S.qi--;
     if(S.qi>0){ S.qi--; scrQuestion(); }
     else { scrDimIntro(); }
   }
@@ -1599,7 +1614,7 @@
       3+S.di);
     wireChips(S.hist[d.key]);
     document.getElementById("go").onclick=function(){ advanceAfterDim(d); };
-    document.getElementById("back").onclick=function(){ S.qi=d.qs.length-1; scrQuestion(); };
+    document.getElementById("back").onclick=function(){ toLastQ(d); };
   }
   function advanceAfterDim(d){ var v=dimScore(d.key); if(S.di<DIMS.length-1) scrDimReact(d,v); else scrSafety(); }
 
@@ -1616,7 +1631,7 @@
       + '<div class="actions"><button class="cta" id="go">Continue to '+esc(nx.name)+'</button><button class="ghost" id="back">Back</button></div>',
       3+S.di);
     document.getElementById("go").onclick=function(){ S.di++; S.qi=0; scrDimIntro(); };
-    document.getElementById("back").onclick=function(){ if(d.hist&&d.hist.length) scrDimHistory(d); else { S.qi=d.qs.length-1; scrQuestion(); } };
+    document.getElementById("back").onclick=function(){ if(d.hist&&d.hist.length) scrDimHistory(d); else { toLastQ(d); } };
   }
   function encourage(v){ return v>=85?"You’re <em>flourishing</em> here." : v>=70?"You’re building <em>something real</em>." : "This is <em>exactly</em> why you’re here."; }
 
@@ -1645,7 +1660,7 @@
     var add=document.getElementById("addother"); if(S.records.other) add.value=S.records.other;
     add.onchange=function(){ S.records.other=add.value.trim(); };
     document.getElementById("go").onclick=function(){ if(add.value.trim())S.records.other=add.value.trim(); scrRecords(); };
-    document.getElementById("back").onclick=function(){ var d=DIMS[DIMS.length-1]; S.di=DIMS.length-1; S.qi=d.qs.length-1; scrQuestion(); };
+    document.getElementById("back").onclick=function(){ var d=DIMS[DIMS.length-1]; S.di=DIMS.length-1; toLastQ(d); };
   }
 
   // records — pull-in, don't re-ask (the data thesis)
@@ -1936,6 +1951,7 @@
     flushOutbox();
     if(!tryResume()){
       applyDoor(dp || "general");
+      applyPreview();
       scrWelcome();
     }
   }
