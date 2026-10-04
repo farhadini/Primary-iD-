@@ -1207,8 +1207,12 @@
     if(sig === _pidSig) return;
     _pidSig = sig;
     clearTimeout(_pidTimer);
-    _pidTimer = setTimeout(function(){ pidLead("progress"); }, 1500);
+    _pidTimer = setTimeout(function(){ _pidTimer=null; pidLead("progress"); }, 1500);
   }
+  // Leaving mid-answer: send what is pending now rather than lose it (I1).
+  function flushPending(){ if(_pidTimer){ clearTimeout(_pidTimer); _pidTimer=null; pidLead("progress"); } }
+  window.addEventListener("pagehide", flushPending);
+  document.addEventListener("visibilitychange", function(){ if(document.visibilityState==="hidden") flushPending(); });
 
   // Same-device save, so a link brings them back to the same question (E1, B4).
   var STORE="pid:v1:";
