@@ -177,11 +177,11 @@ function Hero() {
       <video
         className="hero-video"
         autoPlay muted loop playsInline
-        poster="/primary-hero-poster.jpg"
+        poster="/videos/myprimaryid-hero-poster.jpg"
         aria-hidden="true"
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "62% 30%", zIndex: 0 }}
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "60% 50%", zIndex: 0 }}
       >
-        <source src="/primary-hero.mp4" type="video/mp4" />
+        <source src="/videos/myprimaryid-hero.mp4" type="video/mp4" />
       </video>
 
       <div className="hero-wash" style={{

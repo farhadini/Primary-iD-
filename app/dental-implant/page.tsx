@@ -186,9 +186,9 @@ export default function DentalImplantPage() {
 
       {/* HERO with background video */}
       <section style={{ position: "relative", background: PALETTE.navy, color: "#FEFCF9", overflow: "hidden" }}>
-        <video autoPlay muted loop playsInline
+        <video autoPlay muted loop playsInline poster="/primary-hero-poster.jpg" aria-hidden="true"
           style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.32 }}>
-          <source src="/videos/full-arch.mp4" type="video/mp4" />
+          <source src="/primary-hero.mp4" type="video/mp4" />
         </video>
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(14,34,64,0.55) 0%, rgba(14,34,64,0.85) 100%)" }} />
         <div style={{ position: "relative", maxWidth: 1100, margin: "0 auto", padding: "140px 28px 110px" }}>
