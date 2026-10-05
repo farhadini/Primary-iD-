@@ -177,6 +177,10 @@ export async function POST(request: Request) {
     // R1: a returning patient never lands on the new patient pipeline or in a
     // marketing sequence. Tagged for the front desk instead.
     const isReturning = b.newOrReturning === "returning"
+    // Once the Primary iD is complete, every later save says so too. A tag or a
+    // stage that only rides on the "complete" call is lost if another save
+    // lands after it.
+    const isComplete = b.phase === "complete" || b.idStatus === "Complete"
     const clip = (v?: string) => (v ?? "").replace(/[^\w\-\/.·$ ]/g, "").trim().slice(0, 80)
 
 
@@ -219,8 +223,8 @@ export async function POST(request: Request) {
       b.pfTrack ? `Track: ${b.pfTrack}` : null,
       f.reason ? `Reason: ${f.reason}` : null,
       ...goals.map((g) => `Goal: ${g}`),
-      b.phase === "complete" ? "Stage: Complete" : null,
-      b.phase === "complete" && typeof b.composite === "number" ? `Score: ${b.composite}` : null,
+      isComplete ? "Stage: Complete" : null,
+      isComplete && typeof b.composite === "number" ? `Score: ${b.composite}` : null,
       b.tier ? `Tier: ${b.tier}` : null,
       safety.length && safety[0] !== "None of these" ? "Safety: flagged" : null,
       // The tag every SMS workflow must filter on. Absence of
@@ -361,7 +365,7 @@ export async function POST(request: Request) {
           contactId,
           (isTest ? "TEST · " : "") + [f.firstName, f.lastName].filter(Boolean).join(" "),
           b.pathway ?? "",
-          b.phase === "complete",
+          isComplete,
         )
       }
 
