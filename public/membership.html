@@ -732,18 +732,70 @@
 <div class="field" aria-hidden="true"></div>
 
 <!-- NAV -->
-<div class="navwrap">
-  <nav class="nav">
-    <div class="brand">Primary <em>iD</em></div>
-    <div class="nlinks">
-      <a href="#doors">Start here</a>
-      <a href="#dimensions">Your iD</a>
-      <a href="#firstvisit">First visit</a>
-      <a href="#membership">Membership</a>
+
+<style>
+  .pn-bar,.pn-bar *,.pf-foot,.pf-foot *{box-sizing:border-box}
+  .pn-bar{position:sticky;top:0;z-index:200;background:rgba(250,248,245,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(14,34,64,.07);padding:0 20px;font-family:Georgia,serif}
+  .pn-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+  .pn-logo{display:inline-flex;align-items:center}
+  .pn-logo img{height:56px;width:auto;display:block}
+  .pn-links{display:none;align-items:center;gap:22px}
+  .pn-links a{font-family:Georgia,serif;font-size:13px;color:#4A4A5A;text-decoration:none;opacity:.7;transition:opacity .2s}
+  .pn-links a:hover,.pn-links a[aria-current]{opacity:1}
+  .pn-right{display:flex;align-items:center;gap:12px}
+  .pn-phone{display:none;color:#0E2240;text-decoration:none;font-family:Georgia,serif;font-size:13px;font-weight:500;align-items:center;gap:6px;opacity:.85}
+  .pn-book{background:#0E2240;color:#fff;text-decoration:none;border-radius:8px;padding:9px 18px;font-family:Georgia,serif;font-size:13px;letter-spacing:.01em;box-shadow:0 2px 12px rgba(14,34,64,.18);white-space:nowrap;display:inline-block;transition:background .2s}
+  .pn-book:hover{background:#1a3a5c}
+  .pn-burger{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;padding:0;background:transparent;border:none;cursor:pointer;color:#0E2240}
+  .pn-panel{display:none;position:absolute;left:0;right:0;top:64px;background:#FAF8F5;border-bottom:1px solid rgba(14,34,64,.07);box-shadow:0 18px 40px -18px rgba(14,34,64,.35);padding:8px 20px 20px}
+  .pn-bar.open .pn-panel{display:block}
+  .pn-panel a{display:block;font-family:Georgia,serif;font-size:17px;color:#0E2240;text-decoration:none;padding:14px 4px;border-bottom:1px solid rgba(14,34,64,.07)}
+  .pn-panel a.pn-tel{display:flex;align-items:center;gap:8px;font-size:16px;font-weight:500;color:#24A7E0;border-bottom:none;padding:16px 4px 4px}
+  .pn-x{display:none}.pn-bar.open .pn-x{display:block}.pn-bar.open .pn-ham{display:none}
+  @media(min-width:760px){.pn-links{display:flex}.pn-phone{display:inline-flex}.pn-burger{display:none}.pn-bar .pn-panel{display:none!important}}
+  .pf-foot{background:#0E2240;padding:56px 32px 36px;font-family:Georgia,serif;margin-top:0}
+  .pf-in{max-width:1100px;margin:0 auto}
+  .pf-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;padding-bottom:44px;border-bottom:1px solid rgba(255,255,255,.12)}
+  .pf-logo{height:52px;width:auto;filter:brightness(0) invert(1);display:block;margin-bottom:18px}
+  .pf-tag{font-size:13px;color:rgba(255,255,255,.65);line-height:1.65;max-width:260px;margin:0}
+  .pf-addr{font-size:12px;color:rgba(255,255,255,.5);margin:16px 0 0;line-height:1.6}
+  .pf-addr span{color:#24A7E0}
+  .pf-h{font-size:11px;font-weight:600;color:rgba(255,255,255,.5);letter-spacing:.08em;margin-bottom:16px}
+  .pf-col a{display:block;font-size:14px;color:rgba(255,255,255,.75);text-decoration:none;margin-bottom:10px;transition:color .2s}
+  .pf-col a:hover,.pf-legal a:hover{color:#24A7E0}
+  .pf-row{display:flex;justify-content:space-between;align-items:center;gap:16px}
+  .pf-copy{font-size:12px;color:rgba(255,255,255,.4)}
+  .pf-legal{display:flex;gap:18px;align-items:center}
+  .pf-legal a{font-size:12px;color:rgba(255,255,255,.55);text-decoration:none}
+  .pf-founder{font-size:12px;color:rgba(255,255,255,.35);font-style:italic}
+  @media(max-width:760px){.pf-grid{grid-template-columns:1fr;gap:32px}.pf-row{flex-direction:column;text-align:center}}
+</style>
+<!-- Site header: mirrors components/site-nav.tsx -->
+<div class="pn-bar" id="pnbar" role="navigation" aria-label="Main">
+  <div class="pn-in">
+    <a class="pn-logo" href="/" aria-label="Primary home"><img src="/images/primary-brand-logo.png" alt="Primary"></a>
+    <div class="pn-links"><a href="/why-primary/">Why Primary</a><a href="/five-dimensions/">Five Dimensions</a><a href="/oral-systemic/">The Science</a><a href="/about/">Dr. Gabi</a><a href="/new-patient/">New Patients</a><a href="/membership/" aria-current="page">Membership</a><a href="/blogs/">Journal</a></div>
+    <div class="pn-right">
+      <a class="pn-phone" href="tel:+13105648990"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>(310) 564-8990</a>
+      <a class="pn-book" href="/book/">Book a visit</a>
+      <button class="pn-burger" type="button" aria-label="Open menu" aria-expanded="false" id="pnburger">
+        <svg class="pn-ham" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+        <svg class="pn-x" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
     </div>
-    <div class="nright"><a class="login" href="tel:+13105648990">(310) 564-8990</a><a class="pill solid" href="/book/">Book a visit</a></div>
-  </nav>
+  </div>
+  <div class="pn-panel"><a href="/why-primary/">Why Primary</a><a href="/five-dimensions/">Five Dimensions</a><a href="/oral-systemic/">The Science</a><a href="/about/">Dr. Gabi</a><a href="/new-patient/">New Patients</a><a href="/membership/" aria-current="page">Membership</a><a href="/blogs/">Journal</a><a class="pn-tel" href="tel:+13105648990"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>(310) 564-8990</a></div>
 </div>
+<script>
+(function(){var bar=document.getElementById("pnbar"),b=document.getElementById("pnburger");
+  if(!bar||!b) return;
+  b.addEventListener("click",function(){var o=!bar.classList.contains("open");bar.classList.toggle("open",o);
+    b.setAttribute("aria-expanded",o?"true":"false");b.setAttribute("aria-label",o?"Close menu":"Open menu");
+    document.body.style.overflow=o?"hidden":"";});
+  bar.querySelectorAll(".pn-panel a").forEach(function(a){a.addEventListener("click",function(){bar.classList.remove("open");document.body.style.overflow="";});});
+})();
+</script>
+
 
 <!-- HERO -->
 <header class="hero wrap">
@@ -1528,28 +1580,22 @@
 </footer>
 
 
-<footer style="background:#0E2240;color:#C0C8D4;font-family:Inter,system-ui,sans-serif;font-size:14px;line-height:1.6;padding:56px 24px 32px;margin-top:64px">
-  <div style="max-width:1120px;margin:0 auto;display:flex;flex-wrap:wrap;gap:40px;justify-content:space-between">
-    <div style="min-width:220px">
-      <a href="/" style="color:#fff;text-decoration:none;font-family:Georgia,serif;font-size:22px">Primary <em style="color:#5BC0EC">iD</em></a>
-      <p style="margin:12px 0 0">Primary Integrative Dentistry<br>11980 San Vicente Blvd, Suite 902<br>Los Angeles, CA 90049</p>
-      <p style="margin:12px 0 0"><a href="tel:+13105648990" style="color:#5BC0EC;text-decoration:none">(310) 564-8990</a><br>Mon&ndash;Thu 8 AM&ndash;6 PM &middot; Fri 8 AM&ndash;5 PM</p>
+<!-- Site footer: mirrors components/site-footer.tsx -->
+<footer class="pf-foot">
+  <div class="pf-in">
+    <div class="pf-grid">
+      <div>
+        <img class="pf-logo" src="/images/primary-brand-logo.png" alt="Primary">
+        <p class="pf-tag">Integrative dentistry that looks at your whole health picture, not just your teeth.</p>
+        <p class="pf-addr">11980 San Vicente Blvd, Suite 902<br>Los Angeles, CA 90049<br><span>(310) 564-8990</span></p>
+      </div>
+      <div class="pf-col"><div class="pf-h">VISIT</div><a href="/book/">Book appointment</a><a href="/new-patient/">New patients</a><a href="/membership/">Membership</a><a href="https://maps.app.goo.gl/oQoaV1MrCoMEQ1CS8">Our location</a><a href="/faq/">FAQ</a></div><div class="pf-col"><div class="pf-h">CARE</div><a href="/book/preventive/">Preventive care</a><a href="/book/airway/">Airway &amp; sleep</a><a href="/cosmetic-dentistry/">Cosmetic dentistry</a><a href="/dental-implant/">Dental implants</a><a href="/safe-mercury-removal/">Safe mercury removal</a><a href="/wholistic-dentistry/">Wholistic dentistry</a></div><div class="pf-col"><div class="pf-h">LEARN</div><a href="/why-primary/">Why Primary</a><a href="/five-dimensions/">Five Dimensions</a><a href="/about/">Dr. Gabi</a><a href="/second-opinion/">Second opinions</a><a href="/blogs/">Primary Journal</a><a href="/primary-id/">Health assessment</a></div>
     </div>
-    <div style="display:flex;gap:48px;flex-wrap:wrap">
-      <div><div style="color:#fff;font-weight:600;margin-bottom:8px">Visit</div>
-        <a href="/book/" style="display:block;color:#C0C8D4;text-decoration:none">Book a visit</a>
-        <a href="/new-patient/" style="display:block;color:#C0C8D4;text-decoration:none">New patients</a>
-        <a href="/faq/" style="display:block;color:#C0C8D4;text-decoration:none">FAQ</a></div>
-      <div><div style="color:#fff;font-weight:600;margin-bottom:8px">Learn</div>
-        <a href="/" style="display:block;color:#C0C8D4;text-decoration:none">Home</a>
-        <a href="/five-dimensions/" style="display:block;color:#C0C8D4;text-decoration:none">Five dimensions</a>
-        <a href="/about/" style="display:block;color:#C0C8D4;text-decoration:none">Dr. Gabi</a>
-        <a href="/second-opinion/" style="display:block;color:#C0C8D4;text-decoration:none">Second opinions</a></div>
+    <div class="pf-row">
+      <span class="pf-copy">&copy; 2026 Primary Integrative Dentistry</span>
+      <span class="pf-legal"><a href="/privacy/">Privacy Policy</a><a href="/terms/">Terms of Service</a></span>
+      <span class="pf-founder">Dr. Tzur Gabi, Founder</span>
     </div>
-  </div>
-  <div style="max-width:1120px;margin:32px auto 0;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;font-size:12.5px">
-    <span>&copy; 2026 Primary Integrative Dentistry &middot; Dr. Tzur Gabi, DMD, prosthodontist</span>
-    <span><a href="/privacy/" style="color:#C0C8D4">Privacy</a> &middot; <a href="/terms/" style="color:#C0C8D4">Terms</a></span>
   </div>
 </footer>
 <script>
