@@ -475,7 +475,7 @@ export default function FiveDimensionsPage() {
             Build your <em style={{ color: PALETTE.blue }}>Primary iD</em> in 10 minutes.
           </h2>
           <p style={{ fontSize: 17, lineHeight: 1.6, color: PALETTE.body, margin: "0 0 32px" }}>
-            Five short chapters. Forty questions. A directional read on what your mouth is telling you about the rest of your body. Free, private, results sent to your inbox.
+            Five short chapters. Forty questions. A directional read on what your mouth is telling you about the rest of your body. Private, and yours to keep.
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "center" }}>
             <Link href="/primary-id/" style={{

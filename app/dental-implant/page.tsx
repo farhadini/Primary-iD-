@@ -6,9 +6,9 @@ import { ServiceSchema, FAQPageSchema, BreadcrumbSchema } from "@/components/sch
 // /dental-implant/ : Full Arch & Implants pathway page.
 //
 // v1 spec: brand-system SVG visuals (no photography placeholders),
-// full-arch animation video in the hero, custom Implant Path Finder
-// (8-question pre-qualifier), no timing callouts on the journey (since
-// teeth-in-a-day collapses several steps), "we map your situation"
+// video in the hero, no timing callouts on the journey (since
+// teeth-in-a-day collapses several steps). Every CTA opens the implants door
+// of the one booking flow, which asks the Pathfinder questions (spec P1-01 L4)., "we map your situation"
 // framing instead of "we score you."
 // ─────────────────────────────────────────────────────────────────────────
 
@@ -206,14 +206,14 @@ export default function DentalImplantPage() {
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
             <a href="/book/implants/" style={{ background: PALETTE.blue, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15 }}>
-              See where I stand →
+              Book a consultation →
             </a>
-            <Link href="/book/implants/" style={{ background: "transparent", color: "#FEFCF9", padding: "13px 26px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15, border: "1.5px solid rgba(254,252,249,0.35)" }}>
-              Schedule consultation →
-            </Link>
+            <a href="tel:+13105648990" style={{ background: "transparent", color: "#FEFCF9", padding: "13px 26px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15, border: "1.5px solid rgba(254,252,249,0.35)" }}>
+              Call (310) 564-8990
+            </a>
           </div>
           <p style={{ marginTop: 24, fontSize: 12.5, color: "rgba(254,252,249,0.6)", fontFamily: SANS, letterSpacing: "0.04em" }}>
-            Free · Private · ~90 seconds · Helps Dr. Gabi personalize your visit
+            About two minutes to request · Private · A person from our team calls you to confirm
           </p>
         </div>
       </section>
@@ -316,26 +316,6 @@ export default function DentalImplantPage() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* IMPLANT PATH FINDER */}
-      <section id="path-finder" style={{ background: PALETTE.cream, padding: "96px 28px", borderTop: `1px solid ${PALETTE.border}` }}>
-        <div style={{ maxWidth: 760, margin: "0 auto" }}>
-          <div style={{ marginBottom: 36 }}>
-            <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>
-              The Path Finder
-            </div>
-            <h2 style={{ fontFamily: SERIF, fontSize: "clamp(32px, 4.5vw, 46px)", fontWeight: 400, color: PALETTE.navy, lineHeight: 1.12, letterSpacing: "-0.02em", margin: "0 0 18px" }}>
-              See where you stand. In about two minutes.
-            </h2>
-            <p style={{ fontSize: 17, lineHeight: 1.6, color: PALETTE.body, margin: 0 }}>
-              Three questions: what is going on, what fixing it would mean for you, and where you are with it. Then someone from our team calls you to set up your visit, already knowing why you got in touch.
-            </p>
-          </div>
-          <a href="/book/implants/" style={{ display: "inline-block", marginTop: 8, background: PALETTE.blue, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15 }}>
-            Start the implant Pathfinder →
-          </a>
         </div>
       </section>
 
@@ -539,24 +519,24 @@ export default function DentalImplantPage() {
       <section style={{ background: PALETTE.cream, padding: "120px 28px", borderTop: `1px solid ${PALETTE.border}` }}>
         <div style={{ maxWidth: 760, margin: "0 auto", textAlign: "center" }}>
           <div style={{ fontFamily: SANS, fontSize: 12, color: PALETTE.blue, letterSpacing: "0.16em", textTransform: "uppercase", fontWeight: 600, marginBottom: 16 }}>
-            Two ways to start
+            Start here
           </div>
           <h2 style={{ fontFamily: SERIF, fontSize: "clamp(34px, 5vw, 52px)", fontWeight: 400, color: PALETTE.navy, lineHeight: 1.1, letterSpacing: "-0.02em", margin: "0 0 28px" }}>
             Whichever you pick, you&apos;re <em style={{ color: PALETTE.blue }}>closer</em> than you were ten minutes ago.
           </h2>
           <p style={{ fontSize: 17, lineHeight: 1.6, color: PALETTE.body, margin: "0 0 36px" }}>
-            Take the Implant Path Finder for a directional read on your situation. Or schedule a 90-minute consultation with Dr. Gabi for a treatment plan the same day.
+            Tell us what is going on and request your visit in about two minutes. Someone from our team calls you to confirm it, already knowing why you got in touch.
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "center", marginBottom: 28 }}>
             <a href="/book/implants/" style={{ background: PALETTE.navy, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15 }}>
-              See where I stand
+              Book a consultation
             </a>
-            <Link href="/book/implants/" style={{ background: "transparent", color: PALETTE.navy, padding: "13px 26px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15, border: `1.5px solid ${PALETTE.navy}` }}>
-              Schedule consultation
+            <Link href="/book/second-opinion/" style={{ background: "transparent", color: PALETTE.navy, padding: "13px 26px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15, border: `1.5px solid ${PALETTE.navy}` }}>
+              Send us a treatment plan
             </Link>
           </div>
           <p style={{ fontFamily: SANS, fontSize: 13.5, color: PALETTE.muted, margin: 0 }}>
-            Or send us a treatment plan you&apos;ve gotten elsewhere, and we&apos;ll review it honestly.
+            A plan from another office is read honestly: what we would do the same, and what we would not.
           </p>
         </div>
       </section>
