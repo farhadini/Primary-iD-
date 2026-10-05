@@ -74,7 +74,7 @@ const BOOK_SCHEMA = {
   author: {
     "@type": "Person",
     name: "Dr. Tzur Gabi",
-    jobTitle: "Functional Prosthodontist & Oral Physician",
+    jobTitle: "Functional Prosthodontist",
     url: "https://myprimaryid.com/about/",
   },
 }
@@ -465,7 +465,7 @@ export default function BookPage() {
 
               <div className="subnote">Free chapter for early readers · No spam, ever.</div>
               <div className="byline">
-                By <a href="/about/">Dr. Tzur Gabi</a>, functional prosthodontist, oral physician, and founder of Primary Integrative Dentistry. The book behind the <Link href="/five-dimensions/">five-dimension</Link> framework.
+                By <a href="/about/">Dr. Tzur Gabi</a>, functional prosthodontist and founder of Primary Integrative Dentistry. The book behind the <Link href="/five-dimensions/">five-dimension</Link> framework.
               </div>
             </div>
 
@@ -664,7 +664,7 @@ export default function BookPage() {
         <section className="author">
           <div className="grid">
             <div className="portrait">
-              <div className="tag">Dr. Tzur Gabi<br /><em>Functional prosthodontist · Oral physician</em></div>
+              <div className="tag">Dr. Tzur Gabi<br /><em>Functional prosthodontist</em></div>
             </div>
             <div>
               <span className="eyebrow">About the author</span>
@@ -714,7 +714,7 @@ export default function BookPage() {
                 <div className="micro">Free · Private · One email, then only when it matters.</div>
               </>
             )}
-            <div className="or">Already a patient? <a href="/diagnostics/">Get your Primary iD score</a> while you wait.</div>
+            <div className="or">Already a patient? <a href="/primary-id/">Get your Primary iD score</a> while you wait.</div>
           </div>
         </section>
       </div>

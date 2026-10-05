@@ -27,7 +27,8 @@ const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY ?? SUPABASE_PUBLISHAB
 
 const GHL_TOKEN = process.env.GHL_API_TOKEN;
 const GHL_LOCATION = process.env.GHL_LOCATION_ID;
-const GHL_LIVE = Boolean(GHL_TOKEN && GHL_LOCATION);
+// Never from a preview or local build. See app/api/lead/route.ts.
+const GHL_LIVE = Boolean(GHL_TOKEN && GHL_LOCATION) && process.env.VERCEL_ENV === "production";
 
 type Chapter = { slug: string; score: number; tier: string; responses?: unknown };
 
@@ -83,8 +84,9 @@ export async function POST(request: Request) {
     const assessmentId = crypto.randomUUID();
     let stored = false;
 
-    // 1) Supabase — the marketing record (non-fatal)
-    try {
+    // 1) Supabase — the marketing record (non-fatal). Production only: test
+    // runs on a preview must not add rows to the live database.
+    if (process.env.VERCEL_ENV === "production") try {
       await sbInsert("assessments", {
         id: assessmentId,
         anon_session_id: anonSessionId ?? crypto.randomUUID(), // table requires an owner id

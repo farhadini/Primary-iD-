@@ -313,7 +313,7 @@ export default function FiveDimensionsPage() {
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "center" }}>
             <Link
-              href="/diagnostics/"
+              href="/primary-id/"
               style={{
                 background: PALETTE.blue, color: "#FFFFFF",
                 padding: "14px 26px", borderRadius: 999, fontFamily: SANS, fontWeight: 600,
@@ -478,7 +478,7 @@ export default function FiveDimensionsPage() {
             Five short chapters. Forty questions. A directional read on what your mouth is telling you about the rest of your body. Free, private, results sent to your inbox.
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "center" }}>
-            <Link href="/diagnostics/" style={{
+            <Link href="/primary-id/" style={{
               background: PALETTE.blue, color: "#FFFFFF",
               padding: "14px 26px", borderRadius: 999, fontFamily: SANS, fontWeight: 600,
               textDecoration: "none", fontSize: 15,

@@ -1,0 +1,1480 @@
+{
+ "meta": {
+  "name": "Primary iD · Phase 1 spec",
+  "version": "v1.0",
+  "date": "2026-10-01",
+  "owner": "Farhad Attaie · system design",
+  "scope": "From any link on myprimaryid.com to a first visit on the schedule and a completed, validated Primary iD. Phase 1 runs without Subscribili online booking: the call center confirms and books every new patient visit.",
+  "rule": "This is the spec. The site, the GoHighLevel setup and the call are built to it, tested against it and audited against it. When the flow needs to change, this file changes first and the build follows.",
+  "supersedes": "For phase 1 this replaces steps 2 to 5 of the Workflow Blueprint (the door, the Primary iD, the booking, the first call). The rest of the Blueprint stands."
+ },
+ "data_version": "v2.4",
+ "spec": {
+  "meta": {
+   "name": "Primary iD · Phase 1 spec",
+   "version": "v1.0",
+   "date": "2026-10-01",
+   "owner": "Farhad Attaie · system design",
+   "scope": "From any link on myprimaryid.com to a first visit on the schedule and a completed, validated Primary iD. Phase 1 runs without Subscribili online booking: the call center confirms and books every new patient visit.",
+   "rule": "This is the spec. The site, the GoHighLevel setup and the call are built to it, tested against it and audited against it. When the flow needs to change, this file changes first and the build follows.",
+   "supersedes": "For phase 1 this replaces steps 2 to 5 of the Workflow Blueprint (the door, the Primary iD, the booking, the first call). The rest of the Blueprint stands."
+  },
+  "decided": [
+   "Every Book link opens the Pathfinder for that visit. One flow, with questions that change by door.",
+   "The Pathfinder is the minimum we need to call someone, and it is stage one of the Primary iD. Nothing in it is asked twice.",
+   "The visit is requested at the end of the Pathfinder, about two minutes in. The patient is then asked to keep going and finish the Primary iD in the same sitting.",
+   "A request triggers the call center. Cesar makes a courtesy onboarding call, confirms the visit and books it in Open Dental.",
+   "Every patient has a completed Primary iD before they arrive, and the Primary team validates it at the visit.",
+   "Subscribili online booking is phase 2. It replaces the manual booking step once the visit types and rules have been proven by hand.",
+   "Agents build, test and audit against this spec. Each check below has an ID so a build, a test run or an audit can report against it."
+  ],
+  "states": {
+   "note": "Two things move, and they move separately. A patient can be booked with an unfinished Primary iD, or have a finished one and no visit yet. The card in GoHighLevel tracks the visit. A status on the card tracks the Primary iD.",
+   "visit": [
+    {
+     "k": "Requested",
+     "d": "The request was submitted. A call is owed.",
+     "ghl": "Stage 1 of 6, renamed 'Visit requested' (today: 'New, assessment started')"
+    },
+    {
+     "k": "Contacted",
+     "d": "Cesar reached them, or logged his tries with an outcome code.",
+     "ghl": "Stage 3, 'Contacted'"
+    },
+    {
+     "k": "Booked",
+     "d": "The visit is on the schedule in Open Dental and the card carries the Open Dental patient number.",
+     "ghl": "Stage 4, 'Appointment booked'"
+    },
+    {
+     "k": "Seen",
+     "d": "They came to the visit.",
+     "ghl": "Stage 5, 'Seen'"
+    }
+   ],
+   "id": [
+    {
+     "k": "Started",
+     "d": "They opened the flow. No contact details yet.",
+     "trust": ""
+    },
+    {
+     "k": "Pathfinder",
+     "d": "The request went in with the Pathfinder answers.",
+     "trust": "Patient said"
+    },
+    {
+     "k": "Complete",
+     "d": "All chapters answered.",
+     "trust": "Patient said"
+    },
+    {
+     "k": "Reviewed",
+     "d": "Cesar confirmed the basics with them on the call.",
+     "trust": "Checked by the team"
+    },
+    {
+     "k": "Validated",
+     "d": "Dr. Gabi read it against what he saw and confirmed or corrected it with the patient.",
+     "trust": "Confirmed by Dr. Gabi"
+    }
+   ],
+   "ghlNote": "The six stage IDs stay as they are, and cards still only move forward. Stage 2, 'Assessment complete', is renamed 'Requested · iD complete': the request is in, the Primary iD is finished, and the call is still owed."
+  },
+  "phases": [
+   {
+    "k": "request",
+    "n": "Request",
+    "d": "About two minutes"
+   },
+   {
+    "k": "build",
+    "n": "Build",
+    "d": "About six more"
+   },
+   {
+    "k": "call",
+    "n": "Call",
+    "d": "Within five minutes, in hours"
+   },
+   {
+    "k": "visit",
+    "n": "Visit",
+    "d": "Finished before, validated at"
+   }
+  ],
+  "touchpoints": [
+   {
+    "id": "P1-01",
+    "phase": "request",
+    "title": "Every link",
+    "sub": "Where the flow starts",
+    "goal": "Every link that invites someone to book or begin lands in the same flow and carries where they came from.",
+    "patient": "Taps Book, Schedule, Begin or a door card anywhere on the site, in an ad or on the Google profile.",
+    "guide": "",
+    "data": [
+     {
+      "f": "Door",
+      "req": "Always",
+      "to": "GoHighLevel contact",
+      "reads": "Call Card"
+     },
+     {
+      "f": "Page and button they came from",
+      "req": "Always",
+      "to": "GoHighLevel contact",
+      "reads": "Reports"
+     },
+     {
+      "f": "Campaign tags (source, medium, campaign)",
+      "req": "When present",
+      "to": "GoHighLevel contact",
+      "reads": "Reports"
+     },
+     {
+      "f": "Primary iD reference",
+      "req": "Created here",
+      "to": "Every later record",
+      "reads": "The join"
+     }
+    ],
+    "system": "Creates the Primary iD reference and holds the door, page and campaign in the session. Nothing goes to GoHighLevel until the request is submitted.",
+    "team": "",
+    "state": {
+     "visit": "",
+     "id": "Started"
+    },
+    "today": {
+     "st": "part",
+     "note": "The doors pass ?door= into the flow. Several links still go somewhere else: see the link map."
+    },
+    "checks": [
+     [
+      "L1",
+      "Every booking link resolves to the Primary iD flow with a door, or to the door chooser."
+     ],
+     [
+      "L2",
+      "No booking link ends in an email address, a file, or a page with no next step."
+     ],
+     [
+      "L3",
+      "Door, page and campaign reach the GoHighLevel contact on every request."
+     ],
+     [
+      "L4",
+      "There is one Pathfinder. No page runs its own quiz whose answers the flow never receives."
+     ]
+    ]
+   },
+   {
+    "id": "P1-02",
+    "phase": "request",
+    "title": "The welcome",
+    "sub": "The guide's promise",
+    "goal": "Before the first question they know what this is, how long it takes and what they get.",
+    "patient": "One screen. A headline set by the door, and two plain promises: two minutes to request the visit, about six more to build the Primary iD Dr. Gabi reads before he meets them.",
+    "guide": "States the time honestly. Says a person will call. Says this is a conversation about them, and that nothing here is a diagnosis.",
+    "data": [],
+    "system": "Sets the headline and the question track from the door.",
+    "team": "",
+    "state": {
+     "visit": "",
+     "id": "Started"
+    },
+    "today": {
+     "st": "part",
+     "note": "The welcome screen is live. It does not yet state the two steps or the time."
+    },
+    "checks": [
+     [
+      "W1",
+      "The time stated matches the measured median for each step."
+     ],
+     [
+      "W2",
+      "One italic phrase on the screen, no exclamation marks, no promise about a score."
+     ]
+    ]
+   },
+   {
+    "id": "P1-03",
+    "phase": "request",
+    "title": "New or returning, and why",
+    "sub": "Two taps",
+    "goal": "We know whether they are new to Primary and what brings them in.",
+    "patient": "Chooses new or returning. On a door page the reason is already set; on the general door they pick it.",
+    "guide": "Opens with them, not with our availability.",
+    "data": [
+     {
+      "f": "New, or been to Primary before",
+      "req": "Required",
+      "to": "GoHighLevel contact (new field)",
+      "reads": "Call Card"
+     },
+     {
+      "f": "Reason: something hurts, something to fix, a blind spot, get ahead of it, curious",
+      "req": "Required",
+      "to": "GoHighLevel tag (live)",
+      "reads": "Call Card"
+     }
+    ],
+    "system": "A returning patient takes a short path: name, mobile and what they need. Their request is tagged existing, kept off the new patient pipeline and sent to Silvia or recare.",
+    "team": "",
+    "state": {
+     "visit": "",
+     "id": "Started"
+    },
+    "today": {
+     "st": "part",
+     "note": "The reason question is live. New or returning is not asked online."
+    },
+    "checks": [
+     [
+      "R1",
+      "A returning patient never lands on the new patient pipeline or in a marketing sequence."
+     ],
+     [
+      "R2",
+      "The preset reason matches the door."
+     ]
+    ]
+   },
+   {
+    "id": "P1-04",
+    "phase": "request",
+    "title": "The Pathfinder",
+    "sub": "The few questions for this visit",
+    "goal": "The answers that tell Cesar who he is calling and which conversation it is.",
+    "patient": "Up to three questions chosen by the door, then one about pain.",
+    "guide": "Each question carries one line on why it is asked.",
+    "data": [
+     {
+      "f": "Pathfinder answers for the door (see the tracks)",
+      "req": "Required",
+      "to": "GoHighLevel fields and tags",
+      "reads": "Call Card"
+     },
+     {
+      "f": "In pain now",
+      "req": "Required, except on the pain door",
+      "to": "GoHighLevel priority tag (live)",
+      "reads": "Call Card, marked urgent"
+     }
+    ],
+    "system": "Pain marks the request urgent: it is called first, and the patient is not pushed to keep going.",
+    "team": "",
+    "state": {
+     "visit": "",
+     "id": "Started"
+    },
+    "today": {
+     "st": "part",
+     "note": "Live for implants and built for aligners. The other doors have no Pathfinder questions yet: the tracks below are proposed."
+    },
+    "checks": [
+     [
+      "PF1",
+      "No door asks more than three Pathfinder questions."
+     ],
+     [
+      "PF2",
+      "Pathfinder questions are existing questions asked early, or unscored flags. Nothing new is scored."
+     ],
+     [
+      "PF3",
+      "Pathfinder answers carry into the full Primary iD and are never asked again."
+     ],
+     [
+      "PF4",
+      "A request with pain is marked urgent and called before anything else."
+     ]
+    ]
+   },
+   {
+    "id": "P1-05",
+    "phase": "request",
+    "title": "How you pay, and the visit",
+    "sub": "The only fork",
+    "goal": "They see the visit they are asking for, what it includes and what it costs, before they give us their number.",
+    "patient": "Says whether they have dental insurance. Sees the matching first visit: the new patient visit billed to their plan, or the $99 Express Visit with what is and is not included. If they are unsure, the screen says we will confirm it on the call.",
+    "guide": "No surprises: the visit and the fee are stated in full before the request.",
+    "data": [
+     {
+      "f": "Insurance: PPO, HMO, Medicare or Medicaid, self-pay, not sure",
+      "req": "Required",
+      "to": "GoHighLevel contact (live, asked late today)",
+      "reads": "Call Card"
+     },
+     {
+      "f": "Carrier",
+      "req": "Optional",
+      "to": "GoHighLevel contact",
+      "reads": "Silvia, to verify"
+     },
+     {
+      "f": "Visit to book",
+      "req": "Set by the answer",
+      "to": "GoHighLevel contact (new field)",
+      "reads": "Call Card"
+     }
+    ],
+    "system": "Maps the answer to a visit from the booking menu in this file. The no-charge partner visit appears only on a partner link.",
+    "team": "",
+    "state": {
+     "visit": "",
+     "id": "Started"
+    },
+    "today": {
+     "st": "part",
+     "note": "Insurance is asked near the end today. The contact screen lists 3D CBCT imaging as included, which the Express Visit does not include."
+    },
+    "checks": [
+     [
+      "V1",
+      "The visit shown matches the booking menu in this file."
+     ],
+     [
+      "V2",
+      "Any fee is shown with what it includes and what it does not."
+     ],
+     [
+      "V3",
+      "No credit, no 'free', no 'starting at', no range."
+     ],
+     [
+      "V4",
+      "The no-charge visit is reachable only from a named partner link."
+     ]
+    ]
+   },
+   {
+    "id": "P1-06",
+    "phase": "request",
+    "title": "The request",
+    "sub": "Their details, and permission to call",
+    "goal": "A complete request that reaches the call center in seconds.",
+    "patient": "Gives first and last name, mobile and email, and the best time to call. Can add one line for us. Chooses whether we may text them.",
+    "guide": "Says exactly what happens when they tap Request my visit.",
+    "data": [
+     {
+      "f": "First and last name",
+      "req": "Required",
+      "to": "GoHighLevel contact (live)",
+      "reads": "Call Card"
+     },
+     {
+      "f": "Mobile",
+      "req": "Required (optional today)",
+      "to": "GoHighLevel contact (live)",
+      "reads": "Call Card"
+     },
+     {
+      "f": "Email",
+      "req": "Required",
+      "to": "GoHighLevel contact (live)",
+      "reads": "For the return link"
+     },
+     {
+      "f": "Best time to call, preferred days",
+      "req": "Time required",
+      "to": "GoHighLevel contact (new fields)",
+      "reads": "Call Card"
+     },
+     {
+      "f": "Anything we should know before we call",
+      "req": "Optional, 200 characters",
+      "to": "GoHighLevel contact (new field)",
+      "reads": "Call Card"
+     },
+     {
+      "f": "Texting consent: wording, version, time, page",
+      "req": "Their choice. Box starts unticked",
+      "to": "GoHighLevel contact (live)",
+      "reads": "Whoever texts"
+     }
+    ],
+    "system": "Creates or updates the contact, puts a card in 'Visit requested', fills the Call Card, alerts Cesar and starts the clock on the first call. A second request from the same mobile or email updates the same contact and card.",
+    "team": "",
+    "state": {
+     "visit": "Requested",
+     "id": "Pathfinder"
+    },
+    "today": {
+     "st": "part",
+     "note": "The contact screen is live with first name and email required and mobile optional. The card is created. No alert goes out, because all four GoHighLevel workflows are still drafts."
+    },
+    "checks": [
+     [
+      "G1",
+      "Mobile is required and checked for a valid number."
+     ],
+     [
+      "G2",
+      "The texting box starts unticked, and the request goes through either way."
+     ],
+     [
+      "G3",
+      "The contact and card exist within ten seconds of the request."
+     ],
+     [
+      "G4",
+      "The alert reaches Cesar. Proven with the test patient before any change ships."
+     ],
+     [
+      "G5",
+      "A repeat request reuses the same contact and card."
+     ],
+     [
+      "G6",
+      "If GoHighLevel is unreachable, the request is held and retried, and the patient still sees the confirmation."
+     ]
+    ]
+   },
+   {
+    "id": "P1-07",
+    "phase": "build",
+    "title": "The bridge",
+    "sub": "Confirmed, and keep going",
+    "goal": "The request is acknowledged in one breath, and the patient keeps going while they are here.",
+    "patient": "Sees that the request is in, who will call, from which number and when. On the same screen, the invitation to finish their Primary iD now, with the progress they have already made. A second option sends a link to finish later.",
+    "guide": "Says what Dr. Gabi does with it, that it is theirs, and that it takes about six minutes.",
+    "data": [
+     {
+      "f": "Kept going, or chose later",
+      "req": "Recorded",
+      "to": "Analytics",
+      "reads": "Reports"
+     }
+    ],
+    "system": "Shows a call window that is true for the time of day. With pain, it says we are calling first and does not push the rest.",
+    "team": "",
+    "state": {
+     "visit": "Requested",
+     "id": "Pathfinder"
+    },
+    "today": {
+     "st": "notbuilt",
+     "note": "Today the request is the last screen of the flow and it ends on 'We'll reach out shortly'."
+    },
+    "checks": [
+     [
+      "B1",
+      "The confirmation names the caller, the number and a window that is true for that hour and day."
+     ],
+     [
+      "B2",
+      "The main button continues the Primary iD."
+     ],
+     [
+      "B3",
+      "Progress shows the work already done."
+     ],
+     [
+      "B4",
+      "'Finish later' sends a link that returns them to the same question."
+     ]
+    ]
+   },
+   {
+    "id": "P1-08",
+    "phase": "build",
+    "title": "The Primary iD",
+    "sub": "Five dimensions and their history",
+    "goal": "A complete Primary iD in one sitting, built so it feels like something they are making, not a form.",
+    "patient": "What matters to them and why now. The five dimensions, eight questions each. Existing dental work and their last exam. Safety items. Records they already have. Date of birth and address. Last, in their own words, what brings them to Primary.",
+    "guide": "All four principles apply here. See the guide.",
+    "data": [
+     {
+      "f": "Goals and why now",
+      "req": "Asked",
+      "to": "GoHighLevel fields (live)",
+      "reads": ""
+     },
+     {
+      "f": "The 40 scored answers",
+      "req": "Asked, any can be skipped",
+      "to": "GoHighLevel fields (live)",
+      "reads": "Dr. Gabi, at the visit"
+     },
+     {
+      "f": "Dental history and existing work",
+      "req": "Asked",
+      "to": "GoHighLevel fields (live)",
+      "reads": "Leo, Dr. Gabi"
+     },
+     {
+      "f": "Safety items: medications and conditions",
+      "req": "Asked",
+      "to": "GoHighLevel fields (live)",
+      "reads": "Leo, before anything clinical"
+     },
+     {
+      "f": "Records they already have",
+      "req": "Asked",
+      "to": "GoHighLevel fields (live)",
+      "reads": "Silvia, Leo"
+     },
+     {
+      "f": "Date of birth, address, legal sex",
+      "req": "Asked",
+      "to": "GoHighLevel contact (live)",
+      "reads": "Cesar, to create the chart"
+     },
+     {
+      "f": "In their own words",
+      "req": "Asked",
+      "to": "GoHighLevel field (live)",
+      "reads": "Call Card, Dr. Gabi"
+     }
+    ],
+    "system": "Saves every answer as it is given and updates the Primary iD status on the card. On the last answer the status becomes Complete. If nobody has called yet, the card moves to 'Requested · iD complete'.",
+    "team": "",
+    "state": {
+     "visit": "Requested",
+     "id": "Complete"
+    },
+    "today": {
+     "st": "live",
+     "note": "All of this is live. The order is different: today the contact screen comes sixth, and insurance and details come at the end."
+    },
+    "checks": [
+     [
+      "I1",
+      "Every answer is saved as given. Someone who leaves halfway has their answers so far on the record."
+     ],
+     [
+      "I2",
+      "Nothing from the request is asked again."
+     ],
+     [
+      "I3",
+      "Each chapter opens with one line on why it matters, in patient language. No instrument names."
+     ],
+     [
+      "I4",
+      "Any question can be skipped, and skips are counted."
+     ],
+     [
+      "I5",
+      "Median time to finish on a phone is eight minutes or less from the first screen."
+     ],
+     [
+      "I6",
+      "Safety items are asked as a way to keep them safe, and are never scored."
+     ]
+    ]
+   },
+   {
+    "id": "P1-09",
+    "phase": "build",
+    "title": "Their Primary iD",
+    "sub": "What they see when it is done",
+    "goal": "They see what they built, know it is theirs, and know what happens next.",
+    "patient": "Their five dimensions and their clearest lever. What Dr. Gabi will look at first. Who they will meet. Where their request stands. A link that brings them back to it.",
+    "guide": "It is theirs. The team confirms it with them at the visit. It is a starting point, not a verdict.",
+    "data": [
+     {
+      "f": "Dimension reads and composite",
+      "req": "Computed",
+      "to": "GoHighLevel fields (live)",
+      "reads": "Dr. Gabi only. Never the call"
+     }
+    ],
+    "system": "Scores the answers. Shows both disclaimers wherever a score appears.",
+    "team": "",
+    "state": {
+     "visit": "Requested",
+     "id": "Complete"
+    },
+    "today": {
+     "st": "part",
+     "note": "The results screen is live. Every completed score so far reads 'Strong', and once the patient leaves this screen they never see their Primary iD again."
+    },
+    "checks": [
+     [
+      "S1",
+      "Wherever a score appears, both disclaimers appear: not a diagnosis, not a measure of biological age."
+     ],
+     [
+      "S2",
+      "Until Dr. Gabi rules on the bands, the dimension reads and the lever lead. The composite tier does not."
+     ],
+     [
+      "S3",
+      "There is no second Book button. The screen shows where the request stands."
+     ],
+     [
+      "S4",
+      "The return link opens their Primary iD, on the same device at minimum."
+     ]
+    ]
+   },
+   {
+    "id": "P1-10",
+    "phase": "call",
+    "title": "The Call Card",
+    "sub": "What the call center sees",
+    "goal": "Cesar knows who he is calling and what to book before he dials.",
+    "patient": "",
+    "guide": "",
+    "data": [
+     {
+      "f": "Name, mobile, best time",
+      "req": "Shown",
+      "to": "From the request",
+      "reads": ""
+     },
+     {
+      "f": "Door, new or returning, Pathfinder answers",
+      "req": "Shown",
+      "to": "From the request",
+      "reads": ""
+     },
+     {
+      "f": "How they pay, and the visit to book",
+      "req": "Shown",
+      "to": "From the request",
+      "reads": ""
+     },
+     {
+      "f": "Urgent, if in pain",
+      "req": "Shown first",
+      "to": "From the request",
+      "reads": ""
+     },
+     {
+      "f": "Their note, and their own words if given",
+      "req": "Shown",
+      "to": "From the request and the Primary iD",
+      "reads": ""
+     },
+     {
+      "f": "Primary iD status: how far, and what is missing",
+      "req": "Shown",
+      "to": "From the flow",
+      "reads": ""
+     },
+     {
+      "f": "Score, tier, weakest dimension",
+      "req": "Never shown",
+      "to": "",
+      "reads": ""
+     }
+    ],
+    "system": "One view inside GoHighLevel, filled from the request and updated as the Primary iD is finished.",
+    "team": "Cesar opens it before every first call.",
+    "state": {
+     "visit": "Requested",
+     "id": ""
+    },
+    "today": {
+     "st": "notbuilt",
+     "note": "Today Cesar would open a contact with 36 raw answer fields and tags, with nothing telling him what to say or book."
+    },
+    "checks": [
+     [
+      "C1",
+      "Everything needed for the call is on one screen."
+     ],
+     [
+      "C2",
+      "No score, tier or weakest dimension appears on it."
+     ],
+     [
+      "C3",
+      "Missing basics are listed so they can be filled in on the call."
+     ]
+    ]
+   },
+   {
+    "id": "P1-11",
+    "phase": "call",
+    "title": "The onboarding call",
+    "sub": "A courtesy call that confirms the visit",
+    "goal": "The patient feels expected. The call ends with a visit on the schedule and the basics confirmed.",
+    "patient": "Gets a call from someone who already knows why they got in touch.",
+    "guide": "",
+    "data": [
+     {
+      "f": "Time of first call",
+      "req": "Recorded",
+      "to": "The card",
+      "reads": "Reports"
+     },
+     {
+      "f": "Outcome code",
+      "req": "Required on every call",
+      "to": "The card",
+      "reads": "Almarie"
+     },
+     {
+      "f": "Basics confirmed, and anything corrected",
+      "req": "Recorded",
+      "to": "The card",
+      "reads": "The building"
+     },
+     {
+      "f": "Insurance details",
+      "req": "Collected",
+      "to": "Open Dental",
+      "reads": "Silvia, to verify"
+     }
+    ],
+    "system": "Mango records the call.",
+    "team": "Cesar calls within five minutes during office hours, or in the window the patient was promised. Three tries over two days. He opens with their words, confirms the visit and how they pay, says what the visit includes and costs, and names who they will meet. If the Primary iD is unfinished he fills in the basics with them or sends the link. Almarie reviews the call.",
+    "state": {
+     "visit": "Contacted",
+     "id": "Reviewed"
+    },
+    "today": {
+     "st": "part",
+     "note": "Cesar is on the phones. Nothing alerts him and there is no Call Card. On 26 September, 43 people had finished a Primary iD and none had been called."
+    },
+    "checks": [
+     [
+      "O1",
+      "First call within five minutes during office hours: the median, and the share inside five minutes."
+     ],
+     [
+      "O2",
+      "Every request has an outcome code within two business days."
+     ],
+     [
+      "O3",
+      "No price is said other than the $99 Express Visit and the $499 membership."
+     ],
+     [
+      "O4",
+      "The names are said before the call ends."
+     ]
+    ]
+   },
+   {
+    "id": "P1-12",
+    "phase": "call",
+    "title": "Booked",
+    "sub": "On the schedule in Open Dental",
+    "goal": "The right visit is on the schedule, and the lead and the patient are joined for good.",
+    "patient": "Hears the date and time on the call, then gets a confirmation with the address, what to bring, who they will meet and the link to finish their Primary iD.",
+    "guide": "",
+    "data": [
+     {
+      "f": "Open Dental patient number",
+      "req": "Required to mark as booked",
+      "to": "The card (new field)",
+      "reads": "The join"
+     },
+     {
+      "f": "Visit date, time and type",
+      "req": "Required",
+      "to": "The card (new fields)",
+      "reads": "Reports"
+     },
+     {
+      "f": "Call summary",
+      "req": "Pasted",
+      "to": "Open Dental appointment note",
+      "reads": "Silvia, Leo, Dr. Gabi"
+     }
+    ],
+    "system": "Moving the card to 'Appointment booked' marks the contact as a patient, which takes them out of every marketing sequence.",
+    "team": "Cesar books the visit in Open Dental from the booking menu, finds or creates the patient, then records the patient number and the visit on the card and moves it to 'Appointment booked'. He pastes the Call Card summary into the appointment note.",
+    "state": {
+     "visit": "Booked",
+     "id": ""
+    },
+    "today": {
+     "st": "part",
+     "note": "Visits are booked by hand in Open Dental. Nothing is written back to the lead: 47 of 514 leads were ever matched to a seen patient."
+    },
+    "checks": [
+     [
+      "K1",
+      "Every booked card carries an Open Dental patient number."
+     ],
+     [
+      "K2",
+      "The visit is within seven days of the request, or the reason is recorded."
+     ],
+     [
+      "K3",
+      "From the moment of booking the contact receives no marketing messages."
+     ],
+     [
+      "K4",
+      "The appointment note carries the call summary."
+     ]
+    ]
+   },
+   {
+    "id": "P1-13",
+    "phase": "visit",
+    "title": "Before the visit",
+    "sub": "The Primary iD gets finished",
+    "goal": "Nobody arrives with an unfinished Primary iD.",
+    "patient": "Gets a reminder with their link if anything is left.",
+    "guide": "",
+    "data": [
+     {
+      "f": "Primary iD status",
+      "req": "Checked 3 days and 2 days before",
+      "to": "The card",
+      "reads": "Cesar"
+     }
+    ],
+    "system": "Two days before the visit, an unfinished Primary iD gets a reminder with the return link.",
+    "team": "Three days before, Cesar calls anyone whose basics are missing and fills them in. Silvia verifies insurance. On the day, Silvia hands the iPad to anyone still unfinished.",
+    "state": {
+     "visit": "Booked",
+     "id": "Complete"
+    },
+    "today": {
+     "st": "part",
+     "note": "The in-office version on the iPad is live. The reminders are not built."
+    },
+    "checks": [
+     [
+      "A1",
+      "The share of first visits that arrive with a complete Primary iD is reported weekly."
+     ],
+     [
+      "A2",
+      "A Primary iD finished in the office is tagged in-clinic and kept off the marketing pipeline."
+     ]
+    ]
+   },
+   {
+    "id": "P1-14",
+    "phase": "visit",
+    "title": "Validated",
+    "sub": "At the visit, by the Primary team",
+    "goal": "The Primary iD stops being only what the patient said.",
+    "patient": "Hears Dr. Gabi go through what they told us and confirm or correct it with them.",
+    "guide": "",
+    "data": [
+     {
+      "f": "Validated on, validated by",
+      "req": "Required after every first visit",
+      "to": "The card (new fields)",
+      "reads": "Reports"
+     },
+     {
+      "f": "What was corrected",
+      "req": "Recorded",
+      "to": "Open Dental chart note",
+      "reads": "Dr. Gabi, Mila"
+     }
+    ],
+    "system": "",
+    "team": "Leo confirms the safety items at records. Dr. Gabi reads the Primary iD against what he sees and confirms or corrects it out loud. Leo records the date and who validated it. A correction is kept beside what the patient said, never written over it.",
+    "state": {
+     "visit": "Seen",
+     "id": "Validated"
+    },
+    "today": {
+     "st": "notbuilt",
+     "note": "Nothing records the confirmation today, so every Primary iD stays 'patient said'."
+    },
+    "checks": [
+     [
+      "X1",
+      "Every seen patient has a validated date within one day of the visit."
+     ],
+     [
+      "X2",
+      "Corrections are recorded next to the original answer."
+     ]
+    ]
+   }
+  ],
+  "tracksNote": "Each door asks at most three questions before the request. A track only reorders or reuses what is already in the question bank, or adds an unscored flag. The scored 40 never change, so every Primary iD stays comparable.",
+  "tracks": [
+   {
+    "door": "implants",
+    "label": "Implants and failing teeth",
+    "reason": "Something to fix",
+    "qs": [
+     "What is going on (missing, failing, old work, dentures)",
+     "What fixing it would mean",
+     "Where they are with it"
+    ],
+    "st": "live",
+    "note": "The live restorative track."
+   },
+   {
+    "door": "orthofx",
+    "label": "Aligners",
+    "reason": "Something to fix",
+    "qs": [
+     "What they want to change",
+     "How much of the day they could wear aligners",
+     "Braces or aligners before"
+    ],
+    "st": "towire",
+    "note": "In the question bank since August. Confirm it is live on the door."
+   },
+   {
+    "door": "cosmetic",
+    "label": "Cosmetic",
+    "reason": "Something to fix",
+    "qs": [
+     "What they would change about their smile",
+     "How confident they feel about their smile",
+     "Where they are with it"
+    ],
+    "st": "proposed",
+    "note": "The second question is an existing scored question, asked early."
+   },
+   {
+    "door": "preventive",
+    "label": "Preventive",
+    "reason": "Get ahead of it",
+    "qs": [
+     "Last professional cleaning",
+     "Last full dental exam",
+     "How dental visits feel for them"
+    ],
+    "st": "proposed",
+    "note": "All three are existing questions, asked early."
+   },
+   {
+    "door": "airway",
+    "label": "Airway and sleep",
+    "reason": "Get ahead of it",
+    "qs": [
+     "Loud snoring",
+     "Tired during the day",
+     "Anyone seen them stop breathing in their sleep"
+    ],
+    "st": "proposed",
+    "note": "Existing questions, asked early. Context only: nothing here says dental treatment treats a sleep disorder."
+   },
+   {
+    "door": "longevity",
+    "label": "Longevity",
+    "reason": "A blind spot",
+    "qs": [
+     "Most recent full lab panel",
+     "Health platforms they already use",
+     "What they want from the next ten years"
+    ],
+    "st": "proposed",
+    "note": "The first two are existing questions. The third is the existing goals question."
+   },
+   {
+    "door": "second_opinion",
+    "label": "Second opinion",
+    "reason": "Something to fix",
+    "qs": [
+     "What they were told they need",
+     "Where they are with it",
+     "Whether they have the plan or x-rays to share"
+    ],
+    "st": "proposed",
+    "note": "The first and third are new unscored flags."
+   },
+   {
+    "door": "pain",
+    "label": "Something hurts",
+    "reason": "Something hurts",
+    "qs": [
+     "What is going on",
+     "How long it has been"
+    ],
+    "st": "proposed",
+    "note": "Two unscored flags, then straight to the request. Called first. The rest of the Primary iD waits."
+   },
+   {
+    "door": "general",
+    "label": "No door (header and home page)",
+    "reason": "They choose",
+    "qs": [
+     "The reason they pick sets which track above they get"
+    ],
+    "st": "part",
+    "note": "The reason question is live. Routing it to a track is not."
+   }
+  ],
+  "guide": {
+   "lede": "The guide is the voice that walks a patient through the flow. Its job is to make finishing in one sitting the natural thing to do. Four principles, each with rules a build can be checked against.",
+   "principles": [
+    {
+     "k": "Enable",
+     "d": "Take the effort out.",
+     "rules": [
+      "One question on a screen, answered with one tap wherever possible.",
+      "Every answer is saved as it is given. Nothing is lost by leaving.",
+      "A link brings them back to the same question.",
+      "Any question can be skipped.",
+      "Works one-handed on a phone. No account, no password."
+     ],
+     "checks": [
+      [
+       "E1",
+       "Leaving and returning by the link restores the same question."
+      ],
+      [
+       "E2",
+       "No screen needs typing except names, contact details, date of birth, address and their own words."
+      ]
+     ]
+    },
+    {
+     "k": "Inspire",
+     "d": "Say why it is worth their time.",
+     "rules": [
+      "Each chapter opens with one line on why it matters, from the question bank's own copy.",
+      "The patient is told Dr. Gabi reads this before he meets them.",
+      "Plain words for clinical ideas. Never spa language, never hype."
+     ],
+     "checks": [
+      [
+       "N1",
+       "Every chapter opener is present and in patient language."
+      ],
+      [
+       "N2",
+       "No exclamation marks and no emoji anywhere in the flow."
+      ]
+     ]
+    },
+    {
+     "k": "Engage",
+     "d": "Let them see it take shape.",
+     "rules": [
+      "Progress is shown by chapter, and it starts above zero after the request.",
+      "Their Primary iD builds on screen as they answer.",
+      "A short reaction closes each chapter, in the language of what they can do, not what is wrong."
+     ],
+     "checks": [
+      [
+       "Y1",
+       "Progress never moves backwards and reaches the end on the last answer."
+      ],
+      [
+       "Y2",
+       "No reaction names a condition, a risk category or an instrument."
+      ]
+     ]
+    },
+    {
+     "k": "Empower",
+     "d": "Make it theirs.",
+     "rules": [
+      "They can see their Primary iD and come back to it.",
+      "The team confirms it with them at the visit instead of asking it all again.",
+      "It is a starting point: directional, not a diagnosis, not a measure of biological age.",
+      "Finishing is invited, never required. Care never depends on it."
+     ],
+     "checks": [
+      [
+       "M1",
+       "The return link opens their Primary iD."
+      ],
+      [
+       "M2",
+       "Both disclaimers appear wherever a score appears."
+      ]
+     ]
+    }
+   ]
+  },
+  "dataMap": {
+   "lede": "Where each piece of information is captured and where it goes. In phase 1 everything lands in GoHighLevel first. The call puts what the building needs into Open Dental by hand. Subscribili receives nothing until phase 2.",
+   "rows": [
+    {
+     "f": "Door, page, campaign",
+     "at": "P1-01",
+     "ghl": "Contact fields (live)",
+     "card": "Source line",
+     "od": "In the appointment note",
+     "p2": "Carried on the booking link"
+    },
+    {
+     "f": "Primary iD reference",
+     "at": "P1-01",
+     "ghl": "Contact field",
+     "card": "",
+     "od": "In the appointment note",
+     "p2": "The key Subscribili sends back"
+    },
+    {
+     "f": "New or returning",
+     "at": "P1-03",
+     "ghl": "New field",
+     "card": "Yes",
+     "od": "",
+     "p2": "Asked by Subscribili"
+    },
+    {
+     "f": "Reason and Pathfinder answers",
+     "at": "P1-04",
+     "ghl": "Fields and tags (partly live)",
+     "card": "Yes",
+     "od": "In the appointment note",
+     "p2": ""
+    },
+    {
+     "f": "In pain now",
+     "at": "P1-04",
+     "ghl": "Priority tag (live)",
+     "card": "Marked urgent",
+     "od": "",
+     "p2": ""
+    },
+    {
+     "f": "Insurance type and carrier",
+     "at": "P1-05",
+     "ghl": "Contact fields (live)",
+     "card": "Yes",
+     "od": "Entered on the call, verified by Silvia",
+     "p2": "Collected at booking"
+    },
+    {
+     "f": "Visit to book",
+     "at": "P1-05",
+     "ghl": "New field",
+     "card": "Yes",
+     "od": "The appointment type",
+     "p2": "The booking menu"
+    },
+    {
+     "f": "Name, mobile, email",
+     "at": "P1-06",
+     "ghl": "Contact (live)",
+     "card": "Yes",
+     "od": "The patient record",
+     "p2": "Filled in for them"
+    },
+    {
+     "f": "Best time, days, their note",
+     "at": "P1-06",
+     "ghl": "New fields",
+     "card": "Yes",
+     "od": "",
+     "p2": ""
+    },
+    {
+     "f": "Texting consent",
+     "at": "P1-06",
+     "ghl": "Fields and tag (live)",
+     "card": "Yes",
+     "od": "",
+     "p2": "Subscribili consent"
+    },
+    {
+     "f": "The 40 answers, goals, why now",
+     "at": "P1-08",
+     "ghl": "Fields (live)",
+     "card": "Status only",
+     "od": "Not sent in phase 1",
+     "p2": ""
+    },
+    {
+     "f": "Dental history and safety items",
+     "at": "P1-08",
+     "ghl": "Fields (live)",
+     "card": "'Safety items to review'",
+     "od": "One line in the appointment note",
+     "p2": "Medical alerts"
+    },
+    {
+     "f": "Date of birth, address, legal sex",
+     "at": "P1-08",
+     "ghl": "Contact (live)",
+     "card": "Date of birth",
+     "od": "The patient record",
+     "p2": "Filled in for them"
+    },
+    {
+     "f": "In their own words",
+     "at": "P1-08",
+     "ghl": "Field (live)",
+     "card": "Yes",
+     "od": "In the appointment note",
+     "p2": ""
+    },
+    {
+     "f": "Score, tier, dimension reads",
+     "at": "P1-09",
+     "ghl": "Fields (live)",
+     "card": "Never",
+     "od": "",
+     "p2": ""
+    },
+    {
+     "f": "Primary iD status and progress",
+     "at": "The flow",
+     "ghl": "New field",
+     "card": "Yes",
+     "od": "",
+     "p2": "Shown as done in Subscribili"
+    },
+    {
+     "f": "First call time, outcome code",
+     "at": "P1-11",
+     "ghl": "The card (new fields)",
+     "card": "",
+     "od": "",
+     "p2": ""
+    },
+    {
+     "f": "Open Dental patient number, visit date and type",
+     "at": "P1-12",
+     "ghl": "The card (new fields)",
+     "card": "",
+     "od": "Where it comes from",
+     "p2": "Sent back automatically"
+    },
+    {
+     "f": "Validated on, validated by",
+     "at": "P1-14",
+     "ghl": "The card (new fields)",
+     "card": "",
+     "od": "Chart note",
+     "p2": ""
+    }
+   ],
+   "note": "The exact GoHighLevel field keys are in the site's lead route. The first build task is to list them here so the 'live' column is exact."
+  },
+  "links": {
+   "lede": "What the site's links did on 30 September, checked by hand on the live site, and where each should go. This is a sample. The full list comes from the code and replaces this table.",
+   "rows": [
+    {
+     "where": "Home · door cards",
+     "today": "Each opens its door under /book/",
+     "target": "No change",
+     "st": "live"
+    },
+    {
+     "where": "Home · five dimension links",
+     "today": "Open the flow with a door and a dimension",
+     "target": "No change",
+     "st": "live"
+    },
+    {
+     "where": "Header and footer · Book",
+     "today": "Opens /book/",
+     "target": "The general door: the reason they pick sets the track",
+     "st": "part"
+    },
+    {
+     "where": "New patient page · Begin your assessment",
+     "today": "Opens /diagnostics/, a different page",
+     "target": "The preventive door",
+     "st": "notbuilt"
+    },
+    {
+     "where": "Implant page · See where I stand",
+     "today": "An eight-question quiz on the page itself",
+     "target": "The implants Pathfinder in the flow",
+     "st": "notbuilt"
+    },
+    {
+     "where": "Implant page · Send us your treatment plan",
+     "today": "An email address",
+     "target": "The second opinion door",
+     "st": "notbuilt"
+    },
+    {
+     "where": "Primary iD Plus page · three buttons",
+     "today": "All open /book/, including 'Download Sample Protocol'",
+     "target": "The longevity door; remove or fix the download button",
+     "st": "notbuilt"
+    },
+    {
+     "where": "/membership/",
+     "today": "Redirects to an address that does not load",
+     "target": "The membership page",
+     "st": "notbuilt"
+    },
+    {
+     "where": "Results screen · Book my first visit",
+     "today": "Ends on 'We'll reach out shortly'",
+     "target": "Removed. The request happens at P1-06 and this screen shows its status",
+     "st": "notbuilt"
+    },
+    {
+     "where": "Header phone number",
+     "today": "The same number as the Google profile, so calls cannot be told apart",
+     "target": "Cesar asks how they heard of us and logs it, until tracked numbers exist",
+     "st": "part"
+    }
+   ]
+  },
+  "numbers": {
+   "lede": "Six numbers, reported weekly at the Friday all-hands. Targets are set there, not here.",
+   "rows": [
+    {
+     "n": "Request rate",
+     "d": "Visits requested, out of everyone who starts the Pathfinder.",
+     "today": "Not measured",
+     "owner": "Farhad"
+    },
+    {
+     "n": "Finished in one sitting",
+     "d": "Completed the Primary iD in the same session, out of everyone who requested a visit.",
+     "today": "Not measured",
+     "owner": "Farhad"
+    },
+    {
+     "n": "Minutes to first call",
+     "d": "From the request to Cesar's first call, during office hours.",
+     "today": "43 finished, none called (26 Sep)",
+     "owner": "Cesar · Almarie"
+    },
+    {
+     "n": "Booked on the first call",
+     "d": "Requests that end the first call with a visit on the schedule.",
+     "today": "Not measured",
+     "owner": "Cesar · Almarie"
+    },
+    {
+     "n": "Complete on arrival",
+     "d": "First visits that arrive with a complete Primary iD.",
+     "today": "Not measured",
+     "owner": "Cesar · Silvia"
+    },
+    {
+     "n": "Matched",
+     "d": "Booked cards that carry an Open Dental patient number.",
+     "today": "47 of 514 leads ever matched",
+     "owner": "Cesar"
+    }
+   ]
+  },
+  "agents": {
+   "lede": "Three jobs, each working from this spec. The check IDs are how they report.",
+   "roles": [
+    {
+     "k": "Build",
+     "who": "Claude Code, in the website repository",
+     "does": [
+      "Reads this spec before changing the flow.",
+      "First task: list every link and every field from the code into the link map and the data map, so 'today' is exact.",
+      "Names the touchpoint and the checks each change satisfies.",
+      "Ships to a preview first. Nothing merges with a failing check."
+     ]
+    },
+    {
+     "k": "Test",
+     "who": "A test run on every preview",
+     "does": [
+      "Takes the test patient, Alex Rivera, through every door at phone width.",
+      "Reports pass or fail for each check ID.",
+      "Uses a tagged test contact so nothing counts as a lead. Preview builds must not write to the live pipeline."
+     ]
+    },
+    {
+     "k": "Audit",
+     "who": "A weekly run against the live site and GoHighLevel",
+     "does": [
+      "Re-checks the link map and the copy rules on the live site.",
+      "Lists requests with no call inside the standard, and booked cards with no patient number.",
+      "Reports the six numbers and anything that drifted from this spec to the Friday all-hands."
+     ]
+    }
+   ],
+   "rails": [
+    "Dr. Gabi is a prosthodontist. Never 'oral physician' or 'orthodontist'.",
+    "No claim that dental treatment treats a sleep disorder, reduces inflammation or extends life.",
+    "The score is directional: not a diagnosis, not a measure of biological age. Both, wherever a score appears.",
+    "One published price. Never 'free', 'up to', 'as low as' or 'starting at'. $1,500 never appears.",
+    "Nothing about a credit between the $99 visit and the membership.",
+    "No exclamation marks, no emoji.",
+    "Test with Alex Rivera only. No real patient names in any screen, log or report."
+   ]
+  },
+  "open": [
+   {
+    "q": "Where the completed Primary iD lives. Today it is fields on a GoHighLevel contact, which cannot power a return link on another device or the patient's own page.",
+    "owner": "Farhad",
+    "blocks": "P1-09"
+   },
+   {
+    "q": "Whether the health answers stay in GoHighLevel, or only what the call needs.",
+    "owner": "Farhad",
+    "blocks": "The data map"
+   },
+   {
+    "q": "The score bands. Every completed score reads 'Strong', so the composite cannot lead the results screen yet.",
+    "owner": "Dr. Gabi",
+    "blocks": "P1-09"
+   },
+   {
+    "q": "The proposed Pathfinder tracks for six doors, including the new unscored questions for second opinion and pain.",
+    "owner": "Dr. Gabi · Farhad",
+    "blocks": "P1-04"
+   },
+   {
+    "q": "Who sends the confirmation, the return link and the reminder. Email can go now; texting needs an approved sender.",
+    "owner": "Farhad · Mila",
+    "blocks": "P1-07, P1-12, P1-13"
+   },
+   {
+    "q": "The call window promised outside office hours, and which number shows when Cesar calls.",
+    "owner": "Almarie · Farhad",
+    "blocks": "P1-07"
+   },
+   {
+    "q": "Whether Cesar's Open Dental access lets him create a patient and an appointment.",
+    "owner": "Silvia",
+    "blocks": "P1-12"
+   },
+   {
+    "q": "What the flow shows for HMO, Medicare and plans Primary does not take.",
+    "owner": "Silvia",
+    "blocks": "P1-05"
+   },
+   {
+    "q": "Whether the $99 is a first visit or a membership tier.",
+    "owner": "Farhad · Sudha · counsel",
+    "blocks": "P1-05"
+   },
+   {
+    "q": "Requiring both mobile and email at the request. More required fields can cost requests, so measure it.",
+    "owner": "Farhad",
+    "blocks": "P1-06"
+   }
+  ],
+  "phase2": {
+   "lede": "What changes when Subscribili online booking is ready. Everything before the request stays the same.",
+   "rows": [
+    "After the request, patients who want to can pick a time themselves. The call becomes a welcome call instead of the booking.",
+    "The booking carries the Primary iD reference in, and Subscribili sends the Open Dental patient number back, so the join no longer depends on a person.",
+    "Confirmations, reminders and the return link move to Subscribili, so the patient hears from one sender.",
+    "The summary reaches the Open Dental appointment automatically."
+   ]
+  }
+ },
+ "visits": [
+  {
+   "n": "New patient visit · with insurance",
+   "who": "Insured, PPO plans Primary accepts",
+   "menu": "First visit · I have dental insurance",
+   "length": "About 90 minutes (confirm)",
+   "includes": "Photos, x-rays, CBCT, vitals; 3D scan when needed. Exam with Dr. Gabi and the plan conversation.",
+   "price": "Billed to the plan",
+   "scope": "This chapter"
+  },
+  {
+   "n": "Express Visit",
+   "who": "Self-pay",
+   "menu": "First visit · self-pay ($99 Express Visit)",
+   "length": "40 minutes",
+   "includes": "Photos on screen, perio screening, x-rays only if needed. Dr. Gabi 15 minutes, plan conversation 10 minutes. No scan, no cleaning, no full plan.",
+   "price": "$99",
+   "scope": "This chapter"
+  },
+  {
+   "n": "Partner Express Visit",
+   "who": "Named partner referrals only",
+   "menu": "Partner link only",
+   "length": "40 minutes",
+   "includes": "Same as the Express Visit.",
+   "price": "No charge",
+   "scope": "This chapter"
+  }
+ ]
+}

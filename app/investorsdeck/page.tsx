@@ -140,7 +140,7 @@ export default function FoundersDeck() {
     19: "Your Primary iD",
     20: "The realization",
     21: "Primary, the place",
-    22: "The oral physician",
+    22: "The prosthodontist",
     23: "The agentic OS",
     24: "The arc of care",
     25: "The first autonomous patient journey",
@@ -1200,12 +1200,12 @@ function Beat21() {
 function Beat22() {
   return (
     <Stage justify="center">
-      <Label>The oral physician</Label>
+      <Label>The prosthodontist</Label>
       <h2 className="font-serif text-[clamp(56px,8vw,104px)] leading-[1.02] font-normal tracking-[-0.03em] mb-4">
         Dr. <em className="italic text-[#4FB3D9]">Tzur Gabi.</em>
       </h2>
       <p className="text-[14px] text-[#8A9BB0] tracking-wide mb-12">
-        DMD · Functional Prosthodontist · Oral Physician · Founder, Primary
+        DMD · Functional Prosthodontist · Founder, Primary
       </p>
       <div className="bg-[#4FB3D9]/[0.06] border-l-[3px] border-[#4FB3D9] rounded-r-xl px-10 py-8 mb-10 max-w-[880px]">
         <p className="font-serif text-[64px] text-[#4FB3D9] leading-[0.5] mb-2">"</p>
@@ -1265,7 +1265,7 @@ function Beat24() {
             During the visit
           </p>
           <p className="font-serif text-[22px] leading-[1.3] mb-3">
-            The <em className="italic">oral physician.</em>
+            The <em className="italic">prosthodontist.</em>
           </p>
           <p className="text-[13px] text-[#C0C8D4] leading-[1.65]">
             Dr. Gabi plus a virtual MD plus a new health-optimizer mid-level workforce. The visit becomes the coordination point for sleep, longevity, nutrition, beauty.
@@ -1526,7 +1526,7 @@ function Beat31() {
 
 function Beat32() {
   const team = [
-    { name: "Dr. Tzur Gabi", role: "Clinical founder · Oral Physician", detail: "DMD. Functional Prosthodontist. 25 years of full-arch reconstruction. The clinical model is his life's work." },
+    { name: "Dr. Tzur Gabi", role: "Clinical founder · Prosthodontist", detail: "DMD. Functional Prosthodontist. 25 years of full-arch reconstruction. The clinical model is his life's work." },
     { name: "Farhad Attaie", role: "Ecosystem architect · Founder", detail: "Strategic architect across dental technology, media, and consumer brand. Building the agentic infrastructure end-to-end." },
     { name: "Founding engineer", role: "Joining at close · Round-funded", detail: "First full-time engineer. Owner of the agentic stack across iD, playbook, voice, scribe, and diagnostics integration." },
     { name: "Strategic advisors", role: "Operators & clinicians", detail: "Founders and operators from dental SaaS, primary care, and the longevity category. Pattern recognition as a foundational asset." },

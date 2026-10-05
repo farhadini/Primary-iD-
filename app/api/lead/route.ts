@@ -45,7 +45,11 @@ const STAGES = [
   "ebb09e99-7c99-4bee-8b08-6f83c1e58a38", // 5 Treatment planned
 ]
 const WF_SCORE = process.env.GHL_WORKFLOW_SCORE
-const LIVE = Boolean(TOKEN && LOCATION)
+// Preview and development builds never write to the live pipeline (spec: Agents
+// · Test). The GHL keys are production-only in Vercel today; this holds even if
+// someone later adds them to Preview. VERCEL_ENV is unset locally, so local dev
+// stays silent too.
+const LIVE = Boolean(TOKEN && LOCATION) && process.env.VERCEL_ENV === "production"
 
 const H = {
   Authorization: `Bearer ${TOKEN}`,
@@ -60,8 +64,20 @@ type Body = {
   assessmentId?: string
   form?: {
     firstName?: string; lastName?: string; email?: string
-    mobile?: string; age?: string; reason?: string
+    mobile?: string; age?: string; reason?: string; reasonDetail?: string
   }
+  // Spec P1-03 to P1-07, from the request screens.
+  newOrReturning?: string
+  need?: string
+  inPain?: boolean
+  visit?: string
+  partner?: string
+  bestTime?: string
+  days?: string[]
+  note?: string
+  bridge?: string
+  idStatus?: string
+  history?: string
   pathway?: string
   goals?: string[]
   intent?: string
@@ -76,7 +92,7 @@ type Body = {
   complaint?: string
   insurance?: { type?: string; carrier?: string; member?: string }
   records?: { pcp?: string; other?: string; labs?: string; platforms?: string }
-  demo?: { dob?: string; sex?: string }
+  demo?: { dob?: string; sex?: string; address?: string }
   smsConsent?: { given?: boolean; at?: string; version?: string; text?: string; source?: string }
   context?: string
   odPatNum?: string
@@ -155,12 +171,14 @@ export async function POST(request: Request) {
     const assessmentId = b.assessmentId || crypto.randomUUID()
 
     // Urgency is derived server-side. Never trust the client for routing.
+    // P1-04: the in-pain answer, the pain door, or a reason that names pain.
     const priority =
-      URGENT.test(f.reason ?? "") || b.pathway === "pain" ? "urgent" : "normal"
+      b.inPain === true || URGENT.test(f.reason ?? "") || b.pathway === "pain" ? "urgent" : "normal"
+    // R1: a returning patient never lands on the new patient pipeline or in a
+    // marketing sequence. Tagged for the front desk instead.
+    const isReturning = b.newOrReturning === "returning"
+    const clip = (v?: string) => (v ?? "").replace(/[^\w\-\/.·$ ]/g, "").trim().slice(0, 80)
 
-    if (!LIVE) {
-      return NextResponse.json({ success: true, assessmentId, crm: false, priority })
-    }
 
     const goals = Array.isArray(b.goals) ? b.goals.filter(Boolean) : []
     const sc = b.scores ?? {}
@@ -172,13 +190,27 @@ export async function POST(request: Request) {
     const consentGiven = consent.given === true
     // Filled in on a practice iPad while the person is already in the chair.
     const inClinic = b.context === "clinic"
+    // The spec's one test patient. Tagged so the contact and card never count as
+    // a lead in reports, and every marketing workflow can filter it out.
+    const isTest =
+      (f.firstName ?? "").trim().toLowerCase() === "alex" &&
+      (f.lastName ?? "").trim().toLowerCase() === "rivera"
+    // Where they came from (spec P1-01 L3). Kept to tags and the source line:
+    // both always land, whereas a custom field missing in GHL sinks the whole upsert.
+    const fromPage = clip(src.from)
+    const fromCta = clip(src.cta)
     const pfAnswers = b.pf && Object.keys(b.pf).length
       ? Object.entries(b.pf).map(([k, v]) => `${k}: ${v}`).join(" · ")
       : ""
 
     const tags = [
-      "Primary iD Lead",
-      b.mode === "score" ? "Primary iD — Score Only" : "Primary iD — Appointment Request",
+      isReturning ? "Existing patient" : "Primary iD Lead",
+      isReturning ? "Primary iD — Existing patient request"
+        : b.mode === "score" ? "Primary iD — Score Only" : "Primary iD — Appointment Request",
+      b.newOrReturning ? `Patient: ${isReturning ? "Returning" : "New"}` : null,
+      b.visit ? `Visit: ${clip(b.visit)}` : null,
+      b.partner ? `Partner: ${clip(b.partner)}` : null,
+      b.bridge ? `Bridge: ${clip(b.bridge)}` : null,
       priority === "urgent" ? "Priority: Urgent (in pain)" : null,
       b.pathway ? `Pathway: ${b.pathway}` : null,
       b.pathfinder && b.pfTrack === "secondop" ? "Pathfinder: second opinion" : null,
@@ -196,13 +228,19 @@ export async function POST(request: Request) {
       // and a TCPA claim, so it is written on EVERY phase, not just the gate.
       consentGiven ? "SMS Consent: Yes" : "SMS Consent: No",
       inClinic ? "Source: In-clinic" : null,
+      isTest ? "Test contact" : null,
+      fromPage ? `From: ${fromPage}` : null,
+      fromCta ? `CTA: ${fromCta}` : null,
+      src.utm_term ? `UTM term: ${clip(src.utm_term)}` : null,
+      src.gclid ? "Ad click: Google" : null,
+      src.fbclid ? "Ad click: Meta" : null,
     ].filter(Boolean) as string[]
 
     const customFields = [
       { key: "assessment_id",   field_value: assessmentId },
       { key: "primary_id_mode", field_value: b.mode ?? "appt" },
       { key: "pathway",         field_value: b.pathway ?? "" },
-      { key: "reason_for_visit",field_value: f.reason ?? "" },
+      { key: "reason_for_visit",field_value: [f.reason, f.reasonDetail, b.need].filter(Boolean).join(" — ") },
       { key: "priority",        field_value: priority },
       { key: "age",             field_value: f.age ?? "" },
       { key: "goals",           field_value: goals.join(", ") },
@@ -246,14 +284,37 @@ export async function POST(request: Request) {
       { key: "opendental_patnum",field_value: b.odPatNum ?? "" },
     ].filter((x) => x.field_value !== "")
 
+    // Phase 1 spec fields (P1-03 to P1-08). These keys must exist in GHL before
+    // they land; until they do, the upsert below falls back to the fields above,
+    // and the tags carry the essentials so the call can still be made.
+    const specFields = [
+      { key: "new_or_returning",  field_value: b.newOrReturning ?? "" },
+      { key: "visit_to_book",     field_value: b.visit ?? "" },
+      { key: "best_time_to_call", field_value: [b.bestTime, (b.days ?? []).join(", ")].filter(Boolean).join(" · ") },
+      { key: "patient_note",      field_value: (b.note ?? "").slice(0, 200) },
+      { key: "primary_id_status", field_value: b.idStatus ?? "" },
+      { key: "dental_history",    field_value: b.history ?? "" },
+      { key: "partner_referral",  field_value: b.partner ?? "" },
+    ].filter((x) => x.field_value !== "")
+
     const base = {
       locationId: LOCATION,
       firstName: f.firstName || undefined,
       lastName: f.lastName || undefined,
       email: f.email || undefined,
       phone: f.mobile || undefined,
-      source: `Primary iD onboarding — ${b.pathway || "general"}`,
+      address1: demo.address || undefined,
+      source: `Primary iD onboarding — ${b.pathway || "general"}${fromPage ? ` · from ${fromPage}` : ""}`,
       tags,
+    }
+
+    // Preview and local builds: write nothing, and hand back exactly what would
+    // have been sent so a test run can check every field and tag against the spec.
+    if (!LIVE) {
+      return NextResponse.json({
+        success: true, assessmentId, crm: false, priority,
+        dryRun: { phase: b.phase ?? "", contact: base, customFields: [...customFields, ...specFields] },
+      })
     }
 
     async function upsert(payload: unknown) {
@@ -273,11 +334,17 @@ export async function POST(request: Request) {
       // contact + tags so the LEAD IS NEVER LOST. Tags alone still drive the
       // workflows, so capture degrades gracefully instead of failing shut.
       try {
-        contactId = await upsert({ ...base, customFields })
-      } catch (fieldErr) {
-        console.error("[lead] upsert with customFields failed, retrying tags-only:", fieldErr)
-        contactId = await upsert(base)
-        console.error("[lead] captured WITHOUT custom fields — run ghl-create-fields.mjs")
+        contactId = await upsert({ ...base, customFields: [...customFields, ...specFields] })
+      } catch (specErr) {
+        console.error("[lead] upsert with spec fields failed, retrying without them:", specErr)
+        try {
+          contactId = await upsert({ ...base, customFields })
+          console.error("[lead] captured WITHOUT the phase 1 spec fields — create them in GHL")
+        } catch (fieldErr) {
+          console.error("[lead] upsert with customFields failed, retrying tags-only:", fieldErr)
+          contactId = await upsert(base)
+          console.error("[lead] captured WITHOUT custom fields")
+        }
       }
 
       // Track the arrival on the board. Runs on every phase so a drop-off
@@ -289,18 +356,19 @@ export async function POST(request: Request) {
       // board misreport where the practice's new patients actually come from.
       // Their contact, scores, tags and fields all still land — only the card
       // is withheld. Find them by the "Source: In-clinic" tag.
-      if (contactId && !inClinic) {
+      if (contactId && !inClinic && !isReturning) {
         await syncOpportunity(
           contactId,
-          [f.firstName, f.lastName].filter(Boolean).join(" "),
+          (isTest ? "TEST · " : "") + [f.firstName, f.lastName].filter(Boolean).join(" "),
           b.pathway ?? "",
           b.phase === "complete",
         )
       }
 
-      // Enrol only on the first (gate) call, so re-sends don't double-enrol.
+      // Enrol only on the request, so re-sends don't double-enrol. ("gate" is the
+      // pre-spec name for the same moment.)
       const wf = b.mode === "score" ? WF_SCORE : WF_APPT
-      if (contactId && wf && b.phase === "gate") {
+      if (contactId && wf && !isReturning && (b.phase === "request" || b.phase === "gate")) {
         const w = await fetch(
           `https://services.leadconnectorhq.com/contacts/${contactId}/workflow/${wf}`,
           { method: "POST", headers: H, body: JSON.stringify({}) },
@@ -311,7 +379,8 @@ export async function POST(request: Request) {
       console.error("[lead] ghl error:", e)
     }
 
-    return NextResponse.json({ success: true, assessmentId, contactId, crm: true, priority })
+    // G6: if nothing reached GHL, say so; the browser holds the request and retries.
+    return NextResponse.json({ success: Boolean(contactId), assessmentId, contactId, crm: true, priority })
   } catch (error) {
     console.error("[lead] error:", error)
     // Never block the patient. A failed lead write is our problem, not theirs.

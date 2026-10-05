@@ -119,8 +119,8 @@ export default function SafeMercuryRemovalPage() {
         </p>
 
         <CTAGroup
-          primary={{ label: "Book a SMART removal consultation", href: "/new-patient/" }}
-          secondary={{ label: "Learn about our diagnostics", href: "/diagnostics/" }}
+          primary={{ label: "Book a SMART removal consultation", href: "/book/" }}
+          secondary={{ label: "Learn about our diagnostics", href: "/primary-id/" }}
         />
 
         <H2>Common questions</H2>

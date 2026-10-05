@@ -132,7 +132,7 @@ export default async function BlogPostPage({
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 8 }}>
             <a
-              href="/diagnostics/"
+              href="/primary-id/"
               style={{
                 background: "#FEFCF9",
                 color: "#0E2240",

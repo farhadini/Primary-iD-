@@ -11,6 +11,12 @@ const nextConfig = {
     unoptimized: true,
   },
 
+  // /membership/ is the membership marketing page, a self-contained static page
+  // (public/membership.html, built from primary-id-membership-page/reference).
+  async rewrites() {
+    return [{ source: "/membership/", destination: "/membership.html" }]
+  },
+
   // ─── 301 Redirects (preserve WordPress URL equity) ────────────────────────
   async redirects() {
     return [
@@ -60,8 +66,8 @@ const nextConfig = {
       { source: "/holistic-dentistry/", destination: "/wholistic-dentistry/", permanent: true },
 
       // Legacy WordPress slugs that consolidate into new App Router pages
-      { source: "/3-d-scanning/", destination: "/diagnostics/", permanent: true },
-      { source: "/3d-scanning/", destination: "/diagnostics/", permanent: true },
+      { source: "/3-d-scanning/", destination: "/blogs/3d-dental-scan-cbct/", permanent: true },
+      { source: "/3d-scanning/", destination: "/blogs/3d-dental-scan-cbct/", permanent: true },
       { source: "/dr-gabi/", destination: "/about/", permanent: true },
       { source: "/our-team/", destination: "/about/", permanent: true },
       { source: "/insurance/", destination: "/new-patient/", permanent: true },
@@ -79,7 +85,7 @@ const nextConfig = {
       { source: "/white-spot-removal/", destination: "/cosmetic-dentistry/", permanent: true },    // rank 1
       { source: "/exams-cleaning-and-whitening/", destination: "/preventive-care/", permanent: true }, // rank 3
       { source: "/prf/", destination: "/dental-implant/", permanent: true },                       // rank 3
-      { source: "/ai-technology/", destination: "/diagnostics/", permanent: true },                // rank 3 (DA92 backlink)
+      { source: "/ai-technology/", destination: "/blogs/how-ai-is-transforming-dental-diagnostics/", permanent: true },                // rank 3 (DA92 backlink)
       { source: "/cosmetic-bonding/", destination: "/cosmetic-dentistry/", permanent: true },      // rank 4
       { source: "/periodontics/", destination: "/preventive-care/", permanent: true },             // rank 5
       { source: "/dna-testing/", destination: "/five-dimensions/", permanent: true },              // rank 11
@@ -125,14 +131,9 @@ const nextConfig = {
         permanent: true,
       },
 
-      // Membership → external Subscribili subdomain
-      // TODO(farhad): confirm exact subdomain with Subscribili rep, then update.
-      {
-        source: "/membership/",
-        destination: "https://primaryid.subscribili.com",
-        permanent: true,
-        basePath: false,
-      },
+      // /membership/ is now a page on this site (app/membership/). The old 301 to
+      // Subscribili is gone; enrolment links out from the page once the
+      // Subscribili URL is confirmed.
 
       // ── Booking CTAs go straight into the onboarding ──────────────────────
       // The /book/* pages were content pages whose only action was a button.
@@ -148,6 +149,16 @@ const nextConfig = {
       { source: "/book/longevity/",  destination: "/primary-id/?door=longevity",  permanent: false },
       { source: "/book/orthofx/",    destination: "/primary-id/?door=orthofx",    permanent: false },
       { source: "/book/second-opinion/", destination: "/primary-id/?door=second_opinion", permanent: false },
+      { source: "/book/pain/",       destination: "/primary-id/?door=pain",       permanent: false },
+
+      // Spec P1-01 L4: one Pathfinder. /diagnostics/ ran its own 40-question quiz
+      // that captured no door, campaign or texting consent; it now opens the flow.
+      { source: "/diagnostics/", destination: "/primary-id/", permanent: false },
+
+      // Spec P1-01 L2: legacy booking links still inside blog posts that 404'd.
+      { source: "/your-first-visit/",   destination: "/new-patient/", permanent: true },
+      { source: "/new-patient-special/", destination: "/new-patient/", permanent: true },
+      { source: "/survey.php",          destination: "/book/",        permanent: false },
 
       // TODO(farhad): add 1:1 redirects for all 31 legacy /blogs/[slug] URLs
       // once we have the WordPress export. Until then, /blogs/[slug] routes

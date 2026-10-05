@@ -358,7 +358,7 @@ export default function PrimaryInvitationPage() {
             </div>
             <div className="mt-5 text-center">
               <div className="font-semibold text-slate-900">Dr. Tzur Gabi</div>
-              <div className="text-xs text-slate-600 mb-1">Functional Prostodontist, Oral Physician</div>
+              <div className="text-xs text-slate-600 mb-1">Functional Prosthodontist</div>
               <div className="text-sm text-slate-500">Founder, Primary</div>
             </div>
           </div>

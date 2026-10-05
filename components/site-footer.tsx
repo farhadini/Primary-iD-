@@ -15,6 +15,7 @@ const footerLinks = [
   { heading: "Visit", links: [
     { label: "Book appointment", href: "/book/" },
     { label: "New patients", href: "/new-patient/" },
+    { label: "Membership", href: "/membership/" },
     { label: "Our location", href: "https://maps.app.goo.gl/oQoaV1MrCoMEQ1CS8" },
     { label: "FAQ", href: "/faq/" },
   ]},

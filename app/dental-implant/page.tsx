@@ -1,7 +1,6 @@
 import Link from "next/link"
 import { SiteHeader, SiteFooter, PALETTE } from "@/components/site-shell"
 import { ServiceSchema, FAQPageSchema, BreadcrumbSchema } from "@/components/schema"
-import ImplantPathFinder from "@/components/implant-path-finder"
 
 // ─────────────────────────────────────────────────────────────────────────
 // /dental-implant/ : Full Arch & Implants pathway page.
@@ -206,7 +205,7 @@ export default function DentalImplantPage() {
             If you&apos;re here, you&apos;ve probably been managing this for a while. Eating around it. Smiling carefully. We start where the last office didn&apos;t, with understanding <em>you</em>, then planning the work.
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-            <a href="#path-finder" style={{ background: PALETTE.blue, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15 }}>
+            <a href="/book/implants/" style={{ background: PALETTE.blue, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15 }}>
               See where I stand →
             </a>
             <Link href="/book/implants/" style={{ background: "transparent", color: "#FEFCF9", padding: "13px 26px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15, border: "1.5px solid rgba(254,252,249,0.35)" }}>
@@ -328,13 +327,15 @@ export default function DentalImplantPage() {
               The Path Finder
             </div>
             <h2 style={{ fontFamily: SERIF, fontSize: "clamp(32px, 4.5vw, 46px)", fontWeight: 400, color: PALETTE.navy, lineHeight: 1.12, letterSpacing: "-0.02em", margin: "0 0 18px" }}>
-              See where your situation maps. In 90 seconds.
+              See where you stand. In about two minutes.
             </h2>
             <p style={{ fontSize: 17, lineHeight: 1.6, color: PALETTE.body, margin: 0 }}>
-              Eight questions about your mouth, your medical context, your priorities, and your timeline. You&apos;ll get a directional read on which option likely fits and what will move the conversation in consultation. No number score. No judgment.
+              Three questions: what is going on, what fixing it would mean for you, and where you are with it. Then someone from our team calls you to set up your visit, already knowing why you got in touch.
             </p>
           </div>
-          <ImplantPathFinder />
+          <a href="/book/implants/" style={{ display: "inline-block", marginTop: 8, background: PALETTE.blue, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15 }}>
+            Start the implant Pathfinder →
+          </a>
         </div>
       </section>
 
@@ -547,7 +548,7 @@ export default function DentalImplantPage() {
             Take the Implant Path Finder for a directional read on your situation. Or schedule a 90-minute consultation with Dr. Gabi for a treatment plan the same day.
           </p>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "center", marginBottom: 28 }}>
-            <a href="#path-finder" style={{ background: PALETTE.navy, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15 }}>
+            <a href="/book/implants/" style={{ background: PALETTE.navy, color: "#FFFFFF", padding: "14px 28px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15 }}>
               See where I stand
             </a>
             <Link href="/book/implants/" style={{ background: "transparent", color: PALETTE.navy, padding: "13px 26px", borderRadius: 999, fontFamily: SANS, fontWeight: 600, textDecoration: "none", fontSize: 15, border: `1.5px solid ${PALETTE.navy}` }}>

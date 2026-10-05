@@ -299,7 +299,7 @@ function Hero() {
             transform: loaded ? "translateY(0)" : "translateY(12px)",
             transition: "all 0.8s ease-out 0.55s",
           }}>
-            <Link href="/diagnostics/" style={{
+            <Link href="/primary-id/" style={{
               fontFamily: SANS,
               display: "inline-flex", alignItems: "center", gap: 10,
               padding: "16px 30px", background: B.navy, color: B.warm,
@@ -310,7 +310,7 @@ function Hero() {
               Build my Primary iD
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </Link>
-            <Link href="/#book" style={{
+            <Link href="/book/" style={{
               fontFamily: SANS,
               display: "inline-flex", alignItems: "center", gap: 10,
               padding: "16px 30px", background: "transparent", color: B.navy,
@@ -958,7 +958,7 @@ function HowWeSeeYou() {
             Read the full science
             <span>→</span>
           </Link>
-          <Link href="/#approach" style={{
+          <Link href="/#services" style={{
             display: "inline-flex", alignItems: "center", gap: 10,
             padding: "14px 26px", borderRadius: 999,
             fontFamily: SANS, fontSize: 13, fontWeight: 600, letterSpacing: "0.02em",
@@ -1690,7 +1690,7 @@ function TheOutcome() {
           }}>
             This is what a Primary smile looks like. Not a veneer shade. A person in better shape than when they walked in.
           </p>
-          <Link href="/#approach" style={{
+          <Link href="/#services" style={{
             display: "inline-flex", alignItems: "center", gap: 8,
             fontFamily: SANS, fontSize: 14, fontWeight: 600,
             color: B.blue, textDecoration: "none",

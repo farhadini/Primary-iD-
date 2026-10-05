@@ -83,7 +83,7 @@ const TILES: Tile[] = [
     icon: <svg viewBox="0 0 24 24" {...S("#D8905A")}><path d="M12 3l1.7 4.3L18 9l-4.3 1.7L12 15l-1.7-4.3L6 9l4.3-1.7z"/></svg>,
   },
   {
-    chip: "Free Plan Review", ac: "#4A6D8C", tint: "228,235,243", name: "A second ", em: "opinion",
+    chip: "Plan Review", ac: "#4A6D8C", tint: "228,235,243", name: "A second ", em: "opinion",
     root: "Already have a treatment plan or a big quote? We evaluate it against your whole-health picture before you commit to anything irreversible.",
     cta: { label: "Get a review →", href: "/book/second-opinion/" },
     icon: <svg viewBox="0 0 24 24" {...S("#4A6D8C")}><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9z"/><path d="M8 12h8M8 16h5"/></svg>,
