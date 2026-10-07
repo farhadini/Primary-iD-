@@ -6,7 +6,7 @@ import { VirtualConsult } from "@/components/virtual-consult"
 // ─────────────────────────────────────────────────────────────────────────
 // The one place on /dental-implant/ where a visitor raises their hand.
 //
-// Two ways in, one card: "About my teeth" (the free virtual consult) and
+// Two ways in, one card: "About my teeth" (the complimentary virtual consult) and
 // "About paying for it" (the financing questions). Both end in the same call
 // from the implant care coordinator, so the page asks for one thing, not two.
 //

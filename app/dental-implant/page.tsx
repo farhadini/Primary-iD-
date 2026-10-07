@@ -26,7 +26,7 @@ import { ThingsWeMiss } from "@/components/things-we-miss"
 //   are YouTube-hosted (Primary Integrative Dentistry channel) and render
 //   through <YouTubeFacade>, which loads the player only on click. To swap a
 //   video, change its `id` in the VIDEOS block below.
-// - ONE ACTION. Every button goes to the free virtual consult form on this
+// - ONE ACTION. Every button goes to the complimentary virtual consult form on this
 //   page (#virtual-consult) or to the phone. The form is in
 //   components/virtual-consult.tsx and is NOT WIRED to the lead flow yet.
 // - CLAIMS. Survival statistics carry a citation and appear once. Painless and
@@ -330,14 +330,14 @@ export default function DentalImplantPage() {
             </p>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginTop: 32 }}>
               <a href={CONSULT} style={{ ...btn, background: T.navy, color: "#FFFFFF" }}>
-                Book a free virtual consult
+                Book a complimentary virtual consult
               </a>
               <a href={PHONE_HREF} style={{ ...btn, ...ghost }}>
                 Call {PHONE_DISPLAY}
               </a>
             </div>
             <p style={{ margin: "20px 0 0", fontSize: 12.5, color: T.muted, fontFamily: SANS }}>
-              Free · About 15 minutes · With our implant care coordinator
+              Complimentary · About 15 minutes · With our implant care coordinator
             </p>
             <a href={GOOGLE.url} target="_blank" rel="noopener" style={{ display: "inline-flex", alignItems: "center", gap: 10, marginTop: 22, fontFamily: SANS, fontSize: 13.5, fontWeight: 600, color: T.navy, textDecoration: "none" }}>
               <Stars />
@@ -353,7 +353,7 @@ export default function DentalImplantPage() {
         </div>
       </section>
 
-      <SectionNav items={NAV_ITEMS} ctaHref={CONSULT} ctaLabel="Free virtual consult" />
+      <SectionNav items={NAV_ITEMS} ctaHref={CONSULT} ctaLabel="Complimentary consult" />
 
       {/* WHY IMPLANTS: what a fixed full arch changes. Answers "why this, and not
           another patch or a denture" before any proof or process. */}
@@ -367,7 +367,7 @@ export default function DentalImplantPage() {
             <p style={{ ...lead, margin: "0 0 28px" }}>
               A fixed full arch is a full set of teeth attached to four to six implants. They stay in. Here is what that means day to day.
             </p>
-            <a href={CONSULT} style={{ ...btn, background: T.navy, color: "#FFFFFF" }}>Book a free virtual consult</a>
+            <a href={CONSULT} style={{ ...btn, background: T.navy, color: "#FFFFFF" }}>Book a complimentary virtual consult</a>
           </div>
           <dl style={{ margin: 0 }}>
             {WHY_IMPLANTS.map((w, i) => (
@@ -797,7 +797,7 @@ export default function DentalImplantPage() {
             <div>
               <p className="eb" style={eyebrow}>Get started</p>
               <h2 style={{ ...h2, margin: "0 0 24px" }}>
-                Start with a <em style={em}>free virtual consult.</em>
+                Start with a <em style={em}>complimentary virtual consult.</em>
               </h2>
               <p style={{ ...lead, margin: "0 0 20px" }}>
                 It is a 15-minute video call with our implant care coordinator. Ask about your options, what the process involves, or how to pay for it. If cost is the main thing on your mind, start there.
@@ -901,7 +901,7 @@ export default function DentalImplantPage() {
             </div>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
               <a href={CONSULT} style={{ ...btn, background: T.blue, color: "#FFFFFF" }}>
-                Book a free virtual consult
+                Book a complimentary virtual consult
               </a>
               <a href={PHONE_HREF} style={{ ...btn, background: "#FFFFFF", color: T.navy }}>
                 Call {PHONE_DISPLAY}
@@ -998,7 +998,7 @@ export default function DentalImplantPage() {
       `}</style>
 
       <SiteFooter />
-      <MobileStickyCTA bookHref={CONSULT} bookLabel="Free virtual consult" />
+      <MobileStickyCTA bookHref={CONSULT} bookLabel="Complimentary consult" />
     </div>
   )
 }

@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react"
 //
 // A slim bar that slides in at the top once the visitor is past the hero. It
 // names the page's sections in the visitor's words, marks the one they are
-// reading, and keeps the one action (the free virtual consult) in reach the
+// reading, and keeps the one action (the complimentary virtual consult) in reach the
 // whole way down. A thin line along the bottom shows how far through the
 // page they are.
 //

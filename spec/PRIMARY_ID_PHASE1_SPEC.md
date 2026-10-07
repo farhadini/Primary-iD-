@@ -513,7 +513,7 @@ What the site's links did on 30 September, checked by hand on the live site, and
 | Home · five dimension links | Open the flow with a door and a dimension | No change | Live |
 | Header and footer · Book | Opens /book/ | The general door: the reason they pick sets the track | Partly working |
 | New patient page · Begin your assessment | Opens /diagnostics/, a different page | The preventive door | Not built |
-| Implant page · Book a free virtual consult | The Pathfinder's own questions asked on the page, sent to the same record | The same, with the answers carried into the flow so nothing is asked twice (PF3) | Partly working |
+| Implant page · Book a complimentary virtual consult | The Pathfinder's own questions asked on the page, sent to the same record | The same, with the answers carried into the flow so nothing is asked twice (PF3) | Partly working |
 | Implant page · Send us your treatment plan | An email address | The second opinion door | Not built |
 | Primary iD Plus page · three buttons | All open /book/, including 'Download Sample Protocol' | The longevity door; remove or fix the download button | Not built |
 | /membership/ | Redirects to an address that does not load | The membership page | Not built |

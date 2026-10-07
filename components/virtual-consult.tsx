@@ -23,13 +23,15 @@ import { useEffect, useRef, useState } from "react"
 // the answers go to the existing pathfinder_answers field and to tags, so the
 // request lands even before the three new custom fields are created.
 //
-// Still open (see the handoff brief):
-//   · PF3  the flow does not yet pick these answers up, so someone who goes on
-//          to /primary-id/ is asked `what` and `where` again.
+// Accepted for now (7 Oct 2026), because this card is a direct request for a
+// virtual consult and does not lead into the flow:
+//   · PF3  the flow does not pick these answers up, so someone who later
+//          starts /primary-id/ on their own is asked `what` and `where` again.
 //   · G1   mobile is checked for ten digits here; email and last name, which
 //          P1-06 requires, are not asked on this card.
-//   · V3   "free" is this page's word for the virtual consult. The booking
-//          menu in the spec has no such visit yet.
+// Settled:
+//   · V3   the offer is a "complimentary virtual consult". The word "free" is
+//          not used. The booking menu in the spec has no such visit yet.
 // ─────────────────────────────────────────────────────────────────────────
 
 const NAVY = "#0E2240"
@@ -93,7 +95,7 @@ const TRACKS: Record<TrackName, Track> = {
         options: ["I would pay in full", "I would want monthly payments", "A mix of both", "I'm not sure yet"],
       },
     ],
-    submit: "Request my free virtual consult",
+    submit: "Request my virtual consult",
     note: "We will call you to set a time.",
     done: "Thank you. We will call you to set a time.",
   },
