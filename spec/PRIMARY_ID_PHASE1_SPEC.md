@@ -413,6 +413,8 @@ Each door asks at most three questions before the request. A track only reorders
 | Door | Reason, preset | Questions before the request | State | Note |
 |---|---|---|---|---|
 | Implants and failing teeth (`implants`) | Something to fix | What is going on (missing, failing, old work, dentures); What fixing it would mean; Where they are with it | Live | The live restorative track. |
+| Implants, asked on the implant page (`implants`) | Something to fix | What is going on; Where they are with it; How they are thinking of paying | Built, not set up | The consult card on /dental-implant/. The first two are the live track's own questions. The third is a new unscored flag (`pay`). Sent to the same record as the flow. |
+| Implants, paying for it (`implants`, track `financing`) | Something to fix | Where they are with it; Whether they have applied for financing before; What would help most | Built, not set up | Opens from the cost section of /dental-implant/. The first is an existing question. The other two are new unscored flags (`fin_applied`, `fin_help`). Never asks for a Social Security number, a date of birth or income. |
 | Aligners (`orthofx`) | Something to fix | What they want to change; How much of the day they could wear aligners; Braces or aligners before | Built, not set up | In the question bank since August. Confirm it is live on the door. |
 | Cosmetic (`cosmetic`) | Something to fix | What they would change about their smile; How confident they feel about their smile; Where they are with it | Proposed | The second question is an existing scored question, asked early. |
 | Preventive (`preventive`) | Get ahead of it | Last professional cleaning; Last full dental exam; How dental visits feel for them | Proposed | All three are existing questions, asked early. |
@@ -511,7 +513,7 @@ What the site's links did on 30 September, checked by hand on the live site, and
 | Home · five dimension links | Open the flow with a door and a dimension | No change | Live |
 | Header and footer · Book | Opens /book/ | The general door: the reason they pick sets the track | Partly working |
 | New patient page · Begin your assessment | Opens /diagnostics/, a different page | The preventive door | Not built |
-| Implant page · See where I stand | An eight-question quiz on the page itself | The implants Pathfinder in the flow | Not built |
+| Implant page · Book a free virtual consult | The Pathfinder's own questions asked on the page, sent to the same record | The same, with the answers carried into the flow so nothing is asked twice (PF3) | Partly working |
 | Implant page · Send us your treatment plan | An email address | The second opinion door | Not built |
 | Primary iD Plus page · three buttons | All open /book/, including 'Download Sample Protocol' | The longevity door; remove or fix the download button | Not built |
 | /membership/ | Redirects to an address that does not load | The membership page | Not built |

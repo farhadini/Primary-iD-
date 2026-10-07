@@ -223,3 +223,35 @@ export function BreadcrumbSchema({
   }
   return <JsonLd data={data} />
 }
+
+// ─── VideoObject (YouTube-hosted videos embedded on a page) ───────────────────
+// Lets Google show the video in search results for the page it sits on.
+// `uploadDate` is the YouTube publish date (YYYY-MM-DD); `duration` is ISO 8601
+// (a 1 min 18 sec video is "PT1M18S").
+export function VideoObjectSchema({
+  youtubeId,
+  name,
+  description,
+  uploadDate,
+  duration,
+}: {
+  youtubeId: string
+  name: string
+  description: string
+  uploadDate: string
+  duration: string
+}) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name,
+    description,
+    thumbnailUrl: [`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`],
+    uploadDate,
+    duration,
+    embedUrl: `https://www.youtube-nocookie.com/embed/${youtubeId}`,
+    contentUrl: `https://www.youtube.com/watch?v=${youtubeId}`,
+    publisher: { "@id": PRACTICE["@id"] },
+  }
+  return <JsonLd data={data} />
+}

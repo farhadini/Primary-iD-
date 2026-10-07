@@ -11,7 +11,14 @@ const NAVY = "#0E2240"
 const CREAM = "#FAF8F5"
 const SANS = "-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif"
 
-export default function MobileStickyCTA() {
+export default function MobileStickyCTA({
+  bookHref = "/book/",
+  bookLabel = "Book a visit",
+}: {
+  /** Where the right-hand button goes. Pathway pages pass their own door. */
+  bookHref?: string
+  bookLabel?: string
+} = {}) {
   const [shown, setShown] = useState(false)
 
   useEffect(() => {
@@ -65,7 +72,7 @@ export default function MobileStickyCTA() {
           Call
         </a>
         <a
-          href="/book/"
+          href={bookHref}
           style={{
             background: CREAM,
             color: NAVY,
@@ -76,7 +83,7 @@ export default function MobileStickyCTA() {
             fontSize: 14,
           }}
         >
-          Book a visit
+          {bookLabel}
         </a>
       </div>
       <style>{`
