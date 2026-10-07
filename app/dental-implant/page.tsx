@@ -337,7 +337,7 @@ export default function DentalImplantPage() {
               </a>
             </div>
             <p style={{ margin: "20px 0 0", fontSize: 12.5, color: T.muted, fontFamily: SANS }}>
-              Complimentary · About 15 minutes · With our implant care coordinator
+              Complimentary · About 15 minutes · With your iD Guide
             </p>
             <a href={GOOGLE.url} target="_blank" rel="noopener" style={{ display: "inline-flex", alignItems: "center", gap: 10, marginTop: 22, fontFamily: SANS, fontSize: 13.5, fontWeight: 600, color: T.navy, textDecoration: "none" }}>
               <Stars />
@@ -800,7 +800,7 @@ export default function DentalImplantPage() {
                 Start with a <em style={em}>complimentary virtual consult.</em>
               </h2>
               <p style={{ ...lead, margin: "0 0 20px" }}>
-                It is a 15-minute video call with our implant care coordinator. Ask about your options, what the process involves, or how to pay for it. If cost is the main thing on your mind, start there.
+                It is a 15-minute video call with your iD Guide. Ask about your options, what the process involves, or how to pay for it. If cost is the main thing on your mind, start there.
               </p>
               <p style={{ ...lead, margin: "0 0 20px" }}>
                 It is not an exam, so it does not replace a visit with Dr. Gabi. We never ask for your Social Security number or your income here.
@@ -895,7 +895,7 @@ export default function DentalImplantPage() {
                 Find out where you stand, <em style={{ ...em, color: T.blueSoft }}>from home.</em>
               </p>
               <p style={{ fontFamily: SANS, fontSize: 13.5, lineHeight: 1.6, color: T.onNavy, margin: 0, maxWidth: "56ch" }}>
-                The virtual consult is about 15 minutes with our implant care coordinator. Already have a treatment plan?{" "}
+                The virtual consult is about 15 minutes with your iD Guide. Already have a treatment plan?{" "}
                 <a href="/book/second-opinion/" style={{ color: "#FFFFFF", textUnderlineOffset: 3 }}>Bring it in for a second opinion</a>.
               </p>
             </div>

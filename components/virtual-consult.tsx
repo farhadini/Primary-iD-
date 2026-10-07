@@ -41,6 +41,35 @@ const INK_SOFT = "#3a4a66"
 const MUTED = "#7A8695"
 const DANGER = "#D97757"
 const LINE = "rgba(14,34,64,0.12)"
+
+// Who calls, and from which number (spec B1). The role name is the brand's
+// word for the person who calls every new request; change it in one place.
+// Keep in step with CALLER / ROLE in public/primary-id-app.html.
+const CALLER = "Cesar"
+const ROLE = "iD Guide"
+const CALL_FROM = "(310) 564-8990"
+
+// A call window that is true for this hour and day in Los Angeles.
+// Mon to Thu 8 to 6, Fri 8 to 5. Same rule as the booking flow.
+function callWindow(): string {
+  const p: Record<string, string> = {}
+  try {
+    new Intl.DateTimeFormat("en-US", { timeZone: "America/Los_Angeles", weekday: "short", hour: "numeric", minute: "numeric", hour12: false })
+      .formatToParts(new Date()).forEach((x) => { p[x.type] = x.value })
+  } catch {}
+  const order = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+  const k = order.indexOf(p.weekday ?? "")
+  const mins = ((parseInt(p.hour ?? "0", 10) || 0) % 24) * 60 + (parseInt(p.minute ?? "0", 10) || 0)
+  if (k >= 1 && k <= 5) {
+    const close = (k === 5 ? 17 : 18) * 60
+    if (mins >= 480 && mins <= close - 30) return "within the next hour"
+    if (mins < 480) return "this morning, after 8 AM"
+  }
+  if (k < 0) return "on the next business morning"
+  let n = k, step = 0
+  do { n = (n + 1) % 7; step++ } while (n === 0 || n === 6)
+  return step === 1 ? "tomorrow morning, after 8 AM" : `on ${["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"][n]} morning, after 8 AM`
+}
 const SERIF = "Georgia, 'Times New Roman', serif"
 const SANS = "var(--font-montserrat), 'Montserrat', 'Helvetica Neue', Arial, sans-serif"
 
@@ -96,8 +125,8 @@ const TRACKS: Record<TrackName, Track> = {
       },
     ],
     submit: "Request my virtual consult",
-    note: "We will call you to set a time.",
-    done: "Thank you. We will call you to set a time.",
+    note: `Your ${ROLE} will call you to set a time.`,
+    done: "to set a time for your virtual consult",
   },
   financing: {
     pfTrack: "financing",
@@ -117,8 +146,8 @@ const TRACKS: Record<TrackName, Track> = {
       },
     ],
     submit: "Show me my options",
-    note: "Our implant care coordinator will call you to go through them.",
-    done: "Thank you. We will call you to go through your options.",
+    note: `Your ${ROLE} will call you to go through them.`,
+    done: "to go through your options with you",
   },
 }
 
@@ -170,6 +199,8 @@ export function VirtualConsult({ track = "consult" }: { track?: TrackName }) {
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [busy, setBusy] = useState(false)
   const [phoneError, setPhoneError] = useState(false)
+  const [when, setWhen] = useState("")
+  const [who, setWho] = useState("")
   // One reference per card for the whole visit, so a second tap on Request
   // updates the same contact instead of making another (G5).
   const assessmentId = useRef("")
@@ -216,6 +247,8 @@ export function VirtualConsult({ track = "consult" }: { track?: TrackName }) {
     try { await send(body) } catch { hold(body) }
     setBusy(false)
     // The patient sees the confirmation either way (G6).
+    setWhen(callWindow())
+    setWho(firstName)
     setStep(DONE)
   }
 
@@ -281,9 +314,12 @@ export function VirtualConsult({ track = "consult" }: { track?: TrackName }) {
 
       <div data-vc-step={DONE} hidden={step !== DONE} role="status">
         <p style={label}>Request received</p>
-        <h3 style={question}>{T.done}</h3>
+        <h3 style={question}>Thank you{who ? `, ${who}` : ""}.</h3>
+        <p style={{ fontFamily: SERIF, fontSize: 17, lineHeight: 1.6, color: NAVY, margin: "8px 0 0" }}>
+          {CALLER}, your {ROLE}, will call you {when || "soon"} from {CALL_FROM} {T.done}.
+        </p>
         <p style={{ fontFamily: SANS, fontSize: 15.5, lineHeight: 1.6, color: INK_SOFT, margin: "8px 0 0" }}>
-          If you would rather talk now, call us at (310) 564-8990.
+          If you would rather talk now, call us at {CALL_FROM}.
         </p>
       </div>
 

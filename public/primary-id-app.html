@@ -832,6 +832,7 @@
   // Who calls, and from which number. Spec open decision (Almarie · Farhad):
   // which number shows when Cesar calls. Change it here.
   var CALLER = "Cesar";
+  var ROLE = "iD Guide";   // the brand's name for the role; keep in step with components/virtual-consult.tsx
   var CALL_FROM = "(310) 564-8990";
 
   // The booking menu (spec: "The first visit each answer leads to"). V1: what is
@@ -1053,14 +1054,14 @@
       show(
         coach("<p>Thank you, "+first+". Because you are in pain, you are first on our list.</p>")
         + '<h1 class="head">Your request is <em>in</em>.</h1>'
-        + '<p class="lede">'+esc(CALLER)+' from our team will call you '+esc(w)+' from '+esc(CALL_FROM)+'. You do not need to do anything else now. If the pain gets worse, call us on that number.</p>'
+        + '<p class="lede">'+esc(CALLER)+', your '+esc(ROLE)+', will call you '+esc(w)+' from '+esc(CALL_FROM)+'. You do not need to do anything else now. If the pain gets worse, call us on that number.</p>'
         + '<div class="actions"><button class="ghost" id="later">I would like to finish my Primary iD later</button></div>',
         1);
       document.getElementById("later").onclick=function(){ S.bridge="later"; scrLater(); };
       return;
     }
     show(
-      coach("<p>Thank you, "+first+". "+esc(CALLER)+" from our team will call you "+esc(w)+" from "+esc(CALL_FROM)+" to confirm your visit.</p>")
+      coach("<p>Thank you, "+first+". "+esc(CALLER)+", your "+esc(ROLE)+", will call you "+esc(w)+" from "+esc(CALL_FROM)+" to confirm your visit.</p>")
       + '<h1 class="head">Your request is <em>in</em>.</h1>'
       + '<div class="steps">'
         + '<div class="stepitem"><div class="num" style="font-style:normal">&check;</div><div style="flex:1"><h4>Your visit request</h4><p>Done. Your answers so far are already part of your Primary iD.</p></div></div>'

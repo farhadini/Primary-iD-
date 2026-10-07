@@ -8,7 +8,7 @@ import { VirtualConsult } from "@/components/virtual-consult"
 //
 // Two ways in, one card: "About my teeth" (the complimentary virtual consult) and
 // "About paying for it" (the financing questions). Both end in the same call
-// from the implant care coordinator, so the page asks for one thing, not two.
+// from the iD Guide, so the page asks for one thing, not two.
 //
 // Any link or button on the page can open a particular side by carrying
 // data-consult-track="consult" or "financing" (and href="#virtual-consult"
