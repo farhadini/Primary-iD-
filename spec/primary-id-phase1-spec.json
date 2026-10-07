@@ -903,6 +903,30 @@
     "note": "The live restorative track."
    },
    {
+    "door": "implants",
+    "label": "Implants, asked on the implant page",
+    "reason": "Something to fix",
+    "qs": [
+     "What is going on",
+     "Where they are with it",
+     "How they are thinking of paying"
+    ],
+    "st": "towire",
+    "note": "The consult card on /dental-implant/. The first two are the live track's own questions. The third is a new unscored flag (pay). Sent to the same record as the flow."
+   },
+   {
+    "door": "implants",
+    "label": "Implants, paying for it (track: financing)",
+    "reason": "Something to fix",
+    "qs": [
+     "Where they are with it",
+     "Whether they have applied for financing before",
+     "What would help most"
+    ],
+    "st": "towire",
+    "note": "Opens from the cost section of /dental-implant/. The first is an existing question. The other two are new unscored flags (fin_applied, fin_help). Never asks for a Social Security number, a date of birth or income."
+   },
+   {
     "door": "orthofx",
     "label": "Aligners",
     "reason": "Something to fix",
@@ -1266,10 +1290,10 @@
      "st": "notbuilt"
     },
     {
-     "where": "Implant page · See where I stand",
-     "today": "An eight-question quiz on the page itself",
-     "target": "The implants Pathfinder in the flow",
-     "st": "notbuilt"
+     "where": "Implant page · Book a complimentary virtual consult",
+     "today": "The Pathfinder's own questions asked on the page, sent to the same record",
+     "target": "The same, with the answers carried into the flow so nothing is asked twice (PF3)",
+     "st": "partly"
     },
     {
      "where": "Implant page · Send us your treatment plan",

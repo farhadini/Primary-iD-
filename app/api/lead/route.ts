@@ -22,6 +22,15 @@
 // tag ("SMS Consent: Yes" / "SMS Consent: No") and four evidence fields.
 // EVERY SMS workflow must filter on the tag. See /terms/ and /privacy/.
 //
+// THE IMPLANT PAGE'S CONSULT CARD POSTS HERE TOO (Oct 2026). It is the same
+// Pathfinder asked on the page (spec P1-01 L4), door "implants", in two tracks:
+//   pfTrack "restorative"  pf = { what, where, pay }
+//   pfTrack "financing"    pf = { where, fin_applied, fin_help }
+// `pay`, `fin_applied` and `fin_help` are unscored flags (bank v2.2). They
+// reach GHL three ways, so the request lands whatever the location has set up:
+// the existing pathfinder_answers field, tags, and three new custom fields
+// (payment_intent, financing_history, help_wanted) once those exist.
+//
 // Silent until GHL_API_TOKEN + GHL_LOCATION_ID are set in Vercel.
 // ============================================================================
 import { NextResponse } from "next/server"
@@ -206,6 +215,13 @@ export async function POST(request: Request) {
     const pfAnswers = b.pf && Object.keys(b.pf).length
       ? Object.entries(b.pf).map(([k, v]) => `${k}: ${v}`).join(" · ")
       : ""
+    // How they plan to pay, and what happened if they have tried financing.
+    // Asked on the implant page's consult card. Not clinical, never a gate:
+    // every answer still gets a call. Read only for the tags below.
+    const pay = b.pf?.pay ?? ""
+    const finApplied = b.pf?.fin_applied ?? ""
+    const finHelp = b.pf?.fin_help ?? ""
+    const wantsMonthly = /monthly|mix/i.test(pay) || /monthly/i.test(finHelp)
 
     const tags = [
       isReturning ? "Existing patient" : "Primary iD Lead",
@@ -220,6 +236,13 @@ export async function POST(request: Request) {
       b.pathfinder && b.pfTrack === "secondop" ? "Pathfinder: second opinion" : null,
       b.pathfinder && b.pfTrack === "alignment" ? "Pathfinder: alignment" : null,
       b.pathfinder && (!b.pfTrack || b.pfTrack === "restorative") ? "Pathfinder: implant intent" : null,
+      b.pathfinder && b.pfTrack === "financing" ? "Pathfinder: financing need" : null,
+      /pay in full/i.test(pay) ? "Pay: In full" : null,
+      wantsMonthly ? "Pay: Monthly payments" : null,
+      /turned down/i.test(finApplied) ? "Financing: Turned down before" : null,
+      /not for enough/i.test(finApplied) ? "Financing: Approved short before" : null,
+      /scholarship/i.test(finHelp) ? "Interest: Primary Scholarship" : null,
+      /membership/i.test(finHelp) ? "Interest: Membership pricing" : null,
       b.pfTrack ? `Track: ${b.pfTrack}` : null,
       f.reason ? `Reason: ${f.reason}` : null,
       ...goals.map((g) => `Goal: ${g}`),
@@ -299,6 +322,11 @@ export async function POST(request: Request) {
       { key: "primary_id_status", field_value: b.idStatus ?? "" },
       { key: "dental_history",    field_value: b.history ?? "" },
       { key: "partner_referral",  field_value: b.partner ?? "" },
+      // The implant page's consult card. Create these three in GHL (single-line
+      // text) and they fill in; until then the tags and pathfinder_answers carry them.
+      { key: "payment_intent",    field_value: pay },
+      { key: "financing_history", field_value: finApplied },
+      { key: "help_wanted",       field_value: finHelp },
     ].filter((x) => x.field_value !== "")
 
     const base = {
