@@ -1,7 +1,7 @@
 "use client";
 
 // ─────────────────────────────────────────────────────────────
-// Section 5: The New Patient Visit, Reimagined
+// Section: your first visit, in the order the booking flow runs (spec P1-02 to P1-09)
 // ─────────────────────────────────────────────────────────────
 
 const B = {
@@ -116,17 +116,17 @@ function MockAppointment() {
       icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>,
       iconBg: "rgba(72,194,140,0.14)",
       iconColor: B.green,
-      title: "In-person visit",
-      sub: "Los Angeles · 90 min",
+      title: "New patient visit",
+      sub: "With insurance · about 90 minutes",
       selected: false,
     },
     {
       icon: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>,
       iconBg: "rgba(36,167,224,0.14)",
       iconColor: B.blue,
-      title: "Virtual second opinion",
-      badge: "Free",
-      sub: "From anywhere",
+      title: "Express Visit",
+      badge: "$99",
+      sub: "Self-pay · 40 minutes",
       selected: true,
     },
   ];
@@ -147,7 +147,7 @@ function MockAppointment() {
         letterSpacing: "0.1em", textTransform: "uppercase", fontWeight: 600,
         marginBottom: 10,
       }}>
-        Choose your visit
+        Your first visit
       </div>
 
       {options.map((opt, i) => (
@@ -206,21 +206,21 @@ function MockAppointment() {
         fontSize: 12, color: B.muted,
         textAlign: "center",
       }}>
-        No rush. No pressure to book in person.
+        We confirm it with you on the call.
       </div>
     </div>
   );
 }
 
 // ─────────────────────────────────────────────────────────────
-// Step 3 Visual: Oral → Systemic Playbook Cover
+// Step 3 Visual: the written plan they leave with
 // ─────────────────────────────────────────────────────────────
 function MockPlaybook() {
   const chips = [
     { label: "Oral", bg: "rgba(72,194,140,0.16)", color: "#2d8a5f" },
     { label: "Sleep", bg: "rgba(36,167,224,0.16)", color: B.blue },
     { label: "Nutrition", bg: "rgba(199,48,90,0.14)", color: "#C7305A" },
-    { label: "Genetics", bg: "rgba(123,104,238,0.16)", color: B.purple },
+    { label: "Family", bg: "rgba(123,104,238,0.16)", color: B.purple },
     { label: "Longevity", bg: "rgba(14,34,64,0.10)", color: B.navy },
   ];
 
@@ -278,7 +278,7 @@ function MockPlaybook() {
           textTransform: "uppercase",
           color: B.muted,
         }}>
-          Your Primary iD · Playbook
+          Your plan · with prices
         </div>
 
         <div>
@@ -459,7 +459,7 @@ export default function NewPatientVisit() {
             gap: 12,
           }}>
             <span style={{ width: 32, height: 1, background: B.blue }} />
-            The New Patient Visit, Reimagined
+            Your first visit
             <span style={{ width: 32, height: 1, background: B.blue }} />
           </div>
           <h2 className="r-h1" style={{
@@ -499,119 +499,30 @@ export default function NewPatientVisit() {
           }} className="steps-grid r-grid1 r-gap">
             <StepCard
               num="01"
-              tag="Pre-assessment"
-              title={<>Start your<br/>Primary Health Score.</>}
-              line="6 minutes online. 50 questions across 5 dimensions of your health. Free."
+              tag="Before you arrive"
+              title={<>Build your<br/>Primary iD.</>}
+              line="Request your visit in about two minutes, then about six more to answer forty questions across five dimensions of your health."
             >
               <MockQuiz />
             </StepCard>
 
             <StepCard
               num="02"
-              tag="New patient appointment"
-              title={<>Book your<br/>way in.</>}
-              line="Come in person, or start with a virtual second opinion from your couch."
+              tag="The call"
+              title={<>Your iD Guide<br/>calls you.</>}
+              line="We confirm a time and tell you what your first visit includes and what it costs, before anything is booked."
             >
               <MockAppointment />
             </StepCard>
 
             <StepCard
               num="03"
-              tag="After your first visit"
-              title={<>Unlock your<br/>Oral → Systemic Playbook.</>}
-              line="One unified, doctor-built playbook, your personalized path to optimal wellbeing, built from your visit and delivered after you come in."
+              tag="Your first visit"
+              title={<>A plan you can<br/>hold, with prices.</>}
+              line="Dr. Gabi reads your Primary iD against what he sees, and you leave with a written plan and every price on it. Nothing is decided in the chair."
             >
               <MockPlaybook />
             </StepCard>
-          </div>
-        </div>
-
-        {/* Pre-visit value strip */}
-        <div style={{
-          marginTop: 80,
-          padding: "28px 36px",
-          background: "rgba(255,255,255,0.5)",
-          border: `1px solid rgba(14,34,64,0.08)`,
-          borderRadius: 16,
-          display: "grid",
-          gridTemplateColumns: "auto 1fr auto",
-          gap: 28,
-          alignItems: "center",
-        }} className="precare-strip r-grid1 r-gap">
-          <div style={{
-            width: 56, height: 56,
-            borderRadius: "50%",
-            background: "rgba(36,167,224,0.12)",
-            color: B.blue,
-            display: "inline-flex", alignItems: "center", justifyContent: "center",
-            flexShrink: 0,
-          }}>
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 8v4"/><path d="M12 16h.01"/><circle cx="12" cy="12" r="10"/>
-            </svg>
-          </div>
-          <div style={{
-            fontFamily: SERIF,
-            fontSize: 19,
-            lineHeight: 1.4,
-            color: B.navy,
-            fontStyle: "italic",
-          }}>
-            <strong style={{ fontStyle: "normal", fontWeight: 400 }}>You get value before you sit in the chair.</strong>{" "}
-            <em style={{ color: B.blue, fontWeight: 500 }}>Your Primary Health Score and a virtual second opinion, yours before any commitment. Your full Oral → Systemic Playbook follows after your first visit.</em>
-          </div>
-          <a href="/about/" style={{
-            background: "transparent", color: B.navy,
-            border: `1px solid rgba(14,34,64,0.18)`,
-            padding: "12px 20px", borderRadius: 9,
-            textDecoration: "none", fontSize: 14, fontWeight: 600,
-            display: "inline-flex", alignItems: "center", gap: 8,
-            whiteSpace: "nowrap",
-            transition: "border-color .2s ease, background .2s ease",
-          }}
-            onMouseOver={e => { e.currentTarget.style.borderColor = B.navy; e.currentTarget.style.background = "rgba(14,34,64,0.04)"; }}
-            onMouseOut={e => { e.currentTarget.style.borderColor = "rgba(14,34,64,0.18)"; e.currentTarget.style.background = "transparent"; }}
-          >
-            How we&apos;re different →
-          </a>
-        </div>
-
-        {/* Bottom CTA */}
-        <div style={{ marginTop: 64, textAlign: "center" }}>
-          <div style={{
-            display: "inline-flex", gap: 20, alignItems: "center",
-            flexWrap: "wrap", justifyContent: "center",
-          }}>
-            <a href="/primary-id/" style={{
-              background: B.navy, color: B.warm,
-              padding: "18px 32px", borderRadius: 9,
-              textDecoration: "none", fontWeight: 600, fontSize: 15,
-              transition: "background .15s ease",
-              boxShadow: "0 20px 40px -20px rgba(14,34,64,0.4)",
-            }}
-              onMouseOver={e => e.currentTarget.style.background = "#1a3259"}
-              onMouseOut={e => e.currentTarget.style.background = B.navy}
-            >
-              Start my Primary Health Score →
-            </a>
-            <a href="#book" style={{
-              color: B.navy, textDecoration: "none",
-              fontWeight: 500, fontSize: 15,
-              display: "inline-flex", alignItems: "center", gap: 8,
-              borderBottom: `1px solid rgba(14,34,64,0.2)`, paddingBottom: 4,
-              transition: "color .15s ease, border-color .15s ease",
-            }}
-              onMouseOver={e => { e.currentTarget.style.color = B.blue; e.currentTarget.style.borderBottomColor = B.blue; }}
-              onMouseOut={e => { e.currentTarget.style.color = B.navy; e.currentTarget.style.borderBottomColor = "rgba(14,34,64,0.2)"; }}
-            >
-              Or book a visit now
-            </a>
-          </div>
-          <div style={{
-            fontSize: 13, letterSpacing: "0.02em", color: B.muted,
-            marginTop: 16,
-          }}>
-            No pressure. No spam. Just clarity.
           </div>
         </div>
       </div>
@@ -621,8 +532,6 @@ export default function NewPatientVisit() {
         @media (max-width: 1024px) {
           .steps-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
           .steps-connector { display: none !important; }
-          .precare-strip { grid-template-columns: 1fr !important; gap: 16px !important; text-align: center !important; }
-          .precare-strip > div:first-child { margin: 0 auto !important; }
         }
         @media (max-width: 620px) {
           section { padding: 80px 24px !important; }
