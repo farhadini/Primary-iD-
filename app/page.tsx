@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import OralSystemicSection from "@/components/oral-systemic-section";
-import MeetYourPrimaryID from "@/components/meet-your-primary-id";
+import OralSystemicSection from "@/components/oral-systemic-section"; // used only by the retired PrimaryiDExperience below
+import PrimaryIdDimensions from "@/components/primary-id-dimensions";
+import { PrimaryIdCard } from "@/components/primary-id-card";
 import NewPatientVisit from "@/components/new-patient-visit";
 import OurApproach from "@/components/our-approach";
 import Testimonials from "@/components/testimonials";
 import MobileStickyCTA from "@/components/mobile-sticky-cta";
-import FinancialMembership from "@/components/financial-membership";
+import MembershipTeaser from "@/components/membership-teaser";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 
@@ -205,7 +206,7 @@ function Hero() {
           </h1>
 
           <p style={{ fontSize: 17, lineHeight: 1.6, color: "#d7e2f1", maxWidth: 440, margin: "0 0 26px", textShadow: "0 1px 16px rgba(0,0,0,.4)" }}>
-            Most practices treat what&apos;s in front of them. We start with you, your sleep, your history, your whole health, and work backwards to your mouth.
+            See what your mouth shows about your whole health, while you can still change it. One visit with Dr. Gabi reads your teeth, gums, bite and airway together.
           </p>
 
           <div style={{ display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
@@ -227,10 +228,10 @@ function Hero() {
                 onMouseOver={e => { e.currentTarget.style.color = "#bfe4f6"; e.currentTarget.style.borderBottomColor = "#bfe4f6"; }}
                 onMouseOut={e => { e.currentTarget.style.color = "#fff"; e.currentTarget.style.borderBottomColor = "rgba(255,255,255,.4)"; }}
               >
-                Take the health assessment
+                Build your Primary iD
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </a>
-              <div style={{ fontSize: 12.5, color: "#9fb4cf" }}>Private · Yours to keep.</div>
+              <div style={{ fontSize: 12.5, color: "#9fb4cf" }}>About six minutes · Private · Yours to keep.</div>
             </div>
           </div>
 
@@ -251,27 +252,13 @@ function Hero() {
         </div>
       </div>
 
-      {/* floating Primary iD card */}
+      {/* The Primary iD card, the same one /membership/ shows */}
       <div className="hero-idcard" style={{
-        position: "absolute", zIndex: 3, right: "9%", top: "50%",
-        transform: "translateY(-50%) rotate(-3deg)", width: 280, padding: "18px 20px",
-        background: "rgba(17,38,68,.6)", backdropFilter: "blur(15px)", WebkitBackdropFilter: "blur(15px)",
-        border: "1px solid rgba(255,255,255,.16)", borderRadius: 16,
-        boxShadow: "0 30px 65px -28px rgba(0,0,0,.8)",
+        position: "absolute", zIndex: 3, right: "6%", top: "50%",
+        transform: "translateY(-50%) rotate(-2deg) scale(.86)", transformOrigin: "center right",
         opacity: loaded ? 1 : 0, transition: "opacity .9s ease .5s",
       }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12 }}>
-          <span style={{ fontSize: 10, letterSpacing: ".12em", textTransform: "uppercase", color: "#9fb0c6" }}>Sample Primary iD</span>
-          <span style={{ fontFamily: "Georgia,serif", fontSize: 34, color: "#fff" }}>74<small style={{ fontSize: 13, color: "#9fb0c6" }}>/100</small></span>
-        </div>
-        {HERO_DIMS.map((d) => (
-          <div key={d.name} style={{ display: "flex", alignItems: "center", gap: 10, margin: "6px 0" }}>
-            <span style={{ fontSize: 11, width: 84, color: "#d3ddea", flex: "none" }}>{d.name}</span>
-            <span style={{ flex: 1, height: 6, borderRadius: 4, background: "rgba(255,255,255,.15)", overflow: "hidden", display: "block" }}>
-              <span style={{ display: "block", height: "100%", borderRadius: 4, width: `${d.pct}%`, background: d.color }} />
-            </span>
-          </div>
-        ))}
+        <PrimaryIdCard />
       </div>
     </section>
   );
@@ -1749,25 +1736,20 @@ export default function PrimaryHomepage() {
       <SiteNav />
       <Hero />
 
-      {/* What your mouth reveals - the Primary iD, directly under the hero */}
-      <MeetYourPrimaryID />
-
-      {/* Our approach - outcome-first, root-cause tiles */}
+      {/* Start with the outcome they want: the doors into the booking flow */}
       <div id="services"><OurApproach /></div>
 
-      {/* Social proof - trust before the ask */}
+      {/* The Primary iD: five dimensions, in the membership page's card design */}
+      <PrimaryIdDimensions />
+
+      {/* Proof, before the ask */}
       <Testimonials />
 
-      {/* The interactive Primary iD assessment - invite engagement once convinced */}
-      <PrimaryiDExperience />
-
-      {/* What to expect at your first visit */}
+      {/* What happens, in the order the booking flow runs */}
       <NewPatientVisit />
 
-      {/* Financial / Membership */}
-      <div id="membership">
-        <FinancialMembership />
-      </div>
+      {/* The membership, in brief; the rest lives on /membership/ */}
+      <MembershipTeaser />
 
       {/* Final booking CTA */}
       <BookingCTA />
