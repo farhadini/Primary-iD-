@@ -727,6 +727,10 @@
     .qpanel,.qopt,.qopt .qdot,.qopt .qdot::after,.qpip{transition:none}
     .qopt:hover{transform:none}}
   .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .film{margin-top:30px;border-radius:24px;overflow:hidden;background:var(--navy);box-shadow:0 30px 70px rgba(14,34,64,.12);aspect-ratio:16/9}
+  .film video{display:block;width:100%;height:100%;object-fit:cover;background:var(--navy)}
+  .film-note{margin-top:14px}
+  @media (max-width:640px){.film{border-radius:16px;margin-top:22px}}
 </style>
 
 <div class="field" aria-hidden="true"></div>
@@ -827,6 +831,23 @@
     </div>
   </div>
 </header>
+
+<!-- MEMBERSHIP FILM - the journey a member takes, start to finish -->
+<section class="sec" id="film" style="padding-top:8px">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow dash">The membership in ninety seconds</span>
+      <h2 style="margin-top:16px">Watch a year of membership, <em>start to finish.</em></h2>
+    </div>
+    <div class="film reveal">
+      <video controls playsinline preload="metadata" poster="https://d2ol7oe51mr4n9.cloudfront.net/user_38cIAK0A3uFxxQ5sB5GjVuQ00S2/8f2339dd-e6cf-471d-aa4d-86b29da6df0d.jpg" aria-label="The Primary iD Membership film">
+        <source src="https://d2ol7oe51mr4n9.cloudfront.net/user_38cIAK0A3uFxxQ5sB5GjVuQ00S2/95aea86c-f436-4876-b2a7-379c68c35c98.mp4" type="video/mp4">
+        <track kind="captions" src="/videos/membership-film.vtt" srclang="en" label="English">
+      </video>
+    </div>
+    <p class="cite film-note">Membership is not insurance. Treatment is charged separately at the member rate.</p>
+  </div>
+</section>
 
 <!-- SEGMENTATION — the card treatment from the live homepage, but doing this
      page's job rather than the homepage's. The homepage runs outcome -> the root
