@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef } from "react";
 import OralSystemicSection from "@/components/oral-systemic-section"; // used only by the retired PrimaryiDExperience below
 import PrimaryIdDimensions from "@/components/primary-id-dimensions";
-import { PrimaryIdCard } from "@/components/primary-id-card";
 import NewPatientVisit from "@/components/new-patient-visit";
 import OurApproach from "@/components/our-approach";
 import Testimonials from "@/components/testimonials";
@@ -252,14 +251,6 @@ function Hero() {
         </div>
       </div>
 
-      {/* The Primary iD card, the same one /membership/ shows */}
-      <div className="hero-idcard" style={{
-        position: "absolute", zIndex: 3, right: "6%", top: "50%",
-        transform: "translateY(-50%) rotate(-2deg) scale(.86)", transformOrigin: "center right",
-        opacity: loaded ? 1 : 0, transition: "opacity .9s ease .5s",
-      }}>
-        <PrimaryIdCard />
-      </div>
     </section>
   );
 }
