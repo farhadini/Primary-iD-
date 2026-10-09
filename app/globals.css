@@ -74,6 +74,15 @@
   --sidebar-ring: oklch(0.439 0 0);
 }
 
+/* Fonts are served from /public/fonts so a build never depends on reaching
+   Google Fonts (two production builds failed on that fetch, Oct 2026).
+   Latin subset, variable weight. The fallbacks keep text on a sans face
+   while the files load. */
+@font-face { font-family: "Geist"; src: url("/fonts/geist.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Geist Mono"; src: url("/fonts/geist-mono.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Geist Fallback"; src: local("Arial"); size-adjust: 104%; }
+@font-face { font-family: "Geist Mono Fallback"; src: local("Courier New"), local("Menlo"); }
+
 @theme inline {
   --font-sans: "Geist", "Geist Fallback";
   --font-mono: "Geist Mono", "Geist Mono Fallback";
