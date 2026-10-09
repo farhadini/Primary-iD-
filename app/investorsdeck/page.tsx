@@ -1,18 +1,20 @@
 "use client"
 
 import { useState, useEffect, useCallback, useRef } from "react"
-import { Fraunces, Inter } from "next/font/google"
+import localFont from "next/font/local"
 
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  style: ["normal", "italic"],
+// Self-hosted (public/fonts) so the build never fetches from Google Fonts.
+const fraunces = localFont({
+  src: [
+    { path: "../../public/fonts/fraunces.woff2", weight: "400 500", style: "normal" },
+    { path: "../../public/fonts/fraunces-italic.woff2", weight: "400 500", style: "italic" },
+  ],
   variable: "--font-fraunces",
 })
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+const inter = localFont({
+  src: "../../public/fonts/inter.woff2",
+  weight: "400 600",
   variable: "--font-inter",
 })
 

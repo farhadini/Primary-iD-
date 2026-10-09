@@ -1,11 +1,12 @@
 import type { Metadata } from "next"
-import { Montserrat } from "next/font/google"
+import localFont from "next/font/local"
 
 // Brand OS display face. Exposed as a CSS variable so page.tsx can use it
 // for headings, labels and buttons; Georgia (a system face) carries the body.
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+// Self-hosted (public/fonts) so the build never fetches from Google Fonts.
+const montserrat = localFont({
+  src: "../../public/fonts/montserrat.woff2",
+  weight: "400 700",
   variable: "--font-montserrat",
   display: "swap",
 })
