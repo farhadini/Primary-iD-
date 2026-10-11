@@ -42,20 +42,26 @@ export default function ChaptersView() {
   const [seen, setSeen] = useState<number[]>([])
   const refs = useRef<(HTMLElement | null)[]>([])
 
+  // The chapter in view is the last one whose top has passed 45% of the screen.
+  // A scroll listener rather than an IntersectionObserver, so it also tracks
+  // jumps from the "ways in" links and the rail.
   useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (!e.isIntersecting) return
-          const i = Number((e.target as HTMLElement).dataset.i)
-          setCurrent(i)
-          setSeen((s) => (s.includes(i) ? s : [...s, i]))
-        })
-      },
-      { rootMargin: "-45% 0px -50% 0px" },
-    )
-    refs.current.forEach((el) => el && io.observe(el))
-    return () => io.disconnect()
+    let t: ReturnType<typeof setTimeout> | null = null
+    const read = () => {
+      t = null
+      const line = window.innerHeight * 0.45
+      let i = -1
+      refs.current.forEach((el, k) => { if (el && el.getBoundingClientRect().top <= line) i = k })
+      const last = refs.current[refs.current.length - 1]
+      if (last && last.getBoundingClientRect().bottom < 0) i = -1
+      setCurrent(i)
+      if (i >= 0) setSeen((s) => (s.includes(i) ? s : [...s, i]))
+    }
+    const onScroll = () => { if (!t) t = setTimeout(read, 60) }
+    read()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    window.addEventListener("resize", onScroll)
+    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); if (t) clearTimeout(t) }
   }, [])
 
   const tint = current >= 0 ? CHAPTERS[current].color : "#24A7E0"

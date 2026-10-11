@@ -253,7 +253,9 @@
    ============================================================ */
 
 /* Global safety net: never allow horizontal overflow; media scales. */
-html, body { max-width: 100%; overflow-x: hidden; }
+/* clip, not hidden: hidden turns the page into a scroll container, which stops
+   position: sticky working anywhere (site header, the Five Dimensions rail). */
+html, body { max-width: 100%; overflow-x: clip; }
 img, video, svg, canvas { max-width: 100%; }
 * { min-width: 0; }
 
