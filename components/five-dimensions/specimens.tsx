@@ -13,6 +13,56 @@
 // ============================================================
 
 import type React from "react"
+import { useEffect, useRef, useState } from "react"
+
+/** True once the element has come on screen. A throttled scroll reader, like the chapter rail. */
+export function useInView<T extends HTMLElement>() {
+  const ref = useRef<T>(null)
+  const [on, setOn] = useState(false)
+  useEffect(() => {
+    if (on) return
+    let t: ReturnType<typeof setTimeout> | null = null
+    const check = () => {
+      t = null
+      const el = ref.current
+      if (!el) return
+      const r = el.getBoundingClientRect(), h = window.innerHeight
+      if (r.top < h * 0.82 && r.bottom > h * 0.12) setOn(true)
+    }
+    const onScroll = () => { if (!t) t = setTimeout(check, 80) }
+    check()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    window.addEventListener("resize", onScroll)
+    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); if (t) clearTimeout(t) }
+  }, [on])
+  return [ref, on] as const
+}
+
+/** Continuous motion is on unless the reader asked for less. */
+function useMotion() {
+  const [ok, setOk] = useState(false)
+  useEffect(() => { setOk(!window.matchMedia("(prefers-reduced-motion: reduce)").matches) }, [])
+  return ok
+}
+
+/** A number that counts up once, fast in and settling. */
+export function CountUp({ to, live }: { to: number; live: boolean }) {
+  const [n, setN] = useState(0)
+  useEffect(() => {
+    if (!live) return
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { setN(to); return }
+    const t0 = Date.now()
+    let t: ReturnType<typeof setTimeout>
+    const tick = () => {
+      const k = Math.min(1, (Date.now() - t0) / 1400)
+      setN(Math.round(to * (1 - Math.pow(1 - k, 3))))
+      if (k < 1) t = setTimeout(tick, 24)
+    }
+    tick()
+    return () => clearTimeout(t)
+  }, [live, to])
+  return <>{n}</>
+}
 
 export type Dim = { name: string; short: string; color: string; score: number }
 
@@ -117,12 +167,24 @@ export function Radar({ dims, live }: { dims: Dim[]; live: boolean }) {
         {[0.25, 0.5, 0.75, 1].map((k) => <circle key={k} cx={C} cy={C} r={R * k} fill="none" stroke="rgba(14,34,64,.08)" />)}
         {dims.map((_, i) => { const [x, y] = pt(i, 1); return <line key={i} x1={C} y1={C} x2={x} y2={y} stroke="rgba(14,34,64,.07)" /> })}
         <g className="spx-grow" style={{ transform: live ? "scale(1)" : "scale(.12)", opacity: live ? 1 : 0 }}>
+        <g className={live ? "spx-breathe" : undefined}>
         <g clipPath="url(#spx-clip)">
           <rect x="0" y="0" width="320" height="320" fill="#FEFCF9" />
-          {dims.map((d, i) => { const [x, y] = pt(i, 0.62); return <circle key={d.short} cx={x} cy={y} r="70" fill={d.color} opacity=".85" filter="url(#spx-blur)" /> })}
+          <g className={live ? "spx-swirl" : undefined}>
+            {dims.map((d, i) => { const [x, y] = pt(i, 0.62); return <circle key={d.short} cx={x} cy={y} r="70" fill={d.color} opacity=".85" filter="url(#spx-blur)" /> })}
+          </g>
         </g>
         <polygon points={poly} fill="none" stroke="rgba(255,255,255,.9)" strokeWidth="1.5" />
-        {dims.map((d, i) => { const [x, y] = pt(i, d.score / 100); return <circle key={d.short} cx={x} cy={y} r="5" fill={d.color} stroke="#fff" strokeWidth="2" /> })}
+        {dims.map((d, i) => {
+          const [x, y] = pt(i, d.score / 100)
+          return (
+            <g key={d.short}>
+              {live && <circle cx={x} cy={y} r="5" fill="none" stroke={d.color} strokeWidth="1.5" className="spx-ring" style={{ animationDelay: `${1.2 + i * 0.7}s` }} />}
+              <circle cx={x} cy={y} r="5" fill={d.color} stroke="#fff" strokeWidth="2" />
+            </g>
+          )
+        })}
+        </g>
         </g>
       </svg>
       {dims.map((d, i) => {
@@ -161,10 +223,14 @@ export function Breakdown({ d, answers, live }: { d: Dim; answers: Answer[]; liv
 export function RootMap({ dims, links, live }: { dims: Dim[]; links: Record<string, ("inflammation" | "toxic")[]>; live: boolean }) {
   const H = 300, rowY = (i: number) => 30 + i * 60
   const sig = { inflammation: 96, toxic: 214 } as const
+  const motion = useMotion()
+  const flow = live && motion
+  const path = (i: number, k: "inflammation" | "toxic") => `M 178 ${rowY(i)} C 300 ${rowY(i)}, 300 ${sig[k]}, 372 ${sig[k]}`
   return (
     <div className="spx-map">
       <svg viewBox="0 0 520 300" role="img" aria-label="The five dimensions, each linked to inflammation, toxic load or both">
         <defs>
+          <filter id="spx-soft" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="8" /></filter>
           {dims.map((d) => (
             <linearGradient key={d.short} id={`lk-${d.short}`} x1="0" x2="1">
               <stop offset="0" stopColor={d.color} stopOpacity=".9" /><stop offset="1" stopColor={d.color} stopOpacity=".25" />
@@ -172,10 +238,25 @@ export function RootMap({ dims, links, live }: { dims: Dim[]; links: Record<stri
           ))}
         </defs>
         {dims.map((d, i) => (links[d.short] || []).map((k) => (
-          <path key={d.short + k} d={`M 178 ${rowY(i)} C 300 ${rowY(i)}, 300 ${sig[k]}, 372 ${sig[k]}`} fill="none"
+          <path key={d.short + k} d={path(i, k)} fill="none"
             stroke={`url(#lk-${d.short})`} strokeWidth="2.4" strokeLinecap="round" className="spx-link" style={{ strokeDashoffset: live ? 0 : 320, transitionDelay: `${i * 90}ms` }} />
         )))}
+        {flow && dims.map((d, i) => (links[d.short] || []).map((k, j) => [0, 1].map((n) => {
+          const dur = `${3.4 + ((i + j) % 3) * 0.5}s`, begin = `${1.3 + i * 0.45 + j * 0.8 + n * 1.9}s`
+          return (
+            <circle key={d.short + k + n} r="3.2" fill={d.color} opacity="0">
+              <animateMotion dur={dur} begin={begin} repeatCount="indefinite" path={path(i, k)} calcMode="spline" keyPoints="0;1" keyTimes="0;1" keySplines=".45 0 .25 1" />
+              <animate attributeName="opacity" dur={dur} begin={begin} repeatCount="indefinite" values="0;1;1;0" keyTimes="0;.12;.85;1" />
+            </circle>
+          )
+        })))}
         {dims.map((d, i) => <circle key={d.short} cx="178" cy={rowY(i)} r="4.5" fill={d.color} />)}
+        {flow && <>
+          <circle cx="372" cy={sig.inflammation} r="22" fill="#D97757" className="spx-ember" filter="url(#spx-soft)" />
+          <circle cx="372" cy={sig.inflammation} r="6" fill="none" stroke="#D97757" strokeWidth="1.5" className="spx-ring" />
+          <circle cx="372" cy={sig.inflammation} r="6" fill="none" stroke="#D97757" strokeWidth="1.5" className="spx-ring" style={{ animationDelay: "1.6s" }} />
+          <circle cx="372" cy={sig.toxic} r="6" fill="none" stroke="#7A8695" strokeWidth="1.5" className="spx-ring slow" style={{ animationDelay: ".8s" }} />
+        </>}
         <circle cx="372" cy={sig.inflammation} r="6" fill="#D97757" /><circle cx="372" cy={sig.toxic} r="6" fill="#7A8695" />
       </svg>
       {dims.map((d, i) => (
@@ -183,6 +264,55 @@ export function RootMap({ dims, links, live }: { dims: Dim[]; links: Record<stri
       ))}
       <span className="spx-sig" style={{ top: `${(sig.inflammation / H) * 100}%` }}><b>Inflammation</b>quiet, and it does not switch off</span>
       <span className="spx-sig" style={{ top: `${(sig.toxic / H) * 100}%` }}><b>Toxic load</b>what you are exposed to, and carry</span>
+    </div>
+  )
+}
+
+/** Illustration: biological age is one reading of today; the Primary iD reads the direction, and where it can change. */
+export function Trajectory({ live }: { live: boolean }) {
+  const motion = useMotion()
+  const built = "M 30 222 C 150 219, 250 200, 360 152"
+  const ahead = "M 360 152 C 450 116, 530 86, 610 46"
+  const lever = "M 360 152 C 440 128, 520 124, 610 122"
+  const draw = (delay: number, dur = 1.3) => ({ strokeDasharray: 1, strokeDashoffset: live ? 0 : 1, transition: `stroke-dashoffset ${dur}s cubic-bezier(.16,1,.3,1) ${delay}s` })
+  return (
+    <div className="spx-traj">
+      <div className="spx-tin">
+        <svg viewBox="0 0 640 270" role="img" aria-label="Illustration. A biological age is a single reading of today. The Primary iD follows the line of what has been building, shows where it is heading, and the lever that would change its direction.">
+          <defs>
+            <linearGradient id="tj-built" x1="0" x2="1"><stop offset="0" stopColor="#D4B584" /><stop offset="1" stopColor="#D97757" /></linearGradient>
+            <linearGradient id="tj-under" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="#D97757" stopOpacity=".18" /><stop offset="1" stopColor="#D97757" stopOpacity="0" /></linearGradient>
+            <filter id="tj-soft" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="7" /></filter>
+          </defs>
+          {[60, 110, 160, 210].map((y) => <line key={y} x1="30" x2="610" y1={y} y2={y} stroke="rgba(14,34,64,.05)" />)}
+          <line x1="30" x2="610" y1="242" y2="242" stroke="rgba(14,34,64,.14)" />
+          <line x1="360" x2="360" y1="30" y2="242" stroke="rgba(14,34,64,.12)" strokeDasharray="3 5" />
+          <path d={`${built} L 360 242 L 30 242 Z`} fill="url(#tj-under)" style={{ opacity: live ? 1 : 0, transition: "opacity 1s ease .9s" }} />
+          <path d={built} pathLength={1} fill="none" stroke="url(#tj-built)" strokeWidth="3.5" strokeLinecap="round" style={draw(0.1, 1.4)} />
+          <path d={ahead} pathLength={1} fill="none" stroke="#D97757" strokeOpacity=".38" strokeWidth="2.5" strokeLinecap="round" style={draw(1.5)} />
+          <path d={lever} pathLength={1} fill="none" stroke="#48C28C" strokeWidth="3.5" strokeLinecap="round" style={draw(2.4)} />
+          {live && motion && (
+            <circle r="5" fill="#D97757" opacity="0">
+              <animateMotion dur="3.6s" begin="2.6s" repeatCount="indefinite" path={built} calcMode="spline" keyPoints="0;1" keyTimes="0;1" keySplines=".45 0 .25 1" />
+              <animate attributeName="opacity" dur="3.6s" begin="2.6s" repeatCount="indefinite" values="0;.9;.9;0" keyTimes="0;.1;.9;1" />
+            </circle>
+          )}
+          {live && motion && <circle cx="610" cy="122" r="14" fill="#48C28C" className="spx-ember" filter="url(#tj-soft)" />}
+          <g style={{ opacity: live ? 1 : 0, transition: "opacity .5s ease 3.3s" }}><circle cx="610" cy="122" r="5.5" fill="#48C28C" stroke="#fff" strokeWidth="2" /></g>
+          <g style={{ opacity: live ? 1 : 0, transition: "opacity .5s ease 1.3s" }}>
+            {live && motion && <circle cx="360" cy="152" r="7" fill="none" stroke="#7A8695" strokeWidth="1.5" className="spx-ring slow" />}
+            <circle cx="360" cy="152" r="7" fill="#9aa3b0" stroke="#fff" strokeWidth="2.5" />
+          </g>
+        </svg>
+        <span className="spx-tax" style={{ left: `${(30 / 640) * 100}%` }}>Years ago</span>
+        <span className="spx-tax mid" style={{ left: `${(360 / 640) * 100}%` }}>Today</span>
+        <span className="spx-tax end" style={{ left: `${(610 / 640) * 100}%` }}>Years ahead</span>
+      </div>
+      <div className="spx-tleg">
+        <span className="spx-pill" style={{ ["--pc" as string]: "#9aa3b0" }}>Biological age · one reading, today</span>
+        <span className="spx-pill" style={{ ["--pc" as string]: "#D97757" }}>What is building · and where it is heading</span>
+        <span className="spx-pill" style={{ ["--pc" as string]: "#48C28C" }}>Your clearest lever · where acting matters most</span>
+      </div>
     </div>
   )
 }
@@ -248,5 +378,22 @@ const SPX_CSS = `
   .spx-sig{position:absolute;left:calc(372/520*100% + 16px);transform:translateY(-50%);display:flex;flex-direction:column;font-family:Georgia,"Times New Roman",serif;font-size:13px;line-height:1.35;color:#7A8695;max-width:150px}
   .spx-sig b{font-family:${MONO};font-weight:500;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#0E2240;margin-bottom:2px}
   @media(max-width:560px){.spx-mlab{font-size:8px;padding:4px 7px;letter-spacing:.04em}.spx-sig{font-size:11px;max-width:96px}.spx-sig b{font-size:9px}}
-  @media(prefers-reduced-motion:reduce){.spx-arc,.spx-grow,.spx-marker,.spx-ticks span,.spx-bdr .f,.spx-link{transition:none!important}}
+  .spx-swirl{transform-box:view-box;transform-origin:160px 160px;animation:spxSwirl 46s linear infinite}
+  .spx-breathe{transform-box:view-box;transform-origin:160px 160px;animation:spxBreathe 9s ease-in-out 1.2s infinite alternate}
+  .spx-ring{transform-box:fill-box;transform-origin:center;opacity:0;animation:spxRing 3.2s cubic-bezier(.16,1,.3,1) infinite}
+  .spx-ring.slow{animation-duration:4.6s}
+  .spx-ember{transform-box:fill-box;transform-origin:center;opacity:.35;animation:spxEmber 4.5s ease-in-out infinite alternate}
+  @keyframes spxSwirl{to{transform:rotate(360deg)}}
+  @keyframes spxBreathe{from{transform:scale(1)}to{transform:scale(1.035)}}
+  @keyframes spxRing{0%{transform:scale(1);opacity:.7}100%{transform:scale(4.2);opacity:0}}
+  @keyframes spxEmber{from{transform:scale(.8);opacity:.22}to{transform:scale(1.25);opacity:.55}}
+  .spx-traj{max-width:640px;margin:0 auto}
+  .spx-tin{position:relative;padding-bottom:22px}
+  .spx-traj svg{display:block;width:100%;overflow:visible}
+  .spx-tax{position:absolute;bottom:0;font-family:${MONO};font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#7A8695;white-space:nowrap}
+  .spx-tax.mid{transform:translateX(-50%);color:#0E2240}.spx-tax.end{transform:translateX(-100%)}
+  .spx-tleg{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+  .spx-tleg .spx-pill{font-size:10px;letter-spacing:.08em;white-space:normal;text-align:left}
+  @media(max-width:560px){.spx-tax{font-size:8.5px}.spx-tleg .spx-pill{font-size:9px}}
+  @media(prefers-reduced-motion:reduce){.spx-arc,.spx-grow,.spx-marker,.spx-ticks span,.spx-bdr .f,.spx-link,.spx-traj *{transition:none!important}.spx-swirl,.spx-breathe,.spx-ring,.spx-ember{animation:none!important}}
 `

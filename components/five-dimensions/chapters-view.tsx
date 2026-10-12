@@ -20,7 +20,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { CHAPTERS, type DoctorNote } from "./chapters"
-import { Field, Gauge, Breakdown, Radar, RootMap, Caption, Pill, type Dim } from "./specimens"
+import { Field, Gauge, Breakdown, Radar, RootMap, Trajectory, Caption, Pill, CountUp, useInView, type Dim } from "./specimens"
 
 function Note({ note, name }: { note: DoctorNote; name: string }) {
   return (
@@ -41,8 +41,9 @@ function Note({ note, name }: { note: DoctorNote; name: string }) {
 export default function ChaptersView() {
   const [current, setCurrent] = useState(-1)
   const [seen, setSeen] = useState<number[]>([])
-  const [radarLive, setRadarLive] = useState(false)
-  useEffect(() => { const t = setTimeout(() => setRadarLive(true), 250); return () => clearTimeout(t) }, [])
+  const [mapRef, mapLive] = useInView<HTMLElement>()
+  const [trajRef, trajLive] = useInView<HTMLElement>()
+  const [wholeRef, wholeLive] = useInView<HTMLElement>()
   const dims: Dim[] = CHAPTERS.map((c) => ({ name: c.name, short: c.slug, color: c.color, score: c.score }))
   const refs = useRef<(HTMLElement | null)[]>([])
 
@@ -86,25 +87,27 @@ export default function ChaptersView() {
               <div className="sig5"><b>Toxic load</b><p>What you are exposed to and carry: tobacco, alcohol, sugary drinks, and the materials already in your mouth, which Dr. Gabi checks at your visit.</p></div>
               <p>Each of the five dimensions is a place where those signals show up, in or through your mouth. And each one is something you can act on.</p>
             </div>
-            <figure className="why5-fig">
+            <figure className="why5-fig" ref={mapRef}>
               <Field hues={["#D97757", "#7B68EE", "#D4B584"]}>
-                <RootMap dims={dims} live={radarLive} links={{ oral: ["inflammation", "toxic"], sleep: ["inflammation"], nutrition: ["inflammation", "toxic"], family: ["inflammation"], longevity: ["inflammation", "toxic"] }} />
+                <RootMap dims={dims} live={mapLive} links={{ oral: ["inflammation", "toxic"], sleep: ["inflammation"], nutrition: ["inflammation", "toxic"], family: ["inflammation"], longevity: ["inflammation", "toxic"] }} />
               </Field>
               <Caption>Five places we look. Two things we are looking for.</Caption>
             </figure>
           </div>
 
-          <div className="vs5">
-            <div className="vs5-card dim5">
-              <span className="spx-pill" style={{ ["--pc" as string]: "#9aa3b0" }}>Biological age</span>
-              <div className="vs5-big">47</div>
-              <p>One number for how old your body seems. It does not say what is driving it or what to do first, and the science behind it is still settling.</p>
+          <div className="traj5">
+            <div className="traj5-copy">
+              <h3>A snapshot, or a <em>direction.</em></h3>
+              <p>A biological age gives you one number for where your body seems to be today. It is interesting, but it does not say what is driving it or what to change first.</p>
+              <p>The Primary iD reads which way things are heading: where inflammation and toxic load are building, across five places you can act on, and the one change that would matter most.</p>
+              <p className="fine5">Directional, not a diagnosis, and not a measure of biological age.</p>
             </div>
-            <div className="vs5-card">
-              <span className="spx-pill">Primary iD</span>
-              <div className="vs5-lever"><span>Your clearest lever</span><b>Bleeding gums</b></div>
-              <p>A risk read: where inflammation and toxic load are likely building, and the one change that would matter most. Directional, not a diagnosis, and not a measure of biological age.</p>
-            </div>
+            <figure className="traj5-fig" ref={trajRef}>
+              <Field hues={["#D97757", "#48C28C", "#24A7E0"]}>
+                <Trajectory live={trajLive} />
+              </Field>
+              <Caption>An illustration, not your data. The line is what has been building; the green is what acting on your lever can look like.</Caption>
+            </figure>
           </div>
         </div>
       </section>
@@ -112,10 +115,10 @@ export default function ChaptersView() {
       {/* The whole iD, then ways in by feeling */}
       <section className="ways" aria-labelledby="ways-h">
         <div className="frame">
-          <figure className="whole">
+          <figure className="whole" ref={wholeRef}>
             <Field hues={["#7B68EE", "#E8985E", "#48C28C"]} tall>
-              <div className="whole-top"><Pill>A sample Primary iD</Pill><span className="whole-n">72<small>/ 100</small></span></div>
-              <Radar dims={dims} live={radarLive} />
+              <div className="whole-top"><Pill>A sample Primary iD</Pill><span className="whole-n" aria-label="72 out of 100"><CountUp to={72} live={wholeLive} /><small>/ 100</small></span></div>
+              <Radar dims={dims} live={wholeLive} />
             </Field>
             <Caption>Your whole picture on one chart. Not one dimension at a time, but all five at once.</Caption>
           </figure>
@@ -270,15 +273,12 @@ const CSS = `
   .fdx .sig5{border-left:2px solid var(--line);padding:2px 0 2px 16px;margin:18px 0}
   .fdx .sig5 b{font-family:"JetBrains Mono","Geist Mono",ui-monospace,Menlo,monospace;font-weight:500;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--navy)}
   .fdx .sig5 p{margin:4px 0 0!important;font-size:16px!important}
-  .fdx .vs5{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:44px}
-  .fdx .vs5-card{background:rgba(254,252,249,.8);border:1px solid var(--line);border-radius:24px;padding:26px}
-  .fdx .vs5-card p{font-size:15px;line-height:1.55;margin:14px 0 0}
-  .fdx .vs5-card.dim5{opacity:.8}
-  .fdx .vs5-big{font-family:"JetBrains Mono","Geist Mono",ui-monospace,Menlo,monospace;font-size:48px;color:#9aa3b0;margin-top:14px;line-height:1}
-  .fdx .vs5-lever{margin-top:14px;display:flex;flex-direction:column}
-  .fdx .vs5-lever span{font-family:"JetBrains Mono","Geist Mono",ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-  .fdx .vs5-lever b{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:28px;color:var(--navy);margin-top:4px}
-  @media(max-width:860px){.fdx .why5-grid,.fdx .vs5{grid-template-columns:1fr;gap:28px}}
+  .fdx .traj5{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:48px;align-items:center;margin-top:72px}
+  .fdx .traj5 h3{font-family:Georgia,"Times New Roman",serif;font-weight:400;color:var(--navy);letter-spacing:-.02em;font-size:clamp(26px,3vw,36px);line-height:1.1;margin:0 0 18px}
+  .fdx .traj5 h3 em{color:var(--blue);font-style:italic}
+  .fdx .traj5-copy p{font-family:Georgia,"Times New Roman",serif;font-size:17.5px;line-height:1.65;margin:0 0 14px;max-width:60ch}
+  .fdx .traj5-copy .fine5{font-family:"JetBrains Mono","Geist Mono",ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  @media(max-width:860px){.fdx .why5-grid,.fdx .traj5{grid-template-columns:1fr;gap:28px}}
   .fdx .whole{margin:0 0 44px}
   .fdx .whole-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
   .fdx .whole-n{font-family:"JetBrains Mono","Geist Mono",ui-monospace,Menlo,monospace;font-size:34px;color:var(--navy);letter-spacing:.02em}
