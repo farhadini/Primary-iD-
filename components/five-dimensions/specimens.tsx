@@ -233,7 +233,8 @@ const SPX_CSS = `
   .spx-bdh span{font-family:${MONO};font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#7A8695}
   .spx-bdh b{font-family:${MONO};font-weight:400;font-size:26px;color:#0E2240}.spx-bdh small{font-size:11px;color:#7A8695;margin-left:4px}
   .spx-bdr{display:grid;grid-template-columns:1fr auto;gap:5px 10px;padding:7px 0;border-top:1px solid rgba(14,34,64,.06)}
-  .spx-bdr .n{font-family:Georgia,"Times New Roman",serif;font-size:14px;color:#3a4a66;text-transform:capitalize}
+  .spx-bdr .n{font-family:Georgia,"Times New Roman",serif;font-size:14px;color:#3a4a66}
+  .spx-bdr .n::first-letter{text-transform:uppercase}
   .spx-bdr .v{font-family:${MONO};font-size:12.5px;color:#7A8695}
   .spx-bdr .b{grid-column:1/-1;height:6px;border-radius:8px;background:rgba(14,34,64,.06);overflow:hidden}
   .spx-bdr .f{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,rgba(14,34,64,.10),rgba(14,34,64,.22));transition:width 1s cubic-bezier(.16,1,.3,1)}
