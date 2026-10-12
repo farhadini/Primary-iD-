@@ -231,7 +231,8 @@ const CSS = `
   .fdx .whole-n small{font-size:13px;color:var(--muted);margin-left:6px}
   .fdx .specimen{margin:30px 0 0}
   .fdx .pair{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:28px;align-items:center}
-  @media(max-width:700px){.fdx .pair{grid-template-columns:1fr;gap:34px}}
+  @container (max-width:600px){.fdx .pair{grid-template-columns:1fr;gap:34px}}
+  .fdx .specimen .spx-field{padding:clamp(16px,3vw,32px)}
   .fdx .diagram{margin:30px 0 0;padding:22px 22px 14px;border:1px solid var(--line);border-radius:16px;background:#fff}
   .fdx .dsvg svg{display:block;width:100%;height:auto;max-height:220px}
   .fdx .dsvg .st{fill:none;stroke:rgba(14,34,64,.28);stroke-width:1.4}

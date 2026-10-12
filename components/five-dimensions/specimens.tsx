@@ -144,7 +144,7 @@ export function Caption({ children }: { children: React.ReactNode }) {
 const SPX_CSS = `
   .spx-field{border-radius:24px;padding:clamp(22px,5vw,56px);border:1px solid rgba(14,34,64,.06);box-shadow:0 30px 70px -50px rgba(14,34,64,.35)}
   .spx-field.tall{padding:clamp(28px,6vw,72px)}
-  .spx-card{background:rgba(254,252,249,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.7);border-radius:24px;padding:clamp(20px,3vw,32px);box-shadow:0 1px 0 rgba(255,255,255,.6) inset}
+  .spx-card{container-type:inline-size;background:rgba(254,252,249,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.7);border-radius:24px;padding:clamp(20px,3vw,32px);box-shadow:0 1px 0 rgba(255,255,255,.6) inset}
   .spx-pill{display:inline-flex;align-items:center;gap:8px;font-family:${MONO};font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#0E2240;
     background:rgba(255,255,255,.85);border:1px solid rgba(14,34,64,.1);border-radius:999px;padding:7px 14px;white-space:nowrap}
   .spx-pill::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--pc,#24A7E0)}
@@ -164,16 +164,17 @@ const SPX_CSS = `
   .spx-ticks{position:relative;height:56px;margin:0 6px}
   .spx-ticks span{position:absolute;bottom:0;width:2px;margin-left:-1px;border-radius:2px;transition:background .5s cubic-bezier(.16,1,.3,1),height .5s cubic-bezier(.16,1,.3,1)}
   .spx-marker{position:absolute;bottom:-4px;width:4px;height:64px;margin-left:-2px;border-radius:3px;transition:left 1.1s cubic-bezier(.16,1,.3,1)}
-  .spx-axis{position:relative;height:34px;margin:10px 6px 0}
+  .spx-axis{position:relative;height:48px;margin:10px 6px 0}
   .spx-axis span{position:absolute;top:0;transform:translateX(-50%);font-family:${MONO};font-size:10.5px;letter-spacing:.04em;color:#7A8695;white-space:nowrap}
+  .spx-axis span:nth-child(even){top:20px}
   .spx-axis span.on{color:#0E2240;font-weight:600}
   .spx-legend{display:flex;justify-content:space-between;font-family:${MONO};font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9aa3b0;margin:4px 6px 0}
-  .spx-radar{position:relative;max-width:440px;margin:0 auto;padding:34px 46px}
+  .spx-radar{position:relative;max-width:520px;margin:0 auto;padding:40px clamp(56px,14%,96px)}
   .spx-radar svg{display:block;width:100%;overflow:visible}
   .spx-grow{transform-origin:160px 160px;transform-box:view-box;transition:transform 1.2s cubic-bezier(.16,1,.3,1),opacity .6s ease}
   .spx-rlab{position:absolute;transform:translate(-50%,-50%);font-size:10px;padding:6px 11px}
   .spx-rlab b{font-weight:600;margin-left:2px;color:#3a4a66}
   .spx-cap{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:16px;line-height:1.5;color:#3a4a66;margin:14px 2px 0}
-  @media(max-width:560px){.spx-rlab{font-size:8.5px;padding:5px 8px;letter-spacing:.06em}.spx-radar{padding:30px 34px}.spx-axis span{font-size:9px}}
+  @media(max-width:560px){.spx-rlab{font-size:8.5px;padding:5px 8px;letter-spacing:.06em}.spx-radar{padding:34px 58px}.spx-axis span{font-size:9px}}
   @media(prefers-reduced-motion:reduce){.spx-arc,.spx-grow,.spx-marker,.spx-ticks span{transition:none!important}}
 `
