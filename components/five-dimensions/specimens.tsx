@@ -108,7 +108,7 @@ export function Radar({ dims, live }: { dims: Dim[]; live: boolean }) {
   }
   const poly = dims.map((d, i) => pt(i, d.score / 100).join(",")).join(" ")
   return (
-    <div className="spx-radar">
+    <div className="spx-radar"><div className="spx-rin">
       <svg viewBox="0 0 320 320" role="img" aria-label={"A sample Primary iD: " + dims.map((d) => `${d.name} ${d.score}`).join(", ")}>
         <defs>
           <filter id="spx-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="26" /></filter>
@@ -133,7 +133,7 @@ export function Radar({ dims, live }: { dims: Dim[]; live: boolean }) {
           </span>
         )
       })}
-    </div>
+    </div></div>
   )
 }
 
@@ -170,6 +170,7 @@ const SPX_CSS = `
   .spx-axis span.on{color:#0E2240;font-weight:600}
   .spx-legend{display:flex;justify-content:space-between;font-family:${MONO};font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#9aa3b0;margin:4px 6px 0}
   .spx-radar{position:relative;max-width:520px;margin:0 auto;padding:40px clamp(56px,14%,96px)}
+  .spx-rin{position:relative}
   .spx-radar svg{display:block;width:100%;overflow:visible}
   .spx-grow{transform-origin:160px 160px;transform-box:view-box;transition:transform 1.2s cubic-bezier(.16,1,.3,1),opacity .6s ease}
   .spx-rlab{position:absolute;transform:translate(-50%,-50%);font-size:10px;padding:6px 11px}
