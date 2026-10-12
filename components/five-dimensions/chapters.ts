@@ -13,8 +13,11 @@ export type Chapter = {
   label: string; look: { b: string; t: string }[]
   qs: { q: string; why: string }[]; tells: string; close: string; sources: string; href: string
   note: DoctorNote | null
-  // One real question from the bank, its answers on a 0–100 scale, the sample answer marked.
-  scale: { title: string; pick: string; options: { label: string; score: number }[] }
+  // The sample patient's eight answers (values from the question bank). They average
+  // to `score`; `lever` marks the weakest, where the first visit starts. One sample
+  // person across all five chapters: 50s, light smoker, a bit heavy, treated for
+  // blood pressure, sugary drinks most weeks, overdue for a cleaning.
+  answers: { short: string; label: string; score: number; lever: boolean }[]
 }
 
 export const CHAPTERS: Chapter[] = [
@@ -93,28 +96,56 @@ export const CHAPTERS: Chapter[] = [
     ],
     "score": 72,
     "note": null,
-    "scale": {
-      "title": "How often do you have sugary drinks or snacks between meals?",
-      "pick": "Once a day",
-      "options": [
-        {
-          "label": "Constantly",
-          "score": 28
-        },
-        {
-          "label": "2–3 times a day",
-          "score": 48
-        },
-        {
-          "label": "Once a day",
-          "score": 70
-        },
-        {
-          "label": "Rarely",
-          "score": 92
-        }
-      ]
-    }
+    "answers": [
+      {
+        "short": "sugary snacking",
+        "label": "2–3 times a day",
+        "score": 48,
+        "lever": false
+      },
+      {
+        "short": "a recent cavity",
+        "label": "No",
+        "score": 90,
+        "lever": false
+      },
+      {
+        "short": "fluoride habit",
+        "label": "Yes",
+        "score": 88,
+        "lever": false
+      },
+      {
+        "short": "bleeding gums",
+        "label": "Yes",
+        "score": 40,
+        "lever": true
+      },
+      {
+        "short": "time since a cleaning",
+        "label": "1–2 years",
+        "score": 48,
+        "lever": false
+      },
+      {
+        "short": "dry mouth",
+        "label": "No",
+        "score": 88,
+        "lever": false
+      },
+      {
+        "short": "grinding or clenching",
+        "label": "No",
+        "score": 85,
+        "lever": false
+      },
+      {
+        "short": "smile confidence",
+        "label": "Very confident",
+        "score": 92,
+        "lever": false
+      }
+    ]
   },
   {
     "slug": "sleep",
@@ -191,28 +222,56 @@ export const CHAPTERS: Chapter[] = [
     ],
     "score": 68,
     "note": null,
-    "scale": {
-      "title": "Sitting and reading, how likely are you to doze off?",
-      "pick": "Slight chance",
-      "options": [
-        {
-          "label": "High chance",
-          "score": 32
-        },
-        {
-          "label": "Moderate chance",
-          "score": 50
-        },
-        {
-          "label": "Slight chance",
-          "score": 70
-        },
-        {
-          "label": "Would never",
-          "score": 90
-        }
-      ]
-    }
+    "answers": [
+      {
+        "short": "loud snoring",
+        "label": "Yes",
+        "score": 45,
+        "lever": true
+      },
+      {
+        "short": "daytime tiredness",
+        "label": "No",
+        "score": 85,
+        "lever": false
+      },
+      {
+        "short": "witnessed pauses",
+        "label": "No",
+        "score": 92,
+        "lever": false
+      },
+      {
+        "short": "blood pressure",
+        "label": "Yes",
+        "score": 52,
+        "lever": false
+      },
+      {
+        "short": "build",
+        "label": "A bit heavy",
+        "score": 66,
+        "lever": false
+      },
+      {
+        "short": "age range",
+        "label": "50–64",
+        "score": 66,
+        "lever": false
+      },
+      {
+        "short": "neck",
+        "label": "Average",
+        "score": 68,
+        "lever": false
+      },
+      {
+        "short": "dozing off",
+        "label": "Slight chance",
+        "score": 70,
+        "lever": false
+      }
+    ]
   },
   {
     "slug": "nutrition",
@@ -289,28 +348,56 @@ export const CHAPTERS: Chapter[] = [
     ],
     "score": 81,
     "note": null,
-    "scale": {
-      "title": "How many servings of vegetables do you eat per day?",
-      "pick": "1 a day",
-      "options": [
-        {
-          "label": "Rarely",
-          "score": 30
-        },
-        {
-          "label": "A few a week",
-          "score": 46
-        },
-        {
-          "label": "1 a day",
-          "score": 66
-        },
-        {
-          "label": "2+ a day",
-          "score": 92
-        }
-      ]
-    }
+    "answers": [
+      {
+        "short": "olive oil",
+        "label": "Yes",
+        "score": 88,
+        "lever": false
+      },
+      {
+        "short": "vegetables",
+        "label": "2+ a day",
+        "score": 92,
+        "lever": false
+      },
+      {
+        "short": "fruit",
+        "label": "1–2 a day",
+        "score": 70,
+        "lever": false
+      },
+      {
+        "short": "red & processed meat",
+        "label": "Rarely",
+        "score": 90,
+        "lever": false
+      },
+      {
+        "short": "sugary drinks",
+        "label": "2–4",
+        "score": 68,
+        "lever": true
+      },
+      {
+        "short": "water",
+        "label": "3–5",
+        "score": 68,
+        "lever": false
+      },
+      {
+        "short": "alcohol",
+        "label": "Rarely / none",
+        "score": 88,
+        "lever": false
+      },
+      {
+        "short": "whole grains",
+        "label": "Yes",
+        "score": 86,
+        "lever": false
+      }
+    ]
   },
   {
     "slug": "family",
@@ -387,28 +474,56 @@ export const CHAPTERS: Chapter[] = [
     ],
     "score": 75,
     "note": null,
-    "scale": {
-      "title": "How would you rate your current stress?",
-      "pick": "Moderate",
-      "options": [
-        {
-          "label": "Very high",
-          "score": 32
-        },
-        {
-          "label": "High",
-          "score": 48
-        },
-        {
-          "label": "Moderate",
-          "score": 68
-        },
-        {
-          "label": "Low",
-          "score": 88
-        }
-      ]
-    }
+    "answers": [
+      {
+        "short": "family gum disease",
+        "label": "No",
+        "score": 88,
+        "lever": false
+      },
+      {
+        "short": "family diabetes",
+        "label": "No",
+        "score": 84,
+        "lever": false
+      },
+      {
+        "short": "early family heart disease",
+        "label": "No",
+        "score": 84,
+        "lever": false
+      },
+      {
+        "short": "smoking history",
+        "label": "Current — light",
+        "score": 46,
+        "lever": true
+      },
+      {
+        "short": "tooth loss to gum disease",
+        "label": "No",
+        "score": 88,
+        "lever": false
+      },
+      {
+        "short": "autoimmune history",
+        "label": "No",
+        "score": 82,
+        "lever": false
+      },
+      {
+        "short": "pregnancy gum changes",
+        "label": "Yes / N/A",
+        "score": 62,
+        "lever": false
+      },
+      {
+        "short": "current stress",
+        "label": "Moderate",
+        "score": 68,
+        "lever": false
+      }
+    ]
   },
   {
     "slug": "longevity",
@@ -485,27 +600,55 @@ export const CHAPTERS: Chapter[] = [
     ],
     "score": 64,
     "note": null,
-    "scale": {
-      "title": "Minutes of moderate exercise per week?",
-      "pick": "Some",
-      "options": [
-        {
-          "label": "Rarely",
-          "score": 32
-        },
-        {
-          "label": "Some",
-          "score": 52
-        },
-        {
-          "label": "75–150",
-          "score": 72
-        },
-        {
-          "label": "150+",
-          "score": 92
-        }
-      ]
-    }
+    "answers": [
+      {
+        "short": "tobacco",
+        "label": "Occasional",
+        "score": 48,
+        "lever": true
+      },
+      {
+        "short": "exercise",
+        "label": "75–150",
+        "score": 72,
+        "lever": false
+      },
+      {
+        "short": "sleep hours",
+        "label": "6–7",
+        "score": 70,
+        "lever": false
+      },
+      {
+        "short": "weight",
+        "label": "A little high",
+        "score": 66,
+        "lever": false
+      },
+      {
+        "short": "knowing your labs",
+        "label": "No",
+        "score": 60,
+        "lever": false
+      },
+      {
+        "short": "blood sugar",
+        "label": "Yes",
+        "score": 50,
+        "lever": false
+      },
+      {
+        "short": "blood pressure",
+        "label": "Normal / great",
+        "score": 90,
+        "lever": false
+      },
+      {
+        "short": "overall diet",
+        "label": "Fair",
+        "score": 52,
+        "lever": false
+      }
+    ]
   }
 ]

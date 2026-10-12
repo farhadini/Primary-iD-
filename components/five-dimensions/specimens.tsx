@@ -137,6 +137,56 @@ export function Radar({ dims, live }: { dims: Dim[]; live: boolean }) {
   )
 }
 
+
+export type Answer = { short: string; label: string; score: number; lever: boolean }
+
+/** One dimension's score as its eight answers: each row is one question, the weakest marked as the lever. */
+export function Breakdown({ d, answers, live }: { d: Dim; answers: Answer[]; live: boolean }) {
+  return (
+    <div className="spx-bd">
+      <div className="spx-bdh"><span>Eight answers</span><b>{d.score}<small> avg</small></b></div>
+      {answers.map((a, i) => (
+        <div key={a.short} className={`spx-bdr${a.lever ? " lever" : ""}`} style={{ ["--dc" as string]: d.color }}>
+          <span className="n">{a.short}</span>
+          <span className="v">{a.score}</span>
+          <span className="b"><span className="f" style={{ width: live ? `${a.score}%` : "0%", transitionDelay: `${i * 60}ms` }} /></span>
+          {a.lever && <span className="tagl">Your lever here · {a.label}</span>}
+        </div>
+      ))}
+    </div>
+  )
+}
+
+/** Five places we look, two things we look for. */
+export function RootMap({ dims, links, live }: { dims: Dim[]; links: Record<string, ("inflammation" | "toxic")[]>; live: boolean }) {
+  const H = 300, rowY = (i: number) => 30 + i * 60
+  const sig = { inflammation: 96, toxic: 214 } as const
+  return (
+    <div className="spx-map">
+      <svg viewBox="0 0 520 300" role="img" aria-label="The five dimensions, each linked to inflammation, toxic load or both">
+        <defs>
+          {dims.map((d) => (
+            <linearGradient key={d.short} id={`lk-${d.short}`} x1="0" x2="1">
+              <stop offset="0" stopColor={d.color} stopOpacity=".9" /><stop offset="1" stopColor={d.color} stopOpacity=".25" />
+            </linearGradient>
+          ))}
+        </defs>
+        {dims.map((d, i) => (links[d.short] || []).map((k) => (
+          <path key={d.short + k} d={`M 178 ${rowY(i)} C 300 ${rowY(i)}, 300 ${sig[k]}, 372 ${sig[k]}`} fill="none"
+            stroke={`url(#lk-${d.short})`} strokeWidth="2.4" strokeLinecap="round" className="spx-link" style={{ strokeDashoffset: live ? 0 : 320, transitionDelay: `${i * 90}ms` }} />
+        )))}
+        {dims.map((d, i) => <circle key={d.short} cx="178" cy={rowY(i)} r="4.5" fill={d.color} />)}
+        <circle cx="372" cy={sig.inflammation} r="6" fill="#D97757" /><circle cx="372" cy={sig.toxic} r="6" fill="#7A8695" />
+      </svg>
+      {dims.map((d, i) => (
+        <span key={d.short} className="spx-pill spx-mlab" style={{ top: `${(rowY(i) / H) * 100}%`, ["--pc" as string]: d.color }}>{d.name}</span>
+      ))}
+      <span className="spx-sig" style={{ top: `${(sig.inflammation / H) * 100}%` }}><b>Inflammation</b>quiet, and it does not switch off</span>
+      <span className="spx-sig" style={{ top: `${(sig.toxic / H) * 100}%` }}><b>Toxic load</b>what you are exposed to, and carry</span>
+    </div>
+  )
+}
+
 export function Caption({ children }: { children: React.ReactNode }) {
   return <p className="spx-cap">{children}</p>
 }
@@ -177,5 +227,25 @@ const SPX_CSS = `
   .spx-rlab b{font-weight:600;margin-left:2px;color:#3a4a66}
   .spx-cap{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:16px;line-height:1.5;color:#3a4a66;margin:14px 2px 0}
   @media(max-width:560px){.spx-rlab{font-size:8.5px;padding:5px 8px;letter-spacing:.06em}.spx-radar{padding:34px 58px}.spx-axis span{font-size:9px}}
-  @media(prefers-reduced-motion:reduce){.spx-arc,.spx-grow,.spx-marker,.spx-ticks span{transition:none!important}}
+
+  .spx-bd{display:flex;flex-direction:column}
+  .spx-bdh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+  .spx-bdh span{font-family:${MONO};font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#7A8695}
+  .spx-bdh b{font-family:${MONO};font-weight:400;font-size:26px;color:#0E2240}.spx-bdh small{font-size:11px;color:#7A8695;margin-left:4px}
+  .spx-bdr{display:grid;grid-template-columns:1fr auto;gap:5px 10px;padding:7px 0;border-top:1px solid rgba(14,34,64,.06)}
+  .spx-bdr .n{font-family:Georgia,"Times New Roman",serif;font-size:14px;color:#3a4a66;text-transform:capitalize}
+  .spx-bdr .v{font-family:${MONO};font-size:12.5px;color:#7A8695}
+  .spx-bdr .b{grid-column:1/-1;height:6px;border-radius:8px;background:rgba(14,34,64,.06);overflow:hidden}
+  .spx-bdr .f{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,rgba(14,34,64,.10),rgba(14,34,64,.22));transition:width 1s cubic-bezier(.16,1,.3,1)}
+  .spx-bdr.lever .n{color:#0E2240;font-weight:600}.spx-bdr.lever .v{color:#0E2240}
+  .spx-bdr.lever .f{background:linear-gradient(90deg,color-mix(in srgb,var(--dc) 45%,#fff),var(--dc))}
+  .spx-bdr .tagl{grid-column:1/-1;justify-self:start;font-family:${MONO};font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#0E2240;background:color-mix(in srgb,var(--dc) 18%,#fff);border-radius:999px;padding:4px 10px;margin-top:2px}
+  .spx-map{position:relative;max-width:620px;margin:0 auto}
+  .spx-map svg{display:block;width:100%;overflow:visible}
+  .spx-link{stroke-dasharray:320;transition:stroke-dashoffset 1.2s cubic-bezier(.16,1,.3,1)}
+  .spx-mlab{position:absolute;right:calc(100% - 178/520*100% + 12px);transform:translateY(-50%);font-size:10px;padding:6px 12px}
+  .spx-sig{position:absolute;left:calc(372/520*100% + 16px);transform:translateY(-50%);display:flex;flex-direction:column;font-family:Georgia,"Times New Roman",serif;font-size:13px;line-height:1.35;color:#7A8695;max-width:150px}
+  .spx-sig b{font-family:${MONO};font-weight:500;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#0E2240;margin-bottom:2px}
+  @media(max-width:560px){.spx-mlab{font-size:8px;padding:4px 7px;letter-spacing:.04em}.spx-sig{font-size:11px;max-width:96px}.spx-sig b{font-size:9px}}
+  @media(prefers-reduced-motion:reduce){.spx-arc,.spx-grow,.spx-marker,.spx-ticks span,.spx-bdr .f,.spx-link{transition:none!important}}
 `

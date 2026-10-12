@@ -20,7 +20,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { CHAPTERS, type DoctorNote } from "./chapters"
-import { Field, Gauge, TickScale, Radar, Caption, Pill, type Dim } from "./specimens"
+import { Field, Gauge, Breakdown, Radar, RootMap, Caption, Pill, type Dim } from "./specimens"
 
 function Note({ note, name }: { note: DoctorNote; name: string }) {
   return (
@@ -73,6 +73,41 @@ export default function ChaptersView() {
   return (
     <div className="fdx" style={{ ["--cur" as string]: tint }}>
       <style>{CSS}</style>
+
+      {/* Why these five. Claims are association and process only (Brand OS rails). */}
+      <section className="why5" aria-labelledby="why5-h">
+        <div className="frame">
+          <span className="eyebrow5">Why these five</span>
+          <h2 id="why5-h">Not how you are doing. <em>What is building.</em></h2>
+          <div className="why5-grid">
+            <div className="why5-copy">
+              <p className="lead5">Most health scores tell you how you are doing today. The Primary iD looks for what is building: the slow, quiet signals that research links to many long-term conditions, years before you would feel them.</p>
+              <div className="sig5"><b>Inflammation</b><p>Low-level inflammation that does not switch off. It often shows first in the gums, and research links it with heart disease, diabetes and other chronic conditions.</p></div>
+              <div className="sig5"><b>Toxic load</b><p>What you are exposed to and carry: tobacco, alcohol, sugary drinks, and the materials already in your mouth, which Dr. Gabi checks at your visit.</p></div>
+              <p>Each of the five dimensions is a place where those signals show up, in or through your mouth. And each one is something you can act on.</p>
+            </div>
+            <figure className="why5-fig">
+              <Field hues={["#D97757", "#7B68EE", "#D4B584"]}>
+                <RootMap dims={dims} live={radarLive} links={{ oral: ["inflammation", "toxic"], sleep: ["inflammation"], nutrition: ["inflammation", "toxic"], family: ["inflammation"], longevity: ["inflammation", "toxic"] }} />
+              </Field>
+              <Caption>Five places we look. Two things we are looking for.</Caption>
+            </figure>
+          </div>
+
+          <div className="vs5">
+            <div className="vs5-card dim5">
+              <span className="spx-pill" style={{ ["--pc" as string]: "#9aa3b0" }}>Biological age</span>
+              <div className="vs5-big">47</div>
+              <p>One number for how old your body seems. It does not say what is driving it or what to do first, and the science behind it is still settling.</p>
+            </div>
+            <div className="vs5-card">
+              <span className="spx-pill">Primary iD</span>
+              <div className="vs5-lever"><span>Your clearest lever</span><b>Bleeding gums</b></div>
+              <p>A risk read: where inflammation and toxic load are likely building, and the one change that would matter most. Directional, not a diagnosis, and not a measure of biological age.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* The whole iD, then ways in by feeling */}
       <section className="ways" aria-labelledby="ways-h">
@@ -148,10 +183,10 @@ export default function ChaptersView() {
                     <Field hues={[c.color, CHAPTERS[(i + 1) % CHAPTERS.length].color, CHAPTERS[(i + 4) % CHAPTERS.length].color]}>
                       <div className="pair">
                         <Gauge d={dims[i]} live={seen.includes(i)} />
-                        <TickScale s={c.scale} color={c.color} live={seen.includes(i)} />
+                        <Breakdown d={dims[i]} answers={c.answers} live={seen.includes(i)} />
                       </div>
                     </Field>
-                    <Caption>One of the eight questions. Every answer has a value from 0 to 100, and the eight together make your {c.name.toLowerCase()} score.</Caption>
+                    <Caption>A sample {c.name.toLowerCase()} score, and the eight answers behind it. The weakest, {c.answers.find((a) => a.lever)?.short}, is where the first visit starts.</Caption>
                   </figure>
 
                   <h3 className="lab">What we look at</h3>
@@ -225,6 +260,25 @@ const CSS = `
   .fdx .sheet p{font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.65;margin:0 0 16px;max-width:66ch}
   .fdx .sheet .def{font-size:21px;color:var(--navy)}
   .fdx .sheet h3.lab{margin:34px 0 12px}
+  .fdx .why5{padding:24px 0 72px}
+  .fdx .eyebrow5{display:inline-flex;align-items:center;gap:12px;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+  .fdx .eyebrow5::before{content:"";width:26px;height:1px;background:var(--blue)}
+  .fdx .why5 h2{font-size:clamp(30px,4vw,48px);line-height:1.08;margin:16px 0 26px;max-width:20ch}
+  .fdx .why5-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:48px;align-items:center}
+  .fdx .why5-copy p{font-family:Georgia,"Times New Roman",serif;font-size:17.5px;line-height:1.65;margin:0 0 14px;max-width:60ch}
+  .fdx .why5-copy .lead5{font-size:20px;color:var(--navy)}
+  .fdx .sig5{border-left:2px solid var(--line);padding:2px 0 2px 16px;margin:18px 0}
+  .fdx .sig5 b{font-family:"JetBrains Mono","Geist Mono",ui-monospace,Menlo,monospace;font-weight:500;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--navy)}
+  .fdx .sig5 p{margin:4px 0 0!important;font-size:16px!important}
+  .fdx .vs5{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:44px}
+  .fdx .vs5-card{background:rgba(254,252,249,.8);border:1px solid var(--line);border-radius:24px;padding:26px}
+  .fdx .vs5-card p{font-size:15px;line-height:1.55;margin:14px 0 0}
+  .fdx .vs5-card.dim5{opacity:.8}
+  .fdx .vs5-big{font-family:"JetBrains Mono","Geist Mono",ui-monospace,Menlo,monospace;font-size:48px;color:#9aa3b0;margin-top:14px;line-height:1}
+  .fdx .vs5-lever{margin-top:14px;display:flex;flex-direction:column}
+  .fdx .vs5-lever span{font-family:"JetBrains Mono","Geist Mono",ui-monospace,Menlo,monospace;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .fdx .vs5-lever b{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:28px;color:var(--navy);margin-top:4px}
+  @media(max-width:860px){.fdx .why5-grid,.fdx .vs5{grid-template-columns:1fr;gap:28px}}
   .fdx .whole{margin:0 0 44px}
   .fdx .whole-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
   .fdx .whole-n{font-family:"JetBrains Mono","Geist Mono",ui-monospace,Menlo,monospace;font-size:34px;color:var(--navy);letter-spacing:.02em}
