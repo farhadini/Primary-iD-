@@ -20,6 +20,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { CHAPTERS, type DoctorNote } from "./chapters"
+import { Field, Gauge, TickScale, Radar, Caption, Pill, type Dim } from "./specimens"
 
 function Note({ note, name }: { note: DoctorNote; name: string }) {
   return (
@@ -40,6 +41,9 @@ function Note({ note, name }: { note: DoctorNote; name: string }) {
 export default function ChaptersView() {
   const [current, setCurrent] = useState(-1)
   const [seen, setSeen] = useState<number[]>([])
+  const [radarLive, setRadarLive] = useState(false)
+  useEffect(() => { const t = setTimeout(() => setRadarLive(true), 250); return () => clearTimeout(t) }, [])
+  const dims: Dim[] = CHAPTERS.map((c) => ({ name: c.name, short: c.slug, color: c.color, score: c.score }))
   const refs = useRef<(HTMLElement | null)[]>([])
 
   // The chapter in view is the last one whose top has passed 45% of the screen.
@@ -70,9 +74,16 @@ export default function ChaptersView() {
     <div className="fdx" style={{ ["--cur" as string]: tint }}>
       <style>{CSS}</style>
 
-      {/* Ways in, by feeling */}
+      {/* The whole iD, then ways in by feeling */}
       <section className="ways" aria-labelledby="ways-h">
         <div className="frame">
+          <figure className="whole">
+            <Field hues={["#7B68EE", "#E8985E", "#48C28C"]} tall>
+              <div className="whole-top"><Pill>A sample Primary iD</Pill><span className="whole-n">72<small>/ 100</small></span></div>
+              <Radar dims={dims} live={radarLive} />
+            </Field>
+            <Caption>Your whole picture on one chart. Not one dimension at a time, but all five at once.</Caption>
+          </figure>
           <p className="lab" id="ways-h">Where would you like to start?</p>
           <div className="wayrow">
             {CHAPTERS.map((c) => (
@@ -133,9 +144,14 @@ export default function ChaptersView() {
 
                   {c.note && <Note note={c.note} name={c.name} />}
 
-                  <figure className="diagram">
-                    <div className="dsvg" dangerouslySetInnerHTML={{ __html: c.svg }} />
-                    <figcaption>{c.label}.</figcaption>
+                  <figure className="specimen">
+                    <Field hues={[c.color, CHAPTERS[(i + 1) % CHAPTERS.length].color, CHAPTERS[(i + 4) % CHAPTERS.length].color]}>
+                      <div className="pair">
+                        <Gauge d={dims[i]} live={seen.includes(i)} />
+                        <TickScale s={c.scale} color={c.color} live={seen.includes(i)} />
+                      </div>
+                    </Field>
+                    <Caption>One of the eight questions. Every answer has a value from 0 to 100, and the eight together make your {c.name.toLowerCase()} score.</Caption>
                   </figure>
 
                   <h3 className="lab">What we look at</h3>
@@ -180,7 +196,8 @@ const CSS = `
   .fdx .field{background:color-mix(in srgb,var(--cur) 9%,var(--cream));transition:background-color .5s cubic-bezier(.22,1,.36,1);padding:64px 0 96px}
   .fdx .grid{display:grid;grid-template-columns:280px minmax(0,1fr);gap:48px;align-items:start}
   .fdx .rail{position:sticky;top:88px}
-  .fdx .mini{background:var(--warm);border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 26px 60px -40px rgba(14,34,64,.45)}
+  .fdx .mini{background:rgba(254,252,249,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.8);border-radius:24px;padding:22px;box-shadow:0 26px 60px -40px rgba(14,34,64,.45)}
+  .fdx .msmp,.fdx .mrow .ms,.fdx .mcomp{font-family:"JetBrains Mono","Geist Mono",ui-monospace,Menlo,monospace!important}
   .fdx .mtop{display:flex;justify-content:space-between;align-items:baseline}
   .fdx .mlab{font-family:Georgia,"Times New Roman",serif;font-size:16px;color:var(--navy)}.fdx .mlab em{color:var(--blue);font-style:italic}
   .fdx .msmp{font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
@@ -208,6 +225,13 @@ const CSS = `
   .fdx .sheet p{font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.65;margin:0 0 16px;max-width:66ch}
   .fdx .sheet .def{font-size:21px;color:var(--navy)}
   .fdx .sheet h3.lab{margin:34px 0 12px}
+  .fdx .whole{margin:0 0 44px}
+  .fdx .whole-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .fdx .whole-n{font-family:"JetBrains Mono","Geist Mono",ui-monospace,Menlo,monospace;font-size:34px;color:var(--navy);letter-spacing:.02em}
+  .fdx .whole-n small{font-size:13px;color:var(--muted);margin-left:6px}
+  .fdx .specimen{margin:30px 0 0}
+  .fdx .pair{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:28px;align-items:center}
+  @media(max-width:700px){.fdx .pair{grid-template-columns:1fr;gap:34px}}
   .fdx .diagram{margin:30px 0 0;padding:22px 22px 14px;border:1px solid var(--line);border-radius:16px;background:#fff}
   .fdx .dsvg svg{display:block;width:100%;height:auto;max-height:220px}
   .fdx .dsvg .st{fill:none;stroke:rgba(14,34,64,.28);stroke-width:1.4}

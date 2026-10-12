@@ -1,4 +1,4 @@
-// GENERATED from public/id-deck.js (the deck's card backs: drawing and "What we look at")
+// GENERATED from public/id-deck.js (the deck's card backs: "What we look at")
 // and the canonical question bank v2.2 (primary-id-bank.json: questions and their
 // clinical basis, rewritten for patients). Instrument names stay out of patient copy;
 // they live only in `sources`. Edit the page wording here.
@@ -10,9 +10,11 @@ export type DoctorNote = { kind: "video" | "audio"; src: string; poster?: string
 export type Chapter = {
   slug: string; n: string; name: string; color: string; feel: string; score: number
   title: [string, string]; definition: string; reframe: string
-  svg: string; label: string; look: { b: string; t: string }[]
+  label: string; look: { b: string; t: string }[]
   qs: { q: string; why: string }[]; tells: string; close: string; sources: string; href: string
   note: DoctorNote | null
+  // One real question from the bank, its answers on a 0–100 scale, the sample answer marked.
+  scale: { title: string; pick: string; options: { label: string; score: number }[] }
 }
 
 export const CHAPTERS: Chapter[] = [
@@ -66,7 +68,6 @@ export const CHAPTERS: Chapter[] = [
     "close": "Every other dimension shows up here first.",
     "sources": "Featherstone JDB, J Calif Dent Assoc 2007 · Eke PI et al., J Periodontol 2013 · Slade GD, Community Dent Oral Epidemiol 1997",
     "href": "/book/preventive/?dim=oral",
-    "svg": "<svg class=\"diagram-svg\" viewBox=\"0 0 300 134\" width=\"100%\" aria-label=\"A tooth with the gum line, three pocket depth readings and the bone level\">\n          <path class=\"gz\" d=\"M34,72 C92,58 208,58 266,72 L266,124 L34,124 Z\"/>\n          <path class=\"st\" d=\"M118,26 h64 a11,11 0 0 1 11,11 v34 c0,27 -11,45 -19,54 l-7,-32 -6,32 c-9,-9 -19,-27 -19,-54 v-34 a11,11 0 0 1 11,-11 z\"/>\n          <path class=\"hl\" d=\"M34,72 C92,58 208,58 266,72\"/>\n          <path class=\"st\" d=\"M130,72 v20 M150,72 v30 M170,72 v20\"/>\n          <circle class=\"dot\" cx=\"130\" cy=\"92\" r=\"3.4\"/><circle class=\"dot\" cx=\"150\" cy=\"102\" r=\"3.4\"/><circle class=\"dot\" cx=\"170\" cy=\"92\" r=\"3.4\"/>\n          <path class=\"st\" d=\"M34,116 h232\" stroke-dasharray=\"4 6\"/>\n        </svg>",
     "label": "A tooth with the gum line, three pocket depth readings and the bone level",
     "look": [
       {
@@ -91,7 +92,29 @@ export const CHAPTERS: Chapter[] = [
       }
     ],
     "score": 72,
-    "note": null
+    "note": null,
+    "scale": {
+      "title": "How often do you have sugary drinks or snacks between meals?",
+      "pick": "Once a day",
+      "options": [
+        {
+          "label": "Constantly",
+          "score": 28
+        },
+        {
+          "label": "2–3 times a day",
+          "score": 48
+        },
+        {
+          "label": "Once a day",
+          "score": 70
+        },
+        {
+          "label": "Rarely",
+          "score": 92
+        }
+      ]
+    }
   },
   {
     "slug": "sleep",
@@ -143,7 +166,6 @@ export const CHAPTERS: Chapter[] = [
     "close": "Rest starts with how you breathe.",
     "sources": "Chung F et al., Anesthesiology 2008 · Johns MW, Sleep 1991",
     "href": "/book/airway/?dim=sleep",
-    "svg": "<svg class=\"diagram-svg\" viewBox=\"0 0 300 134\" width=\"100%\" aria-label=\"A head in profile with the airway channel, palate and tongue base marked\">\n          <path class=\"st\" d=\"M78,130 C76,64 110,20 158,20 C204,20 234,52 234,86 c0,12 -10,16 -16,18 -6,2 -3,10 -1,16\"/>\n          <path class=\"gz\" d=\"M152,54 C172,74 172,102 154,126 L134,126 C154,102 154,76 134,56 Z\"/>\n          <path class=\"hl\" d=\"M142,55 C162,75 162,103 144,128\"/>\n          <path class=\"st\" d=\"M96,98 q24,-14 42,-3\"/>\n          <circle class=\"dot\" cx=\"153\" cy=\"64\" r=\"3.4\"/><circle class=\"dot\" cx=\"151\" cy=\"106\" r=\"3.4\"/>\n        </svg>",
     "label": "A head in profile with the airway channel, palate and tongue base marked",
     "look": [
       {
@@ -168,7 +190,29 @@ export const CHAPTERS: Chapter[] = [
       }
     ],
     "score": 68,
-    "note": null
+    "note": null,
+    "scale": {
+      "title": "Sitting and reading, how likely are you to doze off?",
+      "pick": "Slight chance",
+      "options": [
+        {
+          "label": "High chance",
+          "score": 32
+        },
+        {
+          "label": "Moderate chance",
+          "score": 50
+        },
+        {
+          "label": "Slight chance",
+          "score": 70
+        },
+        {
+          "label": "Would never",
+          "score": 90
+        }
+      ]
+    }
   },
   {
     "slug": "nutrition",
@@ -220,7 +264,6 @@ export const CHAPTERS: Chapter[] = [
     "close": "Everything you eat starts in your mouth.",
     "sources": "Martínez-González MA et al., PLoS One 2012 · Hedrick VE et al., J Am Diet Assoc 2012",
     "href": "/book/longevity/?dim=nutrition",
-    "svg": "<svg class=\"diagram-svg\" viewBox=\"0 0 300 134\" width=\"100%\" aria-label=\"A tooth with erosion zones and a timeline of acid exposures\">\n          <path class=\"st\" d=\"M116,26 h68 a11,11 0 0 1 11,11 v32 c0,26 -11,44 -19,52 l-7,-30 -7,30 c-8,-8 -19,-26 -19,-52 v-32 a11,11 0 0 1 11,-11 z\"/>\n          <path class=\"gz\" d=\"M116,26 h68 a11,11 0 0 1 11,11 v11 h-90 v-11 a11,11 0 0 1 11,-11 z\"/>\n          <path class=\"hl\" d=\"M116,44 C140,36 170,36 195,44\"/>\n          <circle class=\"dot\" cx=\"127\" cy=\"76\" r=\"3.4\"/><circle class=\"dot\" cx=\"184\" cy=\"76\" r=\"3.4\"/>\n          <path class=\"st\" d=\"M40,122 h220\"/>\n          <circle class=\"dot\" cx=\"58\" cy=\"122\" r=\"3\"/><circle class=\"dot\" cx=\"92\" cy=\"122\" r=\"3\"/><circle class=\"dot\" cx=\"116\" cy=\"122\" r=\"3\"/><circle class=\"dot\" cx=\"170\" cy=\"122\" r=\"3\"/><circle class=\"dot\" cx=\"198\" cy=\"122\" r=\"3\"/><circle class=\"dot\" cx=\"216\" cy=\"122\" r=\"3\"/>\n        </svg>",
     "label": "A tooth with erosion zones and a timeline of acid exposures",
     "look": [
       {
@@ -245,7 +288,29 @@ export const CHAPTERS: Chapter[] = [
       }
     ],
     "score": 81,
-    "note": null
+    "note": null,
+    "scale": {
+      "title": "How many servings of vegetables do you eat per day?",
+      "pick": "1 a day",
+      "options": [
+        {
+          "label": "Rarely",
+          "score": 30
+        },
+        {
+          "label": "A few a week",
+          "score": 46
+        },
+        {
+          "label": "1 a day",
+          "score": 66
+        },
+        {
+          "label": "2+ a day",
+          "score": 92
+        }
+      ]
+    }
   },
   {
     "slug": "family",
@@ -297,7 +362,6 @@ export const CHAPTERS: Chapter[] = [
     "close": "Knowing it early is how you get ahead of it.",
     "sources": "Jepsen S et al., J Periodontol 2018 · Nibali L et al., 2019",
     "href": "/book/longevity/?dim=genetics",
-    "svg": "<svg class=\"diagram-svg\" viewBox=\"0 0 300 134\" width=\"100%\" aria-label=\"A dental arch with the bone level traced across it\">\n          <path class=\"st\" d=\"M46,112 C46,40 254,40 254,112\"/>\n          <circle class=\"dot\" cx=\"52\" cy=\"94\" r=\"3\"/><circle class=\"dot\" cx=\"62\" cy=\"74\" r=\"3\"/><circle class=\"dot\" cx=\"80\" cy=\"58\" r=\"3\"/><circle class=\"dot\" cx=\"104\" cy=\"49\" r=\"3\"/><circle class=\"dot\" cx=\"132\" cy=\"45\" r=\"3\"/><circle class=\"dot\" cx=\"168\" cy=\"45\" r=\"3\"/><circle class=\"dot\" cx=\"196\" cy=\"49\" r=\"3\"/><circle class=\"dot\" cx=\"220\" cy=\"58\" r=\"3\"/><circle class=\"dot\" cx=\"238\" cy=\"74\" r=\"3\"/><circle class=\"dot\" cx=\"248\" cy=\"94\" r=\"3\"/>\n          <path class=\"hl\" d=\"M50,118 C92,106 120,126 152,110 C186,94 220,120 250,112\"/>\n        </svg>",
     "label": "A dental arch with the bone level traced across it",
     "look": [
       {
@@ -322,7 +386,29 @@ export const CHAPTERS: Chapter[] = [
       }
     ],
     "score": 75,
-    "note": null
+    "note": null,
+    "scale": {
+      "title": "How would you rate your current stress?",
+      "pick": "Moderate",
+      "options": [
+        {
+          "label": "Very high",
+          "score": 32
+        },
+        {
+          "label": "High",
+          "score": 48
+        },
+        {
+          "label": "Moderate",
+          "score": 68
+        },
+        {
+          "label": "Low",
+          "score": 88
+        }
+      ]
+    }
   },
   {
     "slug": "longevity",
@@ -374,7 +460,6 @@ export const CHAPTERS: Chapter[] = [
     "close": "The basics compound. So does knowing where you stand.",
     "sources": "Lloyd-Jones DM et al., Circulation 2022",
     "href": "/book/longevity/?dim=longevity",
-    "svg": "<svg class=\"diagram-svg\" viewBox=\"0 0 300 134\" width=\"100%\" aria-label=\"Teeth remaining, with three gaps, above a rising trend line\">\n          <g class=\"st\">\n            <path d=\"M44,34 v30 M60,34 v30 M76,34 v30 M92,34 v30\"/>\n            <path d=\"M124,34 v30 M140,34 v30 M156,34 v30\"/>\n            <path d=\"M188,34 v30 M204,34 v30 M236,34 v30 M252,34 v30\"/>\n          </g>\n          <g class=\"st\" stroke-dasharray=\"2 4\" opacity=\".5\"><path d=\"M108,34 v30 M172,34 v30 M220,34 v30\"/></g>\n          <path class=\"st\" d=\"M40,86 h220\" stroke-dasharray=\"4 6\"/>\n          <path class=\"hl\" d=\"M46,116 C96,112 132,102 168,96 C202,90 232,82 254,74\"/>\n          <circle class=\"dot\" cx=\"254\" cy=\"74\" r=\"4\"/>\n        </svg>",
     "label": "Teeth remaining, with three gaps, above a rising trend line",
     "look": [
       {
@@ -399,6 +484,28 @@ export const CHAPTERS: Chapter[] = [
       }
     ],
     "score": 64,
-    "note": null
+    "note": null,
+    "scale": {
+      "title": "Minutes of moderate exercise per week?",
+      "pick": "Some",
+      "options": [
+        {
+          "label": "Rarely",
+          "score": 32
+        },
+        {
+          "label": "Some",
+          "score": 52
+        },
+        {
+          "label": "75–150",
+          "score": 72
+        },
+        {
+          "label": "150+",
+          "score": 92
+        }
+      ]
+    }
   }
 ]
