@@ -255,8 +255,8 @@ export function VirtualConsult({ track = "consult" }: { track?: TrackName }) {
   const label: React.CSSProperties = { fontFamily: SANS, fontSize: 11, fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: BLUE, margin: "0 0 10px" }
   const question: React.CSSProperties = { fontFamily: SERIF, fontSize: 24, fontWeight: 400, letterSpacing: "-0.015em", lineHeight: 1.2, color: NAVY, margin: "0 0 8px" }
   const option: React.CSSProperties = { display: "block", width: "100%", textAlign: "left", fontFamily: SANS, fontSize: 15.5, fontWeight: 500, lineHeight: 1.4, color: NAVY, background: "#FFFFFF", border: `1px solid ${LINE}`, borderRadius: 16, padding: "14px 18px", cursor: "pointer" }
-  const input: React.CSSProperties = { display: "block", width: "100%", fontFamily: SERIF, fontSize: 16, color: NAVY, background: "#FFFFFF", border: `1px solid ${LINE}`, borderRadius: 8, padding: "12px 14px" }
-  const back: React.CSSProperties = { fontFamily: SANS, fontSize: 13, fontWeight: 600, color: MUTED, background: "transparent", border: "none", padding: 0, marginTop: 18, cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }
+  const input: React.CSSProperties = { display: "block", width: "100%", fontFamily: SERIF, fontSize: 16, color: NAVY, background: "#FFFFFF", border: `1px solid ${LINE}`, borderRadius: 8, padding: "14px 14px" }
+  const back: React.CSSProperties = { fontFamily: SANS, fontSize: 14, fontWeight: 600, color: MUTED, background: "transparent", border: "none", padding: "12px 4px", minHeight: 44, marginTop: 8, cursor: "pointer", textDecoration: "underline", textUnderlineOffset: 3 }
 
   return (
     <div className="vc" data-vc={track} style={{ background: WARM, border: `1px solid ${LINE}`, borderRadius: 24, padding: "28px 28px 26px", boxShadow: "0 24px 60px -28px rgba(14,34,64,0.28)" }}>
@@ -284,11 +284,11 @@ export function VirtualConsult({ track = "consult" }: { track?: TrackName }) {
         <div style={{ display: "grid", gap: 12, marginTop: 16 }}>
           <label htmlFor={id("name")} style={{ fontFamily: SANS, fontSize: 13, fontWeight: 600, color: NAVY }}>
             First name
-            <input id={id("name")} name="firstName" type="text" autoComplete="given-name" required style={{ ...input, marginTop: 6 }} />
+            <input id={id("name")} name="firstName" type="text" autoComplete="given-name" autoCapitalize="words" enterKeyHint="next" required style={{ ...input, marginTop: 6 }} />
           </label>
           <label htmlFor={id("phone")} style={{ fontFamily: SANS, fontSize: 13, fontWeight: 600, color: NAVY }}>
             Mobile number
-            <input id={id("phone")} name="phone" type="tel" autoComplete="tel" inputMode="tel" required aria-invalid={phoneError} aria-describedby={phoneError ? id("phone-error") : undefined} style={{ ...input, marginTop: 6, borderColor: phoneError ? DANGER : LINE }} />
+            <input id={id("phone")} name="phone" type="tel" autoComplete="tel" inputMode="tel" enterKeyHint="send" required aria-invalid={phoneError} aria-describedby={phoneError ? id("phone-error") : undefined} style={{ ...input, marginTop: 6, borderColor: phoneError ? DANGER : LINE }} />
           </label>
           {phoneError ? (
             <p id={id("phone-error")} role="alert" style={{ fontFamily: SANS, fontSize: 13, lineHeight: 1.5, color: DANGER, margin: "-4px 0 0" }}>
@@ -297,7 +297,7 @@ export function VirtualConsult({ track = "consult" }: { track?: TrackName }) {
           ) : null}
           {/* Texting consent: starts unticked, and the request goes through either way (G2). */}
           <label htmlFor={id("sms")} style={{ display: "grid", gridTemplateColumns: "20px 1fr", gap: 10, alignItems: "start", fontFamily: SANS, fontSize: 12.5, lineHeight: 1.55, color: INK_SOFT, cursor: "pointer" }}>
-            <input id={id("sms")} name="smsConsent" type="checkbox" style={{ width: 18, height: 18, marginTop: 2 }} />
+            <input id={id("sms")} name="smsConsent" type="checkbox" style={{ width: 22, height: 22, marginTop: 1, flex: "none" }} />
             <span>
               {CONSENT_TEXT} See our <a href="/terms/" target="_blank" rel="noopener" style={{ color: NAVY }}>Terms</a> and <a href="/privacy/" target="_blank" rel="noopener" style={{ color: NAVY }}>Privacy Policy</a>.
             </span>

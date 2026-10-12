@@ -137,9 +137,9 @@ function TileCard({ t }: { t: Tile }) {
         <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: ".08em", textTransform: "uppercase", color: t.ac, marginBottom: 8 }}>The root we address</div>
         <p style={{ fontSize: 12.5, color: B.body, lineHeight: 1.5, margin: 0 }}>{t.root}</p>
         <div style={{ marginTop: "auto", paddingTop: 10, display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
-          <a href={t.cta.href} onClick={(e) => e.stopPropagation()} style={{ fontSize: 13.5, fontWeight: 600, color: B.navy, textDecoration: "none" }}>{t.cta.label}</a>
+          <a className="tap" href={t.cta.href} onClick={(e) => e.stopPropagation()} style={{ fontSize: 13.5, fontWeight: 600, color: B.navy, textDecoration: "none" }}>{t.cta.label}</a>
           {t.learn && (
-            <a href={t.learn.href} onClick={(e) => e.stopPropagation()} style={{ fontSize: 12.5, color: B.muted, textDecoration: "none" }}>{t.learn.label}</a>
+            <a className="tap" href={t.learn.href} onClick={(e) => e.stopPropagation()} style={{ fontSize: 12.5, color: B.muted, textDecoration: "none" }}>{t.learn.label}</a>
           )}
         </div>
       </div>
@@ -187,8 +187,8 @@ export default function OurApproach() {
             </p>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 11, alignItems: "flex-start" }}>
-            <a href="/primary-id/" style={{ fontSize: 15, fontWeight: 600, color: B.navy, textDecoration: "none" }}>Build your Primary iD →</a>
-            <a href="/book/preventive/" style={{ fontSize: 13, color: B.muted, textDecoration: "none" }}>Book a cleaning</a>
+            <a className="tap" href="/primary-id/" style={{ fontSize: 15, fontWeight: 600, color: B.navy, textDecoration: "none" }}>Build your Primary iD →</a>
+            <a className="tap" href="/book/preventive/" style={{ fontSize: 13, color: B.muted, textDecoration: "none" }}>Book a cleaning</a>
           </div>
         </div>
 

@@ -54,6 +54,10 @@ function EmailCapture({ buttonLabel = "Send me the chapter" }: { buttonLabel?: s
         onChange={(e) => setEmail(e.target.value)}
         placeholder="you@email.com"
         aria-label="Email address"
+        autoComplete="email"
+        autoCapitalize="off"
+        spellCheck={false}
+        enterKeyHint="send"
       />
       <button type="submit">{buttonLabel}</button>
     </form>
@@ -407,7 +411,7 @@ export default function BookPage() {
         }
         .book-page .signup-form input {
           flex: 1; min-width: 240px; height: 54px; padding: 0 20px; border-radius: 10px;
-          border: 1px solid var(--line); background: var(--card); font-family: var(--sans); font-size: 15px;
+          border: 1px solid var(--line); background: var(--card); font-family: var(--sans); font-size: 16px;
           color: var(--navy); outline: none; transition: border 0.2s, box-shadow 0.2s;
         }
         .book-page .signup-form input:focus { border-color: var(--cyan); box-shadow: 0 0 0 4px rgba(36,167,224,0.12); }

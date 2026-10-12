@@ -214,7 +214,8 @@ export function StoryReel({ stories }: { stories: Story[] }) {
         .sr-tap { display: none; font-family: var(--font-montserrat), 'Montserrat', 'Helvetica Neue', Arial, sans-serif; font-size: 13px; font-weight: 600; color: #0E2240; margin: 14px 0 0; }
 
         .sr-ctl { width: var(--sr-w); margin: -18px auto 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-        .sr-dots { display: flex; align-items: center; gap: 8px; }
+        .sr-dots { display: flex; align-items: center; gap: 0; }
+        .sr-dot { min-width: 44px; min-height: 44px; background-clip: content-box; }
         .sr-dot { position: relative; width: 44px; height: 32px; padding: 0; border: 0; background: none; cursor: pointer; }
         .sr-dot::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 3px; margin-top: -1.5px; border-radius: 2px; background: rgba(14,34,64,0.18); transition: background 300ms ease; }
         .sr-dot[aria-current="true"]::before { background: #0E2240; }

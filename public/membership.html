@@ -731,6 +731,13 @@
   .film video{display:block;width:100%;height:100%;object-fit:cover;background:var(--navy)}
   .film-note{margin-top:14px}
   @media (max-width:640px){.film{border-radius:16px;margin-top:22px}}
+
+  /* Phones: tap targets on the door cards and the deck tabs (44px). */
+  @media(max-width:760px){
+    .ocgo,.ocsm{display:inline-flex;align-items:center;min-height:44px}
+    .ocshut{min-width:44px;min-height:44px}
+    .qopt{min-height:48px}
+  }
 </style>
 
 <div class="field" aria-hidden="true"></div>
