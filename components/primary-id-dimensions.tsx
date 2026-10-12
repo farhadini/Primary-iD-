@@ -7,21 +7,9 @@
 // the home page's job: say what the iD is for, then one button into the flow.
 // ============================================================
 
-import { useEffect, useRef } from "react"
-import Script from "next/script"
-
-declare global {
-  interface Window { PrimaryIdDeck?: { mount: (el: Element) => void } }
-}
+import { IdDeck } from "@/components/id-deck"
 
 export default function PrimaryIdDimensions() {
-  const deck = useRef<HTMLDivElement>(null)
-
-  // Mount on arrival, and again after client-side navigation back to the page.
-  useEffect(() => {
-    if (deck.current && window.PrimaryIdDeck) window.PrimaryIdDeck.mount(deck.current)
-  }, [])
-
   return (
     <section className="pidd" aria-labelledby="pidd-h">
       <style>{`
@@ -48,14 +36,13 @@ export default function PrimaryIdDimensions() {
           </p>
         </div>
 
-        <div ref={deck} data-id-deck />
+        <IdDeck />
 
         <div className="after">
           <a className="cta" href="/book/">Build your Primary iD →</a>
           <p className="disc">Your Primary iD is directional. It is not a diagnosis, and it is not a measure of biological age.</p>
         </div>
       </div>
-      <Script src="/id-deck.js" strategy="afterInteractive" />
     </section>
   )
 }

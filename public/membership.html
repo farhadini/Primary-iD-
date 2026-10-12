@@ -731,6 +731,33 @@
   .film video{display:block;width:100%;height:100%;object-fit:cover;background:var(--navy)}
   .film-note{margin-top:14px}
   @media (max-width:640px){.film{border-radius:16px;margin-top:22px}}
+
+  /* Phones: tap targets on the door cards and the deck tabs (44px). */
+  @media(max-width:760px){
+    .ocgo,.ocsm{display:inline-flex;align-items:center;min-height:44px}
+    .ocshut{min-width:44px;min-height:44px}
+    .qopt{min-height:48px}
+  }
+
+  /* ══ MEMBERSHIP AT A GLANCE (hero card) + WHAT YOU GET ══ */
+  .mcard .comp .n{font-size:64px}
+  .mcard .mh{font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin:16px 0 4px}
+  .mcard .mrow{display:flex;justify-content:space-between;gap:14px;padding:8px 0;border-top:1px solid var(--line-soft);font-size:14px;color:var(--navy);line-height:1.4}
+  .mcard .mh+.mrow{border-top:none}
+  .mcard .mv{font-family:var(--sans);font-size:13px;color:var(--muted);white-space:nowrap}
+  .mcard .mrow.plus .mt{display:flex;gap:9px}
+  .mcard .mrow.plus .mt::before{content:"";flex:none;width:6px;height:6px;margin-top:7px;border-radius:50%;background:var(--blue)}
+  .mcard .mlink{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;font-family:var(--sans);font-size:14px;font-weight:600;color:var(--blue)}
+  .mcard .mfine{font-size:11px;line-height:1.5;color:var(--muted);border-top:1px solid var(--line);padding-top:12px;margin-top:4px}
+  .bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:44px}
+  .bcard{background:var(--warm);border:1px solid var(--line);border-radius:var(--r-panel);padding:28px 26px}
+  .bcard .bk{font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--blue)}
+  .bcard h3{font-family:var(--serif);font-weight:400;font-size:22px;line-height:1.2;color:var(--navy);margin:12px 0 10px}
+  .bcard p{font-size:15px;line-height:1.6;color:var(--ink-soft)}
+  .bfoot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-top:28px}
+  .bprice{font-size:15px;color:var(--ink-soft)}.bprice b{font-family:var(--serif);font-weight:400;font-size:26px;color:var(--navy)}
+  .bfoot .cta{margin-top:0}
+  @media(max-width:860px){.bgrid{grid-template-columns:1fr}.bfoot{flex-direction:column;align-items:stretch}.bfoot .cta{flex-direction:column}.bfoot .pill{justify-content:center}}
 </style>
 
 <div class="field" aria-hidden="true"></div>
@@ -812,25 +839,61 @@
       <p class="lede reveal">You already spend on how you look and how long you last &mdash; the skin, the sleep, the training. Your mouth is the one part of that most people only think about when something goes wrong. It is also the only place all of it can be seen at once, by one clinician, in a single appointment.</p>
       <div class="cta reveal">
         <a class="pill solid" href="/book/">Build your Primary iD</a>
-        <a class="pill ghost" href="#membership">What membership gets you</a>
+        <a class="pill ghost" href="#benefits">What membership gets you</a>
       </div>
       <div class="micro reveal">Six minutes &nbsp;·&nbsp; Private &nbsp;·&nbsp; Founded by Dr. Tzur Gabi, prosthodontist</div>
     </div>
     <div class="idstage reveal">
-      <div class="idcard">
-        <div class="top"><span class="lab">Primary <em>iD</em></span><span class="smp">Sample</span></div>
-        <div class="comp"><span class="n">72</span><span class="o">/ 100</span></div>
-        <div class="cap">Five dimensions. One score.</div>
-        <div class="idrow" style="--dc:var(--d-oral)"><span class="rn">Oral health</span><span class="rs">72</span><span class="bar"><span class="fill" data-w="72"></span></span></div>
-        <div class="idrow" style="--dc:var(--d-sleep)"><span class="rn">Sleep &amp; airway</span><span class="rs">68</span><span class="bar"><span class="fill" data-w="68"></span></span></div>
-        <div class="idrow" style="--dc:var(--d-nutrition)"><span class="rn">Nutrition</span><span class="rs">81</span><span class="bar"><span class="fill" data-w="81"></span></span></div>
-        <div class="idrow" style="--dc:var(--d-family)"><span class="rn">Family history</span><span class="rs">75</span><span class="bar"><span class="fill" data-w="75"></span></span></div>
-        <div class="idrow" style="--dc:var(--d-longevity)"><span class="rn">Longevity</span><span class="rs">64</span><span class="bar"><span class="fill" data-w="64"></span></span></div>
-        <div class="lever"><b>Your clearest lever: Longevity, 64.</b> This is where a first visit moves your number the most.</div>
+      <div class="idcard mcard">
+        <div class="top"><span class="lab">Founding <em>membership</em></span><span class="smp">Brentwood</span></div>
+        <div class="comp"><span class="n">$499</span><span class="o">/ year</span></div>
+        <div class="cap">$1,220 of care included, every year. Or $45 a month.</div>
+        <div class="mh">Included every year</div>
+        <div class="mrow"><span class="mt">A 3D scan of both jaws (CBCT)</span><span class="mv">$500</span></div>
+        <div class="mrow"><span class="mt">Oral cancer screening</span><span class="mv">$150</span></div>
+        <div class="mrow"><span class="mt">One more preventive visit, with its exam</span><span class="mv">$375</span></div>
+        <div class="mrow"><span class="mt">Longevity and peptide consultation</span><span class="mv">$195</span></div>
+        <div class="mh">And all year</div>
+        <div class="mrow plus"><span class="mt">Member pricing on everything, with no annual maximum</span></div>
+        <div class="mrow plus"><span class="mt">20% off whitening, bonding and veneers</span></div>
+        <div class="mrow plus"><span class="mt">Unlimited second opinions, on any plan from any dentist</span></div>
+        <a class="mlink" href="#membership">See everything included &rarr;</a>
+        <div class="mfine">Values are Primary&rsquo;s regularly charged self-pay fees. Membership is not insurance.</div>
       </div>
     </div>
   </div>
 </header>
+
+<!-- WHAT YOU GET - the benefits, before the story -->
+<section class="sec" id="benefits">
+  <div class="wrap">
+    <div class="head reveal"><span class="eyebrow dash">What membership gets you</span><h2>The care your dental plan leaves out, <em>included.</em></h2></div>
+    <div class="bgrid">
+      <div class="bcard reveal">
+        <span class="bk">Seen before it hurts</span>
+        <h3>A 3D scan and a cancer screening, every year.</h3>
+        <p>Plus one more preventive visit than you have now, and your Primary iD re-scored, so you watch your health move instead of waiting for something to hurt.</p>
+      </div>
+      <div class="bcard reveal">
+        <span class="bk">Less for what you want</span>
+        <h3>Member pricing on everything, with no ceiling.</h3>
+        <p>20% off whitening, bonding, veneers and night guards, 10% off clear aligners, and member rates on every treatment. Each fee confirmed in writing before anything is scheduled.</p>
+      </div>
+      <div class="bcard reveal">
+        <span class="bk">A second opinion, anytime</span>
+        <h3>Send us any treatment plan, from any dentist.</h3>
+        <p>We read it back to you in plain language before you commit, as often as you need. Keep your insurance; we bill it first.</p>
+      </div>
+    </div>
+    <div class="bfoot reveal">
+      <div class="bprice"><b>$499</b> a year for founding members &nbsp;·&nbsp; $1,220 of care included</div>
+      <div class="cta">
+        <a class="pill solid" href="/book/">Build your Primary iD</a>
+        <a class="pill ghost" href="#membership">See everything included</a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- MEMBERSHIP FILM - the journey a member takes, start to finish -->
 <section class="sec" id="film" style="padding-top:8px">
@@ -956,6 +1019,106 @@
         </span>
       </article>
     </div>
+  </div>
+</section>
+
+<section class="sec" id="membership">
+  <div class="wrap">
+    <div class="mem">
+      <div class="reveal">
+        <span class="eyebrow dash">Membership</span>
+        <h2 style="margin-top:16px">Care designed around your risk.<br><em>Not around a maximum.</em></h2>
+        <p class="one" style="margin-top:20px">Every dental plan ever written has a ceiling. Most were set decades ago and have barely moved since. Membership has no ceiling &mdash; because the thing that decides your care should be what your mouth is doing, not what month it is.</p>
+
+        <div class="steal reveal">
+          <div class="sh">Included every year &middot; at the fees Primary regularly charges</div>
+          <div class="srow"><span>CBCT of both jaws</span><span class="sv">$500</span></div>
+          <div class="srow"><span>Oral cancer screening</span><span class="sv">$150</span></div>
+          <div class="srow"><span>One more preventive visit than you have now</span><span class="sv">$225</span></div>
+          <div class="srow"><span>The periodic exam that goes with it</span><span class="sv">$150</span></div>
+          <div class="srow"><span>Longevity and peptide consultation</span><span class="sv">$195</span></div>
+          <div class="srow sum"><span>Included, every year</span><span class="sv">$1,220</span></div>
+          <div class="stot"><span class="l">Member pricing on everything else</span><span class="v">no maximum</span></div>
+        </div>
+        <p class="sline">Most plans pay about seventeen cents on the dollar toward that scan. It is the reason almost nobody has had one.</p>
+        <p class="cite" style="margin-top:14px">Fees shown are Primary&rsquo;s regularly charged self-pay fees</p>
+
+        <p class="one" style="margin-top:34px;font-size:19px;font-family:var(--serif);color:var(--navy);line-height:1.35;max-width:36ch">And it is not only the work you are told you need.</p>
+        <p class="one" style="margin-top:12px">Member pricing runs across everything we do &mdash; including the things people actually come in wanting. Your plan contributes nothing toward any of these.</p>
+
+        <div class="wallet reveal">
+          <div class="wh">Member pricing &middot; what you want</div>
+          <div class="wrow" style="--dc:var(--d-oral)"><span class="wn">Whitening, in-office and take-home</span><span class="wv">20% off</span></div>
+          <div class="wrow" style="--dc:var(--d-oral)"><span class="wn">Cosmetic bonding and veneers</span><span class="wv">20% off</span></div>
+          <div class="wrow" style="--dc:var(--d-oral)"><span class="wn">Clear aligners</span><span class="wv">10% off</span></div>
+          <div class="wrow" style="--dc:var(--d-sleep)"><span class="wn">Night guards</span><span class="wv">20% off</span></div>
+          <div class="wrow" style="--dc:var(--d-sleep)"><span class="wn">Sleep appliances</span><span class="wv">15% off</span></div>
+          <div class="wrow" style="--dc:var(--d-nutrition)"><span class="wn">Salivary and oral microbiome panels</span><span class="wv">at lab cost + $50</span></div>
+          <div class="wrow" style="--dc:var(--d-nutrition)"><span class="wn">Products we stock, all year</span><span class="wv">15% off</span></div>
+          <div class="wtot"><span class="l">Restorative and endodontics 25% off &middot; periodontics, prosthodontics and oral surgery 20% off &middot; implants 15% off</span><span class="v">no cap</span></div>
+        </div>
+        <p class="cite" style="margin-top:14px">Member rates are published in advance and confirmed in writing before anything is scheduled</p>
+
+        <div class="incl">
+          <p style="margin:0"><b>What is included:</b> the imaging, screening, preventive visit, examination and consultation listed above, your Primary iD, and unlimited second opinions. <b>What is not:</b> restorative, periodontal, surgical, orthodontic and cosmetic treatment, laboratory fees, diagnostic panels and labs ordered at the consultation, and any procedure beyond those visits &mdash; each available at the member rate and quoted to you in writing before it is scheduled. Membership is not insurance and does not pay for treatment.</p>
+        </div>
+      </div>
+
+      <div class="plan reveal">
+        <span class="founding">Founding member</span>
+        <div class="price"><span class="now">$499</span><span class="per">/ year</span></div>
+        <div class="lock">Or $129 a quarter, or $45 a month, on a twelve-month term.</div>
+        <ul>
+          <li><b>A CBCT of both jaws</b> and an oral cancer screening, every year</li>
+          <li><b>One more preventive visit than you have now</b> &mdash; a third if you are insured, your first if you are not</li>
+          <li><b>Your Primary iD</b>, re-scored every year and read at every visit</li>
+          <li><b>Member pricing on everything we do</b>, published in advance, with no annual maximum</li>
+          <li><b>A longevity and peptide consultation</b>, once a year &mdash; labs billed separately</li>
+          <li><b>Unlimited second opinions</b> &mdash; send us any treatment plan, from any dentist, anywhere</li>
+        </ul>
+        <a class="pill solid" href="/book/">Build your Primary iD</a>
+        <p class="fine">Start with your iD &mdash; about six minutes. Then a forty-minute first visit with Dr. Gabi: $99, or billed to your insurance. You can join there.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE INSURANCE QUESTION -->
+<section class="sec" id="insurance">
+  <div class="wrap">
+    <div class="head reveal">
+      <span class="eyebrow dash">Insurance</span>
+      <h2>What if I already have <em>dental insurance?</em></h2>
+      <p class="lede">Then keep it. Membership is not a replacement for your plan and it is not insurance &mdash; it is the half your plan was never built to cover. We help you use every dollar of your benefit before it resets, and membership picks up everything after that.</p>
+    </div>
+
+    <div class="ins">
+      <div class="inscol reveal">
+        <div class="k">What your plan is built for</div>
+        <h3>Fixing what already broke</h3>
+        <ul>
+          <li>Two cleanings and exams a year, on the calendar rather than on your risk</li>
+          <li>X-rays on a fixed schedule, and about seventeen cents on the dollar toward a 3D scan</li>
+          <li>A share of fillings, crowns and root canals</li>
+          <li><b>An annual maximum</b> &mdash; reset each year whether or not you used it</li>
+          <li><b>Nothing at all</b> toward whitening, cosmetic work, night guards, panels or products</li>
+        </ul>
+      </div>
+      <div class="inscol us reveal">
+        <div class="k">What membership adds</div>
+        <h3>Seeing it before it breaks</h3>
+        <ul>
+          <li><b>A 3D scan and an oral cancer screening</b> every year, and one more preventive visit than your plan funds</li>
+          <li><b>Your Primary iD</b>, re-scored every year and read at every visit</li>
+          <li><b>Member pricing with no maximum</b> &mdash; nobody tells you you have used too much</li>
+          <li><b>The categories your plan ignores</b> &mdash; whitening, cosmetic, aligners, guards, panels, products</li>
+          <li><b>Unlimited second opinions</b>, including on plans from other dentists</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="insnote reveal"><b>The two work together.</b> Bring your card to the first visit. We&rsquo;ll tell you what your plan covers, what it doesn&rsquo;t, and what your benefit is worth before the end of the year. Then membership picks up the rest &mdash; and every dollar it saves you on whitening, cosmetic work, a night guard or a panel is a dollar <b>no dental plan would ever have saved you</b>.</p>
+    <p class="cite reveal" style="margin-top:16px">Primary iD membership is not insurance and does not pay for treatment. Coverage, maximums and reimbursement vary by plan — we confirm yours in writing before anything is scheduled.</p>
   </div>
 </section>
 
@@ -1169,7 +1332,6 @@
   </div>
 </section>
 
-<!-- MEMBERSHIP -->
 <!-- FIRST VISIT — PRD v5 section 5 -->
 <section class="sec" id="firstvisit">
   <div class="wrap">
@@ -1212,105 +1374,7 @@
   </div>
 </section>
 
-<section class="sec" id="membership">
-  <div class="wrap">
-    <div class="mem">
-      <div class="reveal">
-        <span class="eyebrow dash">Membership</span>
-        <h2 style="margin-top:16px">Care designed around your risk.<br><em>Not around a maximum.</em></h2>
-        <p class="one" style="margin-top:20px">Every dental plan ever written has a ceiling. Most were set decades ago and have barely moved since. Membership has no ceiling &mdash; because the thing that decides your care should be what your mouth is doing, not what month it is.</p>
 
-        <div class="steal reveal">
-          <div class="sh">Included every year &middot; at the fees Primary regularly charges</div>
-          <div class="srow"><span>CBCT of both jaws</span><span class="sv">$500</span></div>
-          <div class="srow"><span>Oral cancer screening</span><span class="sv">$150</span></div>
-          <div class="srow"><span>One more preventive visit than you have now</span><span class="sv">$225</span></div>
-          <div class="srow"><span>The periodic exam that goes with it</span><span class="sv">$150</span></div>
-          <div class="srow"><span>Longevity and peptide consultation</span><span class="sv">$195</span></div>
-          <div class="srow sum"><span>Included, every year</span><span class="sv">$1,220</span></div>
-          <div class="stot"><span class="l">Member pricing on everything else</span><span class="v">no maximum</span></div>
-        </div>
-        <p class="sline">Most plans pay about seventeen cents on the dollar toward that scan. It is the reason almost nobody has had one.</p>
-        <p class="cite" style="margin-top:14px">Fees shown are Primary&rsquo;s regularly charged self-pay fees</p>
-
-        <p class="one" style="margin-top:34px;font-size:19px;font-family:var(--serif);color:var(--navy);line-height:1.35;max-width:36ch">And it is not only the work you are told you need.</p>
-        <p class="one" style="margin-top:12px">Member pricing runs across everything we do &mdash; including the things people actually come in wanting. Your plan contributes nothing toward any of these.</p>
-
-        <div class="wallet reveal">
-          <div class="wh">Member pricing &middot; what you want</div>
-          <div class="wrow" style="--dc:var(--d-oral)"><span class="wn">Whitening, in-office and take-home</span><span class="wv">20% off</span></div>
-          <div class="wrow" style="--dc:var(--d-oral)"><span class="wn">Cosmetic bonding and veneers</span><span class="wv">20% off</span></div>
-          <div class="wrow" style="--dc:var(--d-oral)"><span class="wn">Clear aligners</span><span class="wv">10% off</span></div>
-          <div class="wrow" style="--dc:var(--d-sleep)"><span class="wn">Night guards</span><span class="wv">20% off</span></div>
-          <div class="wrow" style="--dc:var(--d-sleep)"><span class="wn">Sleep appliances</span><span class="wv">15% off</span></div>
-          <div class="wrow" style="--dc:var(--d-nutrition)"><span class="wn">Salivary and oral microbiome panels</span><span class="wv">at lab cost + $50</span></div>
-          <div class="wrow" style="--dc:var(--d-nutrition)"><span class="wn">Products we stock, all year</span><span class="wv">15% off</span></div>
-          <div class="wtot"><span class="l">Restorative and endodontics 25% off &middot; periodontics, prosthodontics and oral surgery 20% off &middot; implants 15% off</span><span class="v">no cap</span></div>
-        </div>
-        <p class="cite" style="margin-top:14px">Member rates are published in advance and confirmed in writing before anything is scheduled</p>
-
-        <div class="incl">
-          <p style="margin:0"><b>What is included:</b> the imaging, screening, preventive visit, examination and consultation listed above, your Primary iD, and unlimited second opinions. <b>What is not:</b> restorative, periodontal, surgical, orthodontic and cosmetic treatment, laboratory fees, diagnostic panels and labs ordered at the consultation, and any procedure beyond those visits &mdash; each available at the member rate and quoted to you in writing before it is scheduled. Membership is not insurance and does not pay for treatment.</p>
-        </div>
-      </div>
-
-      <div class="plan reveal">
-        <span class="founding">Founding member</span>
-        <div class="price"><span class="now">$499</span><span class="per">/ year</span></div>
-        <div class="lock">Or $129 a quarter, or $45 a month, on a twelve-month term.</div>
-        <ul>
-          <li><b>A CBCT of both jaws</b> and an oral cancer screening, every year</li>
-          <li><b>One more preventive visit than you have now</b> &mdash; a third if you are insured, your first if you are not</li>
-          <li><b>Your Primary iD</b>, re-scored every year and read at every visit</li>
-          <li><b>Member pricing on everything we do</b>, published in advance, with no annual maximum</li>
-          <li><b>A longevity and peptide consultation</b>, once a year &mdash; labs billed separately</li>
-          <li><b>Unlimited second opinions</b> &mdash; send us any treatment plan, from any dentist, anywhere</li>
-        </ul>
-        <a class="pill solid" href="/book/">Build your Primary iD</a>
-        <p class="fine">Start with your iD &mdash; about six minutes. Then a forty-minute first visit with Dr. Gabi: $99, or billed to your insurance. You can join there.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- THE INSURANCE QUESTION -->
-<section class="sec" id="insurance">
-  <div class="wrap">
-    <div class="head reveal">
-      <span class="eyebrow dash">Insurance</span>
-      <h2>What if I already have <em>dental insurance?</em></h2>
-      <p class="lede">Then keep it. Membership is not a replacement for your plan and it is not insurance &mdash; it is the half your plan was never built to cover. We help you use every dollar of your benefit before it resets, and membership picks up everything after that.</p>
-    </div>
-
-    <div class="ins">
-      <div class="inscol reveal">
-        <div class="k">What your plan is built for</div>
-        <h3>Fixing what already broke</h3>
-        <ul>
-          <li>Two cleanings and exams a year, on the calendar rather than on your risk</li>
-          <li>X-rays on a fixed schedule, and about seventeen cents on the dollar toward a 3D scan</li>
-          <li>A share of fillings, crowns and root canals</li>
-          <li><b>An annual maximum</b> &mdash; reset each year whether or not you used it</li>
-          <li><b>Nothing at all</b> toward whitening, cosmetic work, night guards, panels or products</li>
-        </ul>
-      </div>
-      <div class="inscol us reveal">
-        <div class="k">What membership adds</div>
-        <h3>Seeing it before it breaks</h3>
-        <ul>
-          <li><b>A 3D scan and an oral cancer screening</b> every year, and one more preventive visit than your plan funds</li>
-          <li><b>Your Primary iD</b>, re-scored every year and read at every visit</li>
-          <li><b>Member pricing with no maximum</b> &mdash; nobody tells you you have used too much</li>
-          <li><b>The categories your plan ignores</b> &mdash; whitening, cosmetic, aligners, guards, panels, products</li>
-          <li><b>Unlimited second opinions</b>, including on plans from other dentists</li>
-        </ul>
-      </div>
-    </div>
-
-    <p class="insnote reveal"><b>The two work together.</b> Bring your card to the first visit. We&rsquo;ll tell you what your plan covers, what it doesn&rsquo;t, and what your benefit is worth before the end of the year. Then membership picks up the rest &mdash; and every dollar it saves you on whitening, cosmetic work, a night guard or a panel is a dollar <b>no dental plan would ever have saved you</b>.</p>
-    <p class="cite reveal" style="margin-top:16px">Primary iD membership is not insurance and does not pay for treatment. Coverage, maximums and reimbursement vary by plan — we confirm yours in writing before anything is scheduled.</p>
-  </div>
-</section>
 
 <!-- COMPARISON -->
 <section class="sec">

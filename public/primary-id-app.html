@@ -378,6 +378,36 @@
   .provbanner{max-width:640px; margin-top:6px; background:var(--navy); color:#fff; border-radius:var(--r-card); padding:12px 16px; font-family:var(--sans); font-size:13px; display:flex; gap:10px; align-items:center; line-height:1.4}
   .provbanner b{color:var(--blueSoft); letter-spacing:.09em; text-transform:uppercase; font-size:10.5px; font-weight:700; white-space:nowrap}
   @media(max-width:560px){ .fieldgrid{grid-template-columns:1fr} }
+
+  /* ── Phones ───────────────────────────────────────────────────────────────
+     Every tap target at least 44px tall, the primary button full width and in
+     easy thumb reach, inputs at 16px+ so iOS never zooms on focus, and room for
+     the home indicator. Before there are scores to show, the twin panel stays
+     out of the way so the first screen is the question, not a dark band. */
+  @media(max-width:920px){
+    body.pre .twin{display:none}
+  }
+  @media(max-width:560px){
+    .stage{padding:20px 18px calc(96px + env(safe-area-inset-bottom))}
+    .head{font-size:30px; line-height:1.12}
+    .lede{font-size:16.5px}
+    .field{max-width:none; margin-top:18px}
+    .field input, .addfield input, textarea.notes{font-size:17px; padding:15px 16px}
+    .chips{gap:10px}
+    .chip{padding:12px 16px; font-size:15px; min-height:44px}
+    .opt{padding:16px 18px; min-height:56px}
+    .tile{padding:18px 16px}
+    .actions{gap:8px 14px; margin-top:26px}
+    .actions .cta{flex:1 1 100%; justify-content:center; padding:17px 24px; font-size:15.5px; min-height:52px}
+    .ghost{padding:14px 10px; font-size:14.5px; min-height:44px}
+    .consent{gap:12px; margin-top:20px}
+    .consent input{width:24px; height:24px}
+    .consent label{font-size:12.5px}
+    .twin{padding:12px 16px; gap:12px}
+    .figwrap{display:none}
+    .composite{padding:10px 12px} .composite .cv{font-size:22px}
+    .twin .disclaim{display:none}
+  }
 </style>
 
 <script>
@@ -755,6 +785,7 @@
   }
   function show(html, stage){
     renderProg(stage);
+    document.body.classList.toggle("pre", !S.pastDims);
     screensEl.innerHTML='<div class="screen active">'+html+'</div>';
     window.scrollTo(0,0);
     try{ pidSync(); }catch(e){}
@@ -912,7 +943,7 @@
       coach("<p>No surprises. You see the visit and what it costs before you give us your number.</p>")
       + '<h1 class="head">Do you have <em>dental insurance</em>?</h1>'
       + '<div class="chips" id="inschips" style="max-width:600px;margin-top:22px">'+chips+'</div>'
-      + (showCarrier ? '<div class="fieldgrid"><div class="field full"><label>Insurance company (optional)</label><input id="i_carrier" type="text" value="'+esc(S.insurance.carrier||"")+'" placeholder="e.g. Delta Dental" /></div></div>' : '')
+      + (showCarrier ? '<div class="fieldgrid"><div class="field full"><label>Insurance company (optional)</label><input id="i_carrier" type="text" autocomplete="off" autocapitalize="words" enterkeyhint="done" value="'+esc(S.insurance.carrier||"")+'" placeholder="e.g. Delta Dental" /></div></div>' : '')
       + (v ? '<div class="visit"><div class="vn">'+esc(v.name)+'</div>'+(v.len?'<div class="vl">'+esc(v.len)+'</div>':'')
           + '<div class="vi">'+esc(v.inc)+'</div>'+(v.exc?'<div class="vx">'+esc(v.exc)+'</div>':'')
           + (v.price?'<div class="vp">'+esc(v.price)+'</div>':'')
@@ -959,10 +990,10 @@
       + coach("<p>When you tap <em>Request my visit</em>, your request goes straight to our team and "+esc(CALLER)+" calls you to confirm a time. Nothing is booked until you have spoken.</p>")
       + '<h1 class="head">Where can we <em>reach you</em>?</h1>'
       + '<div class="fieldgrid">'
-        + '<div class="field"><label>First name</label><input id="g_first" type="text" autocomplete="given-name" value="'+esc(S.name||"")+'" /></div>'
-        + '<div class="field"><label>Last name</label><input id="g_last" type="text" autocomplete="family-name" value="'+esc(S.demo.last||"")+'" /></div>'
-        + '<div class="field"><label>Mobile</label><input id="g_phone" type="tel" autocomplete="tel" placeholder="(___) ___-____" value="'+esc(S.demo.phone||"")+'" /><div class="fielderr" id="e_phone"></div></div>'
-        + '<div class="field"><label>Email</label><input id="g_email" type="email" autocomplete="email" placeholder="you@email.com" value="'+esc(S.demo.email||"")+'" /></div>'
+        + '<div class="field"><label>First name</label><input id="g_first" type="text" autocomplete="given-name" autocapitalize="words" enterkeyhint="next" value="'+esc(S.name||"")+'" /></div>'
+        + '<div class="field"><label>Last name</label><input id="g_last" type="text" autocomplete="family-name" autocapitalize="words" enterkeyhint="next" value="'+esc(S.demo.last||"")+'" /></div>'
+        + '<div class="field"><label>Mobile</label><input id="g_phone" type="tel" autocomplete="tel" inputmode="tel" enterkeyhint="next" placeholder="(___) ___-____" value="'+esc(S.demo.phone||"")+'" /><div class="fielderr" id="e_phone"></div></div>'
+        + '<div class="field"><label>Email</label><input id="g_email" type="email" autocomplete="email" autocapitalize="off" spellcheck="false" enterkeyhint="next" placeholder="you@email.com" value="'+esc(S.demo.email||"")+'" /></div>'
         + (IS_CLINIC ? '<div class="field"><label>Open Dental patient # (staff)</label><input id="g_pat" type="text" inputmode="numeric" placeholder="optional" value="'+esc(S.odPatNum||"")+'" /></div>' : '')
       + '</div>'
       + '<div class="chiprow" style="max-width:600px;margin-top:20px"><div class="ql">Best time to call</div><div class="chips" id="timechips">'+times+'</div></div>'
@@ -1009,9 +1040,9 @@
       coach("<p>Welcome back. Tell us what you need and our front desk will call you.</p>")
       + '<h1 class="head">Good to see you <em>again</em>.</h1>'
       + '<div class="fieldgrid">'
-        + '<div class="field"><label>First name</label><input id="r_first" type="text" autocomplete="given-name" value="'+esc(S.name||"")+'" /></div>'
-        + '<div class="field"><label>Last name</label><input id="r_last" type="text" autocomplete="family-name" value="'+esc(S.demo.last||"")+'" /></div>'
-        + '<div class="field full"><label>Mobile</label><input id="r_phone" type="tel" autocomplete="tel" placeholder="(___) ___-____" value="'+esc(S.demo.phone||"")+'" /><div class="fielderr" id="e_phone"></div></div>'
+        + '<div class="field"><label>First name</label><input id="r_first" type="text" autocomplete="given-name" autocapitalize="words" enterkeyhint="next" value="'+esc(S.name||"")+'" /></div>'
+        + '<div class="field"><label>Last name</label><input id="r_last" type="text" autocomplete="family-name" autocapitalize="words" enterkeyhint="next" value="'+esc(S.demo.last||"")+'" /></div>'
+        + '<div class="field full"><label>Mobile</label><input id="r_phone" type="tel" autocomplete="tel" inputmode="tel" enterkeyhint="next" placeholder="(___) ___-____" value="'+esc(S.demo.phone||"")+'" /><div class="fielderr" id="e_phone"></div></div>'
       + '</div>'
       + '<div class="chiprow" style="max-width:600px;margin-top:20px"><div class="ql">What do you need?</div><div class="chips" id="needchips">'+needs+'</div></div>'
       + '<div class="addfield"><input id="r_note" type="text" maxlength="200" placeholder="Anything else? (optional)" value="'+esc(S.note||"")+'" /></div>'
@@ -1696,13 +1727,20 @@
       + '<h1 class="head">The <em>essentials</em>.</h1>'
       + '<p class="lede" style="font-size:14px">On file from earlier: <b>'+esc(known||"your contact details")+'</b>.</p>'
       + '<div class="fieldgrid">'
-        + '<div class="field"><label>Date of birth</label><input id="d_dob" type="text" placeholder="MM / DD / YYYY" value="'+esc(S.demo.dob||"")+'" /></div>'
+        + '<div class="field"><label>Date of birth</label><input id="d_dob" type="text" inputmode="numeric" autocomplete="bday" enterkeyhint="next" maxlength="14" placeholder="MM / DD / YYYY" value="'+esc(S.demo.dob||"")+'" /></div>'
         + '<div class="field"><label>Legal sex</label><div class="chips" id="sexchips">'+["Female","Male","Other"].map(function(o){var on=S.demo.sex===o;return '<button class="chip'+(on?" sel":"")+'" data-v="'+o+'">'+o+'</button>';}).join("")+'</div></div>'
-        + '<div class="field full"><label>Home address</label><input id="d_address" type="text" placeholder="Street, City, State, ZIP" value="'+esc(S.demo.address||"")+'" /></div>'
+        + '<div class="field full"><label>Home address</label><input id="d_address" type="text" autocomplete="street-address" enterkeyhint="done" placeholder="Street, City, State, ZIP" value="'+esc(S.demo.address||"")+'" /></div>'
       + '</div>'
       + '<div class="actions"><button class="cta" id="go">Continue</button><button class="ghost" id="back">Back</button></div>',
       9);
     ["dob","address"].forEach(function(id){ var el=document.getElementById("d_"+id); if(el) el.onchange=function(){ S.demo[id]=el.value.trim(); }; });
+    var dobEl=document.getElementById("d_dob");
+    if(dobEl) dobEl.addEventListener("input", function(){
+      var d=dobEl.value.replace(/\D/g,"").slice(0,8), out=d.slice(0,2);
+      if(d.length>2) out+=" / "+d.slice(2,4);
+      if(d.length>4) out+=" / "+d.slice(4);
+      dobEl.value=out;
+    });
     Array.prototype.forEach.call(document.querySelectorAll("#sexchips .chip"),function(c){ c.onclick=function(){ S.demo.sex=c.getAttribute("data-v"); Array.prototype.forEach.call(document.querySelectorAll("#sexchips .chip"),function(x){x.classList.toggle("sel",x===c);}); }; });
     document.getElementById("go").onclick=function(){ ["dob","address"].forEach(function(id){var el=document.getElementById("d_"+id); if(el)S.demo[id]=el.value.trim();}); scrComplaint(); };
     document.getElementById("back").onclick=scrRecords;

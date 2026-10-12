@@ -253,7 +253,9 @@
    ============================================================ */
 
 /* Global safety net: never allow horizontal overflow; media scales. */
-html, body { max-width: 100%; overflow-x: hidden; }
+/* clip, not hidden: hidden turns the page into a scroll container, which stops
+   position: sticky working anywhere (site header, the Five Dimensions rail). */
+html, body { max-width: 100%; overflow-x: clip; }
 img, video, svg, canvas { max-width: 100%; }
 * { min-width: 0; }
 
@@ -298,3 +300,15 @@ img, video, svg, canvas { max-width: 100%; }
 
 /* Show ".r-only" elements only on mobile */
 @media (min-width: 760px) { .r-only { display: none !important; } }
+
+
+/* ── Phones: tap targets ─────────────────────────────────────────────────────
+   Footer links and standalone call-to-action links get a 44px-tall tap area
+   (Apple and WCAG guidance) without changing how they look. */
+@media (max-width: 760px) {
+  footer a { display: inline-flex; align-items: center; min-height: 44px; margin-bottom: 0 !important; }
+  footer .r-stack a { min-height: 44px; }
+  /* Standalone arrow links ("Start here →") marked with .tap get a taller hit
+     area through vertical padding, which does not move the layout. */
+  a.tap { padding-top: 12px; padding-bottom: 12px; }
+}
