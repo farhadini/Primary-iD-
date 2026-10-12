@@ -20,7 +20,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { CHAPTERS, type DoctorNote } from "./chapters"
-import { Field, Gauge, Breakdown, Radar, RootMap, Trajectory, Caption, Pill, CountUp, useInView, type Dim } from "./specimens"
+import { Field, Gauge, Breakdown, Radar, RootMap, Trajectory, Caption, Pill, useInView, type Dim } from "./specimens"
 
 function Note({ note, name }: { note: DoctorNote; name: string }) {
   return (
@@ -38,12 +38,83 @@ function Note({ note, name }: { note: DoctorNote; name: string }) {
   )
 }
 
+// The sample over time. An illustration, not a promise: oral health moves
+// first, and the other four follow a beat behind it.
+const STAGES: { label: string; note: string; s: Record<string, number> }[] = [
+  { label: "Today", note: "Where this sample patient starts. Bleeding gums make oral health the clearest lever.", s: { oral: 72, sleep: 68, nutrition: 81, family: 75, longevity: 64 } },
+  { label: "6 months", note: "Gums treated and home care in place. Oral health moves first.", s: { oral: 84, sleep: 71, nutrition: 83, family: 76, longevity: 66 } },
+  { label: "1 year", note: "As inflammation in the mouth settles, the other four tend to follow.", s: { oral: 90, sleep: 77, nutrition: 86, family: 77, longevity: 75 } },
+]
+const FOLLOW = ["sleep", "nutrition", "longevity", "family"]
+
+function Journey({ dims }: { dims: Dim[] }) {
+  const [ref, live] = useInView<HTMLElement>()
+  const [stage, setStage] = useState(0)
+  const [auto, setAuto] = useState(true)
+  const [shown, setShown] = useState<Record<string, number>>(STAGES[0].s)
+  const at = useRef<Record<string, number>>(STAGES[0].s)
+
+  // Move from where the chart is now to the stage's scores. Going forward,
+  // oral health leads and the rest follow; going back, all reset together.
+  useEffect(() => {
+    const target = STAGES[stage].s, start = { ...at.current }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { at.current = target; setShown(target); return }
+    const back = target.oral < start.oral
+    const t0 = Date.now()
+    let t: ReturnType<typeof setTimeout>
+    const tick = () => {
+      const e = Date.now() - t0, next: Record<string, number> = {}
+      let done = true
+      for (const k of Object.keys(target)) {
+        const delay = back || k === "oral" ? 0 : 650 + FOLLOW.indexOf(k) * 160
+        const dur = back ? 700 : 1300
+        const p = Math.min(1, Math.max(0, (e - delay) / dur))
+        if (p < 1) done = false
+        next[k] = start[k] + (target[k] - start[k]) * (1 - Math.pow(1 - p, 3))
+      }
+      at.current = next
+      setShown(next)
+      if (!done) t = setTimeout(tick, 30)
+    }
+    tick()
+    return () => clearTimeout(t)
+  }, [stage])
+
+  // Plays on its own once on screen, until the reader picks a stage.
+  useEffect(() => {
+    if (!live || !auto || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    const t = setTimeout(() => setStage((s) => (s + 1) % STAGES.length), stage === STAGES.length - 1 ? 5200 : 4200)
+    return () => clearTimeout(t)
+  }, [live, auto, stage])
+
+  const now = dims.map((d) => ({ ...d, score: shown[d.short] ?? d.score }))
+  const total = Math.round(now.reduce((a, d) => a + d.score, 0) / now.length)
+  const base = Math.round(dims.reduce((a, d) => a + d.score, 0) / dims.length)
+  return (
+    <figure className="whole" ref={ref}>
+      <Field hues={["#7B68EE", "#E8985E", "#48C28C"]} tall>
+        <div className="whole-top">
+          <Pill>A sample Primary iD</Pill>
+          <span className="whole-n">{total}<small>/ 100</small>{total > base && <em className="whole-d">+{total - base}</em>}</span>
+        </div>
+        <Radar dims={now} live={live} lead="oral" />
+        <div className="jrny" role="group" aria-label="The sample over time">
+          {STAGES.map((st, i) => (
+            <button key={st.label} type="button" className={i === stage ? "on" : ""} aria-pressed={i === stage} onClick={() => { setAuto(false); setStage(i) }}>{st.label}</button>
+          ))}
+        </div>
+        <p className="jrny-note" aria-live="polite">{STAGES[stage].note}</p>
+      </Field>
+      <Caption>An illustration of how a Primary iD can move, not a promise. Oral health is often the first lever, and as it improves the others tend to follow.</Caption>
+    </figure>
+  )
+}
+
 export default function ChaptersView() {
   const [current, setCurrent] = useState(-1)
   const [seen, setSeen] = useState<number[]>([])
   const [mapRef, mapLive] = useInView<HTMLElement>()
   const [trajRef, trajLive] = useInView<HTMLElement>()
-  const [wholeRef, wholeLive] = useInView<HTMLElement>()
   const dims: Dim[] = CHAPTERS.map((c) => ({ name: c.name, short: c.slug, color: c.color, score: c.score }))
   const refs = useRef<(HTMLElement | null)[]>([])
 
@@ -115,13 +186,7 @@ export default function ChaptersView() {
       {/* The whole iD, then ways in by feeling */}
       <section className="ways" aria-labelledby="ways-h">
         <div className="frame">
-          <figure className="whole" ref={wholeRef}>
-            <Field hues={["#7B68EE", "#E8985E", "#48C28C"]} tall>
-              <div className="whole-top"><Pill>A sample Primary iD</Pill><span className="whole-n" aria-label="72 out of 100"><CountUp to={72} live={wholeLive} /><small>/ 100</small></span></div>
-              <Radar dims={dims} live={wholeLive} />
-            </Field>
-            <Caption>Your whole picture on one chart. Not one dimension at a time, but all five at once.</Caption>
-          </figure>
+          <Journey dims={dims} />
           <p className="lab" id="ways-h">Where would you like to start?</p>
           <div className="wayrow">
             {CHAPTERS.map((c) => (
@@ -282,6 +347,11 @@ const CSS = `
   .fdx .whole{margin:0 0 44px}
   .fdx .whole-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
   .fdx .whole-n{font-family:"JetBrains Mono","Geist Mono",ui-monospace,Menlo,monospace;font-size:34px;color:var(--navy);letter-spacing:.02em}
+  .fdx .whole-d{font-style:normal;font-size:13px;letter-spacing:.04em;color:#2a8a5e;background:rgba(72,194,140,.16);border-radius:999px;padding:3px 9px;margin-left:10px;vertical-align:middle}
+  .fdx .jrny{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:6px}
+  .fdx .jrny button{font-family:"JetBrains Mono","Geist Mono",ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);background:rgba(255,255,255,.75);border:1px solid var(--line);border-radius:999px;padding:0 18px;min-height:44px;cursor:pointer;transition:background .4s cubic-bezier(.16,1,.3,1),color .4s cubic-bezier(.16,1,.3,1),border-color .4s}
+  .fdx .jrny button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+  .fdx .jrny-note{font-family:Georgia,"Times New Roman",serif;font-size:16.5px;line-height:1.5;color:var(--navy);text-align:center;max-width:44ch;margin:16px auto 0;min-height:3em}
   .fdx .whole-n small{font-size:13px;color:var(--muted);margin-left:6px}
   .fdx .specimen{margin:30px 0 0}
   .fdx .pair{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:28px;align-items:center}

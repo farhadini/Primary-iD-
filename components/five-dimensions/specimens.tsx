@@ -150,7 +150,7 @@ export function TickScale({ s, color, live }: { s: Scale; color: string; live: b
 }
 
 /** All five dimensions on one radar, filled with a soft blend of their colours. */
-export function Radar({ dims, live }: { dims: Dim[]; live: boolean }) {
+export function Radar({ dims, live, lead }: { dims: Dim[]; live: boolean; lead?: string }) {
   const C = 160, R = 112
   const pt = (i: number, v: number) => {
     const a = -Math.PI / 2 + (i * 2 * Math.PI) / dims.length
@@ -159,9 +159,10 @@ export function Radar({ dims, live }: { dims: Dim[]; live: boolean }) {
   const poly = dims.map((d, i) => pt(i, d.score / 100).join(",")).join(" ")
   return (
     <div className="spx-radar"><div className="spx-rin">
-      <svg viewBox="0 0 320 320" role="img" aria-label={"A sample Primary iD: " + dims.map((d) => `${d.name} ${d.score}`).join(", ")}>
+      <svg viewBox="0 0 320 320" role="img" aria-label={"A sample Primary iD: " + dims.map((d) => `${d.name} ${Math.round(d.score)}`).join(", ")}>
         <defs>
           <filter id="spx-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="26" /></filter>
+          <filter id="spx-blur-s" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="6" /></filter>
           <clipPath id="spx-clip"><polygon points={poly} /></clipPath>
         </defs>
         {[0.25, 0.5, 0.75, 1].map((k) => <circle key={k} cx={C} cy={C} r={R * k} fill="none" stroke="rgba(14,34,64,.08)" />)}
@@ -179,6 +180,7 @@ export function Radar({ dims, live }: { dims: Dim[]; live: boolean }) {
           const [x, y] = pt(i, d.score / 100)
           return (
             <g key={d.short}>
+              {live && d.short === lead && <circle cx={x} cy={y} r="13" fill={d.color} className="spx-ember" filter="url(#spx-blur-s)" />}
               {live && <circle cx={x} cy={y} r="5" fill="none" stroke={d.color} strokeWidth="1.5" className="spx-ring" style={{ animationDelay: `${1.2 + i * 0.7}s` }} />}
               <circle cx={x} cy={y} r="5" fill={d.color} stroke="#fff" strokeWidth="2" />
             </g>
@@ -191,7 +193,7 @@ export function Radar({ dims, live }: { dims: Dim[]; live: boolean }) {
         const [x, y] = pt(i, 1.32)
         return (
           <span key={d.short} className="spx-pill spx-rlab" style={{ left: `${(x / 320) * 100}%`, top: `${(y / 320) * 100}%`, ["--pc" as string]: d.color }}>
-            {d.name}<b>{d.score}</b>
+            {d.name}<b>{Math.round(d.score)}</b>
           </span>
         )
       })}
