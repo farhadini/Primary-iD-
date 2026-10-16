@@ -66,6 +66,13 @@ type Pillar = {
   turn: { delay: number; node: [number, number]; leader: string; label: CSSProperties; side: "l" | "r" };
 };
 
+// The five Primary iD dimensions, always in these colours and this order
+// (Brand OS tokens; the same values as public/id-deck.js and the Five
+// Dimensions page). A dimension named anywhere in this section uses its colour.
+const DIM = { oral: "#D4B584", sleep: "#7B68EE", nutrition: "#48C28C", family: "#E8985E", longevity: "#D97757" };
+// which dimension each outcome's pillar belongs to (cosmetic and the rest are not dimensions)
+const PILLAR_DIM: Record<string, string> = { "Oral health": DIM.oral, "Airway & grinding": DIM.sleep, "Longevity": DIM.longevity };
+
 const PILLARS: Pillar[] = [
   {
     key: "cosmetic", name: "Beauty & cosmetic", reads: "shade · alignment · smile line",
@@ -78,7 +85,7 @@ const PILLARS: Pillar[] = [
   },
   {
     key: "oral", name: "Oral health", reads: "gums · enamel · breath",
-    color: "#3FA98A", delay: 0.75, node: [353, 112],
+    color: DIM.oral, delay: 0.75, node: [353, 112],
     leader: "M353 112 L262 112", label: { right: "73%", top: "27%" }, side: "l",
     person: { delay: 1.02, node: [382.8, 271.9], leader: "M382.8 271.9 L330 410 L192 410",
       label: { right: "80.2%", top: "73.2%" }, side: "l" },
@@ -87,7 +94,7 @@ const PILLARS: Pillar[] = [
   },
   {
     key: "longevity", name: "Longevity", reads: "inflammation · heart · metabolism",
-    color: "#5B7BA6", delay: 1.85, node: [480, 205],
+    color: DIM.longevity, delay: 1.85, node: [480, 205],
     leader: "M480 205 L480 318 L262 318", label: { right: "73%", top: "88%" }, side: "l",
     person: { delay: 1.79, node: [512.4, 474.4], leader: "M512.4 474.4 L768 474.4",
       label: { left: "80%", top: "84.7%" }, side: "r" },
@@ -96,7 +103,7 @@ const PILLARS: Pillar[] = [
   },
   {
     key: "airway", name: "Airway & grinding", reads: "airway · bite · wear",
-    color: "#7B68EE", delay: 2.2, node: [628, 229],
+    color: DIM.sleep, delay: 2.2, node: [628, 229],
     leader: "M628 229 L664 252 L700 252", label: { left: "73%", top: "68%" }, side: "r",
     person: { delay: 1.5, node: [463.8, 317.8], leader: "M463.8 317.8 L560 250 L768 250",
       label: { left: "80%", top: "44.6%" }, side: "r" },
@@ -329,7 +336,7 @@ type Block = {
 
 const BLOCKS: Block[] = [
   {
-    n: "01", name: "Oral health", color: "#3FA98A",
+    n: "01", name: "Oral health", color: DIM.oral,
     img: "/images/visit/oral.webp", alt: "A dental mirror and a toothbrush in soft daylight", pos: "50% 100%",
     line: "Your gums, teeth and breath, read with x-rays, photos and a full gum exam.",
     leads: [
@@ -338,7 +345,7 @@ const BLOCKS: Block[] = [
     ],
   },
   {
-    n: "02", name: "Airway & grinding", color: "#7B68EE",
+    n: "02", name: "Airway & grinding", color: DIM.sleep,
     img: "/images/visit/airway.webp", alt: "A clear night guard floating in morning light", pos: "50% 100%",
     line: "Snoring, clenching, waking tired. We look at how you breathe and how your teeth meet before anyone suggests a fix.",
     leads: [{ label: "Sleep and airway", href: "/airway-sleep/" }],
@@ -353,7 +360,7 @@ const BLOCKS: Block[] = [
     ],
   },
   {
-    n: "04", name: "Longevity", color: "#5B7BA6",
+    n: "04", name: "Longevity", color: DIM.longevity,
     img: "/images/visit/longevity.webp", alt: "A small glass sample vial in cool light", pos: "50% 100%",
     line: "Inflammation, heart and metabolic history, and family history, read alongside your mouth so you know what to watch.",
     leads: [
@@ -364,13 +371,13 @@ const BLOCKS: Block[] = [
 ];
 
 // ── the outcome row: what people come in wanting ──────────────
-// Smaller cards under the four blocks, in the same colours as the outcome
-// tiles they replace (components/our-approach.tsx): each card rests on its
-// light tint and, on hover, floods with a deeper shade of its colour while
+// Smaller cards under the four blocks. A card takes the colour of its pillar:
+// oral health gold, airway purple, longevity coral (the Primary iD dimension
+// colours), cosmetic brand blue, and slate or navy for the doors that are not
+// a dimension, so no card wears a dimension colour it does not belong to.
+// Each rests on its light tint and, on hover, floods with a deeper shade while
 // the icon tile shifts and tilts, the way the Hims tiles do. The deep shades
-// keep white text at 4.5:1 or better. Out of pain floods navy; its old rose
-// (#C7305A) is a retired colour in the Brand OS, so its icon uses the Brand
-// OS coral instead.
+// keep white text at 4.5:1 or better.
 // The row scrolls (swipe, trackpad or the arrows); it does not move by itself.
 // Wants go straight into the Primary iD flow through their door, so the
 // click carries the intent (next.config.mjs maps /book/* to ?door=).
@@ -382,16 +389,16 @@ type Outcome = {
 };
 const OUTCOMES: Outcome[] = [
   { want: "Whiter teeth", pillar: "Beauty & cosmetic", href: "/book/cosmetic/",
-    accent: "#C79A3E", tint: "246,238,224", deep: ["#906D26", "#73581F"],
+    accent: "#24A7E0", tint: "224,240,251", deep: ["#147CA9", "#106489"],
     icon: (c) => <path {...ic(c)} d="M7 3c-2 0-3 1.6-3 4 0 3 1 5 1.4 8.5C5.6 18 6 20 7 20c1.2 0 1-3 2-3s.8 3 2 3c1 0 1.4-2 1.6-4.5C15 12 16 10 16 7c0-2.4-1-4-3-4-1.4 0-1.6 1-3 1s-1.6-1-3-1z" transform="translate(2 1)" /> },
   { want: "Straighter teeth", pillar: "Beauty & cosmetic", href: "/book/orthofx/",
     accent: "#24A7E0", tint: "224,240,251", deep: ["#147CA9", "#106489"],
     icon: (c) => <path {...ic(c)} d="M4 15c0-5 3.5-8 8-8s8 3 8 8M8 13v3M12 12v4M16 13v3" /> },
   { want: "Fresh breath", pillar: "Oral health", href: "/book/preventive/",
-    accent: "#3FA98A", tint: "226,242,232", deep: ["#2D8068", "#246653"],
+    accent: DIM.oral, tint: "247,240,226", deep: ["#8A6A2C", "#6E5423"],
     icon: (c) => <path {...ic(c)} d="M5 19c0-8 6-13 14-14 1 9-4 15-14 14zM5 19c3-4 6-6 10-8" /> },
   { want: "Healthy gums", pillar: "Oral health", href: "/book/preventive/",
-    accent: "#D8785E", tint: "250,232,226", deep: ["#C44B2B", "#A64024"],
+    accent: DIM.oral, tint: "247,240,226", deep: ["#8A6A2C", "#6E5423"],
     icon: (c) => <path {...ic(c)} d="M12 20s-7-4.6-7-9.5A3.5 3.5 0 0112 8a3.5 3.5 0 017 2.5C19 15.4 12 20 12 20z" /> },
   { want: "Restful sleep", pillar: "Airway & grinding", href: "/book/airway/",
     accent: "#7B68EE", tint: "235,232,250", deep: ["#705BF1", "#543AEE"],
@@ -400,21 +407,21 @@ const OUTCOMES: Outcome[] = [
     accent: "#7B68EE", tint: "235,232,250", deep: ["#705BF1", "#543AEE"],
     icon: (c) => <path {...ic(c)} d="M4 10c2.5-3.5 13.5-3.5 16 0M4 14c2.5 3.5 13.5 3.5 16 0M9 9.5v1.5M12 9v2M15 9.5v1.5M9 13v1.5M12 13v2M15 13v1.5" /> },
   { want: "Ahead of it", pillar: "Longevity", href: "/book/longevity/",
-    accent: "#5B7BA6", tint: "228,234,244", deep: ["#5475A0", "#486489"],
+    accent: DIM.longevity, tint: "250,232,226", deep: ["#B4502C", "#93401F"],
     icon: (c) => <path {...ic(c)} d="M4 19h16M5 15l4-4 3 3 6-7M18 7h2v2" /> },
   { want: "A new smile", pillar: "Implants & full arch", href: "/dental-implant/",
-    accent: "#D8905A", tint: "250,238,225", deep: ["#AC5F25", "#8F4F1E"],
+    accent: "#4A6D8C", tint: "228,235,243", deep: ["#486D8E", "#3C5B76"],
     icon: (c) => <path {...ic(c)} d="M12 3l1.7 4.3L18 9l-4.3 1.7L12 15l-1.7-4.3L6 9l4.3-1.7z" /> },
   { want: "A second opinion", pillar: "Bring your plan", href: "/book/second-opinion/",
     accent: "#4A6D8C", tint: "228,235,243", deep: ["#486D8E", "#3C5B76"],
     icon: (c) => <path {...ic(c)} d="M7 4h10a2 2 0 012 2v13a2 2 0 01-2 2H7a2 2 0 01-2-2V6a2 2 0 012-2zM9 4h6v3H9zM8 12h8M8 16h5" /> },
   { want: "Out of pain", pillar: "Call (310) 564-8990", href: "tel:+13105648990",
-    accent: "#D97757", tint: "250,232,236", deep: ["#0E2240", "#16305A"],
+    accent: "#0E2240", tint: "232,236,243", deep: ["#0E2240", "#16305A"],
     icon: (c) => <path {...ic(c)} d="M13 2L5 13h5l-1 9 8-12h-5z" /> },
 ];
 
 function OutcomeCard({ o }: { o: Outcome }) {
-  const vars = { "--t": o.tint, "--d1": o.deep[0], "--d2": o.deep[1], "--a": o.accent } as CSSProperties;
+  const vars = { "--t": o.tint, "--d1": o.deep[0], "--d2": o.deep[1], "--a": o.accent, "--pc": PILLAR_DIM[o.pillar] ?? o.accent } as CSSProperties;
   return (
     <a className="vs-out" href={o.href} style={vars}>
       <span className="vs-out-t">
@@ -656,7 +663,7 @@ const CSS = `
 .vs-out-t b{display:block;font-family:var(--sans);font-weight:600;font-size:16.5px;letter-spacing:-.01em;line-height:1.2;transition:color .4s;}
 .vs-out-t i{display:flex;align-items:center;gap:7px;margin-top:5px;font-style:normal;font-family:var(--mono);
   font-size:10.5px;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .4s;}
-.vs-out-t .vs-dot{width:6px;height:6px;background:var(--a);transition:background .4s;}
+.vs-out-t .vs-dot{width:6px;height:6px;background:var(--pc,var(--a));transition:background .4s;}
 .vs-out-ic{flex:none;width:46px;height:46px;border-radius:16px;background:#fff;display:flex;align-items:center;
   justify-content:center;box-shadow:0 10px 20px -14px rgba(14,34,64,.45);
   transform:translateX(-6px);transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s ease;}
@@ -719,6 +726,21 @@ const CSS = `
 }
 `;
 
+// The Primary iD bar: five segments, one per dimension, in the standard order
+// and colours. Oral health, sleep and longevity fill as the scan reaches their
+// read; nutrition and family history (from the Primary iD questions) fill last.
+function idBar(at: (p: Pillar) => { delay: number }) {
+  const d = (k: string) => at(PILLARS.find((p) => p.key === k)!).delay
+  const last = Math.max(...PILLARS.map((p) => at(p).delay))
+  return [
+    { key: "oral", color: DIM.oral, delay: d("oral") },
+    { key: "sleep", color: DIM.sleep, delay: d("airway") },
+    { key: "nutrition", color: DIM.nutrition, delay: last + 0.2 },
+    { key: "family", color: DIM.family, delay: last + 0.4 },
+    { key: "longevity", color: DIM.longevity, delay: d("longevity") },
+  ]
+}
+
 // visual="person" (default) shows the portrait read; visual="turn" shows her
 // turning and smiling under a face mesh; visual="arch" shows the drawing of
 // the teeth. Switch in app/page.tsx: <VisitShowcase visual="turn" />
@@ -758,8 +780,8 @@ export default function VisitShowcase({ visual = "person" }: { visual?: "person"
         <div className="vsm-id" aria-hidden="true">
           <span className="vsm-id-k">PRIMARY iD</span>
           <span className="vsm-bar">
-            {PILLARS.map((p) => (
-              <span key={p.key}><i style={{ background: p.color, animationDelay: `${at(p).delay}s` }} /></span>
+            {idBar(at).map((b) => (
+              <span key={b.key}><i style={{ background: b.color, animationDelay: `${b.delay}s` }} /></span>
             ))}
           </span>
           <span className="vsm-state"><em className="a">Reading your mouth</em><em className="b">Baseline ready</em></span>
