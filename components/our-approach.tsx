@@ -153,7 +153,7 @@ export default function OurApproach() {
       <style>{`
         .oa-grid{display:grid;gap:14px;grid-template-columns:repeat(3,1fr);}
         .oa-anchor{display:grid;grid-template-columns:1.6fr 1fr;gap:20px;align-items:center;}
-        @media(max-width:900px){ .oa-grid{grid-template-columns:repeat(2,1fr);} .oa-h2{font-size:30px !important;} .oa-anchor{grid-template-columns:1fr;} }
+        @media(max-width:900px){ .oa-grid{grid-template-columns:repeat(2,1fr);} .oa-anchor{grid-template-columns:1fr;} }
         @media(max-width:560px){ .oa-grid{grid-template-columns:1fr;} }
       `}</style>
 
@@ -165,7 +165,7 @@ export default function OurApproach() {
               <span style={{ width: 26, height: 1, background: "currentColor" }} />
               Our approach
             </div>
-            <h2 className="oa-h2 r-h2" style={{ fontFamily: SERIF, fontWeight: 400, color: B.navy, fontSize: 38, lineHeight: 1.08, margin: 0 }}>
+            <h2 className="oa-h2 r-h2" style={{ fontFamily: SERIF, fontWeight: 400, color: B.navy, fontSize: "var(--fs-h2)", lineHeight: 1.08, margin: 0 }}>
               Start with the outcome you want.<br />We&apos;ll fix what&apos;s <span style={{ color: B.blue, fontStyle: "italic" }}>underneath it</span>.
             </h2>
           </div>
@@ -179,7 +179,7 @@ export default function OurApproach() {
         }}>
           <div>
             <span style={{ display: "inline-block", fontSize: 11, fontWeight: 600, color: B.blue, background: "#e7f6fd", padding: "4px 11px", borderRadius: 20, marginBottom: 12 }}>Check-up &amp; Cleaning</span>
-            <h3 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: 30, color: B.navy, margin: "0 0 9px" }}>
+            <h3 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "var(--fs-h3)", color: B.navy, margin: "0 0 9px" }}>
               Oral-Systemic <span style={{ fontStyle: "italic", color: B.blue }}>Check-up</span>.
             </h3>
             <p style={{ fontSize: 14.5, color: B.body, lineHeight: 1.55, margin: 0, maxWidth: 520 }}>

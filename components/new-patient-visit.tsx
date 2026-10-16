@@ -395,7 +395,7 @@ function StepCard({ num, tag, title, line, children }: {
       <h3 style={{
         fontFamily: SERIF,
         fontWeight: 400,
-        fontSize: 28,
+        fontSize: "var(--fs-h3)",
         lineHeight: 1.15,
         color: B.navy,
         margin: "0 0 12px",
@@ -462,10 +462,10 @@ export default function NewPatientVisit() {
             Your first visit
             <span style={{ width: 32, height: 1, background: B.blue }} />
           </div>
-          <h2 className="r-h1" style={{
+          <h2 className="r-h2" style={{
             fontFamily: SERIF,
             fontWeight: 400,
-            fontSize: "clamp(42px, 5.5vw, 76px)",
+            fontSize: "var(--fs-h2)",
             lineHeight: 1.05,
             letterSpacing: "-0.02em",
             color: B.navy,

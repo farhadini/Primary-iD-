@@ -168,10 +168,8 @@ function Hero() {
         @media (prefers-reduced-motion: reduce){ .hero-video{ display:none } }
         @media (max-width: 980px){
           .hero-idcard{ display:none !important }
-          .hero-h1{ font-size:40px !important }
           .hero-wash{ background:linear-gradient(0deg, rgba(10,22,44,.94), rgba(10,22,44,.5) 55%, rgba(10,22,44,.6)) !important }
         }
-        @media (max-width: 560px){ .hero-h1{ font-size:32px !important } }
       `}</style>
 
       <video
@@ -197,7 +195,7 @@ function Hero() {
           transition: "all .8s cubic-bezier(0.23,1,0.32,1) .15s",
         }}>
           <h1 className="hero-h1" style={{
-            fontFamily: "Georgia,serif", fontWeight: 400, fontSize: 52, lineHeight: 1.06,
+            fontFamily: "Georgia,serif", fontWeight: 400, fontSize: "var(--fs-h1)", lineHeight: 1.06,
             margin: "0 0 18px", maxWidth: "13ch", letterSpacing: "-.01em",
             textShadow: "0 2px 30px rgba(0,0,0,.4)",
           }}>
@@ -1352,7 +1350,7 @@ function BookingCTA() {
           <div style={{ fontSize: 24, marginBottom: 16, color: B.navy, opacity: 0.15, fontFamily: "Georgia,serif" }}>"</div>
           <h2 style={{
             fontFamily: "Georgia,serif",
-            fontSize: "clamp(28px, 3.5vw, 44px)",
+            fontSize: "var(--fs-h2)",
             fontWeight: 400,
             color: B.navy,
             lineHeight: 1.12,

@@ -46,7 +46,7 @@ export default function MembershipTeaser() {
         .mtz .in{max-width:1180px;margin:0 auto}
         .mtz .eyebrow{display:inline-flex;align-items:center;gap:12px;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#24A7E0}
         .mtz .eyebrow::before{content:"";width:26px;height:1px;background:#24A7E0}
-        .mtz h2{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(32px,4.2vw,52px);line-height:1.08;letter-spacing:-.02em;color:#0E2240;margin:18px 0 14px;max-width:20ch}
+        .mtz h2{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:var(--fs-h2);line-height:1.08;letter-spacing:-.02em;color:#0E2240;margin:18px 0 14px;max-width:20ch}
         .mtz h2 em{color:#24A7E0;font-style:italic}
         .mtz .lede{font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.62;color:#3a4a66;max-width:60ch;margin:0}
         .mtz .two{display:grid;grid-template-columns:1fr 1.15fr;gap:24px;margin-top:48px;align-items:stretch}
@@ -55,7 +55,7 @@ export default function MembershipTeaser() {
         .mtz .head{padding:32px 32px 26px;background:linear-gradient(160deg,#EEF4FA 0%,#F6F9FC 100%);border-bottom:1px solid rgba(14,34,64,.08)}
         .mtz .mem .head{background:linear-gradient(160deg,#E8F6FC 0%,#D6EEF9 100%)}
         .mtz .kick{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#24A7E0}
-        .mtz h3{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(24px,2.6vw,32px);line-height:1.15;color:#0E2240;margin:12px 0 10px}
+        .mtz h3{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:var(--fs-h3);line-height:1.15;color:#0E2240;margin:12px 0 10px}
         .mtz .head p{font-family:Georgia,"Times New Roman",serif;font-size:16px;line-height:1.6;color:#3a4a66;margin:0}
         .mtz .price{display:flex;align-items:baseline;gap:8px;margin-top:14px}
         .mtz .price .n{font-family:Georgia,"Times New Roman",serif;font-size:48px;line-height:1;color:#0E2240;font-variant-numeric:lining-nums}
