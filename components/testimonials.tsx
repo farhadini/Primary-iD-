@@ -88,7 +88,7 @@ export default function Testimonials() {
           <h2
             style={{
               fontFamily: SERIF,
-              fontSize: "clamp(32px, 4.5vw, 46px)",
+              fontSize: "var(--fs-h2)",
               fontWeight: 400,
               color: B.navy,
               lineHeight: 1.15,

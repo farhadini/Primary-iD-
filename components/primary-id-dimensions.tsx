@@ -18,7 +18,7 @@ export default function PrimaryIdDimensions() {
         .pidd .head{text-align:center;max-width:720px;margin:0 auto 40px}
         .pidd .eyebrow{display:inline-flex;align-items:center;gap:12px;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#24A7E0}
         .pidd .eyebrow::before,.pidd .eyebrow::after{content:"";width:26px;height:1px;background:#24A7E0}
-        .pidd h2{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(32px,4.2vw,52px);line-height:1.08;letter-spacing:-.02em;color:#0E2240;margin:18px 0 14px}
+        .pidd h2{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:var(--fs-h2);line-height:1.08;letter-spacing:-.02em;color:#0E2240;margin:18px 0 14px}
         .pidd h2 em{color:#24A7E0;font-style:italic}
         .pidd .lede{font-family:Georgia,"Times New Roman",serif;font-size:18px;line-height:1.62;color:#3a4a66;margin:0 auto;max-width:60ch}
         .pidd .after{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:36px;text-align:center}

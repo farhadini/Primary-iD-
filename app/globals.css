@@ -4,6 +4,11 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  /* Heading scale: one size per level, shrinking smoothly to phone width.
+     H1 = page hero, H2 = section heading, H3 = card / sub-heading. */
+  --fs-h1: clamp(38px, 4.4vw, 60px);
+  --fs-h2: clamp(30px, 3.3vw, 46px);
+  --fs-h3: clamp(22px, 1.9vw, 26px);
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -276,9 +281,9 @@ img, video, svg, canvas { max-width: 100%; }
   .r-mt      { margin-top: 24px !important; }
 
   /* Type — cap oversized desktop headings (beats inline font-size) */
-  .r-h1 { font-size: 34px !important; line-height: 1.1 !important; }
-  .r-h2 { font-size: 26px !important; line-height: 1.15 !important; }
-  .r-h3 { font-size: 20px !important; line-height: 1.2 !important; }
+  .r-h1 { font-size: var(--fs-h1) !important; line-height: 1.1 !important; }
+  .r-h2 { font-size: var(--fs-h2) !important; line-height: 1.15 !important; }
+  .r-h3 { font-size: var(--fs-h3) !important; line-height: 1.2 !important; }
   .r-lead { font-size: 16px !important; line-height: 1.6 !important; }
 
   /* Visibility */
