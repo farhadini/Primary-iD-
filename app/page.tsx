@@ -4,7 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import OralSystemicSection from "@/components/oral-systemic-section"; // used only by the retired PrimaryiDExperience below
 import PrimaryIdDimensions from "@/components/primary-id-dimensions";
 import NewPatientVisit from "@/components/new-patient-visit";
-import OurApproach from "@/components/our-approach";
+import VisitShowcase from "@/components/visit-showcase"; // replaces components/our-approach.tsx (kept for rollback)
+import StoryFilm from "@/components/story-film";
 import Testimonials from "@/components/testimonials";
 import MobileStickyCTA from "@/components/mobile-sticky-cta";
 import MembershipTeaser from "@/components/membership-teaser";
@@ -1365,6 +1366,9 @@ function BookingCTA() {
             Schedule a visit and experience what it feels like when care looks at the whole you, not just the problem in front of us.
           </p>
 
+          {/* the patient-voices film: people say the headline in their own words, then the button */}
+          <StoryFilm />
+
           <a href="/book/" style={{
             background: B.navy, color: B.white, textDecoration: "none",
             borderRadius: 9, padding: "16px 40px",
@@ -1725,8 +1729,8 @@ export default function PrimaryHomepage() {
       <SiteNav />
       <Hero />
 
-      {/* Start with the outcome they want: the doors into the booking flow */}
-      <div id="services"><OurApproach /></div>
+      {/* The first visit as the way in: the four reads, then the outcome doors into the booking flow */}
+      <div id="services"><VisitShowcase /></div>
 
       {/* The Primary iD: five dimensions, in the membership page's card design */}
       <PrimaryIdDimensions />
