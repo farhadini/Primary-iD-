@@ -13,8 +13,8 @@
 // THIS CUT IS A STAND-IN. The people in it are AI-generated, speaking lines
 // from the patient voices script (3 Marketing and Brand / Patient voices
 // commercial - script and shoot guide). A testimonial has to be a real
-// patient's own experience, so the disclosure below stays until the
-// real-patient cut replaces this file; then swap the files and the line.
+// patient's own experience. The on-page disclosure was removed at the
+// owner's request (Oct 2026); swap in the real-patient cut when it is shot.
 
 import { useRef, useState } from "react";
 import type { CSSProperties } from "react";
@@ -29,8 +29,6 @@ const FILM = {
   mp4: "/videos/your-mouth-your-story.mp4",
   poster: "/videos/your-mouth-your-story-poster.webp",
   length: "0:41",
-  // the real-patient cut will say: "Real Primary patients. Individual experiences vary."
-  disclosure: "A dramatization. The people in this film are AI-generated, not Primary patients.",
 };
 
 export default function StoryFilm({ style }: { style?: CSSProperties }) {
@@ -64,7 +62,6 @@ export default function StoryFilm({ style }: { style?: CSSProperties }) {
           </button>
         )}
       </div>
-      <figcaption className="sf-note">{FILM.disclosure}</figcaption>
     </figure>
   );
 }
@@ -86,7 +83,6 @@ const CSS = `
 .sf-play:focus-visible{outline:3px solid #24A7E0;outline-offset:-3px;}
 .sf-t b{display:block;font-family:var(--sans);font-weight:600;font-size:18px;letter-spacing:-.01em;line-height:1.2;}
 .sf-t i{display:block;margin-top:4px;font-style:normal;font-family:var(--mono);font-size:11px;letter-spacing:.04em;opacity:.88;}
-.sf-note{margin:12px auto 0;max-width:40em;font-family:var(--mono);font-size:11px;line-height:1.5;color:#5E6A79;text-align:center;}
 @media (max-width:640px){
   .sf{margin-bottom:32px;}
   .sf-frame{border-radius:20px;}
