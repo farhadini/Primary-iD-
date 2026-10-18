@@ -74,8 +74,11 @@ export default function Testimonials() {
   const saved: Review[] = TESTIMONIALS.map((t) => ({ name: t.name, text: t.quote, rating: 5, tag: t.tag }))
     .filter((t) => !live.some((l) => first(l.name) === first(t.name)))
   const reviews: Review[] = [...live, ...saved]
-  const loop = [...reviews, ...reviews] // two copies, so the row scrolls without a seam
-  const secs = reviews.length * 7
+  // one lap is at least eight cards, so it always covers a wide screen; two laps scroll without a seam
+  const lap: Review[] = []
+  while (lap.length < 8) lap.push(...reviews)
+  const loop = [...lap, ...lap]
+  const secs = lap.length * 7
 
   return (
     <section
