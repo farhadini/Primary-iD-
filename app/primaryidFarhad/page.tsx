@@ -399,7 +399,7 @@ export default function PrimaryIDDashboard() {
           <PrimaryIDLogo size={1} dark={false} />
           <div style={{ display:"flex", gap:16, alignItems:"center" }}>
             <div className="pd-meta" style={{ textAlign:"right" }}>
-              <div style={{ fontSize:11, color:C.muted, fontWeight:600, letterSpacing:"0.06em", textTransform:"uppercase" }}>Farhad Attaie · Age 44.5</div>
+              <div style={{ fontSize:11, color:C.muted, fontWeight:600, letterSpacing:"0.06em", textTransform:"uppercase" }}>Farhad Attaie · Age 45</div>
               <div style={{ fontSize:11, color:C.muted, marginTop:1 }}>4 panels · Jul 2024 – Mar 2026</div>
             </div>
             <div className="pd-pill" style={{ display:"flex", alignItems:"center", gap:8, background:C.green+"11", border:`1.5px solid ${C.green}44`, borderRadius:24, padding:"7px 16px" }}>
@@ -460,7 +460,7 @@ export default function PrimaryIDDashboard() {
                   <div className="pd-big" style={{ fontSize:80, fontWeight:700, color:C.green, lineHeight:1, letterSpacing:"-0.04em" }}>31.2</div>
                   <div style={{ paddingBottom:6 }}>
                     <div style={{ fontSize:28, fontWeight:700, color:C.green }}>−13.3</div>
-                    <div style={{ fontSize:12, color:"rgba(255,255,255,0.4)", marginTop:2 }}>years younger · calendar 44.5</div>
+                    <div style={{ fontSize:12, color:"rgba(255,255,255,0.4)", marginTop:2 }}>years younger · age 44.5 at the Mar 2026 test</div>
                   </div>
                 </div>
                 <div style={{ display:"flex", borderTop:"1px solid rgba(255,255,255,0.08)", paddingTop:14 }}>
@@ -543,7 +543,7 @@ export default function PrimaryIDDashboard() {
                     <div>
                       <div style={{ fontSize:18, color:"rgba(255,255,255,0.45)" }}>years old</div>
                       <div style={{ fontSize:36, fontWeight:700, color:C.green, marginTop:4 }}>−13.3 <span style={{ fontSize:16, fontWeight:400, color:"rgba(255,255,255,0.38)" }}>years younger</span></div>
-                      <div style={{ fontSize:13, color:"rgba(255,255,255,0.35)", marginTop:4 }}>than calendar age of 44.5</div>
+                      <div style={{ fontSize:13, color:"rgba(255,255,255,0.35)", marginTop:4 }}>than calendar age of 44.5 at the Mar 2026 test</div>
                     </div>
                   </div>
                 </div>
