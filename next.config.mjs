@@ -20,6 +20,10 @@ const nextConfig = {
   // ─── 301 Redirects (preserve WordPress URL equity) ────────────────────────
   async redirects() {
     return [
+      // Existing patients get their Primary iD (Primary iD Project: "1 Primary iD/Existing patient pathway.md").
+      // Any query string passes through, so /welcome-back/?ctx=clinic opens the office iPad version.
+      // Temporary on purpose: when the patient portal launches, this points at its sign-in.
+      { source: "/welcome-back/", destination: "/primary-id/?for=existing", permanent: false },
       // Legacy root blog URLs (WordPress served posts at root) -> /blogs/[slug]/ to preserve SEO equity
       { source: "/dental-implants-a-friendly-guide-to-comfort-care-and-long-lasting-smiles/", destination: "/blogs/dental-implants-a-friendly-guide-to-comfort-care-and-long-lasting-smiles/", permanent: true },
       { source: "/emergency-dentist-los-angeles-ca-quick-compassionate-care-for-tooth-pain-and-injuries/", destination: "/blogs/emergency-dentist-los-angeles-ca-quick-compassionate-care-for-tooth-pain-and-injuries/", permanent: true },

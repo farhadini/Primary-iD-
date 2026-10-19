@@ -31,6 +31,19 @@
 // the existing pathfinder_answers field, tags, and three new custom fields
 // (payment_intent, financing_history, help_wanted) once those exist.
 //
+// EXISTING PATIENTS (Oct 2026). `patientType: "existing"` comes from the
+// existing patient mode of the flow (/welcome-back/, or "Get my Primary iD"
+// after "I've been to Primary before"). Design: "1 Primary iD/Existing patient
+// pathway.md" in the Primary iD Project; checks X1 to X8 in the handoff.
+//   - Never on the Primary iD Journey board, never in a new patient workflow (R1).
+//   - Its own pipeline, "Existing patient", found BY NAME with its stages
+//     Started, Complete, Reviewed at visit, so nobody has to paste ids. Optional
+//     override: GHL_EXISTING_PIPELINE_ID. Unlike the Journey board, runs taken in
+//     the office DO get a card here: this board counts Primary iDs, not leads.
+//   - "Needs a call" is the one tag the front desk's GoHighLevel workflow
+//     watches: in pain, asked to book, or under 18.
+//   - On completion the full answers are kept on the contact as a note.
+//
 // Silent until GHL_API_TOKEN + GHL_LOCATION_ID are set in Vercel.
 // ============================================================================
 import { NextResponse } from "next/server"
@@ -106,6 +119,11 @@ type Body = {
   context?: string
   odPatNum?: string
   leadSource?: Record<string, string>
+  // Existing patient mode.
+  patientType?: string
+  wantsVisit?: boolean
+  minor?: boolean
+  answers?: { dim?: string; score?: number | null; items?: [string, string][] }[]
 }
 
 const num = (v: number | null | undefined) => (typeof v === "number" && !isNaN(v) ? String(v) : "")
@@ -131,13 +149,14 @@ async function syncOpportunity(
   name: string,
   pathway: string,
   complete: boolean,
+  board: { id: string; stages: string[] } = { id: PIPELINE, stages: STAGES },
 ) {
   const wantIdx = complete ? 1 : 0
   const label = `${name || "Unnamed"}${pathway ? ` — ${pathway.replace(/_/g, " ")}` : ""}`
   try {
     const q = await fetch(
       `https://services.leadconnectorhq.com/opportunities/search?location_id=${LOCATION}` +
-        `&pipeline_id=${PIPELINE}&contact_id=${contactId}&limit=1`,
+        `&pipeline_id=${board.id}&contact_id=${contactId}&limit=1`,
       { headers: H },
     )
     const existing = q.ok ? (await q.json())?.opportunities?.[0] : null
@@ -147,9 +166,9 @@ async function syncOpportunity(
         method: "POST",
         headers: H,
         body: JSON.stringify({
-          pipelineId: PIPELINE,
+          pipelineId: board.id,
           locationId: LOCATION,
-          pipelineStageId: STAGES[wantIdx],
+          pipelineStageId: board.stages[wantIdx],
           name: label,
           status: "open",
           contactId,
@@ -159,17 +178,106 @@ async function syncOpportunity(
     }
 
     // Someone already moved this person along, or closed them out. Leave it.
-    const atIdx = STAGES.indexOf(existing.pipelineStageId)
+    const atIdx = board.stages.indexOf(existing.pipelineStageId)
     if (existing.status !== "open" || atIdx < 0 || atIdx >= wantIdx) return
 
     await fetch(`https://services.leadconnectorhq.com/opportunities/${existing.id}`, {
       method: "PUT",
       headers: H,
-      body: JSON.stringify({ pipelineStageId: STAGES[wantIdx], name: label }),
+      body: JSON.stringify({ pipelineStageId: board.stages[wantIdx], name: label }),
     })
   } catch (e) {
     console.error("[lead] opportunity sync failed:", e)
   }
+}
+
+// ---------------------------------------------------------------------------
+// The "Existing patient" pipeline, found by name so it works the moment someone
+// creates it in GoHighLevel. Stage order matters (cards only move forward):
+// Started, Complete, Reviewed at visit. The code never moves a card to the
+// third stage; people do that at the visit.
+//
+// Looked up at most every ten minutes per server instance. Missing pipeline or
+// stages: logged, and the contact and tags still land.
+const EXISTING_PIPELINE_NAME = "existing patient"
+const EXISTING_STAGE_NAMES = ["started", "complete", "reviewed at visit"]
+let existingBoard: { id: string; stages: string[] } | null = null
+let existingCheckedAt = 0
+const norm = (s: unknown) =>
+  String(s ?? "").toLowerCase().replace(/[^a-z ]/g, " ").replace(/\s+/g, " ").trim().replace(/s$/, "")
+
+async function findExistingBoard(): Promise<{ id: string; stages: string[] } | null> {
+  if (existingBoard || Date.now() - existingCheckedAt < 10 * 60 * 1000) return existingBoard
+  existingCheckedAt = Date.now()
+  try {
+    const r = await fetch(
+      `https://services.leadconnectorhq.com/opportunities/pipelines?locationId=${LOCATION}`,
+      { headers: H },
+    )
+    if (!r.ok) {
+      console.error(`[lead] pipelines ${r.status}`)
+      return null
+    }
+    type Stage = { id?: string; name?: string }
+    type Pipe = { id?: string; name?: string; stages?: Stage[] }
+    const list: Pipe[] = (await r.json())?.pipelines ?? []
+    const override = process.env.GHL_EXISTING_PIPELINE_ID
+    const p = override
+      ? list.find((x) => x.id === override)
+      : list.find((x) => norm(x.name) === norm(EXISTING_PIPELINE_NAME))
+    if (!p?.id) {
+      console.error('[lead] no "Existing patient" pipeline in GoHighLevel yet: create it to track existing patients')
+      return null
+    }
+    const stages = EXISTING_STAGE_NAMES.map(
+      (n) => (p.stages ?? []).find((s) => norm(s.name) === norm(n))?.id ?? "",
+    )
+    if (stages.some((s) => !s)) {
+      console.error('[lead] the "Existing patient" pipeline needs the stages Started, Complete, Reviewed at visit')
+      return null
+    }
+    existingBoard = { id: p.id, stages }
+    return existingBoard
+  } catch (e) {
+    console.error("[lead] pipeline lookup failed:", e)
+    return null
+  }
+}
+
+// The finished Primary iD, as one note on the GoHighLevel contact (BAA-covered).
+// Phase 2 writes the same text into the Open Dental chart.
+const line = (v: unknown, max = 300) => String(v ?? "").replace(/[\r\n]+/g, " ").trim().slice(0, max)
+function primaryIdNote(b: Body, priority: string, invite: string): string {
+  const L: string[] = []
+  L.push("Primary iD: completed (current patient)")
+  L.push("Directional, not a diagnosis. Confirm at the visit.")
+  L.push(`Taken: ${b.context === "clinic" ? "in the office" : "online"} · Invite: ${invite}`)
+  if (priority === "urgent") L.push("Something is bothering them now (asked before the five dimensions).")
+  if (b.wantsVisit) L.push("Asked for their next visit to be booked.")
+  if (typeof b.composite === "number") L.push(`Overall: ${b.composite}${b.tier ? ` (${line(b.tier, 40)})` : ""}`)
+  const goals = Array.isArray(b.goals) ? b.goals.filter(Boolean).map((g) => line(g, 60)) : []
+  if (goals.length) L.push(`What matters to them: ${goals.join(", ")}`)
+  if (b.intent) L.push(`If nothing changes in a year: ${line(b.intent, 80)}`)
+  if (b.complaint) L.push(`In their words: ${line(b.complaint, 600)}`)
+  const safety = Array.isArray(b.safety) ? b.safety.filter(Boolean).map((s) => line(s, 80)) : []
+  L.push(`Safety check: ${safety.length ? safety.join(", ") : "not answered"}`)
+  if (b.records?.other) L.push(`They added: ${line(b.records.other, 300)}`)
+  for (const d of Array.isArray(b.answers) ? b.answers.slice(0, 10) : []) {
+    L.push("")
+    L.push(`${line(d?.dim, 40)}${typeof d?.score === "number" ? ` (${d.score})` : ""}`)
+    for (const it of Array.isArray(d?.items) ? d.items.slice(0, 12) : []) {
+      if (Array.isArray(it)) L.push(`- ${line(it[0], 160)} ${line(it[1], 80)}`)
+    }
+  }
+  if (b.history) {
+    L.push("")
+    L.push(`Dental and health history: ${line(b.history, 1500)}`)
+  }
+  const rec = b.records ?? {}
+  const recBits = [rec.pcp ? `primary care doctor: ${line(rec.pcp, 20)}` : "", rec.labs ? `labs: ${line(rec.labs, 30)}` : "",
+    rec.platforms ? `platforms: ${line(Array.isArray(rec.platforms) ? (rec.platforms as unknown as string[]).join(", ") : rec.platforms, 80)}` : ""].filter(Boolean)
+  if (recBits.length) L.push(`Records: ${recBits.join(" · ")}`)
+  return L.join("\n").slice(0, 9000)
 }
 
 export async function POST(request: Request) {
@@ -185,7 +293,9 @@ export async function POST(request: Request) {
       b.inPain === true || URGENT.test(f.reason ?? "") || b.pathway === "pain" ? "urgent" : "normal"
     // R1: a returning patient never lands on the new patient pipeline or in a
     // marketing sequence. Tagged for the front desk instead.
-    const isReturning = b.newOrReturning === "returning"
+    // Existing patient mode is also returning, so R1 holds for it everywhere below.
+    const isExisting = b.patientType === "existing"
+    const isReturning = b.newOrReturning === "returning" || isExisting
     // Once the Primary iD is complete, every later save says so too. A tag or a
     // stage that only rides on the "complete" call is lost if another save
     // lands after it.
@@ -208,6 +318,15 @@ export async function POST(request: Request) {
     const isTest =
       (f.firstName ?? "").trim().toLowerCase() === "alex" &&
       (f.lastName ?? "").trim().toLowerCase() === "rivera"
+    // Existing patients: how the invitation reached them, and whether the front
+    // desk needs to call (in pain, asked to book, or under 18). "Needs a call" is
+    // the single tag the front desk's GoHighLevel workflow watches.
+    const invite = inClinic ? "In office"
+      : /sms|text/i.test(src.utm_source ?? "") ? "Text"
+      : /mail/i.test(src.utm_source ?? "") ? "Email" : "Website"
+    const wantsVisit = isExisting && (b.wantsVisit === true || b.phase === "visit-request")
+    const isMinor = isExisting && b.minor === true
+    const needsCall = isExisting && (priority === "urgent" || wantsVisit || isMinor)
     // Where they came from (spec P1-01 L3). Kept to tags and the source line:
     // both always land, whereas a custom field missing in GHL sinks the whole upsert.
     const fromPage = clip(src.from)
@@ -225,9 +344,14 @@ export async function POST(request: Request) {
 
     const tags = [
       isReturning ? "Existing patient" : "Primary iD Lead",
-      isReturning ? "Primary iD — Existing patient request"
+      isExisting ? "Primary iD: existing patient"
+        : isReturning ? "Primary iD — Existing patient request"
         : b.mode === "score" ? "Primary iD — Score Only" : "Primary iD — Appointment Request",
       b.newOrReturning ? `Patient: ${isReturning ? "Returning" : "New"}` : null,
+      isExisting ? `Invite: ${invite}` : null,
+      needsCall ? "Needs a call" : null,
+      wantsVisit ? "Wants a visit" : null,
+      isMinor ? "Under 18" : null,
       b.visit ? `Visit: ${clip(b.visit)}` : null,
       b.partner ? `Partner: ${clip(b.partner)}` : null,
       b.bridge ? `Bridge: ${clip(b.bridge)}` : null,
@@ -340,12 +464,19 @@ export async function POST(request: Request) {
       tags,
     }
 
+    // The full Primary iD, kept on the contact once, when an existing patient finishes.
+    const noteText =
+      isExisting && b.phase === "complete" && Array.isArray(b.answers) && b.answers.length
+        ? primaryIdNote(b, priority, invite)
+        : ""
+
     // Preview and local builds: write nothing, and hand back exactly what would
     // have been sent so a test run can check every field and tag against the spec.
     if (!LIVE) {
       return NextResponse.json({
         success: true, assessmentId, crm: false, priority,
-        dryRun: { phase: b.phase ?? "", contact: base, customFields: [...customFields, ...specFields] },
+        dryRun: { phase: b.phase ?? "", contact: base, customFields: [...customFields, ...specFields],
+          note: noteText || undefined },
       })
     }
 
@@ -388,7 +519,36 @@ export async function POST(request: Request) {
       // board misreport where the practice's new patients actually come from.
       // Their contact, scores, tags and fields all still land — only the card
       // is withheld. Find them by the "Source: In-clinic" tag.
-      if (contactId && !inClinic && !isReturning) {
+      //
+      // EXISTING PATIENTS go on their own board instead, in the office too: it
+      // counts Primary iDs, not leads. Not for under-18s, who stop at the front
+      // desk and would sit at Started for ever.
+      if (contactId && isExisting) {
+        if (!isMinor) {
+          const board = await findExistingBoard()
+          if (board) {
+            await syncOpportunity(
+              contactId,
+              (isTest ? "TEST · " : "") + [f.firstName, f.lastName].filter(Boolean).join(" "),
+              "existing patient",
+              isComplete,
+              board,
+            )
+          }
+        }
+        if (noteText) {
+          try {
+            const n = await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/notes`, {
+              method: "POST",
+              headers: H,
+              body: JSON.stringify({ body: noteText }),
+            })
+            if (!n.ok) console.error(`[lead] note ${n.status}`)
+          } catch (e) {
+            console.error("[lead] note failed:", e)
+          }
+        }
+      } else if (contactId && !inClinic && !isReturning) {
         await syncOpportunity(
           contactId,
           (isTest ? "TEST · " : "") + [f.firstName, f.lastName].filter(Boolean).join(" "),

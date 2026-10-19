@@ -1,7 +1,7 @@
 # Primary iD · Phase 1 build status
 
 Updated by Claude Code after every change. Checked against `PRIMARY_ID_PHASE1_SPEC.md`.
-Last update: 4 Oct 2026.
+Last update: 19 Oct 2026 (the existing patient pathway, phase 1).
 
 ## Waiting on Farhad
 
@@ -14,6 +14,11 @@ Last update: 4 Oct 2026.
 - [ ] Decide: what the pain screen says out of hours (is anyone answering the phone?)
 - [ ] Decide: the number Cesar calls from (today: (310) 564-8990)
 - [ ] Dr. Gabi: Pathfinder questions for cosmetic, preventive, airway, longevity; score bands
+
+- [ ] Existing patient pathway: merge its pull request with **Squash and merge**
+- [ ] GoHighLevel: create the pipeline **Existing patient** with three stages, in this order: **Started**, **Complete**, **Reviewed at visit**. The site finds it by name; no ids to paste
+- [ ] GoHighLevel: a workflow "Existing patient needs a call": when a contact gets the tag `Needs a call`, create a task for the front desk (Cesar can also take it) and alert them. `Priority: Urgent (in pain)` is same day
+- [ ] The front desk iPad: open `myprimaryid.com/welcome-back/?ctx=clinic` for hygiene and recare check-ins
 
 ## Your requests for Claude
 
@@ -36,6 +41,22 @@ Write anything here, top = most important. Claude reads this list at the start o
 | P1-09 Their Primary iD | PR #10 + #11 | S1, S3, M2; S4 same device | S2 composite still leads (score bands) |
 | P1-10 Call Card | Not started | — | Built inside GoHighLevel |
 | Membership page | PR #11 | The marketing landing page ("Your smile, the gateway…") at /membership/; its 3 quiz answers carry into the flow | Join button needs the Subscribili link; sample deep-cleaning fee ($350/quadrant) to confirm |
+
+## Existing patient pathway (19 Oct 2026)
+
+Design: `1 Primary iD/Existing patient pathway.md` in the Primary iD Project. Brief: `2 Website/Existing patient pathway handoff (19 Oct 2026).md`.
+
+| Check | State |
+|---|---|
+| X1 `/welcome-back/` opens the flow in existing mode, query kept | Built. Redirect in `next.config.mjs`; the flow tested with `?for=existing` |
+| X2 "I've been to Primary before" offers Get my Primary iD and I just need something | Built, tested |
+| X3 No Pathfinder, insurance, visit, best time, bridge, legal sex, address, last exam, last X-rays | Built, tested |
+| X4 Under 18 stops at the front desk, nothing scored | Built, tested |
+| X5 The same screens whether or not a chart matches | Built (phase 1 does no chart lookup) |
+| X6 One card on Existing patient, Started then Complete, never backward; no Journey card, no workflow | Built, tested against a simulated GoHighLevel. Needs the pipeline created |
+| X7 Something bothering them now: tagged urgent at once, the flow continues | Built, tested |
+| X8 In-office runs get a card | Built, tested |
+| X9 to X11 Open Dental (phase 2) | Not started: waits on the Open Dental connection's first test |
 
 ## Next up (Claude)
 

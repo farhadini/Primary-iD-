@@ -591,6 +591,31 @@
   // the consent language are identical either way — a patient in the chair is
   // owed exactly the same assessment as one on the sofa at home.
   var IS_CLINIC = /[?&]ctx=clinic\b/i.test((location.search||"")+(location.hash||""));
+  // EXISTING PATIENT MODE (?for=existing, which /welcome-back/ opens, or "Get my
+  // Primary iD" after "I've been to Primary before").
+  //
+  // Design: "1 Primary iD/Existing patient pathway.md" in the Primary iD Project.
+  // Checks X1 to X8 in "2 Website/Existing patient pathway handoff (19 Oct 2026).md".
+  //
+  // The same questions, scoring and reveal a new patient gets. It skips what only
+  // a new patient needs: the Pathfinder, pain and pay, the request, the bridge,
+  // the essentials (date of birth is asked up front; legal sex and address are in
+  // the chart already), and last full exam and last X-rays, which the chart holds.
+  // Never on the new patient board or in a new patient workflow (R1).
+  var FOR_EXISTING = /[?&]for=existing\b/i.test((location.search||"")+(location.hash||""));
+  function isExisting(){ return S.patientType==="existing"; }
+  function startExisting(){
+    S.patientType="existing"; S.newRet="returning";
+    S.prefill["oral.lastexam"]=true; S.prefill["oral.lastxray"]=true;
+  }
+  function stopExisting(){
+    S.patientType=""; delete S.prefill["oral.lastexam"]; delete S.prefill["oral.lastxray"];
+  }
+  // Who goes through it with them, and when.
+  function reviewLine(){
+    return IS_CLINIC ? "Your care team will go through it with you today."
+      : "Dr. Gabi will go through it with you at your next visit.";
+  }
   function staffBar(){
     return IS_CLINIC
       ? '<div class="staffbar"><span class="dot"></span>In clinic · staff device</div>'
@@ -626,6 +651,10 @@
 
   var S = { prefill:{}, newRet:"", inPain:null, visit:"", bestTime:"", days:[], note:"", need:"", bridge:"", at:"", complete:false, pastDims:false, name:"", door:"", reason:"", reasonDetail:"", pf:{}, align:{}, pfTrack:"", pathfinder:false, leadFired:false, goals:[], intent:"", di:0, qi:0, scores:{}, hist:{}, safety:[], records:{}, demo:{}, insurance:{}, complaint:"" };
   DIMS.forEach(function(d){ S.scores[d.key]=[]; });
+  // Existing patient mode: who they are (patientType), whether they asked to book
+  // (wantsVisit), the under-18 stop (minor), and whether the full answers have
+  // already gone to GoHighLevel as a note (noteSent).
+  S.patientType=""; S.wantsVisit=false; S.minor=false; S.noteSent=false;
 
   var screensEl = document.getElementById("screens");
   var progEl = document.getElementById("progress");
@@ -1071,7 +1100,164 @@
         + '<p class="lede">The call comes from '+esc(CALL_FROM)+'. If anything changes before then, call us on the same number.</p>',
         0);
     };
+    document.getElementById("back").onclick=function(){ if(FOR_EXISTING) scrWelcomeBack(); else scrReturnChoice(); };
+  }
+
+  // ── EXISTING PATIENTS (design section 3) ──────────────────────────────────
+  // X2: after "I've been to Primary before", two choices. The second is the
+  // callback form above, unchanged.
+  function scrReturnChoice(){
+    var opts=[["id","Get my Primary iD"],["need","I just need something: a cleaning, something that hurts, or a question"]].map(function(o){
+      return '<button class="opt" data-v="'+o[0]+'"><span>'+esc(o[1])+'</span><span class="chk"></span></button>';
+    }).join("");
+    show(
+      staffBar()
+      + coach("<p>Good to see you again. What would you like to do today?</p>")
+      + '<h1 class="head">Welcome <em>back</em>.</h1>'
+      + '<div class="opts">'+opts+'</div>'
+      + '<div class="actions"><button class="ghost" id="back">Back</button></div>',
+      0);
+    Array.prototype.forEach.call(document.querySelectorAll(".opt"),function(o){
+      o.onclick=function(){
+        Array.prototype.forEach.call(document.querySelectorAll(".opt"),function(x){x.classList.toggle("sel",x===o);});
+        var v=o.getAttribute("data-v");
+        setTimeout(function(){ if(v==="id"){ startExisting(); scrVerify(); } else { stopExisting(); scrReturning(); } },240);
+      };
+    });
     document.getElementById("back").onclick=scrStart;
+  }
+
+  // X1: where /welcome-back/ lands.
+  function scrWelcomeBack(){
+    show(
+      staffBar()
+      + coach("<p>Welcome back.</p>")
+      + '<h1 class="head">Get your <em>Primary iD</em>.</h1>'
+      + '<p class="lede">You know us. Now see your health the way we read it: five dimensions, one picture, about eight minutes. '+esc(reviewLine())+'</p>'
+      + '<div class="actions"><button class="cta blue" id="go">Start my Primary iD</button><button class="ghost" id="other">I just need something</button></div>',
+      0);
+    document.getElementById("go").onclick=function(){ startExisting(); scrVerify(); };
+    document.getElementById("other").onclick=function(){ stopExisting(); S.newRet="returning"; scrReturning(); };
+  }
+
+  // A real date of birth, typed MM / DD / YYYY. Returns the age in years, or -1.
+  function ageFrom(dob){
+    var d=String(dob||"").replace(/\D/g,""); if(d.length!==8) return -1;
+    var mm=+d.slice(0,2), dd=+d.slice(2,4), yy=+d.slice(4);
+    var dt=new Date(yy, mm-1, dd);
+    if(dt.getFullYear()!==yy || dt.getMonth()!==mm-1 || dt.getDate()!==dd) return -1;
+    var now=new Date(); if(dt>now || yy<1900) return -1;
+    var age=now.getFullYear()-yy; if(now.getMonth()<mm-1 || (now.getMonth()===mm-1 && now.getDate()<dd)) age--;
+    return age;
+  }
+  function fmtDobInput(el){
+    el.addEventListener("input", function(){
+      var d=el.value.replace(/\D/g,"").slice(0,8), out=d.slice(0,2);
+      if(d.length>2) out+=" / "+d.slice(2,4);
+      if(d.length>4) out+=" / "+d.slice(4);
+      el.value=out;
+    });
+  }
+
+  // Confirm it's you. Nothing goes to GoHighLevel before this (as for the request).
+  // X5: what follows never says whether their chart was found.
+  function scrVerify(){
+    S.at="xverify";
+    function v(id){ var el=document.getElementById(id); return el?el.value.trim():""; }
+    show(
+      staffBar()
+      + coach("<p>First, so your Primary iD joins the right chart. We only use this to find you.</p>")
+      + '<h1 class="head">Let\'s confirm it\'s <em>you</em>.</h1>'
+      + '<div class="fieldgrid">'
+        + '<div class="field"><label>First name</label><input id="x_first" type="text" autocomplete="given-name" autocapitalize="words" enterkeyhint="next" value="'+esc(S.name||"")+'" /></div>'
+        + '<div class="field"><label>Last name</label><input id="x_last" type="text" autocomplete="family-name" autocapitalize="words" enterkeyhint="next" value="'+esc(S.demo.last||"")+'" /></div>'
+        + '<div class="field"><label>Date of birth</label><input id="x_dob" type="text" inputmode="numeric" autocomplete="bday" enterkeyhint="next" maxlength="14" placeholder="MM / DD / YYYY" value="'+esc(S.demo.dob||"")+'" /><div class="fielderr" id="e_dob"></div></div>'
+        + '<div class="field"><label>Mobile</label><input id="x_phone" type="tel" autocomplete="tel" inputmode="tel" enterkeyhint="next" placeholder="(___) ___-____" value="'+esc(S.demo.phone||"")+'" /><div class="fielderr" id="e_phone"></div></div>'
+        + '<div class="field full"><label>Email (optional)</label><input id="x_email" type="email" autocomplete="email" autocapitalize="off" spellcheck="false" enterkeyhint="done" placeholder="you@email.com" value="'+esc(S.demo.email||"")+'" /><div class="fielderr" id="e_email"></div></div>'
+        + (IS_CLINIC ? '<div class="field"><label>Open Dental patient # (staff)</label><input id="x_pat" type="text" inputmode="numeric" placeholder="optional" value="'+esc(S.odPatNum||"")+'" /></div>' : '')
+      + '</div>'
+      + consentBox()
+      + '<div class="actions"><button class="cta blue" id="go" disabled>Continue</button><button class="ghost" id="back">Back</button></div>',
+      0);
+    var go=document.getElementById("go");
+    fmtDobInput(document.getElementById("x_dob"));
+    function chk(){
+      var dob=v("x_dob"), age=ageFrom(dob), phone=v("x_phone"), email=v("x_email");
+      var emailOk = !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      go.disabled=!(v("x_first") && v("x_last") && age>=0 && cleanMobile(phone) && emailOk);
+      document.getElementById("e_dob").textContent = (dob.replace(/\D/g,"").length===8 && age<0) ? "Please enter a real date of birth." : "";
+      document.getElementById("e_phone").textContent = (phone && !cleanMobile(phone)) ? "Please enter a 10-digit US mobile number." : "";
+      document.getElementById("e_email").textContent = (email && !emailOk) ? "Please check the email address." : "";
+    }
+    ["x_first","x_last","x_dob","x_phone","x_email","x_pat"].forEach(function(id){ var el=document.getElementById(id); if(el) el.addEventListener("input", chk); });
+    var f0=document.getElementById("x_first"); if(f0 && !f0.value) f0.focus(); chk();
+    go.onclick=function(){
+      S.name=v("x_first"); S.demo.last=v("x_last"); S.demo.dob=v("x_dob");
+      S.demo.phone=fmtMobile(cleanMobile(v("x_phone"))); S.demo.email=v("x_email");
+      S.odPatNum=v("x_pat");
+      readConsent();
+      S.leadFired=true; S.requestedAt=(new Date()).toISOString();
+      updateTwin("Welcome back, "+esc(S.name.split(" ")[0])+".");
+      // X4: the questions are written for adults. Under 18 goes to the front desk.
+      if(ageFrom(S.demo.dob)<18){
+        S.minor=true; S.need="A Primary iD for a patient under 18";
+        pidLead("verify"); scrUnder18(); return;
+      }
+      pidLead("verify");
+      scrExistingPain();
+    };
+    document.getElementById("back").onclick=function(){ if(FOR_EXISTING) scrWelcomeBack(); else scrReturnChoice(); };
+  }
+
+  function scrUnder18(){
+    S.at="xminor";
+    show(
+      coach("<p>Thank you, "+esc((S.name||"").split(" ")[0])+".</p>")
+      + '<h1 class="head">This version is <em>for adults</em>.</h1>'
+      + '<p class="lede">'+(IS_CLINIC
+          ? "We'll help with your child's at the front desk today."
+          : "We'll help with your child's at their next visit. Our front desk will call you "+esc(callWindow())+" from "+esc(CALL_FROM)+".")+'</p>',
+      0);
+  }
+
+  // X7: one question before the five dimensions. Yes marks them urgent at once.
+  function scrExistingPain(){
+    S.at="xpain";
+    var opts=[["yes","Yes, something is bothering me"],["no","No"]].map(function(o){
+      var sel=(S.inPain===true&&o[0]==="yes")||(S.inPain===false&&o[0]==="no");
+      return '<button class="opt'+(sel?" sel":"")+'" data-v="'+o[0]+'"><span>'+o[1]+'</span><span class="chk"></span></button>';
+    }).join("");
+    show(
+      coach("<p>One quick one before we start.</p>")
+      + '<h1 class="head">Is anything <em>bothering you</em> right now?</h1>'
+      + '<div class="opts">'+opts+'</div>'
+      + '<div class="actions"><button class="ghost" id="back">Back</button></div>',
+      0);
+    Array.prototype.forEach.call(document.querySelectorAll(".opt"),function(o){
+      o.onclick=function(){
+        var was=S.inPain; S.inPain = o.getAttribute("data-v")==="yes";
+        Array.prototype.forEach.call(document.querySelectorAll(".opt"),function(x){x.classList.toggle("sel",x===o);});
+        if(S.inPain && was!==true) pidLead("progress");
+        setTimeout(S.inPain ? scrExistingPainNote : scrGoals, 240);
+      };
+    });
+    document.getElementById("back").onclick=scrVerify;
+  }
+  function scrExistingPainNote(){
+    show(
+      coach("<p>Thank you for telling us.</p>")
+      + '<h1 class="head">We\'ll ask the front desk to <em>call you</em>.</h1>'
+      + '<p class="lede">'+(IS_CLINIC ? "Let the front desk know now, too." : "They will call you "+esc(callWindow())+" from "+esc(CALL_FROM)+". If it gets worse, call us on that number.")+' Your Primary iD helps us look after you, so let\'s keep going while you wait.</p>'
+      + '<div class="actions"><button class="cta blue" id="go">Continue</button><button class="ghost" id="back">Back</button></div>',
+      0);
+    document.getElementById("go").onclick=scrGoals;
+    document.getElementById("back").onclick=scrExistingPain;
+  }
+
+  // One tap from their Primary iD: a request to the front desk, with no form.
+  function bookNext(){
+    if(S.wantsVisit) return;
+    S.wantsVisit=true; save(); pidLead("visit-request");
   }
 
   // P1-07: THE BRIDGE. The request is acknowledged in one breath, and the
@@ -1164,7 +1350,7 @@
   function idStatus(){
     if(S.complete) return "Complete";
     var n=idAnswered();
-    return n ? "In progress · "+n+" of 40 answered" : "Pathfinder";
+    return n ? "In progress · "+n+" of 40 answered" : (isExisting() ? "Started" : "Pathfinder");
   }
   function leadBody(phase){
     var SC = pidScores();
@@ -1206,8 +1392,22 @@
       demo:       { dob:S.demo.dob||"", sex:S.demo.sex||"", address:S.demo.address||"" },
       smsConsent: S.smsConsent || { given:false },
       context:    IS_CLINIC ? "clinic" : "web",
-      odPatNum:   S.odPatNum || ""
+      odPatNum:   S.odPatNum || "",
+      // Existing patient mode (design section 5).
+      patientType: S.patientType || "",
+      wantsVisit:  S.wantsVisit === true,
+      minor:       S.minor === true,
+      // The full answers, once, when an existing patient finishes. The lead route
+      // keeps them on the GoHighLevel contact as a note, which the Open Dental
+      // connection (phase 2) writes into the chart.
+      answers:     (phase==="complete" && isExisting() && !S.noteSent) ? allAnswers() : undefined
     };
+  }
+  function allAnswers(){
+    return DIMS.map(function(d){
+      return { dim: d.name, score: dimScore(d.key),
+        items: d.qs.map(function(q,i){ return [q.q, S.scores[d.key][i]==null ? "(skipped)" : answerLabel(d.key,i)]; }) };
+    });
   }
 
   // G6: if the request cannot reach us, hold it on this device and retry. The
@@ -1227,7 +1427,8 @@
   }
   function pidLead(phase){
     var body; try{ body=leadBody(phase); }catch(e){ return; }
-    if(phase==="request"){
+    if(body.answers){ S.noteSent=true; save(); }
+    if(phase==="request" || phase==="verify" || phase==="visit-request" || (phase==="complete" && body.answers)){
       var tries=0;
       (function attempt(){
         post(body).catch(function(){
@@ -1289,6 +1490,9 @@
       else if(at==="essentials") scrEssentials();
       else if(at==="complaint") scrComplaint();
       else if(at==="done") scrYours();
+      else if(at==="xminor") scrUnder18();
+      else if(at==="xpain") scrExistingPain();
+      else if(isExisting()) scrGoals();
       else scrBridge();
       return true;
     }catch(e){ return false; }
@@ -1356,7 +1560,7 @@
     chk();
     go.onclick=function(){
       if(det && det.value.trim()) S.reasonDetail=det.value.trim();
-      if(S.newRet==="returning") scrReturning(); else routePF();
+      if(S.newRet==="returning") scrReturnChoice(); else { stopExisting(); routePF(); }
     };
     document.getElementById("back").onclick=scrWelcome;
   }
@@ -1677,8 +1881,11 @@
       + '<button class="chip'+(S.safety.indexOf("None of these")>-1?" sel":"")+'" data-val="None of these">None of these</button>';
     show(
       '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>Safety check</div>'
-      + coach("<p>Last stretch. A quick safety check so your care team can treat you safely — most people tap <em>None</em>. Tap anything that applies.</p>")
-      + '<h1 class="head">Anything we should <em>know</em>?</h1>'
+      + (isExisting()
+          ? coach("<p>Last stretch. A quick safety check so your care team can treat you safely. Most people tap <em>None of these</em>.</p>")
+            + '<h1 class="head">Do any of these apply to you <em>today</em>?</h1>'
+          : coach("<p>Last stretch. A quick safety check so your care team can treat you safely — most people tap <em>None</em>. Tap anything that applies.</p>")
+            + '<h1 class="head">Anything we should <em>know</em>?</h1>')
       + '<div class="chips" id="safechips" style="max-width:600px">'+chips+'</div>'
       + '<div class="addfield"><input id="addother" type="text" placeholder="Add anything else — allergies, conditions, meds…" /></div>'
       + '<div class="actions"><button class="cta" id="go">Continue</button><button class="ghost" id="back">Back</button></div>',
@@ -1713,7 +1920,9 @@
       + '<div class="actions"><button class="cta" id="go">Continue</button><button class="ghost" id="back">Back</button></div>',
       8);
     wireChips(S.records);
-    document.getElementById("go").onclick=scrEssentials;
+    // Existing patients skip the essentials: date of birth was asked up front,
+    // and legal sex and address are already in their chart.
+    document.getElementById("go").onclick=function(){ if(isExisting()) scrComplaint(); else scrEssentials(); };
     document.getElementById("back").onclick=scrSafety;
   }
 
@@ -1775,14 +1984,17 @@
     show(
       '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>In your words</div>'
       + coach("<p>Last one — and the most important. Forget the checkboxes for a second.</p>")
-      + '<h1 class="head">What do you want to <em>walk out with</em>?</h1>'
-      + '<p class="lede">You came in for a reason. In your own words — what would make this whole thing worth it?</p>'
+      + (isExisting()
+          ? '<h1 class="head">What would you like from your <em>next visit</em>?</h1>'
+            + '<p class="lede">In your own words. Anything you have been meaning to ask, change or finally sort out.</p>'
+          : '<h1 class="head">What do you want to <em>walk out with</em>?</h1>'
+            + '<p class="lede">You came in for a reason. In your own words — what would make this whole thing worth it?</p>')
       + '<textarea class="notes" id="cc" placeholder="In your own words…">'+esc(S.complaint)+'</textarea>'
       + '<div class="actions"><button class="cta blue" id="go">See my Primary iD</button><button class="ghost" id="back">Back</button></div>',
       9);
     var cc=document.getElementById("cc"); cc.focus();
     document.getElementById("go").onclick=function(){ S.complaint=cc.value.trim(); scrReveal(); };
-    document.getElementById("back").onclick=scrEssentials;
+    document.getElementById("back").onclick=function(){ if(isExisting()) scrRecords(); else scrEssentials(); };
   }
 
   // reveal
@@ -1818,7 +2030,9 @@
         + '</div>'
       + '</div>'
       + DISCLAIM
-      + '<p class="foot-note">No forms. This isn\'t a chart in a filing cabinet — it\'s a living record. It\'s yours, it moves, and it grows every visit.</p>'
+      + (isExisting()
+          ? '<p class="foot-note">Your care team has your Primary iD now. '+esc(reviewLine())+'</p>'
+          : '<p class="foot-note">No forms. This isn\'t a chart in a filing cabinet — it\'s a living record. It\'s yours, it moves, and it grows every visit.</p>')
       + '<div class="actions"><button class="cta blue" id="go">See my recommended path →</button><button class="ghost" id="restart">Start over</button></div>',
       10);
     document.getElementById("go").onclick=scrJourney;
@@ -1845,7 +2059,7 @@
     else if(S.reason==="blindspot") nowLead = "We close the blind spot you came to close — starting with ";
     else if(S.reason==="prevent") nowLead = "We get ahead of it, exactly like you want — starting with ";
     else nowLead = "A visit built around ";
-    var nowTitle="Your first visit", nowBody;
+    var nowTitle=isExisting() ? "Your next visit" : "Your first visit", nowBody;
     if(S.pathfinder){
       nowTitle="Your restorative consult · Pathfinder";
       nowBody = "A consult mapped to <b>"+esc(S.pf.what||"your situation")+"</b>"+(S.pf.why?", so you can "+esc(S.pf.why.toLowerCase()):"")+"."+(S.pf.where?" "+esc(S.pf.where)+".":"")+" We'll start your foundation at <b>"+esc(lever.d.name)+"</b> ("+lever.v+") in the same visit."+flagNote;
@@ -1895,10 +2109,26 @@
     if(S.insurance.type) saved.push("Insurance · "+esc(S.insurance.type));
     var plats=(S.records.platforms||[]).filter(function(p){return p!=="None";});
     if(plats.length) saved.push("Connecting: "+plats.join(", "));
+    var ex=isExisting();
+    // Until the patient portal exists, an existing patient's Primary iD is not
+    // portable, so this screen does not say it is (design section 3).
+    var visitBox = '';
+    if(ex && !IS_CLINIC){
+      visitBox = S.wantsVisit
+        ? '<div class="insight"><div class="il">Your next visit</div><p>Your request is in. Our front desk will call you '+esc(callWindow())+' from '+esc(CALL_FROM)+' to find a time.</p></div>'
+        : '<div class="insight"><div class="il">Your next visit</div><p>'+esc(reviewLine())+' Not booked yet? One tap and our front desk calls you to find a time.</p>'
+          + '<div class="actions" style="margin-top:12px"><button class="cta blue" id="book">Book my next visit</button></div></div>';
+    } else if(ex){
+      visitBox = '<div class="insight"><div class="il">Today</div><p>'+esc(reviewLine())+'</p></div>';
+    }
     show(
-      coach("<p>This part is just for you. Everything you shared is saved, private, and portable — it's yours to keep.</p>")
-      + '<h1 class="head">This one\'s <em>yours</em>.</h1>'
-      + '<p class="lede">Your Primary iD lives here — a living record you own and take with you. It grows every visit.</p>'
+      (ex
+        ? coach("<p>This part is just for you.</p>")
+          + '<h1 class="head">This one\'s <em>yours</em>.</h1>'
+          + '<p class="lede">Your Primary iD is with your care team now, and it grows with every visit.</p>'
+        : coach("<p>This part is just for you. Everything you shared is saved, private, and portable — it's yours to keep.</p>")
+          + '<h1 class="head">This one\'s <em>yours</em>.</h1>'
+          + '<p class="lede">Your Primary iD lives here — a living record you own and take with you. It grows every visit.</p>')
       + '<div class="brief">'
         + '<div class="bhead"><div class="bname">'+esc(S.name||"You")+'<small>Your Primary iD</small></div>'
           + '<div class="bcomp"><div class="n">'+c+'</div><div class="t" style="color:'+ct.c+'">'+esc(ct.w)+'</div></div></div>'
@@ -1908,9 +2138,9 @@
         + '<div class="brow"><div class="bk">Saved to your record</div><div class="bchips"><span>'+saved.map(esc).join('</span><span>')+'</span></div></div>'
       + '</div>'
       + DISCLAIM
-      + '<p class="foot-note">No forms. Your record is private and portable — it moves with you.</p>'
+      + (ex ? visitBox : '<p class="foot-note">No forms. Your record is private and portable — it moves with you.</p>')
       // S3: no second Book button. The request already went in at P1-06.
-      + (S.leadFired ? '<div class="insight"><div class="il">Your visit</div><p>Your request is in. '+esc(CALLER)+' will call you '+esc(callWindow())+' from '+esc(CALL_FROM)+' to confirm your time. You will meet Dr. Gabi, and the team confirms your Primary iD with you at the visit.</p></div>' : '')
+      + (S.leadFired && !ex ? '<div class="insight"><div class="il">Your visit</div><p>Your request is in. '+esc(CALLER)+' will call you '+esc(callWindow())+' from '+esc(CALL_FROM)+' to confirm your time. You will meet Dr. Gabi, and the team confirms your Primary iD with you at the visit.</p></div>' : '')
       + '<div class="actions"><button class="cta" id="copy">Copy my link</button><button class="ghost" id="back">Back</button>'
       + (IS_CLINIC ? '<button class="ghost" id="prov" style="margin-left:auto;opacity:.6">Provider view (team only)</button>' : '') + '</div>',
       10);
@@ -1920,6 +2150,7 @@
     };
     document.getElementById("back").onclick=scrJourney;
     var pv=document.getElementById("prov"); if(pv) pv.onclick=scrProvider;
+    var bk=document.getElementById("book"); if(bk) bk.onclick=function(){ bookNext(); scrYours(); };
   }
 
   // PROVIDER view — the clinical brief. The patient never sees this in production.
@@ -1957,6 +2188,7 @@
           + '<div class="bcomp"><div class="n">'+c+'</div><div class="t" style="color:'+ct.c+'">'+esc(ct.w)+'</div></div></div>'
         + (demoBits.length?'<div class="brow"><div class="bk">Demographics</div><div class="bv">'+demoBits.map(esc).join(" · ")+'</div></div>':'')
         + '<div class="brow"><div class="bk">Insurance</div><div class="bv">'+insLine+'</div></div>'
+        + (isExisting()?'<div class="brow"><div class="bk">Patient</div><div class="bv">Existing patient'+(S.odPatNum?' · chart #'+esc(S.odPatNum):'')+(S.inPain?' · <em>something is bothering them now</em>':'')+'</div></div>':'')
         + (S.reason?'<div class="brow"><div class="bk">Why they came</div><div class="bv"><em>'+esc(reasonLabel(S.reason))+'</em>'+(S.reasonDetail?' — “'+esc(S.reasonDetail)+'”':'')+'</div></div>':'')
         + (S.pathfinder?'<div class="brow"><div class="bk">Pathfinder · '+(S.pfTrack==="alignment"?"alignment":"restorative")+'</div><div class="bchips warn"><span>'+[S.pf.what,S.pf.why,S.pf.where].filter(Boolean).map(esc).join('</span><span>')+'</span></div></div>':'')
         + (S.pfTrack==="alignment"?'<div class="brow"><div class="bk">Aligner candidacy</div><div class="bchips">'+[(S.align.wear_tolerance?"Wear: "+S.align.wear_tolerance:""),(S.align.ortho_history?"Ortho: "+S.align.ortho_history:""),(S.align.retainer_wear?"Retainer: "+S.align.retainer_wear:"")].filter(Boolean).map(function(x){return '<span>'+esc(x)+'</span>';}).join('')+'</div></div>':'')
@@ -1990,9 +2222,16 @@
     var dp=resolveDoorParam();
     flushOutbox();
     if(!tryResume()){
-      applyDoor(dp || "general");
-      applyPreview();
-      scrWelcome();
+      if(FOR_EXISTING){
+        // X1: /welcome-back/ (and ?for=existing) opens straight into existing patient mode.
+        applyDoor("general");
+        startExisting();
+        scrWelcomeBack();
+      } else {
+        applyDoor(dp || "general");
+        applyPreview();
+        scrWelcome();
+      }
     }
   }
 })();
