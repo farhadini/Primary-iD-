@@ -396,7 +396,7 @@ export default function PrimaryIDDashboard() {
       {/* ── Header ── */}
       <div className="pd-head" style={{ background:"#fff", borderBottom:`1px solid ${C.border}`, padding:"0 40px", boxShadow:"0 1px 8px rgba(14,34,64,0.06)" }}>
         <div className="pd-head-in" style={{ maxWidth:1100, margin:"0 auto", display:"flex", justifyContent:"space-between", alignItems:"center", height:72 }}>
-          <PrimaryIDLogo size={1} dark={false} />
+          <a href="/" aria-label="Primary Integrative Dentistry home" style={{ display:"inline-flex", alignItems:"center", minHeight:44 }}><PrimaryIDLogo size={1} dark={false} /></a>
           <div style={{ display:"flex", gap:16, alignItems:"center" }}>
             <div className="pd-meta" style={{ textAlign:"right" }}>
               <div style={{ fontSize:11, color:C.muted, fontWeight:600, letterSpacing:"0.06em", textTransform:"uppercase" }}>Farhad Attaie · Age 45</div>
@@ -913,7 +913,7 @@ export default function PrimaryIDDashboard() {
       {/* Footer */}
       <div style={{ borderTop:`1px solid ${C.border}`, padding:"20px 40px", background:"#fff", marginTop:40 }}>
         <div style={{ maxWidth:1100, margin:"0 auto", display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:8 }}>
-          <PrimaryIDLogo size={0.6} dark={false} />
+          <a href="/" aria-label="Primary Integrative Dentistry home" style={{ display:"inline-flex", alignItems:"center", minHeight:44 }}><PrimaryIDLogo size={0.6} dark={false} /></a>
           <span style={{ fontSize:11, color:C.muted }}>Quest Diagnostics via Function Health · 4 panels Jul 2024 – Mar 2026 · Dr. Srinivas S. Boppana, D.O.</span>
         </div>
       </div>
