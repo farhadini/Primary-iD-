@@ -371,17 +371,38 @@ export default function PrimaryIDDashboard() {
 
   return (
     <div style={{ background:C.cream, minHeight:"100vh", fontFamily:"system-ui,sans-serif", color:C.body }}>
+      {/* phones: one column, the header trimmed to logo and photo, the score rings wrapping */}
+      <style>{`
+        .pd-tabs{scrollbar-width:none;-webkit-overflow-scrolling:touch}
+        .pd-tabs::-webkit-scrollbar{display:none}
+        .pd-tabs button{flex:none}
+        @media (max-width:860px){
+          .pd-g1{grid-template-columns:1fr !important}
+          .pd-g2{grid-template-columns:repeat(2,1fr) !important}
+          .pd-rings{flex-wrap:wrap;justify-content:center !important;row-gap:16px !important}
+        }
+        @media (max-width:640px){
+          .pd-head{padding:0 16px !important}
+          .pd-head-in{height:60px !important}
+          .pd-meta,.pd-pill{display:none !important}
+          .pd-tabs{padding:0 8px !important}
+          .pd-tabs button{padding:14px 12px !important}
+          .pd-main{padding:20px 16px 40px !important}
+          .pd-big{font-size:60px !important}
+          .pd-main table{font-size:11px !important}
+        }
+      `}</style>
 
       {/* ── Header ── */}
-      <div style={{ background:"#fff", borderBottom:`1px solid ${C.border}`, padding:"0 40px", boxShadow:"0 1px 8px rgba(14,34,64,0.06)" }}>
-        <div style={{ maxWidth:1100, margin:"0 auto", display:"flex", justifyContent:"space-between", alignItems:"center", height:72 }}>
+      <div className="pd-head" style={{ background:"#fff", borderBottom:`1px solid ${C.border}`, padding:"0 40px", boxShadow:"0 1px 8px rgba(14,34,64,0.06)" }}>
+        <div className="pd-head-in" style={{ maxWidth:1100, margin:"0 auto", display:"flex", justifyContent:"space-between", alignItems:"center", height:72 }}>
           <PrimaryIDLogo size={1} dark={false} />
           <div style={{ display:"flex", gap:16, alignItems:"center" }}>
-            <div style={{ textAlign:"right" }}>
+            <div className="pd-meta" style={{ textAlign:"right" }}>
               <div style={{ fontSize:11, color:C.muted, fontWeight:600, letterSpacing:"0.06em", textTransform:"uppercase" }}>Farhad Attaie · Age 44.5</div>
               <div style={{ fontSize:11, color:C.muted, marginTop:1 }}>4 panels · Jul 2024 – Mar 2026</div>
             </div>
-            <div style={{ display:"flex", alignItems:"center", gap:8, background:C.green+"11", border:`1.5px solid ${C.green}44`, borderRadius:24, padding:"7px 16px" }}>
+            <div className="pd-pill" style={{ display:"flex", alignItems:"center", gap:8, background:C.green+"11", border:`1.5px solid ${C.green}44`, borderRadius:24, padding:"7px 16px" }}>
               <svg width={8} height={8}><circle cx={4} cy={4} r={4} fill={C.green} /></svg>
               <span style={{ fontSize:11, color:C.muted, fontWeight:600 }}>Biological Age</span>
               <span style={{ fontSize:16, fontWeight:700, color:C.green }}>31.2</span>
@@ -406,7 +427,7 @@ export default function PrimaryIDDashboard() {
 
       {/* ── Tabs ── */}
       <div style={{ background:"#fff", borderBottom:`1px solid ${C.border}`, position:"sticky", top:0, zIndex:100 }}>
-        <div style={{ maxWidth:1100, margin:"0 auto", padding:"0 40px", display:"flex", overflowX:"auto" }}>
+        <div className="pd-tabs" style={{ maxWidth:1100, margin:"0 auto", padding:"0 40px", display:"flex", overflowX:"auto" }}>
           {tabs.map(t => (
             <button key={t.id} onClick={()=>setTab(t.id)} style={{
               background:"none", border:"none", cursor:"pointer",
@@ -421,13 +442,13 @@ export default function PrimaryIDDashboard() {
         </div>
       </div>
 
-      <div style={{ maxWidth:1100, margin:"0 auto", padding:"32px 40px" }}>
+      <div className="pd-main" style={{ maxWidth:1100, margin:"0 auto", padding:"32px 40px" }}>
 
         {/* ══ OVERVIEW ══════════════════════════════════════════════════════ */}
         {tab==="overview" && (
           <div>
             {/* Hero row */}
-            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:24 }}>
+            <div className="pd-g1" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:24 }}>
 
               {/* Bio Age card */}
               <div style={{ ...S.card, background:C.navy, border:"none" }}>
@@ -436,7 +457,7 @@ export default function PrimaryIDDashboard() {
                 </div>
                 <div style={{ ...S.label, color:"rgba(255,255,255,0.38)", marginBottom:8 }}>Biological Age · Mar 2026</div>
                 <div style={{ display:"flex", alignItems:"flex-end", gap:14, marginBottom:18 }}>
-                  <div style={{ fontSize:80, fontWeight:700, color:C.green, lineHeight:1, letterSpacing:"-0.04em" }}>31.2</div>
+                  <div className="pd-big" style={{ fontSize:80, fontWeight:700, color:C.green, lineHeight:1, letterSpacing:"-0.04em" }}>31.2</div>
                   <div style={{ paddingBottom:6 }}>
                     <div style={{ fontSize:28, fontWeight:700, color:C.green }}>−13.3</div>
                     <div style={{ fontSize:12, color:"rgba(255,255,255,0.4)", marginTop:2 }}>years younger · calendar 44.5</div>
@@ -457,13 +478,13 @@ export default function PrimaryIDDashboard() {
               <div style={{ ...S.card }}>
                 <div style={{ ...S.label, color:C.navy, marginBottom:10 }}>Primary iD Health Score</div>
                 <div style={{ display:"flex", alignItems:"center", gap:16, marginBottom:18 }}>
-                  <div style={{ fontSize:80, fontWeight:700, color:C.navy, lineHeight:1, letterSpacing:"-0.04em" }}>{totalScore}</div>
+                  <div className="pd-big" style={{ fontSize:80, fontWeight:700, color:C.navy, lineHeight:1, letterSpacing:"-0.04em" }}>{totalScore}</div>
                   <div>
                     <div style={{ fontSize:13, color:C.body }}>Composite wellness score</div>
                     <div style={{ fontSize:12, color:C.muted, marginTop:2 }}>4 lab panels · Jul 2024 – Mar 2026</div>
                   </div>
                 </div>
-                <div style={{ display:"flex", gap:12, justifyContent:"space-between" }}>
+                <div className="pd-rings" style={{ display:"flex", gap:12, justifyContent:"space-between" }}>
                   {primaryIDScores.map((s,i)=><ScoreRing key={i} {...s} />)}
                 </div>
               </div>
@@ -546,7 +567,7 @@ export default function PrimaryIDDashboard() {
 
             <div style={{ ...S.card, marginBottom:20 }}>
               <div style={{ ...S.label, color:C.navy, marginBottom:16 }}>Measurement History</div>
-              <table style={{ width:"100%", borderCollapse:"collapse" }}>
+              <div style={{ overflowX:"auto" }}><table style={{ width:"100%", borderCollapse:"collapse" }}>
                 <thead>
                   <tr style={{ borderBottom:`2px solid ${C.border}` }}>
                     {["Date","Calendar Age","Biological Age","Youth Gap","Change"].map((h,i)=>(
@@ -577,12 +598,12 @@ export default function PrimaryIDDashboard() {
                     );
                   })}
                 </tbody>
-              </table>
+              </table></div>
             </div>
 
             <div style={{ ...S.card, background:"#f0faf5", borderColor:C.green+"44" }}>
               <div style={{ ...S.label, color:C.green, marginBottom:12 }}>What Drove the 6-Year Drop Between May 2025 and March 2026</div>
-              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14 }}>
+              <div className="pd-g1" style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:14 }}>
                 {[
                   { f:"Retatrutide (2mg/week)", d:"Primary metabolic driver — insulin −77%, leptin −80%, BMI normalized" },
                   { f:"Triglycerides 582→85 mg/dL", d:"Largest single lipid contributor to biological age improvement" },
@@ -719,7 +740,7 @@ export default function PrimaryIDDashboard() {
             </div>
 
             {/* Hero metrics row */}
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:16, marginBottom:28 }}>
+            <div className="pd-g1" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:16, marginBottom:28 }}>
               {[
                 { label:"All-time Average", value:"89", unit:"mg/dL", target:"healthy <117", color:C.green },
                 { label:"Time in Range", value:"98", unit:"%", target:"70-140 mg/dL", color:C.green },
@@ -779,7 +800,7 @@ export default function PrimaryIDDashboard() {
                   <span style={{ fontSize:11, fontWeight:700, color:"#fff" }}>16%</span>
                 </div>
               </div>
-              <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:12 }}>
+              <div className="pd-g2" style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:12 }}>
                 {[
                   { range:"<70 mg/dL", pct:"2%", color:C.redAlert, label:"Low" },
                   { range:"70-99 mg/dL", pct:"82%", color:C.green, label:"Optimal" },
@@ -798,7 +819,7 @@ export default function PrimaryIDDashboard() {
             {/* Variability by time of day */}
             <div style={{ ...S.card, marginBottom:20 }}>
               <div style={{ ...S.label, color:C.navy, marginBottom:14 }}>Glucose Variability (CV) by Time of Day</div>
-              <div style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:16 }}>
+              <div className="pd-g2" style={{ display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:16 }}>
                 {[
                   { label:"Overnight", cv:"9%", color:C.green, note:"Excellent" },
                   { label:"Morning", cv:"12%", color:C.green, note:"Optimal" },
@@ -854,7 +875,7 @@ export default function PrimaryIDDashboard() {
             </div>
 
             <div style={{ ...S.label, color:C.navy, marginBottom:14 }}>Supplement Stack</div>
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(290px,1fr))", gap:14 }}>
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(min(290px,100%),1fr))", gap:14 }}>
               {[
                 { name:"Wiley's Finest Fish Oil", dose:"630mg EPA+DHA/day", icon:"🐟", note:"OmegaCheck 5.4%, DPA below range. Increase to 2-3g EPA+DHA/day.", flag:"upgrade", color:C.yellowWarn },
                 { name:"Nuven Magnesium Glycinate", dose:"Calming Drink Mix", icon:"🌿", note:"RBC Mag jumped to 7.2 (above range 4.0-6.4). Stop or significantly reduce now. Retest in 6 weeks.", flag:"stop", color:C.redAlert },
