@@ -11,6 +11,10 @@ import MobileStickyCTA from "@/components/mobile-sticky-cta";
 import MembershipTeaser from "@/components/membership-teaser";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
+import localFont from "next/font/local";
+
+// Montserrat for labels (Brand OS); ships from public/fonts, never fetched from Google at build time
+const montserrat = localFont({ src: "../public/fonts/montserrat.woff2", weight: "100 900", display: "swap" });
 
 // ============================================================
 // PRIMARY: Homepage
@@ -195,6 +199,16 @@ function Hero() {
           opacity: loaded ? 1 : 0, transform: loaded ? "translateY(0)" : "translateY(14px)",
           transition: "all .8s cubic-bezier(0.23,1,0.32,1) .15s",
         }}>
+          {/* the welcome line for the relaunch: a label above the locked H1, not a second headline */}
+          <div className={montserrat.className} style={{
+            display: "inline-flex", alignItems: "center", gap: 10, alignSelf: "flex-start",
+            margin: "0 0 20px", padding: "8px 16px 8px 13px", borderRadius: 999,
+            background: "rgba(36,167,224,.12)", border: "1px solid rgba(91,192,236,.35)",
+            fontSize: 11, fontWeight: 600, letterSpacing: ".14em", textTransform: "uppercase", color: "#5BC0EC",
+          }}>
+            <span aria-hidden="true" style={{ width: 7, height: 7, borderRadius: "50%", background: "#5BC0EC", flex: "none" }} />
+            Welcome to the new Primary
+          </div>
           <h1 className="hero-h1" style={{
             fontFamily: "Georgia,serif", fontWeight: 400, fontSize: "var(--fs-h1)", lineHeight: 1.06,
             margin: "0 0 18px", maxWidth: "13ch", letterSpacing: "-.01em",
