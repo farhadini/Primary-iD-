@@ -1272,8 +1272,11 @@
         coach("<p>Thank you, "+first+". Because you are in pain, you are first on our list.</p>")
         + '<h1 class="head">Your request is <em>in</em>.</h1>'
         + '<p class="lede">'+esc(CALLER)+', your '+esc(ROLE)+', will call you '+esc(w)+' from '+esc(CALL_FROM)+'. You do not need to do anything else now. If the pain gets worse, call us on that number.</p>'
-        + '<div class="actions"><button class="ghost" id="later">I would like to finish my Primary iD later</button></div>',
+        + '<p class="lede" style="margin-top:22px">If you feel up to it while you wait, you can finish your Primary iD now. It takes about six minutes, and Dr. Gabi reads it before he sees you.</p>'
+        // Offered, not pushed (spec P1-07): two equal quiet choices, no call to action.
+        + '<div class="actions"><button class="ghost" id="go">Finish my Primary iD now</button><button class="ghost" id="later">Finish later</button></div>',
         1);
+      document.getElementById("go").onclick=function(){ S.bridge="kept going"; scrGoals(); };
       document.getElementById("later").onclick=function(){ S.bridge="later"; scrLater(); };
       return;
     }
