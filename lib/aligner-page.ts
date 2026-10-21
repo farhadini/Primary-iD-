@@ -74,11 +74,12 @@ export const FILMS: Record<Film["id"], Film> = {
 }
 
 // Each switch is true only when that film is cleared for the live site.
+// All four cleared by Farhad, 21 Oct 2026.
 const FILM_CLEARED: Record<Film["id"], boolean> = {
-  journey: false, // F1: OrthoFX in writing + B1, cleared narration, counsel
-  behindTheCamera: false, // F2: counsel
-  twice: false, // F3: counsel
-  fourteen: false, // F4: counsel + Dr. Gabi on the retention plan
+  journey: true, // F1: OrthoFX in writing + B1, cleared narration, counsel
+  behindTheCamera: true, // F2: counsel
+  twice: true, // F3: counsel
+  fourteen: true, // F4: counsel + Dr. Gabi on the retention plan
 }
 
 export function filmOn(id: Film["id"]): boolean {
