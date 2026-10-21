@@ -3,6 +3,10 @@
 // The #smile drawing on /clear-aligners/: four common cases, each a drawn row
 // of teeth that moves into line. A drawing, never a photograph, and nothing
 // on it is presented as a result (spec, section 2 and build note 3).
+//
+// The pick travels into the aligner door as ?smile=<key> and presets the
+// matching answer there (spec P1-01 L4: one Pathfinder; conflict C77). Nothing
+// is stored on this page.
 
 import { useState } from "react"
 import type { CSSProperties } from "react"
@@ -14,21 +18,24 @@ const W = [38, 42, 50, 50, 42, 38]
 const H = [70, 74, 86, 86, 74, 70]
 const GAP = 4
 
-type Case = { label: string; text: string; off: number[][] }
+type Case = { key: "overlap" | "spaces" | "moved" | "uneven"; label: string; text: string; off: number[][] }
 
-export function SmileCases({ quickToBringBack }: { quickToBringBack: boolean }) {
+export function SmileCases({ quickToBringBack, doorHref }: { quickToBringBack: boolean; doorHref: string }) {
   const cases: Case[] = [
     {
+      key: "overlap",
       label: "Teeth that overlap",
       text: "Overlapping teeth catch the light unevenly. Lined up, the same teeth look calmer and more even, before anything is whitened or reshaped.",
       off: [[0, 2, 0, 1], [8, 4, -16, 2], [10, -2, 7, 3], [-10, 0, -6, 2], [-6, 5, 14, 1], [0, 2, 0, 1]],
     },
     {
+      key: "spaces",
       label: "Spaces between teeth",
       text: "Closing small spaces changes the whole smile without touching the teeth themselves.",
       off: [[-14, 0, -3, 1], [-9, 0, -2, 1], [-4, 0, 0, 1], [4, 0, 0, 1], [9, 0, 2, 1], [14, 0, 3, 1]],
     },
     {
+      key: "moved",
       label: "Teeth that moved after braces",
       text: quickToBringBack
         ? "Common, and usually quick to bring back. This time, we keep checking the result at your visits."
@@ -36,6 +43,7 @@ export function SmileCases({ quickToBringBack }: { quickToBringBack: boolean }) 
       off: [[0, 0, 0, 1], [3, 3, -9, 2], [4, 0, 8, 3], [0, 0, 0, 1], [0, 2, 0, 1], [0, 0, 0, 1]],
     },
     {
+      key: "uneven",
       label: "An uneven smile line",
       text: "Levelling the edges is often what makes a smile look finished. Sometimes it is all a smile needs; sometimes it means less work later.",
       off: [[0, 9, -4, 1], [0, -2, 3, 1], [0, -7, 0, 1], [0, 7, 0, 1], [0, -4, -3, 1], [0, 6, 4, 1]],
@@ -94,6 +102,12 @@ export function SmileCases({ quickToBringBack }: { quickToBringBack: boolean }) 
           ))}
         </div>
         <p style={{ margin: 0, fontFamily: SERIF, fontSize: 18, lineHeight: 1.55, color: "#0E2240" }}>{c.text}</p>
+        <a
+          href={`${doorHref}?smile=${c.key}`}
+          style={{ alignSelf: "flex-start", fontFamily: SANS, fontSize: 14, fontWeight: 600, color: "#1F86B5", textDecoration: "none", minHeight: 44, display: "inline-flex", alignItems: "center" }}
+        >
+          Start your Primary iD with this &rarr;
+        </a>
       </div>
       <div
         style={{

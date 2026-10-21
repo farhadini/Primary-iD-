@@ -6,8 +6,9 @@
 //
 // BLOCKED SLOTS (B1 to B4) stay null until each is signed off. A null slot
 // does not render: no OrthoFX wear claim, no price section, no member price,
-// no credentials line. B5 is the door: today the button opens the live
-// OrthoFX door; it becomes /book/aligners/ (with a redirect) once agreed.
+// no credentials line. B5 is the door: /book/aligners/ (the old /book/orthofx/
+// redirects there), led by the smile, with the smile quiz (preview branch
+// preview/aligner-door, 21 Oct 2026; BRD-38 decision 12).
 //
 // FILM SWITCHES (F1 to F4) are off on the live site until each film is
 // cleared (what clears each is in the spec). They are on in Vercel preview
@@ -86,7 +87,7 @@ export function filmOn(id: Film["id"]): boolean {
 
 export const ALIGNER_PAGE = {
   launched: false,
-  doorHref: "/book/orthofx/", // B5
+  doorHref: "/book/aligners/", // B5
   // B1: OrthoFX's exact wording and footnote, in writing, or leave null.
   airflexClaim: null as null | { claim: string; footnote: string },
   // B2 and B3: the cost section stays hidden while these are null.

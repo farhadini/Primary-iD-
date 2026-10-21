@@ -356,7 +356,7 @@ const BLOCKS: Block[] = [
     line: "Shade, alignment and wear, and the bite underneath, so a better smile sits on teeth that can hold it.",
     leads: [
       { label: "Whitening, veneers and bonding", href: "/cosmetic-dentistry/" },
-      { label: "Clear aligners", href: "/book/orthofx/" },
+      { label: "Clear aligners", href: "/book/aligners/" },
     ],
   },
   {
@@ -391,7 +391,7 @@ const OUTCOMES: Outcome[] = [
   { want: "Whiter teeth", pillar: "Beauty & cosmetic", href: "/book/cosmetic/",
     accent: "#24A7E0", tint: "224,240,251", deep: ["#147CA9", "#106489"],
     icon: (c) => <path {...ic(c)} d="M7 3c-2 0-3 1.6-3 4 0 3 1 5 1.4 8.5C5.6 18 6 20 7 20c1.2 0 1-3 2-3s.8 3 2 3c1 0 1.4-2 1.6-4.5C15 12 16 10 16 7c0-2.4-1-4-3-4-1.4 0-1.6 1-3 1s-1.6-1-3-1z" transform="translate(2 1)" /> },
-  { want: "Straighter teeth", pillar: "Beauty & cosmetic", href: "/book/orthofx/",
+  { want: "Straighter teeth", pillar: "Beauty & cosmetic", href: "/book/aligners/",
     accent: "#24A7E0", tint: "224,240,251", deep: ["#147CA9", "#106489"],
     icon: (c) => <path {...ic(c)} d="M4 15c0-5 3.5-8 8-8s8 3 8 8M8 13v3M12 12v4M16 13v3" /> },
   { want: "Fresh breath", pillar: "Oral health", href: "/book/preventive/",

@@ -86,6 +86,12 @@
   .tile.sel{border-color:var(--blue); background:#F2FAFE}
   .tile.sel .tchk{border-color:var(--blue); background:var(--blue)}
   .tile.sel .tchk::after{content:""; position:absolute; top:3px; left:6px; width:6px; height:11px; border:solid #fff; border-width:0 2px 2px 0; transform:rotate(45deg)}
+  /* Your smile (aligner door, question 4): drawn cases, never photographs */
+  .smilegrid{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px}
+  .chip.stile{border-radius:var(--r-card); padding:10px 8px 12px; display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center; font-size:12.5px; line-height:1.3; min-height:44px}
+  .chip.stile svg{display:block; width:100%; max-width:104px; height:auto}
+  .chip.stile.sel{background:#EAF6FD}
+  .qnote{font-family:var(--sans); font-size:12px; color:var(--muted); margin-top:8px}
 
   /* buttons */
   .cta{display:inline-flex; align-items:center; gap:9px; cursor:pointer; font-family:var(--sans); font-weight:600; font-size:14px; letter-spacing:.02em; border:none; border-radius:var(--r-pill); padding:15px 30px; background:var(--navy); color:#fff; box-shadow:var(--shadow-sm); transition:.16s}
@@ -212,6 +218,7 @@
     .composite{padding:12px} .composite .cv{font-size:26px}
     .stage{padding:26px 22px 100px}
     .grid{grid-template-columns:1fr}
+    .smilegrid{grid-template-columns:repeat(2,minmax(0,1fr))}
     .rgrid{grid-template-columns:1fr 1fr}
   }
 </style>
@@ -544,12 +551,14 @@
       heroH:"One score that <em>moves over time</em>.",
       heroSub:"The habits and markers that shape your next decades — baselined today, tracked from here. We start at your mouth and follow what runs through it.",
       reason:"blindspot", track:null, rec:"longevity" },
-    orthofx: { label:"Clear aligners", pathway:"your aligner fit assessment",
-      desc:"A straighter smile with less daily wear time.",
-      includes:["Aligner Fit Assessment + 3D scan","Bite, gum & airway-history review","Full Primary iD score across five dimensions"],
-      heroH:"Twelve hours a day. <em>Not twenty-two.</em>",
-      heroSub:"A straighter smile designed around your day — with a prosthodontist looking at your bite, gums and airway history before anything moves.",
-      reason:"fix", track:"alignment", rec:"airflex", cobrand:true },
+    // The aligner door (was "orthofx"; ?door=orthofx and /book/orthofx/ still land
+    // here). It leads with the smile, never a wear number (B1) or a price (B2).
+    aligners: { label:"Clear aligners", pathway:"your aligner assessment",
+      desc:"Straighter teeth that look like yours, planned around your whole mouth.",
+      includes:["Your smile, gums and bite looked at together","Your bite, gums and airway history reviewed first","A plan that fits your day: Dr. Gabi prescribes your hours","Full Primary iD score across five dimensions"],
+      heroH:"A smile you'll <em>want to show</em>.",
+      heroSub:"Straighter teeth that still look like yours, planned by a prosthodontist who checks your gums and bite before anything moves.",
+      reason:"fix", track:"alignment", rec:"aligner", cobrand:true },
     second_opinion: { label:"Second opinion", pathway:"your second-opinion review",
       desc:"A plan and a quote from somewhere else, read again from the foundation up.",
       includes:["Independent review of the proposed plan","Bite, gum and bone evaluation","What we'd do the same, and what we wouldn't","Full Primary iD score behind the decision"],
@@ -570,14 +579,21 @@
       heroSub:"Tell us what brings you in and we will take it from there.",
       reason:null, track:null, rec:"first" }
   };
-  var PICKER_DOORS = ["preventive","orthofx","airway","cosmetic","implants","longevity","second_opinion","pain"];
-  function doorCfg(){ return DOORS[S.door] || DOORS.general; }
+  var PICKER_DOORS = ["preventive","aligners","airway","cosmetic","implants","longevity","second_opinion","pain"];
+  // Old door names that still arrive on links and saved runs.
+  var DOOR_ALIAS = { orthofx:"aligners" };
+  function doorKey(k){ k=(k||"").toLowerCase(); return DOOR_ALIAS[k] || k; }
+  function doorCfg(){ return DOORS[doorKey(S.door)] || DOORS.general; }
   function resolveDoorParam(){
     var s=(location.search||"")+(location.hash||"");
-    var m=s.match(/[?&]door=([a-z_]+)/i); if(m && DOORS[m[1].toLowerCase()]) return m[1].toLowerCase();
-    m=s.match(/[?&]pathway=([a-z_]+)/i); if(m && DOORS[m[1].toLowerCase()]) return m[1].toLowerCase();
+    var m=s.match(/[?&]door=([a-z_]+)/i); if(m && DOORS[doorKey(m[1])]) return doorKey(m[1]);
+    m=s.match(/[?&]pathway=([a-z_]+)/i); if(m && DOORS[doorKey(m[1])]) return doorKey(m[1]);
     return null;
   }
+  // The aligner page's #smile picker hands its pick to the door (C77, check L4).
+  // Nothing is stored on the page: the pick only travels on the link.
+  var SMILE_PICKS = { overlap:"Crowded or overlapping", spaces:"Gaps between teeth", uneven:"The edges look uneven", moved:"" };
+  var SMILE_PICK = (function(){ var m=/[?&]smile=([a-z]+)/i.exec(location.search||""); var k=m?m[1].toLowerCase():""; return Object.prototype.hasOwnProperty.call(SMILE_PICKS,k)?k:""; })();
   function applyDoor(key){ S.door=key; var d=DOORS[key]; if(d && d.reason) S.reason=d.reason; }
 
   // IN-CLINIC MODE (?ctx=clinic)
@@ -676,7 +692,7 @@
       var o=JSON.parse(ub64u(m[1]));
       S.name=o.n||""; S.demo=o.d||{}; S.insurance=o.ins||{}; S.reason=o.r||""; S.reasonDetail=o.rd||"";
       S.pf=o.pf||{}; S.pathfinder=!!o.pfb; S.goals=o.g||[]; S.intent=o.it||"";
-      S.door=o.dr||""; S.align=o.al||{}; S.pfTrack=o.pft||"";
+      S.door=doorKey(o.dr||""); S.align=o.al||{}; S.pfTrack=o.pft||"";
       S.scores=o.sc||{}; S.hist=o.h||{}; S.safety=o.sf||[]; S.records=o.rec||{}; S.complaint=o.cc||"";
       DIMS.forEach(function(d){ if(!S.scores[d.key]) S.scores[d.key]=[]; });
       updateTwin(""); scrYours(); return true;
@@ -710,7 +726,7 @@
     L.push("Pathway (door): "+(S.door&&DOORS[S.door]?DOORS[S.door].label:"General / Book a visit"));
     L.push("Why they came: "+reasonLabel(S.reason)+(S.reasonDetail?(" — \""+S.reasonDetail+"\""):""));
     if(S.pathfinder) L.push("Pathfinder ("+(S.pfTrack||"restorative")+"): "+[S.pf.what,S.pf.why,S.pf.where].filter(Boolean).join(" / "));
-    if(S.pfTrack==="alignment") L.push("Aligner candidacy: "+[(S.align.wear_tolerance?"wear="+S.align.wear_tolerance:""),(S.align.ortho_history?"ortho="+S.align.ortho_history:""),(S.align.retainer_wear?"retainer="+S.align.retainer_wear:"")].filter(Boolean).join(" · "));
+    if(S.pfTrack==="alignment") L.push("Aligner candidacy: "+alignLines(true).join(" · "));
     if(S.goals&&S.goals.length) L.push("What matters: "+S.goals.map(goalOf).join(", "));
     if(S.intent) L.push("If nothing changes: "+S.intent);
     L.push("");
@@ -826,7 +842,7 @@
     var sel=store[item.id], opts=item.type==="yn"?["Yes","No"]:item.opts;
     var chips=opts.map(function(o){
       var on=item.type==="multi"?(Array.isArray(sel)&&sel.indexOf(o)>-1):(sel===o);
-      return '<button class="chip'+(on?" sel":"")+'" data-id="'+esc(item.id)+'" data-val="'+esc(o)+'" data-type="'+item.type+'">'+esc(o)+'</button>';
+      return '<button class="chip'+(on?" sel":"")+'" data-id="'+esc(item.id)+'" data-val="'+esc(o)+'" data-type="'+item.type+'"'+(item.excl?' data-excl="'+esc(item.excl)+'"':'')+(item.max?' data-max="'+item.max+'"':'')+'>'+esc(o)+'</button>';
     }).join("");
     return '<div class="chiprow"><div class="ql">'+esc(item.q)+'</div>'+(item.why?'<div class="qwhy">'+esc(item.why)+'</div>':'')+'<div class="chips">'+chips+'</div></div>';
   }
@@ -837,8 +853,9 @@
         var id=c.getAttribute("data-id"), val=c.getAttribute("data-val"), type=c.getAttribute("data-type"), row=rowOf(c);
         if(type==="multi"){
           var arr=Array.isArray(store[id])?store[id]:[];
-          if(val==="None"){ arr=["None"]; }
-          else { var i=arr.indexOf(val); if(i>-1)arr.splice(i,1); else { arr.push(val); var n=arr.indexOf("None"); if(n>-1)arr.splice(n,1); } }
+          var excl=c.getAttribute("data-excl")||"None", max=+(c.getAttribute("data-max")||0);
+          if(val===excl){ arr=[excl]; }
+          else { var i=arr.indexOf(val); if(i>-1)arr.splice(i,1); else { arr.push(val); var n=arr.indexOf(excl); if(n>-1)arr.splice(n,1); if(max && arr.length>max) arr.shift(); } }
           store[id]=arr;
           Array.prototype.forEach.call(row.querySelectorAll(".chip"),function(x){ x.classList.toggle("sel", arr.indexOf(x.getAttribute("data-val"))>-1); });
         } else {
@@ -1289,7 +1306,7 @@
       + '</div>'
       + '<div class="actions"><button class="cta blue" id="go">Finish my Primary iD</button><button class="ghost" id="later">Finish later</button></div>',
       1);
-    document.getElementById("go").onclick=function(){ S.bridge="kept going"; if(S.pfTrack==="alignment" && priorBraces() && !S.align.retainer_wear) scrRetainer(); else scrGoals(); };
+    document.getElementById("go").onclick=function(){ S.bridge="kept going"; if(S.pfTrack==="alignment" && !S.align.smile_done) scrYourSmile(); else scrGoals(); };
     document.getElementById("later").onclick=function(){ S.bridge="later"; scrLater(); };
   }
 
@@ -1382,6 +1399,7 @@
       pathfinder: !!S.pathfinder,
       pfTrack:    S.pfTrack||"",
       pf:         S.pf||{},
+      align:      alignOut(),
       entryDim:   (new URLSearchParams(location.search||"")).get("dim")||"",
       leadSource: pidUtm(),
       scores:     { oral:SC.oral, sleep:SC.sleep, nutri:SC.nutri, family:SC.family, long:SC.long },
@@ -1486,6 +1504,7 @@
       if(at==="dims") scrQuestion();
       else if(at==="hist") scrDimHistory(DIMS[S.di]);
       else if(at==="goals") scrGoals();
+      else if(at==="smile") scrYourSmile();
       else if(at==="intent") scrIntent();
       else if(at==="how") scrHow();
       else if(at==="safety") scrSafety();
@@ -1574,13 +1593,92 @@
     {id:"why", type:"single", q:"What would fixing it mean for you?", why:"This is what we plan around, before anything technical.", opts:["Eat normally again","Feel confident smiling","Stop the pain or worry","A permanent fix, not a patch"]},
     {id:"where", type:"single", q:"Where are you with it?", why:"So we start where you are, not at the beginning.", opts:["Just starting to look","I've been told I need work","I have a quote elsewhere","Ready to move now"]}
   ];
-  // alignment track (OrthoFX) — one Pathfinder, two tracks. Only `what` forks; why/where shared.
+  // ALIGNER DOOR: the smile quiz (Primary iD Project, "1 Primary iD/New patient
+  // journey/OrthoFX door journey.md"; the door page is built from doors.orthofx
+  // in the journey data). Three questions before the request (PF1), then Your
+  // smile straight after the bridge. Nothing here is scored (PF2) and nothing is
+  // asked again later (PF3, I2). No wear number, price or comparison (B1, B2).
+  // `what` is the aligner goal (question 1); it keeps the id the call and the
+  // brief already read. The wear labels change with C64.
   var PF_ALIGN = [
-    {id:"what", type:"single", q:"What would you change about your smile?", why:"Aligners can move teeth in different ways. This tells us which movement matters to you.", opts:["Crowding or crooked teeth","Gaps between my teeth","How my teeth meet when I bite","They shifted back after braces","Something else about my smile"]},
-    {id:"ortho_history", type:"single", q:"Have you had braces or aligners at any point?", why:"Teeth that have moved before tend to move again, and that changes the plan.", opts:["Never","As a teenager","As an adult","I'm in treatment now"]},
-    {id:"wear_tolerance", type:"single", q:"Realistically, how much of the day could you wear aligners?", why:"Wear time decides which aligner plan fits your day.", opts:["All day — that's fine","Evenings and overnight only","This is why I've put treatment off","I'm not sure"]}
+    {id:"what", type:"single", q:"What would you like from straightening?", why:"So the person who calls you already knows what you want.", opts:["A straighter smile, for photos and on camera","Teeth that moved back after braces","Getting ready for veneers or crowns","A bite or wear concern","Not sure yet"]},
+    {id:"wear_tolerance", type:"single", q:"Realistically, how much of the day could you wear aligners?", why:"There's no wrong answer. It helps Dr. Gabi plan hours you can keep.", opts:["All day — that's fine","Evenings and overnight only","This is why I've put treatment off","I'm not sure"]},
+    {id:"ortho_history", type:"single", q:"Have you had braces or aligners at any point?", why:"Teeth that have moved before tend to move again, and that changes the plan.", opts:["Never","As a teenager","As an adult","I'm in treatment now"]}
   ];
-  var PF_RETAINER = {id:"retainer_wear", type:"single", q:"Did you keep wearing your retainers?", opts:["Still do","Stopped after a while","Never really did","Lost or broke them"]};
+  // Your smile: questions 4 to 8. Question 4 is drawn; the brief shows Dr. Gabi
+  // the clinical label beside each answer (two languages).
+  var SMILE_CASES = [
+    {v:"Crowded or overlapping", k:"crowd", c:"Crowding"},
+    {v:"Gaps between teeth", k:"gaps", c:"Spacing"},
+    {v:"The edges look uneven", k:"uneven", c:"Uneven incisal edges"},
+    {v:"Top teeth cover most of the bottom ones", k:"deep", c:"Deep bite"},
+    {v:"Bottom teeth sit in front of the top ones", k:"under", c:"Anterior crossbite or Class III tendency", bite:true},
+    {v:"Front teeth don't touch when I bite", k:"open", c:"Open bite", bite:true},
+    {v:"Some top teeth sit inside the bottom ones", k:"cross", c:"Posterior crossbite", bite:true},
+    {v:"Not sure", k:"unsure", c:""}
+  ];
+  var PF_SMILE_CASE = {id:"smile_case", type:"multi", max:2, excl:"Not sure", q:"Which of these looks most like your teeth?", why:"It helps Dr. Gabi prepare. He decides what your teeth need once he has seen them."};
+  var PF_RETAINER = {id:"retainer_wear", type:"single", q:"Did you keep wearing your retainers?", why:"It tells us a lot about what happened and what will hold.", opts:["Still do","Stopped after a while","Never really did","Lost or broke them"]};
+  var PF_SMILE = [
+    {id:"between_meals", type:"single", q:"Between meals, how often do you snack or sip something other than water?", why:"Aligners come out to eat and to drink anything but water, so this helps plan hours you can keep.", opts:["Most of the day","A few times a day","Rarely"]},
+    {id:"wear_obstacles", type:"multi", excl:"Nothing much", q:"What else could get in the way of wearing them?", why:"So the plan fits your days, not the other way round. Pick any.", opts:["Meals out for work or with friends","Calls, meetings or speaking on camera","Sport or the gym","Travel","Nothing much"]},
+    {id:"ready_by", type:"single", q:"Is there a date you'd like your smile ready for?", why:"Treatment time depends on your teeth. A date helps Dr. Gabi tell you what's realistic.", opts:["No date","Within six months","Six to twelve months","Later than that"]}
+  ];
+  // A front view of six upper teeth (and the lower front teeth for the bite
+  // cases), in the style of the aligner page's #smile drawing. Never a photo.
+  function smileSvg(k){
+    var bite=(k==="deep"||k==="under"||k==="open"||k==="cross"), VH=bite?74:54, G=2;
+    if(k==="unsure") return '<svg viewBox="0 0 120 54" aria-hidden="true"><circle cx="60" cy="27" r="18" fill="#EAF6FD" stroke="#24A7E0" stroke-width="1.5"/><text x="60" y="35" text-anchor="middle" font-family="Georgia,serif" font-size="20" fill="#0E2240">?</text></svg>';
+    var row=function(W){ var t=W.reduce(function(a,b){return a+b;},0)+G*(W.length-1), x=(120-t)/2, xs=[]; W.forEach(function(w){ xs.push(x); x+=w+G; }); return xs; };
+    var W=[14,16,19,19,16,14], H=[27,29,34,34,29,27], xs=row(W);
+    var LW=[12,13,13,13,13,12], lxs=row(LW);
+    var up={crowd:[[1,1,4],[4,2,-14],[4,-1,8],[-4,0,-7],[-3,2,12],[-1,1,-4]], gaps:[[-6,0,-3],[-4,0,-2],[-2,0,0],[2,0,0],[4,0,2],[6,0,3]],
+      uneven:[[0,4,-4],[0,-1,3],[0,-4,0],[0,4,0],[0,-2,-3],[0,3,4]]}[k] || [[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0],[0,0,0]];
+    var tooth=function(tx,ty,w,h,r){ return '<rect x="'+tx.toFixed(1)+'" y="'+ty.toFixed(1)+'" width="'+w+'" height="'+h.toFixed(1)+'" rx="4" transform="rotate('+r+' '+(tx+w/2).toFixed(1)+' '+ty.toFixed(1)+')" fill="#FFFFFF" stroke="#0E2240" stroke-width="1.3"/>'; };
+    var uy=10, uh=bite?0.82:1, upper='', lower='', sides='';
+    for(var n=0;n<6;n++){ var o=up[n]; upper+=tooth(xs[n]+o[0],uy+o[1],W[n],H[n]*uh,o[2]); }
+    var gum='<path d="M0 0 H120 V10 Q60 20 0 10 Z" fill="#F1CDB8"/>';
+    if(bite){
+      var ly=k==="deep"?28:k==="open"?42:k==="under"?26:33, base=64;
+      for(var m=0;m<6;m++) lower+=tooth(lxs[m],ly,LW[m],base-ly,0);
+      gum+='<path d="M0 74 H120 V64 Q60 56 0 64 Z" fill="#F1CDB8"/>';
+      // Crossbite: the back lower teeth sit outside the top ones, so they go on top.
+      if(k==="cross") sides=tooth(lxs[0]-5,ly-5,LW[0],base-ly+5,0)+tooth(lxs[5]+5,ly-5,LW[5],base-ly+5,0);
+    }
+    // Bottom teeth in front of the top ones: the lower row is drawn last.
+    return '<svg viewBox="0 0 120 '+VH+'" aria-hidden="true">'+gum+(k==="under"?upper+lower:lower+upper+sides)+'</svg>';
+  }
+  function smileTiles(){
+    var sel=Array.isArray(S.align.smile_case)?S.align.smile_case:[];
+    return '<div class="chiprow"><div class="ql">'+esc(PF_SMILE_CASE.q)+'</div><div class="qwhy">'+esc(PF_SMILE_CASE.why)+' Pick up to two.</div><div class="smilegrid">'
+      + SMILE_CASES.map(function(o){
+          return '<button class="chip stile'+(sel.indexOf(o.v)>-1?" sel":"")+'" data-id="smile_case" data-val="'+esc(o.v)+'" data-type="multi" data-excl="Not sure" data-max="2">'+smileSvg(o.k)+'<span>'+esc(o.v)+'</span></button>';
+        }).join("")
+      + '</div><div class="qnote">These are drawings, not photos.</div></div>';
+  }
+  function smileLabel(v){ for(var i=0;i<SMILE_CASES.length;i++){ if(SMILE_CASES[i].v===v) return SMILE_CASES[i]; } return null; }
+  function biteFirst(){ return (S.align.smile_case||[]).some(function(v){ var o=smileLabel(v); return o&&o.bite; }); }
+  // What the call, the brief and the summary read (clinical=true adds the labels).
+  function alignLines(clinical){
+    var A=S.align||{}, out=[];
+    if(A.what) out.push("Wants: "+A.what);
+    if(A.wear_tolerance) out.push("Wear: "+A.wear_tolerance);
+    if(A.ortho_history) out.push("Ortho: "+A.ortho_history);
+    if(A.retainer_wear) out.push("Retainer: "+A.retainer_wear);
+    if(A.smile_case&&A.smile_case.length) out.push("Sees: "+A.smile_case.map(function(v){ var o=smileLabel(v); return clinical&&o&&o.c ? v+" ("+o.c+")" : v; }).join("; "));
+    if(A.smile_pick) out.push("Picked on the page: "+A.smile_pick);
+    if(A.between_meals) out.push("Between meals: "+A.between_meals);
+    if(A.wear_obstacles&&A.wear_obstacles.length) out.push("In the way: "+A.wear_obstacles.join(", "));
+    if(A.ready_by) out.push("Ready by: "+A.ready_by);
+    if(clinical&&biteFirst()) out.push("A bite to look at first");
+    return out;
+  }
+  function alignOut(){
+    var A=S.align||{};
+    if(S.pfTrack!=="alignment") return undefined;
+    return { smile_pick:A.smile_pick||"", smile_case:A.smile_case||[], retainer_wear:A.retainer_wear||"",
+      between_meals:A.between_meals||"", wear_obstacles:A.wear_obstacles||[], ready_by:A.ready_by||"" };
+  }
   // second-opinion track — same shape as the restorative Pathfinder, different questions.
   var PFSO=[
     {id:"what", type:"single", q:"What's the plan for?", why:"So we read the same plan the other office wrote.", opts:["Implants or a full arch","Crowns, bridges or veneers","A root canal","Braces or aligners","Gum treatment","More than one thing"]},
@@ -1682,9 +1780,16 @@
     document.getElementById("back").onclick=scrPathway;
   }
 
-  // Pathfinder — ALIGNMENT track (OrthoFX). why/where shared; only `what` forks.
+  // Pathfinder: the ALIGNER door (questions 1 to 3).
   function scrPathfinderAlign(){
     S.align=S.align||{};
+    // A pick carried from the aligner page's #smile drawing presets the answer it
+    // stands for; the patient can change it. "moved" is an aligner goal.
+    if(SMILE_PICK && !S.align.smile_pick){
+      S.align.smile_pick=SMILE_PICK;
+      if(SMILE_PICK==="moved"){ if(!S.align.what) S.align.what="Teeth that moved back after braces"; }
+      else if(!S.align.smile_case) S.align.smile_case=[SMILE_PICKS[SMILE_PICK]];
+    }
     var items=PF_ALIGN.map(function(it){ return chipItem(it, S.align); }).join("");
     show(
       '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>Your smile</div>'
@@ -1699,22 +1804,28 @@
     go.onclick=finishAlign;
     document.getElementById("back").onclick=backFromPF;
   }
-  function scrRetainer(){
-    S.align=S.align||{};
+  // Your smile: questions 4 to 8, about a minute, straight after the bridge.
+  // Every answer is saved as it is given (I1) and any can be skipped (I4).
+  function scrYourSmile(){
+    S.at="smile"; S.align=S.align||{};
+    var rows=[smileTiles()];
+    if(priorBraces()) rows.push(chipItem(PF_RETAINER, S.align));
+    PF_SMILE.forEach(function(it){ rows.push(chipItem(it, S.align)); });
     show(
       '<div class="dchip" style="--dc:var(--blue)"><span class="dot" style="background:var(--blue)"></span>Your smile</div>'
-      + coach("<p>One more — this tells us a lot about what happened and what'll hold.</p>")
-      + '<h1 class="head">And your <em>retainers</em>?</h1>'
-      + '<div class="chipset">'+chipItem(PF_RETAINER, S.align)+'</div>'
+      + coach("<p>About a minute on your smile. Skip anything you are not sure about.</p>")
+      + '<h1 class="head">A minute on your <em>smile</em>.</h1>'
+      + '<div class="chipset">'+rows.join("")+'</div>'
       + '<div class="actions"><button class="cta" id="go">Continue</button><button class="ghost" id="back">Back</button></div>',
-      0);
+      1);
     wireChips(S.align);
-    document.getElementById("go").onclick=scrGoals;
+    document.querySelector(".chipset").addEventListener("click", function(){ try{ pidSync(); }catch(e){} });
+    document.getElementById("go").onclick=function(){ S.align.smile_done=true; scrGoals(); };
     document.getElementById("back").onclick=scrBridge;
   }
   function finishAlign(){
     // Every aligner answer reaches the call, not just the first (data map).
-    ["what","ortho_history","wear_tolerance"].forEach(function(k){ if(S.align[k]) S.pf[k]=S.align[k]; });
+    ["what","wear_tolerance","ortho_history"].forEach(function(k){ if(S.align[k]) S.pf[k]=S.align[k]; });
     S.pathfinder=true; S.pfTrack="alignment";
     // PF3: asked here, so the sleep chapter does not ask it again.
     if(S.align.ortho_history){ S.hist.sleep=S.hist.sleep||{}; S.hist.sleep.ortho_history=S.align.ortho_history; S.prefill["sleep.ortho_history"]=true; }
@@ -2071,9 +2182,9 @@
     }
     // door recommendation (Lever 4) — only the "Now" step changes; score & tiers are identical
     var rec=doorCfg().rec;
-    if(rec==="airflex"){ nowTitle="Your AirFlex Fit Assessment";
-      nowBody="A complimentary AirFlex Fit Assessment + 3D scan — with your bite, gums and airway history reviewed first."
-        + (S.align&&S.align.wear_tolerance==="This is why I've put treatment off"?" We heard you on wear time — that's exactly what the 12-hour protocol is built for.":"")
+    if(rec==="aligner"){ nowTitle="Your aligner assessment";
+      nowBody="Dr. Gabi checks your gums and bite first, then talks through what straightening could do for "+(S.align&&S.align.what&&S.align.what!=="Not sure yet"?"<b>"+esc(S.align.what.toLowerCase())+"</b>":"your smile")+" and how a plan would fit your day."
+        + (S.align&&S.align.wear_tolerance==="This is why I've put treatment off"?" You told us wear time is what held you back. Dr. Gabi prescribes your hours, so the plan is one you can keep.":"")
         + " We'll start your foundation at <b>"+esc(lever.d.name)+"</b> ("+lever.v+") in the same visit."+flagNote; }
     else if(rec==="implant"){ nowTitle="Your Implant & Longevity Assessment";
       nowBody="A 90-minute Implant & Longevity Assessment — bone, gums and bite mapped around <b>"+esc(S.pf.what||"your situation")+"</b> and planned for your whole health, not just the gap. We'll baseline <b>"+esc(lever.d.name)+"</b> ("+lever.v+") in the same visit."+flagNote; }
@@ -2194,7 +2305,7 @@
         + (isExisting()?'<div class="brow"><div class="bk">Patient</div><div class="bv">Existing patient'+(S.odPatNum?' · chart #'+esc(S.odPatNum):'')+(S.inPain?' · <em>something is bothering them now</em>':'')+'</div></div>':'')
         + (S.reason?'<div class="brow"><div class="bk">Why they came</div><div class="bv"><em>'+esc(reasonLabel(S.reason))+'</em>'+(S.reasonDetail?' — “'+esc(S.reasonDetail)+'”':'')+'</div></div>':'')
         + (S.pathfinder?'<div class="brow"><div class="bk">Pathfinder · '+(S.pfTrack==="alignment"?"alignment":"restorative")+'</div><div class="bchips warn"><span>'+[S.pf.what,S.pf.why,S.pf.where].filter(Boolean).map(esc).join('</span><span>')+'</span></div></div>':'')
-        + (S.pfTrack==="alignment"?'<div class="brow"><div class="bk">Aligner candidacy</div><div class="bchips">'+[(S.align.wear_tolerance?"Wear: "+S.align.wear_tolerance:""),(S.align.ortho_history?"Ortho: "+S.align.ortho_history:""),(S.align.retainer_wear?"Retainer: "+S.align.retainer_wear:"")].filter(Boolean).map(function(x){return '<span>'+esc(x)+'</span>';}).join('')+'</div></div>':'')
+        + (S.pfTrack==="alignment"?'<div class="brow"><div class="bk">Aligner candidacy</div><div class="bchips'+(biteFirst()?' warn':'')+'">'+alignLines(true).map(function(x){return '<span>'+esc(x)+'</span>';}).join('')+'</div></div>':'')
         + (doorCfg().rec==="implant"?'<div class="brow"><div class="bk">Implant candidacy</div><div class="bv">Read from flags — extractions, existing work, bisphosphonates (MRONJ), perio (see history). MRONJ review before any surgical plan if bisphosphonates positive.</div></div>':'')
         + '<div class="brow"><div class="bk">The five dimensions</div><div class="bscores">'+scoreChips+'</div></div>'
         + (S.goals.length?'<div class="brow"><div class="bk">What they want</div><div class="bv">'+esc(S.goals.map(goalOf).join(" · "))+(S.intent?' — <em>'+esc(S.intent)+'</em>':'')+'</div></div>':'')

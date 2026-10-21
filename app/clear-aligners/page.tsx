@@ -104,7 +104,7 @@ export default function ClearAlignersPage() {
       {/* ── 2. What straightening changes ── */}
       <section id="smile" className="al-sec al-line">
         <div className="al-wrap" style={{ display: "flex", flexDirection: "column", gap: 56 }}>
-          <SmileCases quickToBringBack={quick} />
+          <SmileCases quickToBringBack={quick} doorHref={door} />
           {filmOn("behindTheCamera") && (
             <div className="al-two al-film-row">
               <AlignerFilm film={FILMS.behindTheCamera} />

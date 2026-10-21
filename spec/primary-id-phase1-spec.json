@@ -1,8 +1,8 @@
 {
  "meta": {
   "name": "Primary iD · Phase 1 spec",
-  "version": "v1.0",
-  "date": "2026-10-01",
+  "version": "v1.1",
+  "date": "2026-10-20",
   "owner": "Farhad Attaie · system design",
   "scope": "From any link on myprimaryid.com to a first visit on the schedule and a completed, validated Primary iD. Phase 1 runs without Subscribili online booking: the call center confirms and books every new patient visit.",
   "rule": "This is the spec. The site, the GoHighLevel setup and the call are built to it, tested against it and audited against it. When the flow needs to change, this file changes first and the build follows.",
@@ -12,8 +12,8 @@
  "spec": {
   "meta": {
    "name": "Primary iD · Phase 1 spec",
-   "version": "v1.0",
-   "date": "2026-10-01",
+   "version": "v1.1",
+   "date": "2026-10-20",
    "owner": "Farhad Attaie · system design",
    "scope": "From any link on myprimaryid.com to a first visit on the schedule and a completed, validated Primary iD. Phase 1 runs without Subscribili online booking: the call center confirms and books every new patient visit.",
    "rule": "This is the spec. The site, the GoHighLevel setup and the call are built to it, tested against it and audited against it. When the flow needs to change, this file changes first and the build follows.",
@@ -931,12 +931,12 @@
     "label": "Aligners",
     "reason": "Something to fix",
     "qs": [
-     "What they want to change",
+     "What they would like from straightening",
      "How much of the day they could wear aligners",
      "Braces or aligners before"
     ],
-    "st": "towire",
-    "note": "In the question bank since August. Confirm it is live on the door."
+    "st": "part",
+    "note": "Live since August, with case types asked first. Proposed 20 October: what they want comes first; the case types move to Your smile, about a minute after the bridge (P1-07), with the retainer, between-meals, what-gets-in-the-way and ready-by questions, all unscored. The door is renamed aligners, with /book/orthofx/ kept as a redirect (BRD-38 decision 12). The full smile quiz is on The OrthoFX door page."
    },
    {
     "door": "cosmetic",
@@ -1460,6 +1460,11 @@
     "q": "Requiring both mobile and email at the request. More required fields can cost requests, so measure it.",
     "owner": "Farhad",
     "blocks": "P1-06"
+   },
+   {
+    "q": "The aligner page's smile picker: hand the pick to the aligner door (?smile=) so no page runs its own quiz (L4), and Dr. Gabi approves Your smile before it enters the question bank. Conflict C77.",
+    "owner": "Farhad · Dr. Gabi",
+    "blocks": "P1-01, P1-04 for the aligner door"
    }
   ],
   "phase2": {
