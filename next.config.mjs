@@ -98,7 +98,7 @@ const nextConfig = {
       { source: "/root-canals/", destination: "/wholistic-dentistry/", permanent: true },          // rank 20
       { source: "/emergency-dentistry/", destination: "/new-patient/", permanent: true },          // rank 20
       { source: "/crowns/", destination: "/cosmetic-dentistry/", permanent: true },                // rank 21
-      { source: "/invisalign/", destination: "/airway-sleep/", permanent: true },                  // rank 21
+      { source: "/invisalign/", destination: "/clear-aligners/", permanent: true },                  // rank 21
       { source: "/veneers/", destination: "/cosmetic-dentistry/", permanent: true },               // rank 29
       { source: "/oral-surgery/", destination: "/dental-implant/", permanent: true },              // DA91 backlink
 
