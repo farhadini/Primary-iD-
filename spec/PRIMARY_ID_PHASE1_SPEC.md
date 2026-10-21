@@ -1,4 +1,4 @@
-# Primary iD · Phase 1 spec (v1.0, 2026-10-01)
+# Primary iD · Phase 1 spec (v1.1, 2026-10-20)
 
 From any link on myprimaryid.com to a first visit on the schedule and a completed, validated Primary iD. Phase 1 runs without Subscribili online booking: the call center confirms and books every new patient visit.
 
@@ -415,7 +415,7 @@ Each door asks at most three questions before the request. A track only reorders
 | Implants and failing teeth (`implants`) | Something to fix | What is going on (missing, failing, old work, dentures); What fixing it would mean; Where they are with it | Live | The live restorative track. |
 | Implants, asked on the implant page (`implants`) | Something to fix | What is going on; Where they are with it; How they are thinking of paying | Built, not set up | The consult card on /dental-implant/. The first two are the live track's own questions. The third is a new unscored flag (`pay`). Sent to the same record as the flow. |
 | Implants, paying for it (`implants`, track `financing`) | Something to fix | Where they are with it; Whether they have applied for financing before; What would help most | Built, not set up | Opens from the cost section of /dental-implant/. The first is an existing question. The other two are new unscored flags (`fin_applied`, `fin_help`). Never asks for a Social Security number, a date of birth or income. |
-| Aligners (`orthofx`) | Something to fix | What they want to change; How much of the day they could wear aligners; Braces or aligners before | Built, not set up | In the question bank since August. Confirm it is live on the door. |
+| Aligners (`orthofx`) | Something to fix | What they would like from straightening; How much of the day they could wear aligners; Braces or aligners before | Partly working | Live since August, with case types asked first. Proposed 20 October: what they want comes first; the case types move to Your smile, about a minute after the bridge (P1-07), with the retainer, between-meals, what-gets-in-the-way and ready-by questions, all unscored. The door is renamed aligners, with /book/orthofx/ kept as a redirect (BRD-38 decision 12). The full smile quiz is on The OrthoFX door page. |
 | Cosmetic (`cosmetic`) | Something to fix | What they would change about their smile; How confident they feel about their smile; Where they are with it | Proposed | The second question is an existing scored question, asked early. |
 | Preventive (`preventive`) | Get ahead of it | Last professional cleaning; Last full dental exam; How dental visits feel for them | Proposed | All three are existing questions, asked early. |
 | Airway and sleep (`airway`) | Get ahead of it | Loud snoring; Tired during the day; Anyone seen them stop breathing in their sleep | Proposed | Existing questions, asked early. Context only: nothing here says dental treatment treats a sleep disorder. |
@@ -576,6 +576,7 @@ Three jobs, each working from this spec. The check IDs are how they report.
 - What the flow shows for HMO, Medicare and plans Primary does not take. Owner: Silvia. Holds up: P1-05.
 - Whether the $99 is a first visit or a membership tier. Owner: Farhad · Sudha · counsel. Holds up: P1-05.
 - Requiring both mobile and email at the request. More required fields can cost requests, so measure it. Owner: Farhad. Holds up: P1-06.
+- The aligner page's smile picker: hand the pick to the aligner door (?smile=) so no page runs its own quiz (L4), and Dr. Gabi approves Your smile before it enters the question bank. Conflict C77. Owner: Farhad · Dr. Gabi. Holds up: P1-01, P1-04 for the aligner door.
 
 ## Phase 2
 

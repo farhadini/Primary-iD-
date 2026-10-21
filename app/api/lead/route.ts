@@ -44,6 +44,17 @@
 //     watches: in pain, asked to book, or under 18.
 //   - On completion the full answers are kept on the contact as a note.
 //
+// THE ALIGNER DOOR'S SMILE QUIZ (Oct 2026). Door "aligners" (was "orthofx").
+// Questions 1 to 3 ride in `pf` (what = the aligner goal, wear_tolerance,
+// ortho_history) and land in pathfinder_answers as before. Questions 4 to 8
+// ride in `align` (smile_case, retainer_wear, between_meals, wear_obstacles,
+// ready_by, and smile_pick from the aligner page's picker) and land in one
+// single-line field, smile_profile, once Mila creates it in GHL. Five tags make
+// them countable: Aligner goal, Braces before, Wear: put it off, Ready within 6
+// months, Smile pick. "Aligner: in treatment elsewhere" means call, not book.
+// No aligner answer goes to OrthoFX or to any ad platform. Design: "1 Primary
+// iD/New patient journey/OrthoFX door journey.md" in the Primary iD Project.
+//
 // Silent until GHL_API_TOKEN + GHL_LOCATION_ID are set in Vercel.
 // ============================================================================
 import { NextResponse } from "next/server"
@@ -106,6 +117,7 @@ type Body = {
   pathfinder?: boolean
   pfTrack?: string
   pf?: Record<string, string>
+  align?: { smile_pick?: string; smile_case?: string[]; retainer_wear?: string; between_meals?: string; wear_obstacles?: string[]; ready_by?: string }
   entryDim?: string
   scores?: { oral?: number | null; sleep?: number | null; nutri?: number | null; family?: number | null; long?: number | null }
   composite?: number | null
@@ -341,6 +353,20 @@ export async function POST(request: Request) {
     const finApplied = b.pf?.fin_applied ?? ""
     const finHelp = b.pf?.fin_help ?? ""
     const wantsMonthly = /monthly|mix/i.test(pay) || /monthly/i.test(finHelp)
+    // The aligner door (smile quiz). Unscored flags; read only for tags and one field.
+    const isAlign = b.pfTrack === "alignment"
+    const al: NonNullable<Body["align"]> = isAlign && b.align ? b.align : {}
+    const ortho = isAlign ? b.pf?.ortho_history ?? "" : ""
+    const smileProfile = isAlign
+      ? [
+          al.smile_case?.length ? `Sees: ${al.smile_case.join("; ")}` : "",
+          al.retainer_wear ? `Retainer: ${al.retainer_wear}` : "",
+          al.between_meals ? `Between meals: ${al.between_meals}` : "",
+          al.wear_obstacles?.length ? `In the way: ${al.wear_obstacles.join(", ")}` : "",
+          al.ready_by ? `Ready by: ${al.ready_by}` : "",
+          al.smile_pick ? `Picked on the page: ${al.smile_pick}` : "",
+        ].filter(Boolean).join(" · ").slice(0, 500)
+      : ""
 
     const tags = [
       isReturning ? "Existing patient" : "Primary iD Lead",
@@ -368,6 +394,12 @@ export async function POST(request: Request) {
       /scholarship/i.test(finHelp) ? "Interest: Primary Scholarship" : null,
       /membership/i.test(finHelp) ? "Interest: Membership pricing" : null,
       b.pfTrack ? `Track: ${b.pfTrack}` : null,
+      isAlign && b.pf?.what ? `Aligner goal: ${clip(b.pf.what)}` : null,
+      /as a teenager|as an adult/i.test(ortho) ? "Braces before" : null,
+      /in treatment now/i.test(ortho) ? "Aligner: in treatment elsewhere" : null,
+      isAlign && /put treatment off/i.test(b.pf?.wear_tolerance ?? "") ? "Wear: put it off" : null,
+      isAlign && al.ready_by === "Within six months" ? "Ready within 6 months" : null,
+      isAlign && al.smile_pick ? `Smile pick: ${clip(al.smile_pick)}` : null,
       f.reason ? `Reason: ${f.reason}` : null,
       ...goals.map((g) => `Goal: ${g}`),
       isComplete ? "Stage: Complete" : null,
@@ -451,6 +483,8 @@ export async function POST(request: Request) {
       { key: "payment_intent",    field_value: pay },
       { key: "financing_history", field_value: finApplied },
       { key: "help_wanted",       field_value: finHelp },
+      // The aligner door's Your smile answers (questions 4 to 8). Single-line text.
+      { key: "smile_profile",     field_value: smileProfile },
     ].filter((x) => x.field_value !== "")
 
     const base = {

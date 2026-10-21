@@ -36,7 +36,7 @@ const TILES: Tile[] = [
   {
     chip: "Clear Aligners", ac: "#24A7E0", tint: "224,240,251", name: "Straighter ", em: "teeth",
     root: "Before anything moves, a prosthodontist looks at your bite, your gums and your airway history, so the plan fits more than the mirror.",
-    cta: { label: "Start here →", href: "/book/orthofx/" },
+    cta: { label: "Start here →", href: "/book/aligners/" },
     learn: { label: "Learn more →", href: "/airway-sleep/" },
     icon: <svg viewBox="0 0 24 24" {...S("#24A7E0")}><path d="M4 15c0-5 3.5-8 8-8s8 3 8 8"/><path d="M8 13v3M12 12v4M16 13v3"/></svg>,
   },

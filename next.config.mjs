@@ -98,7 +98,7 @@ const nextConfig = {
       { source: "/root-canals/", destination: "/wholistic-dentistry/", permanent: true },          // rank 20
       { source: "/emergency-dentistry/", destination: "/new-patient/", permanent: true },          // rank 20
       { source: "/crowns/", destination: "/cosmetic-dentistry/", permanent: true },                // rank 21
-      { source: "/invisalign/", destination: "/airway-sleep/", permanent: true },                  // rank 21
+      { source: "/invisalign/", destination: "/clear-aligners/", permanent: true },                  // rank 21
       { source: "/veneers/", destination: "/cosmetic-dentistry/", permanent: true },               // rank 29
       { source: "/oral-surgery/", destination: "/dental-implant/", permanent: true },              // DA91 backlink
 
@@ -151,7 +151,9 @@ const nextConfig = {
       { source: "/book/cosmetic/",   destination: "/primary-id/?door=cosmetic",   permanent: false },
       { source: "/book/implants/",   destination: "/primary-id/?door=implants",   permanent: false },
       { source: "/book/longevity/",  destination: "/primary-id/?door=longevity",  permanent: false },
-      { source: "/book/orthofx/",    destination: "/primary-id/?door=orthofx",    permanent: false },
+      { source: "/book/aligners/",   destination: "/primary-id/?door=aligners",   permanent: false },
+      // The aligner door was "orthofx" until 21 Oct 2026; old links and ads still land.
+      { source: "/book/orthofx/",    destination: "/primary-id/?door=aligners",   permanent: false },
       { source: "/book/second-opinion/", destination: "/primary-id/?door=second_opinion", permanent: false },
       { source: "/book/pain/",       destination: "/primary-id/?door=pain",       permanent: false },
 
