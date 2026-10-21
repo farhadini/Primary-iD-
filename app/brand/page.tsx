@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 // of truth for the brand: identity kit, voice, campaign creative, videos, and
 // working files. Key assets are hosted here; bulk/raw files link to Drive.
 // Gate: POSTs to /api/brand-auth (checks BRAND_PASSWORD env). noindex via layout.
-// TODO(farhad): drop the ad HTML designs + skill files where marked; set
+// TODO(farhad): drop the ad HTML designs where marked; set
 // BRAND_PASSWORD in Vercel.
 // ============================================================================
 
@@ -265,9 +265,15 @@ export default function BrandHubPage() {
               <div style={{ fontFamily: "Georgia,serif", fontSize: 17, color: B.navy, marginBottom: 6 }}>Marketing assets (Drive) ↗</div>
               <p style={{ fontSize: 14, color: B.body, lineHeight: 1.55, margin: 0 }}>Editable source files, campaign creative, working files, and everything not hosted here.</p>
             </a>
-            <div style={{ background: B.white, border: `1px dashed ${B.gold}`, borderRadius: 14, padding: "22px 24px" }}>
+            <div style={{ background: B.white, border: `1px solid ${B.border}`, borderRadius: 14, padding: "22px 24px" }}>
               <div style={{ fontFamily: "Georgia,serif", fontSize: 17, color: B.navy, marginBottom: 6 }}>Skill files</div>
-              <p style={{ fontSize: 14, color: B.body, lineHeight: 1.55, margin: 0 }}>The AI brand skill files for partners to run in their own tools. (Placeholder, pending upload.)</p>
+              <p style={{ fontSize: 14, color: B.body, lineHeight: 1.55, margin: "0 0 14px" }}>
+                The Primary Brand OS: tokens, type, voice, the five dimensions and the compliance rails, as an AI skill. Install the .zip in Claude (Settings → Capabilities → Skills → Upload), or give the .md to any other AI tool.
+              </p>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 14 }}>
+                <a href="/brand/skills/primary-brand-os.zip" download style={{ fontSize: 12.5, color: B.blue, textDecoration: "none", fontWeight: 600 }}>Download skill (.zip)</a>
+                <a href="/brand/skills/primary-brand-os-SKILL.md" download style={{ fontSize: 12.5, color: B.blue, textDecoration: "none", fontWeight: 600 }}>Download SKILL.md</a>
+              </div>
             </div>
           </div>
 
