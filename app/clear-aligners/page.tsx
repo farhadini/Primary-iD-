@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { ServiceSchema, FAQPageSchema } from "@/components/schema"
 import MobileStickyCTA from "@/components/mobile-sticky-cta"
+import { YouTubeFacade } from "@/components/youtube-facade"
 import { AlignerFilm } from "@/components/aligner-page/aligner-film"
 import { SmileCases } from "@/components/aligner-page/smile-cases"
 import { ALIGNER_PAGE, FILMS, filmOn, GOOGLE, PHONE } from "@/lib/aligner-page"
@@ -233,6 +234,11 @@ export default function ClearAlignersPage() {
             <p style={{ margin: 0 }}>A straight smile still has to fit the rest of your mouth: your bite, your gums, the work you already have and the work you may want later. Planning all of that together is what a prosthodontist is trained to do.</p>
             {ALIGNER_PAGE.credentials && <p style={{ margin: 0, fontSize: 14 }}>{ALIGNER_PAGE.credentials}</p>}
           </div>
+          {/* the same "Meet Dr. Gabi" film as /dental-implant/ (YouTube, loads on play) */}
+          <figure style={{ margin: 0, maxWidth: 820, width: "100%" }}>
+            <YouTubeFacade id="6-PaAY5zcsI" title="Meet Dr. Gabi" poster="/images/stories/gabi-with-patient.jpg" />
+            <figcaption style={{ fontSize: 12.5, lineHeight: 1.55, color: "#7A8695", marginTop: 12 }}>Press play to meet Dr. Gabi.</figcaption>
+          </figure>
           <div className="al-cards4">
             {[
               { h: "Prosthodontist", p: "Three or more years of training after dental school, focused on restoring and replacing teeth." },
