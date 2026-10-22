@@ -96,7 +96,7 @@ export default function ClearAlignersPage() {
             <a href={GOOGLE.url} target="_blank" rel="noopener" className="al-rating"><span aria-hidden="true" className="al-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span>{GOOGLE.rating} on Google</span></a>
           </div>
           <div style={{ position: "relative" }}>
-            <img src="/images/aligners/hero-model.webp" alt="A woman smiling over a cup of coffee" width={960} height={1200} className="al-hero-img" />
+            <img src="/images/aligners/hero-smile.jpg" alt="A close-up of a woman with freckles, smiling" width={960} height={1200} className="al-hero-img" />
             <span className="al-model-tag">Model</span>
           </div>
         </div>
