@@ -136,8 +136,13 @@ export default function ClearAlignersPage() {
               )}
               <p style={{ margin: 0, fontWeight: 600, color: "#FFFFFF" }}>Dr. Gabi prescribes your hours.</p>
             </div>
-            <div style={{ position: "relative", borderRadius: 24, overflow: "hidden", background: "#0B1B35" }}>
-              <img src="/images/aligners/airflex-aligner.webp" alt="A clear aligner" width={1288} height={1000} style={{ display: "block", width: "100%", height: "auto" }} />
+            <div className="al-float" style={{ position: "relative", borderRadius: 24, overflow: "hidden", background: "#0B1B35" }}>
+              {/* motion: the aligner floats and turns slowly, a glow breathes under it, light sweeps across */}
+              <span className="al-float-glow" aria-hidden="true" />
+              <div className="al-float-in">
+                <img src="/images/aligners/airflex-aligner.webp" alt="A clear aligner" width={1288} height={1000} style={{ display: "block", width: "100%", height: "auto" }} />
+              </div>
+              <span className="al-float-sheen" aria-hidden="true" />
               <span style={{ position: "absolute", left: 14, bottom: 12, fontSize: 11, color: "rgba(255,255,255,.75)" }}>AirFlex aligner, image courtesy of OrthoFX</span>
             </div>
           </div>
@@ -425,6 +430,19 @@ const CSS = `
 .al-watch-dot{width:30px;height:30px;border-radius:50%;border:1px solid rgba(14,34,64,.25);background:#FFFFFF;display:inline-flex;align-items:center;justify-content:center;padding-left:2px;}
 .al-rating{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:13px;font-weight:600;color:#0E2240;text-decoration:none;}
 .al-stars{color:#D4B584;letter-spacing:2px;}
+.al-float{isolation:isolate;}
+.al-float-in{position:relative;z-index:1;transform-origin:50% 55%;animation:al-drift 9s ease-in-out infinite;}
+.al-float-in img{transform:scale(1.08);}
+@keyframes al-drift{0%{transform:translateY(8px) rotate(-1.2deg)}50%{transform:translateY(-10px) rotate(1.4deg)}100%{transform:translateY(8px) rotate(-1.2deg)}}
+.al-float-glow{position:absolute;z-index:0;left:18%;right:18%;top:38%;height:42%;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(91,192,236,.38),rgba(91,192,236,0));filter:blur(18px);animation:al-glow 9s ease-in-out infinite;}
+@keyframes al-glow{0%,100%{opacity:.45;transform:scale(.92)}50%{opacity:.9;transform:scale(1.06)}}
+.al-float-sheen{position:absolute;z-index:2;inset:-20% -60%;pointer-events:none;mix-blend-mode:screen;
+  background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.16) 49%,rgba(190,230,255,.28) 50%,rgba(255,255,255,.16) 51%,transparent 58%);
+  transform:translateX(-60%);animation:al-sheen 6.5s cubic-bezier(.45,0,.25,1) 1.2s infinite;}
+@keyframes al-sheen{0%{transform:translateX(-60%)}45%,100%{transform:translateX(60%)}}
+.al-float>span:last-child{z-index:3;}
+@media(prefers-reduced-motion:reduce){.al-float-in,.al-float-glow,.al-float-sheen{animation:none}.al-float-sheen{display:none}}
 .al-hero-img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:24px;box-shadow:0 24px 60px rgba(14,34,64,.16);}
 .al-model-tag{position:absolute;left:14px;bottom:14px;font-size:11px;font-weight:600;letter-spacing:.06em;color:#0E2240;background:rgba(255,255,255,.92);border-radius:999px;padding:5px 10px;}
 .al-eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#1F86B5;display:flex;align-items:center;gap:10px;}
