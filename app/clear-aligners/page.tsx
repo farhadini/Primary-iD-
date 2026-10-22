@@ -1,9 +1,11 @@
 import Link from "next/link"
 import { ServiceSchema, FAQPageSchema } from "@/components/schema"
 import MobileStickyCTA from "@/components/mobile-sticky-cta"
+import { YouTubeFacade } from "@/components/youtube-facade"
 import { AlignerFilm } from "@/components/aligner-page/aligner-film"
 import { SmileCases } from "@/components/aligner-page/smile-cases"
-import { ALIGNER_PAGE, FILMS, filmOn, GOOGLE, PHONE } from "@/lib/aligner-page"
+import { AlignerComparison } from "@/components/aligner-page/comparison"
+import { ALIGNER_PAGE, FILMS, filmOn, GOOGLE, PHONE, IS_REVIEW } from "@/lib/aligner-page"
 
 // ─────────────────────────────────────────────────────────────────────────
 // /clear-aligners/ : the clear aligner landing page (ads and outreach land
@@ -18,7 +20,6 @@ import { ALIGNER_PAGE, FILMS, filmOn, GOOGLE, PHONE } from "@/lib/aligner-page"
 // (never an orthodontist), no wear number unless it is OrthoFX's own wording.
 // ─────────────────────────────────────────────────────────────────────────
 
-const DISCLOSURE = "Dramatization. Not actual Primary patients."
 
 // The three written reviews already published on the home page
 // (components/testimonials.tsx), quoted as written.
@@ -95,8 +96,7 @@ export default function ClearAlignersPage() {
             <a href={GOOGLE.url} target="_blank" rel="noopener" className="al-rating"><span aria-hidden="true" className="al-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span>{GOOGLE.rating} on Google</span></a>
           </div>
           <div style={{ position: "relative" }}>
-            <img src="/images/aligners/hero-model.webp" alt="A woman smiling over a cup of coffee" width={960} height={1200} className="al-hero-img" />
-            <span className="al-model-tag">Model</span>
+            <img src="/images/aligners/hero-smile.jpg" alt="A close-up of a woman with freckles, smiling" width={960} height={1200} className="al-hero-img" />
           </div>
         </div>
       </section>
@@ -112,7 +112,6 @@ export default function ClearAlignersPage() {
                 <span className="al-eyebrow-plain">A smile story &middot; film</span>
                 <h3 className="al-h3">Behind <em>the camera.</em></h3>
                 <p className="al-quote">&ldquo;Somewhere along the way, I learned to smile with my mouth closed.&rdquo;</p>
-                <p className="al-small">{DISCLOSURE}</p>
               </div>
             </div>
           )}
@@ -135,8 +134,13 @@ export default function ClearAlignersPage() {
               )}
               <p style={{ margin: 0, fontWeight: 600, color: "#FFFFFF" }}>Dr. Gabi prescribes your hours.</p>
             </div>
-            <div style={{ position: "relative", borderRadius: 24, overflow: "hidden", background: "#0B1B35" }}>
-              <img src="/images/aligners/airflex-aligner.webp" alt="A clear aligner" width={1288} height={1000} style={{ display: "block", width: "100%", height: "auto" }} />
+            <div className="al-float" style={{ position: "relative", borderRadius: 24, overflow: "hidden", background: "#0B1B35" }}>
+              {/* motion: the aligner floats and turns slowly, a glow breathes under it, light sweeps across */}
+              <span className="al-float-glow" aria-hidden="true" />
+              <div className="al-float-in">
+                <img src="/images/aligners/airflex-aligner.webp" alt="A clear aligner" width={1288} height={1000} style={{ display: "block", width: "100%", height: "auto" }} />
+              </div>
+              <span className="al-float-sheen" aria-hidden="true" />
               <span style={{ position: "absolute", left: 14, bottom: 12, fontSize: 11, color: "rgba(255,255,255,.75)" }}>AirFlex aligner, image courtesy of OrthoFX</span>
             </div>
           </div>
@@ -161,7 +165,6 @@ export default function ClearAlignersPage() {
                 <span className="al-eyebrow-plain" style={{ color: "#5BC0EC" }}>A smile story &middot; film</span>
                 <h3 className="al-h3 al-h3-light">Twice, <em>and then it fit.</em></h3>
                 <p className="al-quote" style={{ color: "#FFFFFF" }}>&ldquo;This time, they asked how my days actually go. Now they go in after dinner, and come out with my morning coffee.&rdquo;</p>
-                <p className="al-small" style={{ color: "rgba(255,255,255,.72)" }}>{DISCLOSURE}</p>
               </div>
             </div>
           )}
@@ -233,6 +236,11 @@ export default function ClearAlignersPage() {
             <p style={{ margin: 0 }}>A straight smile still has to fit the rest of your mouth: your bite, your gums, the work you already have and the work you may want later. Planning all of that together is what a prosthodontist is trained to do.</p>
             {ALIGNER_PAGE.credentials && <p style={{ margin: 0, fontSize: 14 }}>{ALIGNER_PAGE.credentials}</p>}
           </div>
+          {/* the same "Meet Dr. Gabi" film as /dental-implant/ (YouTube, loads on play) */}
+          <figure style={{ margin: 0, maxWidth: 820, width: "100%" }}>
+            <YouTubeFacade id="6-PaAY5zcsI" title="Meet Dr. Gabi" poster="/images/stories/gabi-with-patient.jpg" />
+            <figcaption style={{ fontSize: 12.5, lineHeight: 1.55, color: "#7A8695", marginTop: 12 }}>Press play to meet Dr. Gabi.</figcaption>
+          </figure>
           <div className="al-cards4">
             {[
               { h: "Prosthodontist", p: "Three or more years of training after dental school, focused on restoring and replacing teeth." },
@@ -247,7 +255,7 @@ export default function ClearAlignersPage() {
             ))}
           </div>
           <div className="al-letter">
-            <span className="al-initials" aria-hidden="true">TG</span>
+            <img src="/images/dr-gabi-avatar.jpg" alt="Dr. Tzur Gabi" width={64} height={64} className="al-initials" style={{ objectFit: "cover" }} />
             <div style={{ flex: "1 1 320px", display: "flex", flexDirection: "column", gap: 12 }}>
               <p className="al-letter-p">Most people who ask me about aligners have been thinking about it for years. Usually it&rsquo;s a photo, or a call where they caught themselves on screen.</p>
               <p className="al-letter-p">Come in and I&rsquo;ll show you what your smile could look like, what it takes and what it costs, in writing. And if aligners aren&rsquo;t the right call for your teeth, I&rsquo;ll tell you that too.</p>
@@ -269,7 +277,7 @@ export default function ClearAlignersPage() {
               <AlignerFilm film={FILMS.journey} large />
               <figcaption className="al-journey-cap">
                 <span style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 21, color: "#0E2240" }}>The whole journey, <em style={{ fontStyle: "italic", color: "#24A7E0" }}>in about a minute.</em></span>
-                <span className="al-small">With AirFlex&trade; by OrthoFX. Includes a dramatization. Not actual Primary patients.</span>
+                <span className="al-small">With AirFlex&trade; by OrthoFX.</span>
               </figcaption>
             </figure>
           )}
@@ -303,7 +311,6 @@ export default function ClearAlignersPage() {
               <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 12 }}>
                 <AlignerFilm film={FILMS.fourteen} dark />
                 <p style={{ margin: 0, fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 18, lineHeight: 1.55, color: "#FFFFFF" }}>Fourteen. <em style={{ fontStyle: "italic", color: "#5BC0EC" }}>&ldquo;And this time there&rsquo;s a plan for after.&rdquo;</em></p>
-                <p className="al-small" style={{ color: "rgba(255,255,255,.72)" }}>{DISCLOSURE}</p>
               </div>
             )}
           </div>
@@ -322,7 +329,15 @@ export default function ClearAlignersPage() {
         </div>
       </section>
 
-      {/* ── 9. What it costs: hidden until B2 ── */}
+      {/* ── 9. Primary iD, powered by OrthoFX: five differences and a price ── */}
+      <section id="compare" className="al-sec al-line">
+        <div className="al-wrap" style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          <div className="al-eyebrow">Clear aligners</div>
+          <h2 className="al-h2" style={{ maxWidth: "18ch" }}>Primary iD, <em>powered by OrthoFX.</em></h2>
+          <p style={{ margin: 0, maxWidth: "58ch" }}>Five differences and a price. Go deeper on any row for what sits behind it.</p>
+          <AlignerComparison review={IS_REVIEW} />
+        </div>
+      </section>
 
       {/* ── 10. Am I a candidate? ── */}
       <section id="candidate" className="al-sec al-line">
@@ -419,6 +434,19 @@ const CSS = `
 .al-watch-dot{width:30px;height:30px;border-radius:50%;border:1px solid rgba(14,34,64,.25);background:#FFFFFF;display:inline-flex;align-items:center;justify-content:center;padding-left:2px;}
 .al-rating{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:13px;font-weight:600;color:#0E2240;text-decoration:none;}
 .al-stars{color:#D4B584;letter-spacing:2px;}
+.al-float{isolation:isolate;}
+.al-float-in{position:relative;z-index:1;transform-origin:50% 55%;animation:al-drift 9s ease-in-out infinite;}
+.al-float-in img{transform:scale(1.08);}
+@keyframes al-drift{0%{transform:translateY(8px) rotate(-1.2deg)}50%{transform:translateY(-10px) rotate(1.4deg)}100%{transform:translateY(8px) rotate(-1.2deg)}}
+.al-float-glow{position:absolute;z-index:0;left:18%;right:18%;top:38%;height:42%;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(91,192,236,.38),rgba(91,192,236,0));filter:blur(18px);animation:al-glow 9s ease-in-out infinite;}
+@keyframes al-glow{0%,100%{opacity:.45;transform:scale(.92)}50%{opacity:.9;transform:scale(1.06)}}
+.al-float-sheen{position:absolute;z-index:2;inset:-20% -60%;pointer-events:none;mix-blend-mode:screen;
+  background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.16) 49%,rgba(190,230,255,.28) 50%,rgba(255,255,255,.16) 51%,transparent 58%);
+  transform:translateX(-60%);animation:al-sheen 6.5s cubic-bezier(.45,0,.25,1) 1.2s infinite;}
+@keyframes al-sheen{0%{transform:translateX(-60%)}45%,100%{transform:translateX(60%)}}
+.al-float>span:last-child{z-index:3;}
+@media(prefers-reduced-motion:reduce){.al-float-in,.al-float-glow,.al-float-sheen{animation:none}.al-float-sheen{display:none}}
 .al-hero-img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:24px;box-shadow:0 24px 60px rgba(14,34,64,.16);}
 .al-model-tag{position:absolute;left:14px;bottom:14px;font-size:11px;font-weight:600;letter-spacing:.06em;color:#0E2240;background:rgba(255,255,255,.92);border-radius:999px;padding:5px 10px;}
 .al-eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#1F86B5;display:flex;align-items:center;gap:10px;}
