@@ -19,7 +19,7 @@
 // and Farhad approves the page to go live (spec, build note 9).
 // ─────────────────────────────────────────────────────────────────────────
 
-const IS_REVIEW =
+export const IS_REVIEW =
   process.env.VERCEL_ENV === "preview" || process.env.NODE_ENV === "development"
 
 export type Film = {

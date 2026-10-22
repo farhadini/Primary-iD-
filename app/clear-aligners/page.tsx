@@ -4,7 +4,8 @@ import MobileStickyCTA from "@/components/mobile-sticky-cta"
 import { YouTubeFacade } from "@/components/youtube-facade"
 import { AlignerFilm } from "@/components/aligner-page/aligner-film"
 import { SmileCases } from "@/components/aligner-page/smile-cases"
-import { ALIGNER_PAGE, FILMS, filmOn, GOOGLE, PHONE } from "@/lib/aligner-page"
+import { AlignerComparison } from "@/components/aligner-page/comparison"
+import { ALIGNER_PAGE, FILMS, filmOn, GOOGLE, PHONE, IS_REVIEW } from "@/lib/aligner-page"
 
 // ─────────────────────────────────────────────────────────────────────────
 // /clear-aligners/ : the clear aligner landing page (ads and outreach land
@@ -328,7 +329,15 @@ export default function ClearAlignersPage() {
         </div>
       </section>
 
-      {/* ── 9. What it costs: hidden until B2 ── */}
+      {/* ── 9. Primary iD, powered by OrthoFX: five differences and a price ── */}
+      <section id="compare" className="al-sec al-line">
+        <div className="al-wrap" style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          <div className="al-eyebrow">Clear aligners</div>
+          <h2 className="al-h2" style={{ maxWidth: "18ch" }}>Primary iD, <em>powered by OrthoFX.</em></h2>
+          <p style={{ margin: 0, maxWidth: "58ch" }}>Five differences and a price. Go deeper on any row for what sits behind it.</p>
+          <AlignerComparison review={IS_REVIEW} />
+        </div>
+      </section>
 
       {/* ── 10. Am I a candidate? ── */}
       <section id="candidate" className="al-sec al-line">
