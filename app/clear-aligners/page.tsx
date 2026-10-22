@@ -96,7 +96,6 @@ export default function ClearAlignersPage() {
           </div>
           <div style={{ position: "relative" }}>
             <img src="/images/aligners/hero-smile.jpg" alt="A close-up of a woman with freckles, smiling" width={960} height={1200} className="al-hero-img" />
-            <span className="al-model-tag">Model</span>
           </div>
         </div>
       </section>
