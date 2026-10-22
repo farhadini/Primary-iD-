@@ -19,7 +19,6 @@ import { ALIGNER_PAGE, FILMS, filmOn, GOOGLE, PHONE } from "@/lib/aligner-page"
 // (never an orthodontist), no wear number unless it is OrthoFX's own wording.
 // ─────────────────────────────────────────────────────────────────────────
 
-const DISCLOSURE = "Dramatization. Not actual Primary patients."
 
 // The three written reviews already published on the home page
 // (components/testimonials.tsx), quoted as written.
@@ -113,7 +112,6 @@ export default function ClearAlignersPage() {
                 <span className="al-eyebrow-plain">A smile story &middot; film</span>
                 <h3 className="al-h3">Behind <em>the camera.</em></h3>
                 <p className="al-quote">&ldquo;Somewhere along the way, I learned to smile with my mouth closed.&rdquo;</p>
-                <p className="al-small">{DISCLOSURE}</p>
               </div>
             </div>
           )}
@@ -167,7 +165,6 @@ export default function ClearAlignersPage() {
                 <span className="al-eyebrow-plain" style={{ color: "#5BC0EC" }}>A smile story &middot; film</span>
                 <h3 className="al-h3 al-h3-light">Twice, <em>and then it fit.</em></h3>
                 <p className="al-quote" style={{ color: "#FFFFFF" }}>&ldquo;This time, they asked how my days actually go. Now they go in after dinner, and come out with my morning coffee.&rdquo;</p>
-                <p className="al-small" style={{ color: "rgba(255,255,255,.72)" }}>{DISCLOSURE}</p>
               </div>
             </div>
           )}
@@ -258,7 +255,7 @@ export default function ClearAlignersPage() {
             ))}
           </div>
           <div className="al-letter">
-            <span className="al-initials" aria-hidden="true">TG</span>
+            <img src="/images/dr-gabi-avatar.jpg" alt="Dr. Tzur Gabi" width={64} height={64} className="al-initials" style={{ objectFit: "cover" }} />
             <div style={{ flex: "1 1 320px", display: "flex", flexDirection: "column", gap: 12 }}>
               <p className="al-letter-p">Most people who ask me about aligners have been thinking about it for years. Usually it&rsquo;s a photo, or a call where they caught themselves on screen.</p>
               <p className="al-letter-p">Come in and I&rsquo;ll show you what your smile could look like, what it takes and what it costs, in writing. And if aligners aren&rsquo;t the right call for your teeth, I&rsquo;ll tell you that too.</p>
@@ -280,7 +277,7 @@ export default function ClearAlignersPage() {
               <AlignerFilm film={FILMS.journey} large />
               <figcaption className="al-journey-cap">
                 <span style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 21, color: "#0E2240" }}>The whole journey, <em style={{ fontStyle: "italic", color: "#24A7E0" }}>in about a minute.</em></span>
-                <span className="al-small">With AirFlex&trade; by OrthoFX. Includes a dramatization. Not actual Primary patients.</span>
+                <span className="al-small">With AirFlex&trade; by OrthoFX.</span>
               </figcaption>
             </figure>
           )}
@@ -314,7 +311,6 @@ export default function ClearAlignersPage() {
               <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 12 }}>
                 <AlignerFilm film={FILMS.fourteen} dark />
                 <p style={{ margin: 0, fontFamily: "Georgia, 'Times New Roman', serif", fontSize: 18, lineHeight: 1.55, color: "#FFFFFF" }}>Fourteen. <em style={{ fontStyle: "italic", color: "#5BC0EC" }}>&ldquo;And this time there&rsquo;s a plan for after.&rdquo;</em></p>
-                <p className="al-small" style={{ color: "rgba(255,255,255,.72)" }}>{DISCLOSURE}</p>
               </div>
             )}
           </div>
