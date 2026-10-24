@@ -31,7 +31,7 @@ const REVIEWS = [
 function faqItems() {
   const items: { q: string; a: string }[] = [
     { q: "Will people see them?", a: "They're clear and hard to spot in conversation. Small attachments on some teeth can show up close." },
-    { q: "How many hours a day will I wear them?", a: "Dr. Gabi prescribes your hours, case by case." + (ALIGNER_PAGE.airflexClaim ? " " + ALIGNER_PAGE.airflexClaim.claim : "") },
+    { q: "How many hours a day will I wear them?", a: "Dr. Gabi prescribes your hours, case by case." + (ALIGNER_PAGE.airflexClaim ? " " + ALIGNER_PAGE.airflexClaim.claim : "") + " With AirFlex, your last few aligners are worn through the day as well, to finish the detail." },
     { q: "Will I talk differently?", a: "Some people notice a slight lisp for the first few days. It usually settles as you get used to them." },
     { q: "How long does it take?", a: "It depends on the case. Your plan gives your estimate, and refinements can add months." },
     { q: "My teeth moved after braces. Can you fix that?", a: "Often, yes. That's common, and it's why retention matters." },
@@ -277,7 +277,7 @@ export default function ClearAlignersPage() {
             {[
               { h: "Your first visit", p: "A 3D scan, X-rays, your gums and your bite. Primary evaluates your bite, gums, oral health and relevant sleep or airway history before recommending treatment." },
               { h: "Your plan" + (ALIGNER_PAGE.showPreview3d ? " and preview" : ""), p: "Which aligner, how many hours a day, roughly how long" + (ALIGNER_PAGE.showPreview3d ? ", your fee in writing, and a 3D preview of the finish." : ", and your fee in writing.") },
-              { h: "Your aligners", p: "Check-ins every six to eight weeks, monitoring in between, and refinements along the way, which most treatments need." },
+              { h: "Your aligners", p: "Check-ins every six to eight weeks, monitoring in between, and refinements if your teeth need them." },
               { h: "Your finish", p: "A final scan in your Primary iD record, your first retainers, and whitening if you’d like it." },
             ].map((s, i) => (
               <li key={s.h} className="al-step">
