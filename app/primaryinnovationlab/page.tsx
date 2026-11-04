@@ -3,14 +3,14 @@ import { SiteNav } from "@/components/site-nav"
 import { SiteFooter } from "@/components/site-footer"
 import { HostedVideoSchema } from "@/components/schema"
 import { LabFilm } from "@/components/innovation-lab/lab-film"
-import { LAB_CONTACT, LAB_FILM, LAB_SCRIPT, LAB_STATS, LAB_URL } from "@/lib/innovation-lab"
+import { LAB_CONTACT, LAB_FILM, LAB_STATS, LAB_URL } from "@/lib/innovation-lab"
 
 // ─────────────────────────────────────────────────────────────────────────
 // /primaryinnovationlab/ : the Primary Innovation Lab, v1.
 //
 // Two sections, on purpose. First the data story: the film "Below the line",
 // one patient's first visit as one simple line with every layer underneath
-// it, then the counts it is built on and its script. Second, why the Primary
+// it, then the counts it is built on. Second, why the Primary
 // Innovation Lab exists. The other sections on the design canvas (the atlas,
 // the method, how we design) are held back for a later version.
 //
@@ -139,14 +139,6 @@ export default function PrimaryInnovationLabPage() {
               estimate: the first visit and three cleanings.
             </p>
 
-            <details className="il-script">
-              <summary>Read the script</summary>
-              <div>
-                {LAB_SCRIPT.map((scene, i) => (
-                  <p key={i}>{scene.join(" ")}</p>
-                ))}
-              </div>
-            </details>
           </div>
         </section>
 
@@ -214,14 +206,6 @@ const CSS = `
 .il-n { font-size: clamp(32px, 3.4vw, 44px); font-weight: 600; line-height: 1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
 .il-l { font: 400 13px/1.5 var(--font-lab-mono), "JetBrains Mono", ui-monospace, monospace; color: rgba(255,255,255,.72); }
 .il-note { margin: 28px 0 0; max-width: 72ch; font: 400 12.5px/1.6 var(--font-lab-mono), "JetBrains Mono", ui-monospace, monospace; color: rgba(255,255,255,.6); }
-.il-script { margin-top: 32px; border-top: 1px solid rgba(255,255,255,.18); }
-.il-script summary { list-style: none; cursor: pointer; padding: 18px 0; font-size: 15px; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 10px; }
-.il-script summary::-webkit-details-marker { display: none; }
-.il-script summary::before { content: "+"; display: inline-flex; width: 26px; height: 26px; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,.4); border-radius: 50%; font-weight: 500; }
-.il-script[open] summary::before { content: "\\2212"; }
-.il-script summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 4px; }
-.il-script div { max-width: 70ch; padding-bottom: 8px; }
-.il-script p { margin: 0 0 14px; font: 400 17px/1.65 Georgia, "Times New Roman", serif; color: rgba(255,255,255,.82); }
 .il-h2 { margin: 0; max-width: 21ch; font-size: clamp(32px, 4.4vw, 56px); font-weight: 600; line-height: 1.08; letter-spacing: -.026em; text-wrap: balance; }
 .il-args { margin-top: clamp(48px, 6vw, 88px); border-top: 1px solid var(--line); }
 .il-arg { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: 12px 48px; padding: clamp(28px, 3.4vw, 44px) 0; border-bottom: 1px solid var(--line); }
