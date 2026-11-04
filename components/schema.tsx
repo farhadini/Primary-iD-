@@ -224,6 +224,40 @@ export function BreadcrumbSchema({
   return <JsonLd data={data} />
 }
 
+// ─── VideoObject (a film served from this site, e.g. /videos/...) ─────────────
+// `src` and `poster` are site paths ("/videos/x.mp4"); `duration` is ISO 8601.
+export function HostedVideoSchema({
+  src,
+  poster,
+  name,
+  description,
+  uploadDate,
+  duration,
+  pageUrl,
+}: {
+  src: string
+  poster: string
+  name: string
+  description: string
+  uploadDate: string
+  duration: string
+  pageUrl: string
+}) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name,
+    description,
+    thumbnailUrl: [`${SITE_URL}${poster}`],
+    uploadDate,
+    duration,
+    contentUrl: `${SITE_URL}${src}`,
+    url: pageUrl,
+    publisher: { "@id": PRACTICE["@id"] },
+  }
+  return <JsonLd data={data} />
+}
+
 // ─── VideoObject (YouTube-hosted videos embedded on a page) ───────────────────
 // Lets Google show the video in search results for the page it sits on.
 // `uploadDate` is the YouTube publish date (YYYY-MM-DD); `duration` is ISO 8601

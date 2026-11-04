@@ -20,6 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${SITE}/preventive-care/`,       lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE}/airway-sleep/`,          lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE}/your-mouth-keeps-the-score/`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${SITE}/primaryinnovationlab/`,  lastModified: now, changeFrequency: "monthly", priority: 0.6 },
 
     // Legacy SEO preservation
     { url: `${SITE}/dental-implant/`,        lastModified: now, changeFrequency: "monthly", priority: 0.9 },

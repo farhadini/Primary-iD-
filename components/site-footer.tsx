@@ -34,6 +34,7 @@ const footerLinks = [
     { label: "Second opinions", href: "/second-opinion/" },
     { label: "Primary Journal", href: "/blogs/" },
     { label: "Health assessment", href: "/primary-id/" },
+    { label: "Primary Innovation Lab", href: "/primaryinnovationlab/" },
   ]},
 ];
 
