@@ -15,12 +15,13 @@
 export const LAB_URL = "https://myprimaryid.com/primaryinnovationlab/"
 
 // The film: 1920x1080, captions burned in, so it reads with the sound off.
+// Under the voice: a music bed and sound design written to the film's timeline.
 // The narration is a stand-in voice until the final read is recorded; the
 // picture is timed line by line so the new read drops onto the same cut.
 export const LAB_FILM = {
   title: "Below the line",
-  length: "1:45",
-  isoDuration: "PT1M46S",
+  length: "1:24",
+  isoDuration: "PT1M24S",
   src: "/videos/innovation-lab/below-the-line.mp4",
   webm: "/videos/innovation-lab/below-the-line.webm",
   poster: "/videos/innovation-lab/below-the-line-poster.jpg",
