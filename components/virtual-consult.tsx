@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { trackConsultSubmitted } from "@/lib/google-tag"
 
 // ─────────────────────────────────────────────────────────────────────────
 // The consult card on /dental-implant/: the Pathfinder, asked on the page.
@@ -172,8 +173,21 @@ async function flush() {
   try { q = JSON.parse(localStorage.getItem(OUTBOX) || "[]") } catch {}
   if (!q.length) return
   const left: unknown[] = []
-  for (const b of q) { try { await send(b) } catch { left.push(b) } }
+  for (const b of q) {
+    let sent = false
+    try { await send(b); sent = true } catch { left.push(b) }
+    if (sent) countIfConsultCard(b)
+  }
   try { localStorage.setItem(OUTBOX, JSON.stringify(left)) } catch {}
+}
+
+// The outbox is shared with the booking flow, so a held request only counts
+// as "Consult card submitted" when it came from this card.
+function countIfConsultCard(b: unknown) {
+  const r = b as { assessmentId?: string; visit?: string; leadSource?: { from?: string } } | null
+  if (r && r.visit === "Virtual consult" && r.leadSource?.from === "dental-implant" && r.assessmentId) {
+    trackConsultSubmitted(r.assessmentId)
+  }
 }
 
 // Campaign tags from the address bar, plus the page and button (P1-01 L3).
@@ -244,7 +258,11 @@ export function VirtualConsult({ track = "consult" }: { track?: TrackName }) {
     }
 
     setBusy(true)
-    try { await send(body) } catch { hold(body) }
+    // Google Ads counts the request only once /api/lead/ confirms it landed
+    // (OPS-18 section 4). A held request counts when flush() delivers it.
+    let sent = false
+    try { await send(body); sent = true } catch { hold(body) }
+    if (sent) trackConsultSubmitted(assessmentId.current)
     setBusy(false)
     // The patient sees the confirmation either way (G6).
     setWhen(callWindow())

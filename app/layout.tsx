@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next"
 import Script from "next/script"
 import { Analytics } from "@vercel/analytics/next"
 import { DentistSchema, LocalBusinessSchema } from "@/components/schema"
+import { GOOGLE_TAG_ID } from "@/lib/google-tag"
 import "./globals.css"
 
 
@@ -106,21 +107,24 @@ export default function RootLayout({
           `}</Script>
         )}
 
-        {/* GA4 : gtag.js */}
-        {ga4Id && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}
-              strategy="afterInteractive"
-            />
-            <Script id="ga4" strategy="afterInteractive">{`
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${ga4Id}', { anonymize_ip: true });
-            `}</Script>
-          </>
-        )}
+        {/* Google tag (gtag.js), loaded once. GT-NNXWS9P8 carries Google Ads
+            conversion measurement (lib/google-tag.ts, OPS-18 section 4); GA4
+            is configured on the same load when NEXT_PUBLIC_GA4_ID is set.
+            Ad personalization is off: the tag measures conversions and builds
+            no remarketing audiences from visits to health pages. */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_TAG_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-tag" strategy="afterInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('set', 'allow_ad_personalization_signals', false);
+          gtag('config', '${GOOGLE_TAG_ID}');
+          ${ga4Id ? `gtag('config', '${ga4Id}', { anonymize_ip: true });` : ""}
+        `}</Script>
       </head>
       <body className={`font-sans antialiased`}>
         {/* GTM : body noscript fallback */}
