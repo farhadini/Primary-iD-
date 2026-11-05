@@ -3,10 +3,12 @@
 // Innovation Lab page (v1).
 //
 // Source of truth: the Primary iD Project, the Innovation Lab design canvas
-// (board "Section one: storyboard (below the line)", v32) and the film
-// "Below the line" (draft 2.1, 4 Nov 2026), Asset Map WEB-16, WEB-25, WEB-26.
+// (board "Section one: storyboard (below the line)", v35) and the film
+// "Below the line" (draft 2.2, 4 Nov 2026), Asset Map WEB-16, WEB-25, WEB-26.
+// The fifth layer is "kinds of product", not "innovations" (Farhad, 4 Nov 2026):
+// the products are not the innovation; putting them together is.
 // Every count below comes from Primary's journey record (v3.7, 23 Oct 2026)
-// and the atlas of innovations; change them there first, then here and in the
+// and the atlas of products; change them there first, then here and in the
 // film. Copy rules: no em dashes; say "the Primary Innovation Lab", never
 // "the lab"; "connecting it to primary care" (Primary does not provide primary
 // care); no partner or product names on this page for now.
@@ -27,7 +29,7 @@ export const LAB_FILM = {
   poster: "/videos/innovation-lab/below-the-line-poster.jpg",
   uploadDate: "2026-11-04",
   label:
-    "Below the line: one patient's first dental visit as one simple line, and the layers underneath it: people, where it happens, software, connections and innovation",
+    "Below the line: one patient's first dental visit as one simple line, and the layers underneath it: people, where it happens, software, connections and products",
 }
 
 // Count, then point. Each figure is drawn in the film.
@@ -37,7 +39,7 @@ export const LAB_STATS: { n: string; label: string }[] = [
   { n: "8", label: "steps before the patient walks in" },
   { n: "16", label: "systems, working in 12 of the 15 steps" },
   { n: "25", label: "connections between those systems" },
-  { n: "~100", label: "innovations that touch how a practice runs" },
+  { n: "~100", label: "kinds of product that touch how a practice runs" },
 ]
 
 // The narration, line by line, as captioned in the film.
@@ -63,7 +65,7 @@ export const LAB_SCRIPT: string[][] = [
     "25 of them, each a place where the patient’s record moves on, or gets stuck.",
   ],
   [
-    "And below it all, nearly 100 innovations touch how a practice runs.",
+    "And below it all, nearly 100 kinds of product touch how a practice runs.",
     "Each is built on its own. The patient lives with all of them at once.",
   ],
   ["And that is one visit.", "Recare, aligners, crowns, implants: 9 journeys in all, each with its own stack."],

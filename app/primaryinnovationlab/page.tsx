@@ -105,7 +105,7 @@ export default function PrimaryInnovationLabPage() {
           src={LAB_FILM.src}
           poster={LAB_FILM.poster}
           name={`${LAB_FILM.title}, the Primary Innovation Lab`}
-          description="One patient's first dental visit as one simple line, and every layer underneath it: people, where it happens, software, connections and nearly 100 innovations."
+          description="One patient's first dental visit as one simple line, and every layer underneath it: people, where it happens, software, connections and nearly 100 kinds of product."
           uploadDate={LAB_FILM.uploadDate}
           duration={LAB_FILM.isoDuration}
           pageUrl={LAB_URL}
