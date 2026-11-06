@@ -299,7 +299,7 @@ export default function AboutPage() {
             </Link>
           </div>
           <p style={{ fontFamily: SANS, fontSize: 13.5, color: PALETTE.muted, margin: 0 }}>
-            Or call (310) 564-8990. We&apos;re here Mon–Thu 8a–6p, Fri 8a–5p.
+            Or call (310) 564-8990. We&apos;re here Mon–Thu 9a–6p, Fri 9a–5p.
           </p>
         </div>
       </section>

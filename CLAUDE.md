@@ -53,7 +53,7 @@ This codebase started as a v0 generation and is now in the middle of a migration
 - **Founder:** Dr. Tzur Gabi, DMD — Functional Prosthodontist
 - **Phone:** (310) 564-8990
 - **Address:** 11980 San Vicente Blvd, Suite 902, Los Angeles, CA 90049
-- **Hours:** Mon–Thu 8 AM – 6 PM, Fri 8 AM – 5 PM, Sat–Sun closed
+- **Hours:** Mon–Thu 9 AM – 6 PM, Fri 9 AM – 5 PM, Sat–Sun closed (confirmed by Farhad, 6 Nov 2026)
 - **Google Business Profile URL:** see live-site link (rated 4.9/5 from 373+ reviews)
 - **Social:** LinkedIn linkedin.com/in/drgabi · IG @dentalogics · FB DentalogicsUSA
 
