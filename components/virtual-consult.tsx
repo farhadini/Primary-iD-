@@ -51,7 +51,7 @@ const ROLE = "iD Guide"
 const CALL_FROM = "(310) 564-8990"
 
 // A call window that is true for this hour and day in Los Angeles.
-// Mon to Thu 8 to 6, Fri 8 to 5. Same rule as the booking flow.
+// Mon to Thu 9 to 6, Fri 9 to 5. Same rule as the booking flow.
 function callWindow(): string {
   const p: Record<string, string> = {}
   try {
@@ -63,13 +63,13 @@ function callWindow(): string {
   const mins = ((parseInt(p.hour ?? "0", 10) || 0) % 24) * 60 + (parseInt(p.minute ?? "0", 10) || 0)
   if (k >= 1 && k <= 5) {
     const close = (k === 5 ? 17 : 18) * 60
-    if (mins >= 480 && mins <= close - 30) return "within the next hour"
-    if (mins < 480) return "this morning, after 8 AM"
+    if (mins >= 540 && mins <= close - 30) return "within the next hour"
+    if (mins < 540) return "this morning, after 9 AM"
   }
   if (k < 0) return "on the next business morning"
   let n = k, step = 0
   do { n = (n + 1) % 7; step++ } while (n === 0 || n === 6)
-  return step === 1 ? "tomorrow morning, after 8 AM" : `on ${["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"][n]} morning, after 8 AM`
+  return step === 1 ? "tomorrow morning, after 9 AM" : `on ${["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"][n]} morning, after 9 AM`
 }
 const SERIF = "Georgia, 'Times New Roman', serif"
 const SANS = "var(--font-montserrat), 'Montserrat', 'Helvetica Neue', Arial, sans-serif"

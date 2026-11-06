@@ -97,6 +97,7 @@ const nextConfig = {
       { source: "/smile-makeover/", destination: "/cosmetic-dentistry/", permanent: true },        // rank 19
       { source: "/root-canals/", destination: "/wholistic-dentistry/", permanent: true },          // rank 20
       { source: "/emergency-dentistry/", destination: "/new-patient/", permanent: true },          // rank 20
+      { source: "/emergency-dentist/", destination: "/new-patient/", permanent: true },            // old dentalogics.com ad URL; dentalogics.com forwards here keeping the path
       { source: "/crowns/", destination: "/cosmetic-dentistry/", permanent: true },                // rank 21
       { source: "/invisalign/", destination: "/clear-aligners/", permanent: true },                  // rank 21
       { source: "/veneers/", destination: "/cosmetic-dentistry/", permanent: true },               // rank 29

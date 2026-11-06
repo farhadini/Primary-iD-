@@ -22,11 +22,16 @@ export const CONSULT_CONVERSION = "AW-11002991578/hGeLCNqYgYUYENqn0f4o"
 
 type Gtag = (...args: unknown[]) => void
 
+// Conversions count only on the live site. Vercel previews load the same tag,
+// so a test submit there would otherwise be counted in Google Ads as a real one.
+const LIVE_HOST = /(^|\.)myprimaryid\.com$/
+
 // Fire "Consult card submitted" once for this request. The request's own
 // reference is the transaction ID, so Google drops a repeat; the session note
 // stops a second tap or a retried send from firing twice in the first place.
 export function trackConsultSubmitted(requestId: string) {
   if (typeof window === "undefined" || !requestId) return
+  if (!LIVE_HOST.test(window.location.hostname)) return
   const gtag = (window as unknown as { gtag?: Gtag }).gtag
   if (typeof gtag !== "function") return
   const key = `pid:conv:${requestId}`
