@@ -591,6 +591,9 @@ const CSS = `.pm{--navy:#0E2240;--navy-deep:#07142A;--blue:#24A7E0;--blue-soft:#
 .pm .mlist li:last-child{border-bottom:0}
 .pm .mlist li::before{content:""; position:absolute; left:2px; top:16px; width:7px; height:7px; border-radius:var(--r-pill); background:var(--blue)}
 .pm .mmore{display:inline-block; margin-top:15px; font-family:var(--sans); font-size:15px; font-weight:600; color:var(--blue); text-decoration:none; transition:transform .35s cubic-bezier(.3,1.2,.4,1)}
+.pm .mmore{min-height:44px;display:inline-flex;align-items:center}
+.pm h1 br{display:none}
+.pm h1{text-wrap:balance}
 .pm .mmore:hover{transform:translateX(4px)}
 .pm .mfine{margin-top:15px; padding-top:13px; border-top:1px solid var(--line); font-size:12.5px; line-height:1.6; color:var(--muted)}
 @media (prefers-reduced-motion:reduce){.pm .mwrap::before,.pm .mcard,.pm .mmore,.pm .mprice,.pm .mhead,.pm .msub,.pm .mrow.tot b,.pm .mlist li::before{transition:none}.pm .mwrap::before{transform:none}.pm .mcard{transform:none}.pm .mwrap:hover .mprice,.pm .mwrap:hover .mhead,.pm .mwrap:hover .msub,.pm .mwrap:hover .mrow.tot b,.pm .mwrap:hover .mlist li::before{transform:none}}
