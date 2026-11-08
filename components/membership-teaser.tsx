@@ -1,7 +1,7 @@
 // ============================================================
 // HOME: the membership, in brief. Every number and benefit here is the one the
-// /membership/ page publishes (fees confirmed against Open Dental, 29 Sep 2026).
-// If membership.html changes, change this with it. One job: send people to
+// /membership/ page publishes (app/membership/page.tsx, 6 Nov 2026).
+// If that page changes, change this with it. One job: send people to
 // /membership/ to read the rest.
 //
 // Rails: membership is not insurance and does not pay for treatment; one
@@ -18,12 +18,13 @@ const INSURANCE = [
 ]
 
 const MEMBERSHIP = [
+  { b: "Cleanings,", t: " as many as your mouth needs, and the exam with each one" },
   { b: "A 3D scan and an oral cancer screening,", t: " every year" },
-  { b: "One more preventive visit", t: " than you have now" },
+  { b: "Whitening in the chair,", t: " both arches" },
   { b: "Your Primary iD,", t: " re-scored every year and read at every visit" },
   { b: "A longevity consultation,", t: " once a year (labs billed separately)" },
   { b: "Member pricing on everything we do,", t: " published in advance, no annual maximum" },
-  { b: "Unlimited second opinions,", t: " on any plan from any dentist" },
+  { b: "A lifetime warranty", t: " on your implants" },
 ]
 
 function Mark({ ok }: { ok: boolean }) {
@@ -80,7 +81,7 @@ export default function MembershipTeaser() {
       `}</style>
       <div className="in">
         <span className="eyebrow">Membership</span>
-        <h2 id="mtz-h">$1,220 of care before you use it once. <em>Then everything else gets cheaper.</em></h2>
+        <h2 id="mtz-h">$3,119 of care before you use it once. <em>Then everything else gets cheaper.</em></h2>
         <p className="lede">
           Dental insurance is built to pay for what already broke. Membership is built to see it before it does, for one fee a year, alongside your plan or on its own.
         </p>
@@ -107,7 +108,7 @@ export default function MembershipTeaser() {
             <div className="head">
               <span className="kick">The Primary iD Membership</span>
               <div className="price"><span className="n">$499</span><span className="o">a year</span></div>
-              <div className="terms">Or $129 a quarter, or $45 a month, on a twelve-month term.</div>
+              <div className="terms">One plan. Insured or not.</div>
             </div>
             <div className="body">
               <div className="lab">What membership includes</div>

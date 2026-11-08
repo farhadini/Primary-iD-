@@ -173,7 +173,7 @@ const JOURNEY = [
   { n: "03", name: "Surgery day", body: "You are under IV sedation. Dr. Gabi removes any failing teeth and places the implants using a guide made from your scan. In same-day cases, you go home with temporary teeth. You will be sore for a few days, and we give you a plan for managing it." },
   { n: "04", name: "Healing", body: "Over the next few months your bone grows around the implants. You eat soft foods at first and come in for check-ups. Your temporary teeth stay in the whole time." },
   { n: "05", name: "Your final teeth", body: "Once you have healed, the temporary teeth come off and your final teeth go on. We check the fit, the bite and the color, and show you how to look after them." },
-  { n: "06", name: "Ongoing care", body: "You come in twice a year for a cleaning and a check of your implants. Members pay less for these visits and for any repairs later on." },
+  { n: "06", name: "Ongoing care", body: "You come in for cleanings as often as Dr. Gabi recommends, usually three times a year, with a check of your implants. For members those visits are included, and any repairs later on are at the member rate." },
 ]
 
 // Questions to ask any office, with our own answer. We describe what we do
