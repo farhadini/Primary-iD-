@@ -3,9 +3,9 @@ import { FAQPageSchema, BreadcrumbSchema } from "@/components/schema"
 
 const INSURANCE = [
   { q: "Do you take my insurance?", a: "We accept all PPO plans. We pre-authorize your benefits before treatment so you know exactly what your plan covers and what your out-of-pocket will be." },
-  { q: "What's the difference between your membership and insurance?", a: "Insurance pays a third party (your employer or you) for a contract that limits coverage. Our membership is a direct arrangement: you pay us a flat annual or monthly fee and receive comprehensive preventive care plus member pricing on restorative work. The two work together: many patients use insurance for restorative work and membership for the comprehensive preventive care insurance doesn't cover." },
+  { q: "What's the difference between your membership and insurance?", a: "Insurance pays a third party (your employer or you) for a contract that limits coverage. Our membership is a direct arrangement: you pay us one flat annual fee and receive comprehensive preventive care plus member pricing on restorative work. The two work together: many patients use insurance for restorative work and membership for the comprehensive preventive care insurance doesn't cover." },
   { q: "Do you accept HSA / FSA?", a: "Yes. Most dental work is HSA/FSA-eligible. We provide receipts coded for reimbursement." },
-  { q: "What if I don't have insurance?", a: "Our membership is designed for this. Annual or monthly billing, no claim forms, no surprises." },
+  { q: "What if I don't have insurance?", a: "Our membership is designed for this. One fee, once a year, no claim forms, no surprises." },
 ]
 
 const FIRST_VISIT = [

@@ -24,6 +24,7 @@ const MEMBERSHIP = [
   { b: "Your Primary iD,", t: " re-scored every year and read at every visit" },
   { b: "A longevity consultation,", t: " once a year (labs billed separately)" },
   { b: "Member pricing on everything we do,", t: " published in advance, no annual maximum" },
+  { b: "A lifetime warranty", t: " on your implants" },
 ]
 
 function Mark({ ok }: { ok: boolean }) {

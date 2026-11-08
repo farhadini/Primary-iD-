@@ -4,8 +4,7 @@
 // /membership/ : the Primary iD membership page, rebuilt 6 Nov 2026.
 // Source: "2 Website/Membership page.html" v18 in the Primary iD project (design
 // and copy) and the handoff brief of the same date. Replaces the static
-// public/membership.html, whose numbers ($1,220, instalments, unlimited second
-// opinions) were retired.
+// public/membership.html, whose numbers and plan terms were retired.
 //
 // Server-rendered, so all the copy is in the HTML without JavaScript. Client
 // state only for: the accordion, the three-question Primary iD preview, and the
@@ -27,15 +26,11 @@ import { SiteHeader, SiteFooter } from "@/components/site-shell"
 const JOIN_HREF = "/book/"
 const ID_HREF = "/primary-id/"
 
-// The film: v4, the animated cut (1:28), self-hosted. Set FILM to null to remove
-// the whole section. TODO(farhad): v4 shows $2,682 at 0:56 and $3,119 in its end
-// card; re-render at $3,119 before this ships. Captions need the film's SRT/VTT:
-// add the file and set `captions`.
-const FILM: { src: string; poster: string; captions: string | null } | null = {
-  src: "/videos/membership-film-v4.mp4",
-  poster: "/images/membership-film-poster.jpg",
-  captions: null,
-}
+// The film is behind this flag and does not render while FILM is null. Open: the
+// v4 cut shows a different included-care figure from this page at 0:56, and it
+// has no captions. When a corrected cut and its VTT exist, add them under
+// public/ and set: { src, poster: "/images/membership-film-poster.jpg", captions }.
+const FILM = null as null | { src: string; poster: string; captions: string | null }
 
 const ICO: Record<string, React.ReactNode> = {
   clear: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><path d="M3 12h7M3 7h11M3 17h5"/><path d="M15.5 8.5l5 5M20.5 8.5l-5 5"/></svg>,
@@ -397,6 +392,7 @@ export default function MembershipPage() {
               <ul className="mlist">
                 <li>Member pricing on everything, no annual maximum</li>
                 <li>Your Primary iD, re-scored every year and read at every visit</li>
+                <li>A lifetime warranty on your implants</li>
               </ul>
               <a className="mmore" href="#arith">See everything included →</a>
               <p className="mfine">Values are Primary&rsquo;s regularly charged self-pay fees. Membership is not insurance.</p>
@@ -483,6 +479,7 @@ export default function MembershipPage() {
                 <div key={name} className="rrow"><span>{name}{sub && <em>{sub}</em>}</span><b>{rate}</b></div>
               ))}
             </div>
+            <div className="nocap"><b>A lifetime warranty on your implants.</b> You get the terms in writing with your treatment plan.</div>
             <div className="nocap"><b>And no annual maximum.</b> Most dental plans stop paying somewhere around $1,500 a year. Member pricing does not stop.</div>
           </section>
 
@@ -500,6 +497,7 @@ export default function MembershipPage() {
               <div className="ic hi"><h3>What the membership adds</h3><ul>
                 <li>Cleanings <b>as often as your mouth needs them</b></li><li><b>No ceiling</b> on member pricing</li>
                 <li>All eight included things, <b>at no extra charge</b></li>
+                <li>A lifetime warranty on your implants</li>
                 <li>Your Primary iD, which no plan has heard of</li>
                 <li>One fee, once a year</li>
               </ul></div>
@@ -520,6 +518,7 @@ export default function MembershipPage() {
             <p><b>About these prices.</b> Every fee shown is the regular fee Primary Integrative Dentistry charges a patient who is not a member. Member rates and included services apply only to members, for as long as the membership is active, and your price is confirmed in writing before anything is scheduled. The $3,119 is what the included services would cost at our regular fees if all of them were used in one year.</p>
             <p><b>What it is not.</b> Not insurance, not a dental plan, and it does not pay for treatment. Treatment, laboratory fees and diagnostic panels are charged separately at member rates. Primary evaluates your bite, gums, oral health and relevant sleep or airway history before recommending treatment.</p>
             <p><b>Cleanings, ozone and nitrous.</b> The cleaning interval is a clinical decision made for each patient. For most people that is three visits a year. Ozone and nitrous are included wherever they are clinically indicated.</p>
+            <p><b>Implants.</b> A lifetime warranty on your implants is included with the membership, and you get the terms in writing with your treatment plan.</p>
             <p><b>Your Primary iD.</b> Directional, not a diagnosis, and not a measure of biological age. Primary Integrative Dentistry, 11980 San Vicente Blvd, Suite 902, Los Angeles CA 90049. Founded by Dr. Tzur Gabi, DMD, prosthodontist.</p>
           </div>
         </div>
