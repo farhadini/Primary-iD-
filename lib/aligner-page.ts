@@ -19,7 +19,7 @@
 // and Farhad approves the page to go live (spec, build note 9).
 // ─────────────────────────────────────────────────────────────────────────
 
-const IS_REVIEW =
+export const IS_REVIEW =
   process.env.VERCEL_ENV === "preview" || process.env.NODE_ENV === "development"
 
 export type Film = {
@@ -53,7 +53,7 @@ export const FILMS: Record<Film["id"], Film> = {
     length: "0:25",
     src: `${CDN}/6bddc053-8e41-4c1d-9b91-4632c3ae1281.mp4`,
     poster: "/videos/aligners/poster-behind-the-camera.webp",
-    label: "Behind the camera, a dramatized smile story",
+    label: "Behind the camera, a smile story",
   },
   twice: {
     id: "twice",
@@ -61,7 +61,7 @@ export const FILMS: Record<Film["id"], Film> = {
     length: "0:26",
     src: `${CDN}/700d9195-57dd-4e39-820d-ed460c510108.mp4`,
     poster: "/videos/aligners/poster-twice.webp",
-    label: "Twice, a dramatized smile story",
+    label: "Twice, a smile story",
   },
   fourteen: {
     id: "fourteen",
@@ -69,7 +69,7 @@ export const FILMS: Record<Film["id"], Film> = {
     length: "0:24",
     src: `${CDN}/3f2aa4f2-e421-423d-85b8-f0b1e7990723.mp4`,
     poster: "/videos/aligners/poster-fourteen.webp",
-    label: "Fourteen, a dramatized smile story",
+    label: "Fourteen, a smile story",
   },
 }
 
