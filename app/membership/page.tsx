@@ -26,11 +26,15 @@ import { SiteHeader, SiteFooter } from "@/components/site-shell"
 const JOIN_HREF = "/book/"
 const ID_HREF = "/primary-id/"
 
-// The film is behind this flag and does not render while FILM is null. Open: the
-// v4 cut shows a different included-care figure from this page at 0:56, and it
-// has no captions. When a corrected cut and its VTT exist, add them under
-// public/ and set: { src, poster: "/images/membership-film-poster.jpg", captions }.
-const FILM = null as null | { src: string; poster: string; captions: string | null }
+// The film, self-hosted (published at Farhad's direction, Nov 2026). Set FILM to
+// null to remove the section. TODO(farhad): this cut shows $2,682 at 0:56 where
+// the page and its end card say $3,119; replace the file when re-exported, and add
+// a VTT and set `captions`.
+const FILM = {
+  src: "/videos/membership-film.mp4",
+  poster: "/images/membership-film-poster.jpg",
+  captions: null,
+} as null | { src: string; poster: string; captions: string | null }
 
 const ICO: Record<string, React.ReactNode> = {
   clear: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><path d="M3 12h7M3 7h11M3 17h5"/><path d="M15.5 8.5l5 5M20.5 8.5l-5 5"/></svg>,
