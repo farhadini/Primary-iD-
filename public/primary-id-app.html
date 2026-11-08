@@ -939,7 +939,7 @@
   }
 
   // B1: a call window that is true for this hour and day, in Los Angeles.
-  // Mon–Thu 8–6, Fri 8–5. Holidays are not known here.
+  // Mon–Thu 9–6, Fri 9–5. Holidays are not known here.
   function laNow(){
     var p={};
     try{ new Intl.DateTimeFormat("en-US",{timeZone:"America/Los_Angeles",weekday:"short",hour:"numeric",minute:"numeric",hour12:false})
@@ -950,12 +950,12 @@
     var t=laNow(), order=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], k=order.indexOf(t.d), mins=t.h*60+t.m;
     if(k>=1 && k<=5){
       var close=(k===5?17:18)*60;
-      if(mins>=480 && mins<=close-30) return "within the next hour";
-      if(mins<480) return "this morning, after 8 AM";
+      if(mins>=540 && mins<=close-30) return "within the next hour";
+      if(mins<540) return "this morning, after 9 AM";
     }
     if(k<0) return "on the next business morning";
     var n=k, step=0; do{ n=(n+1)%7; step++; } while(n===0||n===6);
-    return step===1 ? "tomorrow morning, after 8 AM" : "on "+["","Monday","Tuesday","Wednesday","Thursday","Friday"][n]+" morning, after 8 AM";
+    return step===1 ? "tomorrow morning, after 9 AM" : "on "+["","Monday","Tuesday","Wednesday","Thursday","Friday"][n]+" morning, after 9 AM";
   }
 
   // P1-04: in pain now. Required, except on the pain track. Marks the request urgent.
