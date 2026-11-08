@@ -370,7 +370,7 @@ export default function MembershipPage() {
           <div className="hero"><div className="herogrid">
             <div>
               <div className="eyebrow">The Primary iD membership</div>
-              <h1 style={{ marginTop: 20 }}>Everything your insurance<br />was never built to pay for.</h1>
+              <h1 style={{ marginTop: 20 }}>Everything your insurance <br />was never built to pay for.</h1>
               <p className="lede">Most people only see a dentist once something already hurts. This is the other version: the bacteria cleared before they settle in, decay found while it is still a millimetre, and the whole picture looked at again every year. <span className="em">Before anything goes wrong, not after.</span></p>
               <div className="pills"><a className="pill solid" href="#join">Join the membership</a><a className="pill ghost" href={ID_HREF}>Build your Primary iD</a></div>
             </div>
