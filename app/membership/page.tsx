@@ -27,10 +27,15 @@ import { SiteHeader, SiteFooter } from "@/components/site-shell"
 const JOIN_HREF = "/book/"
 const ID_HREF = "/primary-id/"
 
-// The film stays off until its source, poster and captions are cleared: the
-// current source is an internal cut, the poster does not exist, there is no VTT.
-// Set these three and the section renders. While null, no section and no frame.
-const FILM: null | { src: string; poster: string; captions: string } = null
+// The film: v4, the animated cut (1:28), self-hosted. Set FILM to null to remove
+// the whole section. TODO(farhad): v4 shows $2,682 at 0:56 and $3,119 in its end
+// card; re-render at $3,119 before this ships. Captions need the film's SRT/VTT:
+// add the file and set `captions`.
+const FILM: { src: string; poster: string; captions: string | null } | null = {
+  src: "/videos/membership-film-v4.mp4",
+  poster: "/images/membership-film-poster.jpg",
+  captions: null,
+}
 
 const ICO: Record<string, React.ReactNode> = {
   clear: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"><path d="M3 12h7M3 7h11M3 17h5"/><path d="M15.5 8.5l5 5M20.5 8.5l-5 5"/></svg>,
@@ -413,14 +418,13 @@ export default function MembershipPage() {
             <section className="film">
               <div className="eyebrow">The membership in ninety seconds</div>
               <h2 style={{ marginTop: 18 }}>Watch a year of membership, <span className="em">start to finish.</span></h2>
-              <p className="sdek">One woman calls her dental plan to find out what it actually covers. What happens next is the whole argument for this page.</p>
               <div className="filmframe">
-                <video controls playsInline preload="none" poster={(FILM as { poster: string }).poster} src={(FILM as { src: string }).src}>
-                  <track kind="captions" srcLang="en" label="English" src={(FILM as { captions: string }).captions} />
+                <video controls playsInline preload="none" poster={FILM.poster} src={FILM.src}>
+                  {FILM.captions && <track kind="captions" srcLang="en" label="English" src={FILM.captions} />}
                   Your browser cannot play this video. <a href="#arith">Read what is included instead.</a>
                 </video>
               </div>
-              <p className="filmcap"><span className="dur">1:30</span><span>Dramatization. The people shown are not Primary patients.</span></p>
+              <p className="filmcap"><span className="dur">1:28</span></p>
             </section>
           )}
 
