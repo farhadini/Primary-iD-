@@ -24,7 +24,6 @@ const MEMBERSHIP = [
   { b: "Your Primary iD,", t: " re-scored every year and read at every visit" },
   { b: "A longevity consultation,", t: " once a year (labs billed separately)" },
   { b: "Member pricing on everything we do,", t: " published in advance, no annual maximum" },
-  { b: "A lifetime warranty", t: " on your implants" },
 ]
 
 function Mark({ ok }: { ok: boolean }) {
@@ -106,7 +105,7 @@ export default function MembershipTeaser() {
 
           <div className="card mem">
             <div className="head">
-              <span className="kick">The Primary iD Membership</span>
+              <span className="kick">The Primary iD Founding Membership</span>
               <div className="price"><span className="n">$499</span><span className="o">a year</span></div>
               <div className="terms">One plan. Insured or not.</div>
             </div>

@@ -118,7 +118,7 @@ const INC: [string, string, string][] = [
   ["The exam with each one", "3 × $150", "$450"],
   ["X-rays", "", "$130"],
   ["The 3D scan of your jaw, sinuses and airway", "", "$500"],
-  ["Screening for mouth cancer", "", "$150"],
+  ["Screening for oral cancer", "", "$150"],
   ["Screening for how you sleep and breathe", "", "$75"],
   ["Whitening in the chair, both arches", "2 × $225", "$450"],
   ["Ozone, where it is indicated", "2 × $97", "$194"],
@@ -373,21 +373,21 @@ export default function MembershipPage() {
         <div className="herobleed"><div className="wrap">
           <div className="hero"><div className="herogrid">
             <div>
-              <div className="eyebrow">The Primary iD membership</div>
+              <div className="eyebrow">The Primary iD founding membership</div>
               <h1 style={{ marginTop: 20 }}>Everything your insurance <br />was never built to pay for.</h1>
               <p className="lede">Most people only see a dentist once something already hurts. This is the other version: the bacteria cleared before they settle in, decay found while it is still a millimetre, and the whole picture looked at again every year. <span className="em">Before anything goes wrong, not after.</span></p>
-              <div className="pills"><a className="pill solid" href="#join">Join the membership</a><a className="pill ghost" href={ID_HREF}>Build your Primary iD</a></div>
+              <div className="pills"><a className="pill solid" href="#join">Join the founding membership</a><a className="pill ghost" href={ID_HREF}>Build your Primary iD</a></div>
             </div>
             <div className="mwrap" ref={tilt}><aside className="mcard">
-              <div className="mhead"><span className="t">The <em>membership</em></span><span className="loc">Brentwood</span></div>
+              <div className="mhead"><span className="t">The <em>founding</em> membership</span><span className="loc">Brentwood</span></div>
               <div className="mprice">$499<em> / year</em></div>
               <p className="msub">One plan. Insured or not.</p>
               <div className="mlab">Included every year</div>
               <div className="mrows">
-                <div className="mrow"><span>Cleanings and the exam with each one</span><b>$1,125</b></div>
+                <div className="mrow"><span>Unlimited cleanings and exams</span><b>$1,125</b></div>
                 <div className="mrow"><span>A 3D scan of both jaws (CBCT)</span><b>$500</b></div>
                 <div className="mrow"><span>Whitening in the chair, both arches</span><b>$450</b></div>
-                <div className="mrow"><span>Mouth cancer and sleep screening</span><b>$225</b></div>
+                <div className="mrow"><span>Oral cancer and sleep screening</span><b>$225</b></div>
                 <div className="mrow"><span>Ozone, nitrous and x-rays</span><b>$624</b></div>
                 <div className="mrow"><span>The longevity consultation</span><b>$195</b></div>
                 <div className="mrow tot"><span>At our regular fees</span><b>$3,119</b></div>
@@ -396,10 +396,9 @@ export default function MembershipPage() {
               <ul className="mlist">
                 <li>Member pricing on everything, no annual maximum</li>
                 <li>Your Primary iD, re-scored every year and read at every visit</li>
-                <li>A lifetime warranty on your implants</li>
               </ul>
               <a className="mmore" href="#arith">See everything included →</a>
-              <p className="mfine">Values are Primary&rsquo;s regularly charged self-pay fees. Membership is not insurance.</p>
+              <p className="mfine">Prices are Primary&rsquo;s regularly charged self-pay fees. Membership is not insurance.</p>
             </aside></div>
           </div></div>
         </div></div>
@@ -483,7 +482,6 @@ export default function MembershipPage() {
                 <div key={name} className="rrow"><span>{name}{sub && <em>{sub}</em>}</span><b>{rate}</b></div>
               ))}
             </div>
-            <div className="nocap"><b>A lifetime warranty on your implants.</b> You get the terms in writing with your treatment plan.</div>
             <div className="nocap"><b>And no annual maximum.</b> Most dental plans stop paying somewhere around $1,500 a year. Member pricing does not stop.</div>
           </section>
 
@@ -501,7 +499,6 @@ export default function MembershipPage() {
               <div className="ic hi"><h3>What the membership adds</h3><ul>
                 <li>Cleanings <b>as often as your mouth needs them</b></li><li><b>No ceiling</b> on member pricing</li>
                 <li>All eight included things, <b>at no extra charge</b></li>
-                <li>A lifetime warranty on your implants</li>
                 <li>Your Primary iD, which no plan has heard of</li>
                 <li>One fee, once a year</li>
               </ul></div>
@@ -513,7 +510,7 @@ export default function MembershipPage() {
             <h2>One fee. One plan. Everybody gets the same one.</h2>
             <p>$499 for the year. Insured or not, there is nothing better to upgrade to.</p>
             <div className="pills">
-              <a className="pill light" href={JOIN_HREF}>Join the membership</a>
+              <a className="pill light" href={JOIN_HREF}>Join the founding membership</a>
               <a className="pill ghost" style={{ color: "#fff", background: "transparent", boxShadow: "inset 0 0 0 1.5px rgba(255,255,255,.45)" }} href={ID_HREF}>Build your Primary iD</a>
             </div>
           </div>
@@ -522,7 +519,6 @@ export default function MembershipPage() {
             <p><b>About these prices.</b> Every fee shown is the regular fee Primary Integrative Dentistry charges a patient who is not a member. Member rates and included services apply only to members, for as long as the membership is active, and your price is confirmed in writing before anything is scheduled. The $3,119 is what the included services would cost at our regular fees if all of them were used in one year.</p>
             <p><b>What it is not.</b> Not insurance, not a dental plan, and it does not pay for treatment. Treatment, laboratory fees and diagnostic panels are charged separately at member rates. Primary evaluates your bite, gums, oral health and relevant sleep or airway history before recommending treatment.</p>
             <p><b>Cleanings, ozone and nitrous.</b> The cleaning interval is a clinical decision made for each patient. For most people that is three visits a year. Ozone and nitrous are included wherever they are clinically indicated.</p>
-            <p><b>Implants.</b> A lifetime warranty on your implants is included with the membership, and you get the terms in writing with your treatment plan.</p>
             <p><b>Your Primary iD.</b> Directional, not a diagnosis, and not a measure of biological age. Primary Integrative Dentistry, 11980 San Vicente Blvd, Suite 902, Los Angeles CA 90049. Founded by Dr. Tzur Gabi, DMD, prosthodontist.</p>
           </div>
         </div>
