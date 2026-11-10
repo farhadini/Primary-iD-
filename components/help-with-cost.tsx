@@ -26,10 +26,6 @@ import { ScholarshipYear } from "@/components/scholarship-year"
 // what it is for. Wording follows the published /membership/ page. No member
 // percentage is quoted, because this page does not publish the implant fee
 // it would apply to.
-// The warranty leads because it is the one thing on this list that is about
-// implants and nothing else. The panel states it and points to the written
-// terms, and adds no conditions of its own. The wording is confirmed (8 Nov 2026).
-const MEMBER_LEAD = { name: "A lifetime warranty on your implants", why: "Included with your membership. You get the terms in writing with your treatment plan." }
 
 const MEMBER_ROWS = [
   { name: "A 3D scan (CBCT) of both jaws, every year", why: "So the plan is built on what the bone looks like." },
@@ -57,7 +53,7 @@ export function HelpWithCost({ consultHref }: { consultHref: string }) {
 
       {/* THE MEMBERSHIP */}
       <div className="hwc-p hwc-mem">
-        <h4 className="hwc-title" style={{ margin: "0 0 22px" }}>Primary iD membership</h4>
+        <h4 className="hwc-title" style={{ margin: "0 0 22px" }}>Primary iD founding membership</h4>
 
         <div className="hwc-slip">
           <div className="hwc-price">
@@ -69,10 +65,6 @@ export function HelpWithCost({ consultHref }: { consultHref: string }) {
 
         <p className="hwc-label">When you are getting implants</p>
         <dl className="hwc-rows">
-          <div className="hwc-lead">
-            <dt>{MEMBER_LEAD.name}</dt>
-            <dd>{MEMBER_LEAD.why}</dd>
-          </div>
           {MEMBER_ROWS.map(r => (
             <div key={r.name}>
               <dt>{r.name}</dt>
@@ -84,7 +76,7 @@ export function HelpWithCost({ consultHref }: { consultHref: string }) {
         <div className="hwc-inc">
           <p>
             <em>Included</em>
-            Cleanings as often as your mouth needs and the exam with each one, x-rays, the 3D scan, mouth cancer and sleep screening, whitening in the chair, ozone and nitrous where indicated, the longevity consultation, your Primary iD and the lifetime warranty on your implants.
+            Cleanings as often as your mouth needs and the exam with each one, x-rays, the 3D scan, oral cancer and sleep screening, whitening in the chair, ozone and nitrous where indicated, the longevity consultation and your Primary iD.
           </p>
           <p>
             <em>Not included</em>

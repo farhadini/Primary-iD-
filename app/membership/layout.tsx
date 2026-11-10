@@ -7,9 +7,9 @@ import localFont from "next/font/local"
 const inter = localFont({ src: "../../public/fonts/inter.woff2", weight: "100 900", variable: "--font-inter", display: "swap" })
 const jetbrains = localFont({ src: "../../public/fonts/jetbrains-mono.woff2", weight: "100 800", variable: "--font-jetbrains", display: "swap" })
 
-const TITLE = "Primary iD Membership in Brentwood, Los Angeles"
+const TITLE = "Primary iD Founding Membership in Brentwood, Los Angeles"
 const DESCRIPTION =
-  "One fee of $499 a year for the cleanings your mouth needs, a yearly 3D scan, whitening and screenings, $3,119 at our regular fees, plus member pricing with no annual maximum. Not insurance."
+  "The Primary iD founding membership: one fee of $499 a year for unlimited cleanings and exams, a yearly 3D scan, whitening and screenings, $3,119 at our regular fees, plus member pricing with no annual maximum. Not insurance."
 
 export const metadata: Metadata = {
   title: TITLE,

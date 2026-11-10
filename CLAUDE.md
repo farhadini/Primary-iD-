@@ -85,9 +85,11 @@ When creating new pages, import or replicate this palette — don't introduce ne
 ## Membership facts (final as of 8 Nov 2026)
 
 - **Price:** $499 a year, paid once a year. No quarterly or monthly option, no instalments, no term language.
-- **Lifetime implant warranty:** included in the membership. Wording: "A lifetime warranty on your implants." and "You get the terms in writing with your treatment plan." A benefit, not a dollar item: not in the $3,119.
+- **Name:** the founding membership ("The Primary iD founding membership").
+- **No implant warranty** in the membership (removed 9 Nov 2026). Do not list one.
 - **Second opinions** are not part of the membership.
-- **Cleanings:** as many as your mouth needs, at the interval the clinician sets, with the exam each time. Never "one more" visit or cleaning.
+- **Cleanings:** the membership card leads with "Unlimited cleanings and exams" (Farhad, 9 Nov 2026). Elsewhere: as many as your mouth needs, at the interval the clinician sets, with the exam each time. Never "one more" visit or cleaning.
+- Say "oral cancer", not "mouth cancer". The card footnote says "Prices", not "Values".
 - **Join link:** `JOIN_HREF` in `app/membership/page.tsx` points at `/book/` until the enrolment URL arrives. Do not invent a link.
 
 ## Subscribili integration
