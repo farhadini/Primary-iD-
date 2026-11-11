@@ -24,6 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // Legacy SEO preservation
     { url: `${SITE}/dental-implant/`,        lastModified: now, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${SITE}/dental-implant/zirconia/`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
     { url: `${SITE}/cosmetic-dentistry/`,    lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE}/safe-mercury-removal/`,  lastModified: now, changeFrequency: "monthly", priority: 0.9 },
     { url: `${SITE}/wholistic-dentistry/`,   lastModified: now, changeFrequency: "monthly", priority: 0.9 },

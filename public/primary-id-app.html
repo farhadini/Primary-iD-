@@ -1342,9 +1342,22 @@
   function pidUtm(){
     var out={}, q=new URLSearchParams(location.search||"");
     // from = the page they came from, cta = the button (spec P1-01 L3).
-    ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","from","cta","gclid","fbclid"].forEach(function(k){
+    ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","from","cta","gclid","gbraid","wbraid","fbclid"].forEach(function(k){
       var v=q.get(k); if(v) out[k]=v;
     });
+    // No ad tags on this link: use the ad click kept from the page they landed
+    // on (lib/click-ids.ts, key pid_touch, 90 days), so campaign and click ID
+    // still reach the contact (P1-01 L3).
+    if(!out.gclid && !out.gbraid && !out.wbraid && !out.fbclid && !out.utm_source){
+      try{
+        var t=JSON.parse(localStorage.getItem("pid_touch")||"{}");
+        if(t.at && Date.now()-Date.parse(t.at) < 7776000000){
+          ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","gclid","gbraid","wbraid","fbclid","landing_page"].forEach(function(k){
+            if(t[k]) out[k]=String(t[k]);
+          });
+        }
+      }catch(e){}
+    }
     return out;
   }
   // Score snapshot that never throws, however far through the dimensions they are.
