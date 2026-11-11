@@ -88,6 +88,10 @@ export default function RootLayout({
 }>) {
   const gtmId = process.env.NEXT_PUBLIC_GTM_ID
   const ga4Id = process.env.NEXT_PUBLIC_GA4_ID
+  // The Google tag runs only on the production deployment (myprimaryid.com).
+  // Vercel previews and local builds leave it out, so test pages never show up
+  // in Google Ads as extra domains or extra traffic.
+  const loadGoogleTag = process.env.VERCEL_ENV === "production"
 
   return (
     <html lang="en">
@@ -112,19 +116,23 @@ export default function RootLayout({
             is configured on the same load when NEXT_PUBLIC_GA4_ID is set.
             Ad personalization is off: the tag measures conversions and builds
             no remarketing audiences from visits to health pages. */}
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_TAG_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script id="google-tag" strategy="afterInteractive">{`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          window.gtag = gtag;
-          gtag('js', new Date());
-          gtag('set', 'allow_ad_personalization_signals', false);
-          gtag('config', '${GOOGLE_TAG_ID}');
-          ${ga4Id ? `gtag('config', '${ga4Id}', { anonymize_ip: true });` : ""}
-        `}</Script>
+        {loadGoogleTag && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_TAG_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-tag" strategy="afterInteractive">{`
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              window.gtag = gtag;
+              gtag('js', new Date());
+              gtag('set', 'allow_ad_personalization_signals', false);
+              gtag('config', '${GOOGLE_TAG_ID}');
+              ${ga4Id ? `gtag('config', '${ga4Id}', { anonymize_ip: true });` : ""}
+            `}</Script>
+          </>
+        )}
       </head>
       <body className={`font-sans antialiased`}>
         {/* GTM : body noscript fallback */}
