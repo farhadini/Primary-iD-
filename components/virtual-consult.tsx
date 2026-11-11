@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { trackConsultSubmitted } from "@/lib/google-tag"
+import { touchForLead } from "@/lib/click-ids"
 
 // ─────────────────────────────────────────────────────────────────────────
 // The consult card on /dental-implant/: the Pathfinder, asked on the page.
@@ -190,17 +191,10 @@ function countIfConsultCard(b: unknown) {
   }
 }
 
-// Campaign tags from the address bar, plus the page and button (P1-01 L3).
+// The page and button, plus the campaign tags and ad click IDs: from the
+// address bar, or kept from the page they landed on (lib/click-ids.ts, P1-01 L3).
 function leadSource(cta: string) {
-  const out: Record<string, string> = { from: "dental-implant", cta }
-  try {
-    const q = new URLSearchParams(window.location.search || "")
-    for (const k of ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "gclid", "fbclid"]) {
-      const v = q.get(k)
-      if (v) out[k] = v
-    }
-  } catch {}
-  return out
+  return { ...touchForLead(), from: "dental-implant", cta }
 }
 
 export function VirtualConsult({ track = "consult" }: { track?: TrackName }) {

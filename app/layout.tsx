@@ -4,6 +4,7 @@ import Script from "next/script"
 import { Analytics } from "@vercel/analytics/next"
 import { DentistSchema, LocalBusinessSchema } from "@/components/schema"
 import { GOOGLE_TAG_ID } from "@/lib/google-tag"
+import { ClickIdKeeper } from "@/components/click-id-keeper"
 import "./globals.css"
 
 
@@ -147,6 +148,7 @@ export default function RootLayout({
           </noscript>
         )}
         {children}
+        <ClickIdKeeper />
         <Analytics />
       </body>
     </html>

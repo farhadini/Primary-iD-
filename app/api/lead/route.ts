@@ -415,7 +415,7 @@ export async function POST(request: Request) {
       fromPage ? `From: ${fromPage}` : null,
       fromCta ? `CTA: ${fromCta}` : null,
       src.utm_term ? `UTM term: ${clip(src.utm_term)}` : null,
-      src.gclid ? "Ad click: Google" : null,
+      src.gclid || src.gbraid || src.wbraid ? "Ad click: Google" : null,
       src.fbclid ? "Ad click: Meta" : null,
     ].filter(Boolean) as string[]
 
@@ -487,6 +487,19 @@ export async function POST(request: Request) {
       { key: "smile_profile",     field_value: smileProfile },
     ].filter((x) => x.field_value !== "")
 
+    // The ad click itself, so a booked or attended consult can later be sent
+    // back to Google Ads (offline conversion import). Written on its own once
+    // the contact exists, so a field missing in GoHighLevel never costs the
+    // lead. Create gclid, gbraid, wbraid and landing_page in GHL (single-line
+    // text). Click IDs only; nothing personal. P1-01 L3.
+    const cleanId = (v?: string) => (v ?? "").replace(/[^\w\-]/g, "").slice(0, 200)
+    const clickFields = [
+      { key: "gclid",        field_value: cleanId(src.gclid) },
+      { key: "gbraid",       field_value: cleanId(src.gbraid) },
+      { key: "wbraid",       field_value: cleanId(src.wbraid) },
+      { key: "landing_page", field_value: (src.landing_page ?? "").replace(/[^\w\-\/]/g, "").slice(0, 120) },
+    ].filter((x) => x.field_value !== "")
+
     const base = {
       locationId: LOCATION,
       firstName: f.firstName || undefined,
@@ -509,7 +522,7 @@ export async function POST(request: Request) {
     if (!LIVE) {
       return NextResponse.json({
         success: true, assessmentId, crm: false, priority,
-        dryRun: { phase: b.phase ?? "", contact: base, customFields: [...customFields, ...specFields],
+        dryRun: { phase: b.phase ?? "", contact: base, customFields: [...customFields, ...specFields], clickFields,
           note: noteText || undefined },
       })
     }
@@ -541,6 +554,19 @@ export async function POST(request: Request) {
           console.error("[lead] upsert with customFields failed, retrying tags-only:", fieldErr)
           contactId = await upsert(base)
           console.error("[lead] captured WITHOUT custom fields")
+        }
+      }
+
+      if (contactId && clickFields.length) {
+        try {
+          const r = await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}`, {
+            method: "PUT",
+            headers: H,
+            body: JSON.stringify({ customFields: clickFields }),
+          })
+          if (!r.ok) console.error("[lead] click IDs not stored; create gclid, gbraid, wbraid and landing_page in GHL:", r.status)
+        } catch (e) {
+          console.error("[lead] click IDs not stored:", e)
         }
       }
 
