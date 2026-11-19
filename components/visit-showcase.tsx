@@ -356,7 +356,7 @@ const BLOCKS: Block[] = [
     line: "Shade, alignment and wear, and the bite underneath, so a better smile sits on teeth that can hold it.",
     leads: [
       { label: "Whitening, veneers and bonding", href: "/cosmetic-dentistry/" },
-      { label: "Clear aligners", href: "/book/aligners/" },
+      { label: "Clear aligners", href: "/clear-aligners/" },
     ],
   },
   {
