@@ -77,7 +77,7 @@ export function SiteFooter() {
 
         <div className="r-stack r-gap r-center" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <span style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
-            © {new Date().getFullYear()} Primary Integrative Dentistry
+            © {new Date().getFullYear()} Gabi Dental Corp dba Primary Integrative Dentistry
           </span>
           <span style={{ display: "flex", gap: 18, alignItems: "center" }}>
             <a href="/privacy/" style={{ fontFamily: "Georgia,serif", fontSize: 12, color: "rgba(255,255,255,0.55)", textDecoration: "none" }}

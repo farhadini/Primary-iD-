@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   },
 }
 
-const EFFECTIVE = "July 22, 2026"
+const EFFECTIVE = "November 19, 2026"
 
 export default function PrivacyPolicyPage() {
   return (
@@ -48,8 +48,9 @@ export default function PrivacyPolicyPage() {
         </p>
 
         <p>
-          Primary Integrative Dentistry (&quot;Primary,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;)
-          operates the website at myprimaryid.com and provides dental and integrative health services from our
+          Primary Integrative Dentistry is operated by Gabi Dental Corp, a California corporation, doing business as
+          Primary Integrative Dentistry (&quot;Primary,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;). We
+          operate the website at myprimaryid.com and provides dental and integrative health services from our
           office in Los Angeles, California. We respect your privacy and are committed to protecting the personal
           information you share with us. By using this website or providing your information to us, you agree to the
           practices described in this policy.
@@ -82,11 +83,12 @@ export default function PrivacyPolicyPage() {
         </p>
         <p>
           <strong>
-            We do not sell your personal information, and we do not share your mobile phone number or your SMS opt-in
-            consent with any third parties or affiliates for their own marketing or promotional purposes.
+            No mobile information will be shared with third parties or affiliates for marketing or promotional
+            purposes. All the categories of sharing described in this policy exclude text messaging originator opt-in
+            data and consent; this information will not be shared with any third parties.
           </strong>{" "}
-          Mobile opt-in and consent information is used solely to deliver the messages you have asked to receive and is
-          not shared with third parties for marketing.
+          Mobile opt-in and consent information is used solely to deliver the messages you have asked to receive. We do
+          not sell your personal information.
         </p>
 
         <H2>How we share information</H2>
@@ -94,8 +96,8 @@ export default function PrivacyPolicyPage() {
           We do not sell your personal information. We share information only in these limited circumstances: with
           service providers who perform functions on our behalf (see below) under obligations to protect it; when
           required by law or to comply with legal process; to protect the rights, safety, and property of our patients,
-          our practice, or others; and in connection with a business transfer, subject to this policy. As stated above,
-          mobile opt-in and text-messaging consent data is never shared with third parties for marketing.
+          our practice, or others; and in connection with a business transfer, subject to this policy. None of these
+          circumstances applies to text messaging opt-in data and consent, which is never shared with any third party.
         </p>
 
         <H2>Third-party service providers</H2>
@@ -158,7 +160,7 @@ export default function PrivacyPolicyPage() {
           If you have questions about this Privacy Policy or how we handle your information, contact us at:
         </p>
         <p>
-          Primary Integrative Dentistry<br />
+          Gabi Dental Corp dba Primary Integrative Dentistry<br />
           11980 San Vicente Blvd, Suite 902<br />
           Los Angeles, CA 90049<br />
           Phone: <a href="tel:+13105648990" style={{ color: PALETTE.blue, textDecoration: "none" }}>(310) 564-8990</a><br />
